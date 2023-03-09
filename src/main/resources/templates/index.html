@@ -1,10 +1,204 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<!-- 반응형 웹 미디어쿼리 선언부   -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
+    <link rel="import" href="/topmenu.html">
+    <link rel="stylesheet" href="/css/style.css">
+	<header th:insert="topMenu.html::header"></header>
+
+</head>
+
+<body class="p-3 m-0 border-0 bd-example mainBody">
+
+   
+    <!-- <img src="C:/Users/soldesk/Desktop/mainBanner2.jpg" class="img-responsive" width="100%" height="600px"> -->
+
+    <!-- <img src="C:/Users/soldesk/Desktop/mainBack.jpg" class="img-responsive" width="100%" height="450px"> -->
+    <!-- <div class="mainBody"> -->
+    <header th:insert="topMenu.html::nav"></header>
+<img th:src="@{/images/mainBanner5.jpg}">
+    <div class="container text-center" id="main">
+        <div class="row">
+            <div class="col-md-2" id="today">
+                <div class="col-sm-12" id="todayBlock">
+                    <div class="card homecard">
+                        <div class="card-header todayAdvice">
+                            오늘의 조언
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>너 자신을 믿고 의지하고 사랑하라</p>
+                                <footer class="blockquote-footer advice-title">Someone famous in <cite title="Source Title">Source
+                                        Title</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card" id="keyword">
+                        <div class="card-header">
+                            키워드 추천
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0" id="keywordContext">
+                                <p class="list">봄</p>
+                                <p class="list">여름</p>
+                                <p class="list">가을</p>
+                                <p class="list">겨울</p>
+                                <p class="list">빅뱅</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12"></div>
+            </div>
+            <div class="col-md-5 newestDiv">
+                <div class="card" id="newest">
+                    <div class="card-header">
+                        감성일기 최신순(공개)<button type="button" id="plus" class="btn btn-outline-primary">+</button>
+                        
+                    </div>
+                    <div class="card-body">
+                        <!-- <blockquote class="blockquote mb-0" id="newestContext">
+                        <div id="newestContextDiv">
+                            
+                            <p><span id="newDiaryNum">1</span>일기 제목1</p>
+                            <p><span id="newDiaryNum">2</span>일기 제목2</p>
+                            <p><span id="newDiaryNum">3</span>일기 제목3</p>
+                            <p><span id="newDiaryNum">4</span>일기 제목4</p>
+                            <p><span id="newDiaryNum">5</span>일기 제목5</p>
+                        </div>
+                        </blockquote> -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">게시글</th>
+                                    <th scope="col">제목</th>
+                                    <th scope="col">글쓴이</th>
+                                    <th scope="col">날짜</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>오늘의 일기</td>
+                                    <td>김요한</td>
+                                    <td>2023-03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>일기 제목</td>
+                                    <td>박건상</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>일기 제목</td>
+                                    <td>송한빈</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>내일의 일기</td>
+                                    <td>김한희</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>내일의 일기</td>
+                                    <td>김건용</td>
+                                    <td>03-08</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-5 emotionDiv">
+                <div class="card" id="emotion">
+                    <div class="card-header">
+                        감성일기 공감순(공개)<button type="button" id="plus" class="btn btn-outline-primary">+</button>
+                    </div>
+                    <div class="card-body" id="emotionContext">
+                        <!-- <blockquote class="blockquote mb-0">
+                            <p><span id="emoDiaryNum">1</span>일기 제목1</p>
+                            <p><span id="emoDiaryNum">2</span>일기 제목2</p>
+                            <p><span id="emoDiaryNum">3</span>일기 제목3</p>
+                            <p><span id="emoDiaryNum">4</span>일기 제목4</p>
+                            <p><span id="emoDiaryNum">5</span>일기 제목5</p>
+                        </blockquote> -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">게시글</th>
+                                    <th scope="col">제목</th>
+                                    <th scope="col">글쓴이</th>
+                                    <th scope="col">날짜</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>오늘의 일기</td>
+                                    <td>김요한</td>
+                                    <td>2023-03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>일기 제목</td>
+                                    <td>박건상</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>일기 제목</td>
+                                    <td>송한빈</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>내일의 일기</td>
+                                    <td>김한희</td>
+                                    <td>03-08</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>내일의 일기</td>
+                                    <td>김건용</td>
+                                    <td>03-08</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+    <footer class="text-center text-white fixed-bottom" style="background-color: rgba(173, 100, 58, 0.2);">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(173, 100, 58, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- End Example Code -->
 </body>
+
 </html>
