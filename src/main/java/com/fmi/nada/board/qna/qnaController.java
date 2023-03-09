@@ -1,5 +1,6 @@
 package com.fmi.nada.board.qna;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +31,15 @@ public class qnaController {
     }
 
     //QNA 작성 프로세스 실행 이후 리다이렉트
-//    @PostMapping("/write_pro")
-//    public String qnaWrite(@Valid  QnaDto qnaDto,@RequestParam("member_idx") Long member_idx){
-//        Qna qna=qnaService.
-//        qnaService.writeQna(qna);
-//        return "redirect:read";
-//    }
+    @PostMapping("/write_pro")
+    public String qnaWrite(@Valid @ModelAttribute("writeQnaBean") QnaDto qnaDto){
+//        user 어쩌고 시큐리티 어쩌고 할곳
+        Qna qna = new Qna();
+        qna.setQna_subject(qnaDto.getQna_subject());
+        qna.setQna_content(qnaDto.getQna_content());
+        qnaService.writeQna(qna);
+        return "redirect:read";
+    }
 
     /*@PutMapping
     public String upViews(){
