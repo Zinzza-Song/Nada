@@ -9,16 +9,17 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/QNA/")
 public class qnaController {
     //서비스 주입
     private final qnaServiceImpl qnaService;
 
     //QNA 메인
-    @GetMapping("/QNA")
+    @GetMapping("/")
     public String index(Model mo){
         List<Qna> li = qnaService.getList();
         mo.addAttribute("list",li);
-        return "/index";
+        return "QNA/index";
     }
 
     //QNA 작성페이지
@@ -47,11 +48,19 @@ public class qnaController {
         return "QNA/read";
     }
 
+    //QNA 답변페이지
+    @PutMapping("/answer")
+    public void answerQna(@ModelAttribute QnaDto qnaDto){
+        Qna qna = qnaService.get(qnaDto.getQna_idx());
+        qna.setQna_answer(qnaDto.getQna_answer());
+        qna.setQna_isanswered(true);
+        qnaService.answerQna(qna);
+    }
+
     //QNA 삭제
     @DeleteMapping("/delete")
-    public String delete(@RequestParam("qna_idx") Long qna_idx){
+    public void delete(@RequestParam("qna_idx") Long qna_idx){
         qnaService.deleteQna(qna_idx);
-        return "redirect:index";
     }
 
 

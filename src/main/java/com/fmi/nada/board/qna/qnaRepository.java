@@ -7,7 +7,4 @@ import org.springframework.stereotype.Repository;
 public interface qnaRepository extends JpaRepository<Qna,Long> {
 
     void delete(Long qna_idx);
-
-
-
 }
