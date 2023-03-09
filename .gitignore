@@ -262,5 +262,4 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/windows,intellij,eclipse,gradle,java
 
 HELP.md
-.properties
-.yml
+*.yml
