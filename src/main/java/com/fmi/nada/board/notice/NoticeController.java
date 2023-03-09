@@ -32,7 +32,7 @@ public class NoticeController {
 
     // 공지사항 글 읽기 ( 조회수 증가 )
     @GetMapping("/read")
-    public String read(@PathVariable("notice_idx") Integer notice_idx,
+    public String read(@PathVariable("notice_idx") Long notice_idx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model) {
@@ -51,14 +51,19 @@ public class NoticeController {
 
     // 공지사항 작성 서비스 로직 실행
     @PostMapping("/write_pro")
-    public String writeNotice_pro(@Valid @ModelAttribute("addNoticeBean") Notice notice, Model model) {
+    public String writeNotice_pro(@Valid @ModelAttribute("addNoticeBean") NoticeDTO noticeDTO,
+                                  Model model) {
+        Notice notice = new Notice();
+        notice.setNotice_subject(noticeDTO.getNotice_subject());
+        notice.setNotice_content(noticeDTO.getNotice_content());
+        notice.setNotice_file(noticeDTO.getNotice_file());
         noticeService.registerNotice(notice);
         return "redirect:list";
     }
 
     // 공지사항 수정 폼 페이지
     @GetMapping("/modify")
-    public String modifyNotice(@RequestParam("notice_idx") Integer notice_idx, Model model) {
+    public String modifyNotice(@RequestParam("notice_idx") Long notice_idx, Model model) {
         Notice notice = noticeService.getNotice(notice_idx);
         model.addAttribute("modifyNoticeBean", notice);
         return "board/notice/modify";
@@ -66,14 +71,18 @@ public class NoticeController {
 
     // 공지사항 수정 서비스 로직 수행
     @PutMapping("/modify_pro")
-    public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") Notice notice) {
+    public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") NoticeDTO noticeDTO,
+                                   @RequestParam("notice_idx") Long notice_idx) {
+        Notice notice = noticeService.getNotice(notice_idx);
+        notice.setNotice_subject(noticeDTO.getNotice_subject());
+        notice.setNotice_content(noticeDTO.getNotice_content());
         noticeService.updateNotice(notice);
         return "redirect:read";
     }
 
     // 공지사항 삭제 서비스 로직
     @DeleteMapping("/delete")
-    public String deleteNotice(@RequestParam("notice_idx") Integer notice_idx) {
+    public String deleteNotice(@RequestParam("notice_idx") Long notice_idx) {
         noticeService.deleteNotice(notice_idx);
         return "redirect:list";
     }
