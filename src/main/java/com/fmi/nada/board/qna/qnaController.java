@@ -50,8 +50,8 @@ public class qnaController {
 
     //QNA 답변페이지
     @PutMapping("/answer")
-    public void answerQna(@ModelAttribute QnaDto qnaDto){
-        Qna qna = qnaService.get(qnaDto.getQna_idx());
+    public void answerQna(@ModelAttribute QnaDto qnaDto, @RequestParam("qna_idx") Long qna_idx){
+        Qna qna = qnaService.get(qna_idx);
         qna.setQna_answer(qnaDto.getQna_answer());
         qna.setQna_isanswered(true);
         qnaService.answerQna(qna);
