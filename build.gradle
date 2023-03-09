@@ -56,10 +56,10 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // h2
-    runtimeOnly 'com.h2database:h2'
+/*    runtimeOnly 'com.h2database:h2'*/
 
     // mysql
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'mysql:mysql-connector-java'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
