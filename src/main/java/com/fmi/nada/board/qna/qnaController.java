@@ -9,7 +9,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/QNA/")
+@RequestMapping("/board/qna/")
 public class qnaController {
     //서비스 주입
     private final qnaServiceImpl qnaService;
@@ -19,13 +19,13 @@ public class qnaController {
     public String index(Model mo){
         List<Qna> li = qnaService.getList();
         mo.addAttribute("list",li);
-        return "QNA/index";
+        return "board/QNA/index";
     }
 
     //QNA 작성페이지
     @GetMapping("/write")
     public String qnaWrite(){
-        return "QNA/write";
+        return "board/QNA/write";
     }
 
     //QNA 작성 프로세스 실행 이후 리다이렉트
@@ -45,7 +45,7 @@ public class qnaController {
     public String read(@RequestParam("qna_idx") Long qna_idx, Model mo){
         Qna qna = qnaService.get(qna_idx);
         mo.addAttribute("read",qna);
-        return "QNA/read";
+        return "board/QNA/read";
     }
 
     //QNA 답변페이지
