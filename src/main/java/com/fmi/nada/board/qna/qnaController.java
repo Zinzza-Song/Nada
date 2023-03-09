@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,11 +30,12 @@ public class qnaController {
     }
 
     //QNA 작성 프로세스 실행 이후 리다이렉트
-    @PostMapping("/write_pro")
-    public String qnaWrite(Qna qna){
-        qnaService.writeQna(qna);
-        return "redirect:read";
-    }
+//    @PostMapping("/write_pro")
+//    public String qnaWrite(@Valid  QnaDto qnaDto,@RequestParam("member_idx") Long member_idx){
+//        Qna qna=qnaService.
+//        qnaService.writeQna(qna);
+//        return "redirect:read";
+//    }
 
     /*@PutMapping
     public String upViews(){
