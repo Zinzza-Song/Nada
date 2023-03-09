@@ -2,15 +2,19 @@ package com.fmi.nada.service;
 
 import com.fmi.nada.entity.Test;
 import com.fmi.nada.repository.TestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class TestService {
 
-    TestRepository testRepository;
+    private final TestRepository testRepository;
 
-    public Test set(String name) {
-         return testRepository.save(new Test(name));
+    public Test saveTest(String name) {
+        return testRepository.save(new Test(name));
     }
 }
