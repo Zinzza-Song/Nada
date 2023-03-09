@@ -58,7 +58,7 @@ height: 300px;
 background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
 .mainBody {
-    background-image: url(./images/mainBack2.jpg);
+    background-image: url(/images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }

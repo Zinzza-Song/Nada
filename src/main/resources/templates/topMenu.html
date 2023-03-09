@@ -4,7 +4,12 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
+<script type="text/javascript">
+function logout(){
+	href.location="/user/logout";
+}
 
+</script>
 <head th:fragment="header">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +20,9 @@
     <!-- <title>Bootstrap Example</title> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
-	<title>NADA</title>
+    <link rel="stylesheet" href="/css/style.css">
+	<title>NADA 나의 다이어리</title>
+	
 </head>
 <body>
         <!-- Example Code -->
@@ -36,8 +43,10 @@
                                 감성일기
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">일기 작성</a></li>
-                                <li><a class="dropdown-item" href="#">일기 게시판</a></li>
+                                <li><a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                 th:href="@{/diary/write/{member_idx}}">일기 작성</a></li>
+                                <li><a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
                             </ul>
                         </li>
     
@@ -47,17 +56,25 @@
                                 고객센터
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">공지사항</a></li>
-                                <li><a class="dropdown-item" href="#">Q&A</a></li>
-                                <li><a class="dropdown-item" href="#">신고 게시판</a></li>
+                                <li><a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
+                                <li><a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
+                                <li><a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
                             </ul>
                         </li>
                         <li class="nav-item col-md-7">
-                            <a class="nav-link" href="#">마이페이지</a>
+                            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')"
+                            th:href="@{/user/read/{member_idx}}">마이페이지</a>
                         </li>
                         <li class="nav-item col-md-10">
-                            <a class="nav-link" href="#">회원가입/로그인</a>
-                            <a class="nav-link"><span id="nickname">(닉네임)</span><button>로그아웃</button></a>
+                            <a class="nav-link" sec:authorize="!isAuthenticated()"
+                                th:href="@{/user/join}">회원가입</a>/
+                             <a class="nav-link" sec:authorize="!isAuthenticated()"
+                                th:href="@{/user/login}">로그인</a>
+                            <span id="nickname" sec:authorize="isAuthenticated()">(닉네임)</span>
+                            <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
                         </li>
                     </ul>
                 </div>
