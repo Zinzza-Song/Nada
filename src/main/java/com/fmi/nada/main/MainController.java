@@ -1,7 +1,9 @@
 package com.fmi.nada.main;
 
 import com.fmi.nada.diary.Keyword;
+import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +23,14 @@ public class MainController {
      * @return 메인 페이지 view("/index.html")
      */
     @GetMapping("/")
-    public String main(Model model) {
+    public String main(Model model, Authentication authentication) {
+        Member member = null;
+        if(authentication != null)
+            member = (Member) authentication.getPrincipal();
+
         Advice advice = mainService.findByAll().get(0);
         model.addAttribute("adviceModel", advice);
+        model.addAttribute("member", member);
 
         return "index";
     }
