@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Like {
+public class Likes {
 
     @GeneratedValue
     @Id
