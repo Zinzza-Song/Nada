@@ -1,10 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+<!-- 반응형 웹 미디어쿼리 선언부   -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<header th:insert="topMenu.html::header"></header>
 </head>
-<body>
 
+<body class="p-3 m-0 border-0 bd-example mainBody">
+
+   
+    <!-- <img src="C:/Users/soldesk/Desktop/mainBanner2.jpg" class="img-responsive" width="100%" height="600px"> -->
+
+    <!-- <img src="C:/Users/soldesk/Desktop/mainBack.jpg" class="img-responsive" width="100%" height="450px"> -->
+    <!-- <div class="mainBody"> -->
+    <header th:insert="topMenu.html::nav"></header>
+<img th:src="@{/images/mainBanner5.jpg}">
+    <div class="container text-center" id="main">
+        <div class="row">
+            <div class="col-md-2" id="today">
+                <div class="col-sm-12" id="todayBlock">
+                    <div class="card homecard">
+                        <div class="card-header todayAdvice">
+                            오늘의 조언
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p th:text="${adviceModel.advice_content}">오늘의 조언</p>
+                                <footer class="blockquote-footer advice-title" th:text="${adviceModel.advice_author}">오늘의 조언 주인</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card" id="keyword">
+                        <div class="card-header">
+                            키워드 추천
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0" id="keywordContext">
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드1</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드2</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드3</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드4</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드5</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12"></div>
+            </div>
+            <div class="col-md-5 newestDiv">
+                <div class="card" id="newest">
+                    <div class="card-header">
+                        감성일기 최신순(공개)<button type="button" id="plus-recent" class="btn btn-outline-primary">+</button>
+                        
+                    </div>
+                    <div class="card-body">
+                        <!-- <blockquote class="blockquote mb-0" id="newestContext">
+                        <div id="newestContextDiv">
+                            
+                            <p><span id="newDiaryNum">1</span>일기 제목1</p>
+                            <p><span id="newDiaryNum">2</span>일기 제목2</p>
+                            <p><span id="newDiaryNum">3</span>일기 제목3</p>
+                            <p><span id="newDiaryNum">4</span>일기 제목4</p>
+                            <p><span id="newDiaryNum">5</span>일기 제목5</p>
+                        </div>
+                        </blockquote> -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">게시글</th>
+                                    <th scope="col">제목</th>
+                                    <th scope="col">글쓴이</th>
+                                    <th scope="col">날짜</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr th:each="diary : ${recentTop5DiaryList}">
+                                    <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
+                                    <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
+                                    <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
+                                    <td th:text="${diary. diary_date}">최신순 일기 날짜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-5 emotionDiv">
+                <div class="card" id="emotion">
+                    <div class="card-header">
+                        감성일기 공감순(공개)<button type="button" id="plus-sympathy" class="btn btn-outline-primary">+</button>
+                    </div>
+                    <div class="card-body" id="emotionContext">
+                        <!-- <blockquote class="blockquote mb-0">
+                            <p><span id="emoDiaryNum">1</span>일기 제목1</p>
+                            <p><span id="emoDiaryNum">2</span>일기 제목2</p>
+                            <p><span id="emoDiaryNum">3</span>일기 제목3</p>
+                            <p><span id="emoDiaryNum">4</span>일기 제목4</p>
+                            <p><span id="emoDiaryNum">5</span>일기 제목5</p>
+                        </blockquote> -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">게시글</th>
+                                    <th scope="col">제목</th>
+                                    <th scope="col">글쓴이</th>
+                                    <th scope="col">날짜</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="table-group-divider">
+                            <tr th:each="diary : ${mostSympathyTop5DiaryList}">
+                                <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
+                                <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
+                                <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
+                                <td th:text="${diary. diary_date}">최신순 일기 날짜</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+    <footer class="text-center text-white fixed-bottom" style="background-color: rgba(173, 100, 58, 0.2);">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(173, 100, 58, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- End Example Code -->
 </body>
+
 </html>
