@@ -17,7 +17,7 @@ public class qnaController {
     private final qnaServiceImpl qnaService;
 
     //QNA 메인
-    @GetMapping("/")
+    @GetMapping
     public String index(Model mo){
         List<Qna> li = qnaService.getList();
         mo.addAttribute("list",li);
