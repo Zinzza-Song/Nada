@@ -88,7 +88,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed)
             throws IOException {
-        response.sendRedirect("/login");
+        response.sendRedirect("/user/login");
     }
 }
 

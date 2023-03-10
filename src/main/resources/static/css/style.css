@@ -69,8 +69,11 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 20px;
 }
 
+/*#todayAdvice {*/
+/*    background-image: url(./images/list.PNG);*/
+/*}*/
 #todayAdvice {
-    background-image: url(./images/list.jpg);
+    background-image: url(/static/images/list.PNG);
 }
 
 .top-nav {
@@ -78,6 +81,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 .top-menu {
     height: 100%;
+}
+.userLoginBox{
+    display: inline-block;
 }
 @media ( min-width : 992px)and (max-width :1300px){
     #today{
