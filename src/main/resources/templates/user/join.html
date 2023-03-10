@@ -53,14 +53,14 @@
                class="form-control">
         <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
         <div>
-          <input type="button" id="send_Mail_Btn" value="전송" onclick="sendEmail()" class="btn btn-light">
+          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
         </div>
       </div>
 
       <div class="form-group email_code-box" style="display:none">
           <label>E-mail Code</label>
 
-              <input type="text" name="member_email_code" id="member_email_code" th:field="*{member_email_code}" class="form-control">
+              <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
           <div>
               <input type="button" id="btnCertification" value="인증" class="btn btn-light">
           </div>
@@ -101,36 +101,38 @@
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
 <script>
 
-  $(function () {
+  $(function (){
     $("#send_Mail_Btn").click(function () {
+   	  $("email_code-box").css.display = "inline-block";
+    	    //코드 입력 박스를 보이도록 표시
       const eamil = $('#member_email').val() // 이메일 주소값 얻어오기!
       console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
-      const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
+      const checkInput = $('.member_email_code') // 인증번호 입력하는곳
       $.ajax({
         type: 'GET',
         url: '<c:url value ="${root}/member/mailCheck?email="/>' + eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
         success: function (data) {
           console.log("data : " + data);
-          checkInput.attr('disabled', false);
+          checkInput.attr('display', 'inline-block');
           code = data;
           swal('인증번호가 전송되었습니다.')
         }
       }); // end ajax
+      
     });// end send eamil
+    
     // 인증번호 비교
     // blur -> focus가 벗어나는 경우 발생
-    $('.mail-check-input').blur(function () {
+    $('.member_email_code').blur(function () {
       const inputCode = $(this).val();
       const $resultMsg = $('#mail-check-warn');
 
       if (inputCode === code) {
         $resultMsg.html('인증번호가 일치합니다.');
         $resultMsg.css('color', 'green');
-        $('#mail-Check-Btn').attr('disabled', true);
-        $('#userEamil1').attr('readonly', true);
-        $('#userEamil2').attr('readonly', true);
-        $('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-        $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+        $('#send_Mail_Btn').attr('disabled', true);
+        $('#member_email').attr('readonly', true);
+        $('#member_email').attr('onChange', 'this.selectedIndex = this.initialSelect');
       } else {
         $resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
         $resultMsg.css('color', 'red');
@@ -138,14 +140,6 @@
     });
   });
 
-  function sendEmail() {
-
-    const member_email = document.getElementById("member_email").value; //member_email의 id의 값
-    //이메일 전송하는 코드 필요
-    document.getElmentById("email_code-box").style.display = "inline-block";
-    //코드 입력 박스를 보이도록 표시
-
-  }
 
 
   function checkpassword(event) {
