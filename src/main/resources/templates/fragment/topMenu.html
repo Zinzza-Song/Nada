@@ -14,7 +14,7 @@ function logout(){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <!-- <title>Bootstrap Example</title> -->
@@ -22,14 +22,13 @@ function logout(){
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 	<title>NADA 나의 다이어리</title>
-	
 </head>
 <body>
         <!-- Example Code -->
         <div th:fragment="nav">
         <nav class="navbar navbar-expand-lg bg-light top-nav">
             <div class="container-fluid top-menu" style="background-color: rgb(216, 174, 132); border-color: chocolate;">
-                <a class="navbar-brand  col-md-3" th:href="@{/static}"><img th:src="@{/images/nada_logo.png}" style="width:50px; height:50px;"></a>
+                <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}" style="width:50px; height:50px;"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -69,12 +68,13 @@ function logout(){
                             th:href="@{/user/read/{member_idx}}">마이페이지</a>
                         </li>
                         <li class="nav-item col-md-10">
-                            <a class="nav-link" sec:authorize="!isAuthenticated()"
-                                th:href="@{/user/join}">회원가입</a>/
-                             <a class="nav-link" sec:authorize="!isAuthenticated()"
+
+                            <a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
+                                th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
                                 th:href="@{/user/login}" >로그인</a>
                             <span id="nickname" sec:authorize="isAuthenticated()" th:text="${member.member_nickname}">(닉네임)</span>
                             <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
+
                         </li>
                     </ul>
                 </div>
