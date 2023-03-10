@@ -37,7 +37,7 @@ public class JoinController {
                 memberJoinDto.member_address,
                 memberJoinDto.member_phone);
 
-        return "redirect:/user/login";
+        return "redirect:/";
     }
 
 }
