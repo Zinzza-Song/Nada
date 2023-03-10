@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-
+/**
+ * 공지사항 컨트롤러
+ * */
 @Controller
 @RequestMapping("/board/notice")
 @RequiredArgsConstructor
