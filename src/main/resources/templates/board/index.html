@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <header th:insert="~{fragment/topMenu.html::header}"></header>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+
+
+
+
+<!--<footer th:insert="footer.html::footer"></footer>-->
+<footer th:insert="~{fragment/footer.html::footer}"></footer>
 </body>
 </html>

@@ -72,7 +72,7 @@ function logout(){
                             <a class="nav-link" sec:authorize="!isAuthenticated()"
                                 th:href="@{/user/join}">회원가입</a>/
                              <a class="nav-link" sec:authorize="!isAuthenticated()"
-                                th:href="@{/user/login}">로그인</a>
+                                th:href="@{/user/login}" >로그인</a>
                             <span id="nickname" sec:authorize="isAuthenticated()" th:text="${member.member_nickname}">(닉네임)</span>
                             <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
                         </li>
