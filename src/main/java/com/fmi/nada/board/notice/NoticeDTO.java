@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@Valid
 public class NoticeDTO {
 
     @NotBlank

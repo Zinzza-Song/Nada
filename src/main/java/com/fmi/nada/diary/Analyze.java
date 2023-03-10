@@ -3,35 +3,25 @@ package com.fmi.nada.diary;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Analyze {
 
     @Id
     @GeneratedValue
-    private Long comment_idx;
+    private Long analyze_idx;
 
     private Long diary_idx;
 
-    private Long member_idx;
+    private String analyze_result;
 
-    private String comment_content;
+    private Integer analyze_score;
 
-    private Integer comment_like_cnt;
-
-    @CreatedDate
-    private LocalDateTime comment_date;
-
-    private String comment_writer;
-
-    private String comment_writeremail;
 }
