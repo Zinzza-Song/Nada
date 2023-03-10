@@ -11,6 +11,6 @@ public class KeywordDTO {
 
     private String keyword_name;
 
-
+    private Long keyword_cnt;
 
 }
