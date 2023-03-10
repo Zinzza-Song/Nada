@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-
+/**
+ * 다이어리 DTO
+ * */
 @Getter
 @Setter
 public class DiaryDTO {

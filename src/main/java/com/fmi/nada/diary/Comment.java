@@ -8,7 +8,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
+/**
+ * 댓글 테이블 엔티티
+ * */
 @Entity
 @Getter
 @Table

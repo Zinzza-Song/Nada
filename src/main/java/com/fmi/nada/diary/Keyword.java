@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/**
+ * 키워드 테이블 엔티티
+ * */
 @Entity
 @Table
 @Getter
