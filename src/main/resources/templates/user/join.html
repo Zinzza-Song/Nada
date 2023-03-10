@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<!-- 반응형 웹 미디어쿼리 선언부   -->
+<head th:insert="~{fragment/topMenu.html::header}">
+
+</head>
+
+
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+<div id="container">
+  <!-- login Box -->
+
+
+  <form th:action="@{/user/join/join_pro}" method="post" th:object="${memberJoinBean}">
+    <div class="login-box" style="width: 500px;">
+      <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="member_name" id="member_name" th:field="*{member_name}" required
+               class="form-control">
+        <p th:if="${#fields.hasErrors('member_name')}" th:errorclass="error" th:errors="*{member_name}" />
+      </div>
+
+      <div class="form-group">
+        <label>NickName</label>
+        <input type="text" name="member_nickname" id="member_nickname" th:field="*{member_nickname}" required
+               class="form-control">
+        <p th:if="${#fields.hasErrors('member_nickname')}" th:errorclass="error" th:errors="*{member_nickname}" />
+      </div>
+
+      <div class="form-group">
+        <label>Birth</label>
+        <input type="text" name="member_birth" id="member_birth" th:field="*{member_birth}"
+               class="form-control">
+        <p th:if="${#fields.hasErrors('member_birth')}" th:errorclass="error" th:errors="*{member_birth}" />
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" name="member_birth" id="member_address" th:field="*{member_address}"
+               class="form-control">
+        <p th:if="${#fields.hasErrors('member_address')}" th:errorclass="error" th:errors="*{member_address}" />
+      </div>
+
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="text" name="username" id="member_email" th:field="*{username}"
+               class="form-control">
+        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+        <div>
+          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
+        </div>
+      </div>
+
+      <div class="form-group email_code-box" style="display:none">
+          <label>E-mail Code</label>
+
+              <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
+          <div>
+              <input type="button" id="btnCertification" value="인증" class="btn btn-light">
+          </div>
+
+      </div> 
+
+      <div class="form-group">
+        <label id="pw_label">PW</label>
+        <input type="password" name="password" id="member_password" th:field="*{password}"
+               class="form-control" autocomplete="off">
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+      </div>
+
+      <div class="form-group">
+        <label>PW Check</label>
+        <input type="password" name="member_password_check" id="member_password_check" class="form-control"
+               onkeypress="checkpassword(event)" autocomplete="off">
+        <label id="passwordCheckLabel"></label>
+      </div>
+
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{member_phone}"
+               value="" autocomplete="off">
+        <p th:if="${#fields.hasErrors('member_phone')}" th:errorclass="error" th:errors="*{member_phone}" />
+      </div>
+
+      <div id="login-btn-box">
+        <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
+      </div>
+
+
+    </div>
+
+    <!-- login Box //-->
+  </form>
+</div>
+<footer th:insert="~{fragment/footer.html::footer}"></footer>
+<script>
+
+  $(function (){
+    $("#send_Mail_Btn").click(function () {
+   	  $("email_code-box").css.display = "inline-block";
+    	    //코드 입력 박스를 보이도록 표시
+      const eamil = $('#member_email').val() // 이메일 주소값 얻어오기!
+      console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
+      const checkInput = $('.member_email_code') // 인증번호 입력하는곳
+      $.ajax({
+        type: 'GET',
+        url: '<c:url value ="${root}/member/mailCheck?email="/>' + eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+        success: function (data) {
+          console.log("data : " + data);
+          checkInput.attr('display', 'inline-block');
+          code = data;
+          swal('인증번호가 전송되었습니다.')
+        }
+      }); // end ajax
+      
+    });// end send eamil
+    
+    // 인증번호 비교
+    // blur -> focus가 벗어나는 경우 발생
+    $('.member_email_code').blur(function () {
+      const inputCode = $(this).val();
+      const $resultMsg = $('#mail-check-warn');
+
+      if (inputCode === code) {
+        $resultMsg.html('인증번호가 일치합니다.');
+        $resultMsg.css('color', 'green');
+        $('#send_Mail_Btn').attr('disabled', true);
+        $('#member_email').attr('readonly', true);
+        $('#member_email').attr('onChange', 'this.selectedIndex = this.initialSelect');
+      } else {
+        $resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+        $resultMsg.css('color', 'red');
+      }
+    });
+  });
+
+
+
+  function checkpassword(event) {
+    var member_password = document.getElementById("member_password").value;
+    //비밀번호의 값
+    var member_password_check = document.getElementById("member_password_check").value;
+    //비밀번호 확인의 값
+
+    if (member_password == member_password_check) {
+
+      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치합니다.";
+      document.getElementById("passwordCheckLabel").style.coler = "green";
+
+    } else {
+
+      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치하지 않습니다.";
+      document.getElementById("passwordCheckLabel").style.coler = " red";
+
+    }
+  }
+
+
+</script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>
