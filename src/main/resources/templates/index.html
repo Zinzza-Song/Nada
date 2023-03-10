@@ -4,10 +4,11 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head>
+<head th:insert="~{fragment/topMenu.html::header}">
 <!-- 반응형 웹 미디어쿼리 선언부   -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--<header th:insert="topMenu.html::header"></header>-->
+<!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+
 </head>
 
 
@@ -18,14 +19,14 @@
 
     <!-- <img src="C:/Users/soldesk/Desktop/mainBack.jpg" class="img-responsive" width="100%" height="450px"> -->
     <!-- <div class="mainBody"> -->
-<!--    <header th:insert="topMenu.html::nav"></header>-->
+    <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <img th:src="@{/images/mainBanner5.jpg}">
     <div class="container text-center" id="main">
         <div class="row">
             <div class="col-md-2" id="today">
                 <div class="col-sm-12" id="todayBlock">
-                    <div class="card homecard">
-                        <div class="card-header todayAdvice">
+                    <div class="card homecard todayAdvice">
+                        <div class="card-header">
                             오늘의 조언
                         </div>
                         <div class="card-body">
@@ -125,20 +126,23 @@
             </div>
         </div>
     </div>
+    <footer th:insert="~{fragment/footer.html::footer}"></footer>
     <!-- </div> -->
-    <footer class="text-center text-white fixed-bottom" style="background-color: rgba(173, 100, 58, 0.2);">
-        <!-- Grid container -->
-        <div class="container p-4"></div>
-        <!-- Grid container -->
+<!--    <div th:fragment="footer">-->
+<!--    <footer class="text-center text-white fixed-bottom" style="background-color: rgba(173, 100, 58, 0.2);">-->
+<!--        &lt;!&ndash; Grid container &ndash;&gt;-->
+<!--        <div class="container p-4"></div>-->
+<!--        &lt;!&ndash; Grid container &ndash;&gt;-->
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(173, 100, 58, 0.2);">
-            © 2020 Copyright:
-            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
-    <!-- End Example Code -->
+<!--        &lt;!&ndash; Copyright &ndash;&gt;-->
+<!--        <div class="text-center p-3" style="background-color: rgba(173, 100, 58, 0.2);">-->
+<!--            © 2020 Copyright:-->
+<!--            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Copyright &ndash;&gt;-->
+<!--    </footer>-->
+<!--    &lt;!&ndash; End Example Code &ndash;&gt;-->
+<!--    </div>-->
 </body>
 
 </html>
