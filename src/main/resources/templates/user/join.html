@@ -51,11 +51,11 @@
             <label>E-mail</label>
             <input type="text" name="member_email" id="member_email" th:field="*{member_email}" class="form-control">
             <div>
-                <input type="button" id="btnCertification" value="전송" onclick="sendEmail()" class="btn btn-light">
+                <input type="button" id="send-Mail-Btn" value="전송" onclick="sendEmail()" class="btn btn-light">
             </div>
         </div>
 
-        <!-- <div class="form-group email_code-box" style="display:none">
+       <div class="form-group email_code-box" style="display:none">
             <label>E-mail Code</label>
             
                 <input type="text" name="member_email_code" id="member_email_code" th:field="*{member_email_code}" class="form-control">
@@ -63,7 +63,7 @@
                 <input type="button" id="btnCertification" value="인증" class="btn btn-light">
             </div>
             
-        </div> -->
+        </div>
         
         <div class="form-group">
             <label id="pw_label">PW</label>
@@ -93,9 +93,9 @@
 	<footer th:insert="~{fragment/footer.html::footer}"></footer>
 	<script>
 	
-    $(function (){
-        $("#mail-Check-Btn").click(function() {
-            const eamil = $('#email').val() // 이메일 주소값 얻어오기!
+    $(function sendEmail(){
+        $("#send-Mail-Btn").click(function() {
+            const eamil = $('#member_email').val() // 이메일 주소값 얻어오기!
             console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
             const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
             $.ajax({
