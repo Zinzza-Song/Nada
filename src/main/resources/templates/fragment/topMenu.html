@@ -22,7 +22,6 @@ function logout(){
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 	<title>NADA 나의 다이어리</title>
-	
 </head>
 <body>
         <!-- Example Code -->
@@ -69,12 +68,13 @@ function logout(){
                             th:href="@{/user/read/{member_idx}}">마이페이지</a>
                         </li>
                         <li class="nav-item col-md-10">
-                            <a class="nav-link" sec:authorize="!isAuthenticated()"
-                                th:href="@{/user/join}">회원가입</a>/
-                             <a class="nav-link" sec:authorize="!isAuthenticated()"
+
+                            <a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
+                                th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
                                 th:href="@{/user/login}" >로그인</a>
                             <span id="nickname" sec:authorize="isAuthenticated()" th:text="${member.member_nickname}">(닉네임)</span>
                             <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
+
                         </li>
                     </ul>
                 </div>
