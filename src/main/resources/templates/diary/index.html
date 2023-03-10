@@ -7,27 +7,22 @@
 <head th:insert="~{fragment/topMenu.html::header}">
 
 </head>
-<body>
-<header th:insert="~{fragment/topMenu.html::nav}"></header>
-<body class="p-3 m-0 border-0 bd-example">
 
-<!-- Example Code -->
+<body class="p-3 m-0 border-0 bd-example">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col">
-        <div class="card h-100">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-
+        <div class="card h-100" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card h-100">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a short card.</p>
@@ -36,8 +31,6 @@
     </div>
     <div class="col">
         <div class="card h-100">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
@@ -46,17 +39,29 @@
     </div>
     <div class="col">
         <div class="card h-100">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             </div>
         </div>
     </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a short card.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a short card.</p>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- End Example Code -->
 
 
 <!--<footer th:insert="footer.html::footer"></footer>-->
