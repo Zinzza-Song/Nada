@@ -29,8 +29,8 @@
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
-                                <p><th:text="${adviceModel.advice_content}"></p>
-                                <footer class="blockquote-footer advice-title"><th:text="${adviceModel.advice_author}"></footer>
+                                <p th:text="${adviceModel.advice_content}">오늘의 조언</p>
+                                <footer class="blockquote-footer advice-title" th:text="${adviceModel.advice_author}">오늘의 조언 주인</footer>
                             </blockquote>
                         </div>
                     </div>
@@ -40,11 +40,11 @@
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0" id="keywordContext">
-                                <p class="list"><th:text="${keywordList.keyword.keyword_name}"></p>
-                                <p class="list"><th:text="${keywordList.keyword.keyword_name}"></p>
-                                <p class="list"><th:text="${keywordList.keyword.keyword_name}"></p>
-                                <p class="list"><th:text="${keywordList.keyword.keyword_name}"></p>
-                                <p class="list"><th:text="${keywordList.keyword.keyword_name}"></p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드1</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드2</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드3</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드4</p>
+                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드5</p>
                             </blockquote>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
             <div class="col-md-5 newestDiv">
                 <div class="card" id="newest">
                     <div class="card-header">
-                        감성일기 최신순(공개)<button type="button" id="plus" class="btn btn-outline-primary">+</button>
+                        감성일기 최신순(공개)<button type="button" id="plus-recent" class="btn btn-outline-primary">+</button>
                         
                     </div>
                     <div class="card-body">
@@ -78,35 +78,11 @@
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr>
-                                    <th scope="row"><th:text="${recentTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${recentTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${recentTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${recentTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${recentTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${recentTop5DiaryList.diary. diary_date}"></td>
+                                <tr th:each="diary : ${recentTop5DiaryList}">
+                                    <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
+                                    <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
+                                    <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
+                                    <td th:text="${diary. diary_date}">최신순 일기 날짜</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,7 +93,7 @@
             <div class="col-md-5 emotionDiv">
                 <div class="card" id="emotion">
                     <div class="card-header">
-                        감성일기 공감순(공개)<button type="button" id="plus" class="btn btn-outline-primary">+</button>
+                        감성일기 공감순(공개)<button type="button" id="plus-sympathy" class="btn btn-outline-primary">+</button>
                     </div>
                     <div class="card-body" id="emotionContext">
                         <!-- <blockquote class="blockquote mb-0">
@@ -136,37 +112,15 @@
                                     <th scope="col">날짜</th>
                                 </tr>
                             </thead>
+
                             <tbody class="table-group-divider">
-                                <tr>
-                                    <th scope="row"><th:text="${mostSympathyTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${mostSympathyTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${mostSympathyTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${mostSympathyTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><th:text="${mostSympathyTop5DiaryList.diary.diary_idx}"></th>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_subject }"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary.diary_writer}"></td>
-                                    <td><th:text="${mostSympathyTop5DiaryList.diary. diary_date}"></td>
-                                </tr>
+                            <tr th:each="diary : ${mostSympathyTop5DiaryList}">
+                                <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
+                                <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
+                                <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
+                                <td th:text="${diary. diary_date}">최신순 일기 날짜</td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </div>

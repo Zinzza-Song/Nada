@@ -5,7 +5,9 @@
 .list {
     margin-bottom: 12px;
 }
-#plus {
+#plus-recent,
+#plus-sympathy
+{
     border-radius: 50px;
     float: right;
 }

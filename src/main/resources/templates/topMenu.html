@@ -29,7 +29,7 @@ function logout(){
         <div th:fragment="nav">
         <nav class="navbar navbar-expand-lg bg-light top-nav">
             <div class="container-fluid top-menu" style="background-color: rgb(216, 174, 132); border-color: chocolate;">
-                <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}" style=width:50px; height:50px></a>
+                <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}" style="width:50px; height:50px;"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ function logout(){
                                 th:href="@{/user/join}">회원가입</a>/
                              <a class="nav-link" sec:authorize="!isAuthenticated()"
                                 th:href="@{/user/login}">로그인</a>
-                            <span id="nickname" sec:authorize="isAuthenticated()">(닉네임)</span>
+                            <span id="nickname" sec:authorize="isAuthenticated()" th:text="${member.member_nickname}">(닉네임)</span>
                             <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
                         </li>
                     </ul>
