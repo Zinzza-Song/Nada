@@ -8,37 +8,29 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class qnaServiceImpl implements qnaService {
+public class QnaService {
 
-    private final qnaRepository qnaRepository;
+    private final QnaRepository qnaRepository;
 
-    @Override
     public void writeQna(Qna qna) {
         qnaRepository.save(qna);
     }
 
-    @Override
     public List<Qna> getList() {
         return qnaRepository.findAll();
     }
 
-    @Override
     public Qna get(Long qna_idx) {
         Optional<Qna> qna = qnaRepository.findById(qna_idx);
         return qna.get();
     }
 
-    @Override
     public void answerQna(Qna qna) {
         qnaRepository.save(qna);
     }
 
-    @Override
     public void deleteQna(Long qna_idx) {
-        qnaRepository.delete(qna_idx);
+        qnaRepository.deleteById(qna_idx);
     }
-
-
-
 
 }
