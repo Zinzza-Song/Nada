@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="form-group email_code_box" style="display:none";>
+      <div class="form-group email_code_box" style="display:none;">
           <label>E-mail Code</label>
 
               <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
@@ -105,9 +105,9 @@
 <script>
 
   $(function (){
-    $("#send_Mail_Btn").click(function () {
-    	const codebox = $(".email_code_box");
-    	if(codebox.css('display')==none){
+    $("#send_Mail_Btn").on('click',function () {
+    	let codebox = $('.email_code_box');
+    	if(codebox.css('display') == 'none'){
     		codebox.css('display','inline-block');
     	}
    	  //	codebox.attr('style','display:block');
