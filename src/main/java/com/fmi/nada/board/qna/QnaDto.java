@@ -15,4 +15,6 @@ public class QnaDto {
     private String qna_subject;
     @NotBlank
     private String qna_answer;
+
+
 }
