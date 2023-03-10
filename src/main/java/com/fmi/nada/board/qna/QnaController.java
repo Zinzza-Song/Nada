@@ -12,9 +12,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board/qna/")
-public class qnaController {
+public class QnaController {
     //서비스 주입
-    private final qnaServiceImpl qnaService;
+    private final QnaService qnaService;
 
     //QNA 메인
     @GetMapping
