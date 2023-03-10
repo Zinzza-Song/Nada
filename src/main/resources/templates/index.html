@@ -39,12 +39,8 @@
                             키워드 추천
                         </div>
                         <div class="card-body">
-                            <blockquote class="blockquote mb-0" id="keywordContext">
-                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드1</p>
-                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드2</p>
-                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드3</p>
-                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드4</p>
-                                <p class="list" th:text="${keywordList.keyword.keyword_name}">키워드5</p>
+                            <blockquote class="blockquote mb-0" id="keywordContext" th:each="keyword : ${keywordList}">
+                                <p class="list" th:text="${keyword.keyword_name}">키워드</p>
                             </blockquote>
                         </div>
                     </div>
@@ -77,8 +73,8 @@
                                     <th scope="col">날짜</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-group-divider">
-                                <tr th:each="diary : ${recentTop5DiaryList}">
+                            <tbody class="table-group-divider" th:each="diary : ${recentTop5DiaryList}">
+                                <tr>
                                     <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
                                     <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
                                     <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
@@ -113,8 +109,8 @@
                                 </tr>
                             </thead>
 
-                            <tbody class="table-group-divider">
-                            <tr th:each="diary : ${mostSympathyTop5DiaryList}">
+                            <tbody class="table-group-divider" th:each="diary : ${mostSympathyTop5DiaryList}">
+                            <tr>
                                 <th scope="row" th:text="${diary.diary_idx}">최신순 일기 번호</th>
                                 <td th:text="${diary.diary_subject }">최신순 일기 제목</td>
                                 <td th:text="${diary.diary_writer}">최신순 일기 작성자</td>
