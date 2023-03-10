@@ -1,0 +1,131 @@
+
+.advice-title {
+    margin-top: 15px;
+}
+.list {
+    margin-bottom: 12px;
+}
+#plus-recent,
+#plus-sympathy
+{
+    border-radius: 50px;
+    float: right;
+}
+
+#keyword {
+    margin-top: 20px;
+}
+
+#newest {
+    height: 470px;
+}
+
+#emotion {
+    height: 470px;
+}
+
+#newestContext p {
+    padding: 10px;
+}
+
+#emotionContext p {
+    padding: 10px;
+}
+
+#diaryWriter {
+    padding-left: 30px;
+}
+
+#newDiaryNum {
+    float: left;
+    padding-right: 30px;
+}
+
+#emoDiaryNum {
+    float: left;
+    padding-right: 30px;
+}
+
+#nickname {
+    margin-right: 20px;
+}
+
+#banner {
+    background-image: url(./images/mainBanner5.jpg);
+}
+
+/* .img{
+width: 100%;
+height: 300px;
+background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
+} */
+.mainBody {
+    background-image: url(/images/mainBack2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#main {
+    margin-top: 20px;
+}
+
+#todayAdvice {
+    background-image: url(./images/list.jpg);
+}
+
+.top-nav {
+    padding: 0;
+}
+.top-menu {
+    height: 100%;
+}
+@media ( min-width : 992px)and (max-width :1300px){
+    #today{
+        width: 210px;
+    }
+    .newestDiv{
+        width: 350px;
+    }
+    .emotionDiv{
+        width: 350px;
+    }
+}
+@media(max-width: 992px){
+    #today{
+        width: 200px;
+        /* display: none; */
+    }
+    .newestDiv{
+        width: 500px;
+    }
+    .emotionDiv{
+        width: 700px;
+    }
+}
+@media(max-width:768px){
+    #today{
+        width: 600px;
+    }
+    .newestDiv{
+        width: 600px;
+    }
+    .emotionDiv{
+        width: 600px;
+    }
+}
+
+/* @media(min-width: 1200px){
+    #today{
+        width: 200px;
+    }
+}  */
+/* @media ( min-width : 992px) {
+    .mainBody{
+        width: 990px;
+    }
+}
+@media ( min-width : 1200px) {
+    .mainBody{
+        width: 100%;
+    }
+} */
