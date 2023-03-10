@@ -36,8 +36,10 @@ public class Member implements UserDetails {
 
     private String member_address;
 
+    @Column(name = "member_email")
     private String username;
 
+    @Column(name = "member_password")
     private String password;
 
     private String member_phone;
