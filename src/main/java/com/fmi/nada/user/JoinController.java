@@ -18,24 +18,25 @@ public class JoinController {
     private final MemberService memberService;
 
     @GetMapping
-    public String join() {
+    public String join(@ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto) {
         return "user/join";
     }
 
     @PostMapping("/join_pro")
     public String join_pro(
-            @Valid @ModelAttribute MemberJoinDto memberJoinDto,
+            @Valid @ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto,
             BindingResult result) {
         if (result.hasErrors())
             return "user/join";
 
-        memberService.join(memberJoinDto.getMember_email(),
-                memberJoinDto.member_password,
-                memberJoinDto.member_name,
-                memberJoinDto.member_nickname,
-                memberJoinDto.member_birth,
-                memberJoinDto.member_address,
-                memberJoinDto.member_phone);
+        memberService.join(
+                memberJoinDto.getUsername(),
+                memberJoinDto.getPassword(),
+                memberJoinDto.getMember_name(),
+                memberJoinDto.getMember_nickname(),
+                memberJoinDto.getMember_birth(),
+                memberJoinDto.getMember_address(),
+                memberJoinDto.getMember_phone());
 
         return "redirect:/";
     }

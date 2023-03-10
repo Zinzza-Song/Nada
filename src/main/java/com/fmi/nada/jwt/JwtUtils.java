@@ -36,6 +36,7 @@ public class JwtUtils {
      * @return jwt token
      */
     public static String createToken(Member member) {
+        System.out.println(member.getUsername());
         Claims claims = Jwts.claims().setSubject(member.getUsername()); // subject
         Date now = new Date(); // 현재 시간
         Pair<String, Key> key = JwtKey.getRandomKey();
