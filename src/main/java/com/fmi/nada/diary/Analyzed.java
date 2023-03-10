@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Analyze {
+public class Analyzed {
 
     @Id
     @GeneratedValue

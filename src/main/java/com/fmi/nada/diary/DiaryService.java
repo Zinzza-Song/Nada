@@ -18,10 +18,27 @@ public class DiaryService {
         return diaryList;
     }
 
-    public void registerDiary(Diary diary) {
-        diaryRepository.save(diary);
+    public void registerDiary(Long member_idx,
+                              String diary_subject,
+                              String diary_writer,
+                              String diary_content,
+                              String diary_keywords,
+                              String diary_analyze,
+                              Boolean diary_publicable,
+                              Boolean diary_analyze_publicable
+    ) {
+        diaryRepository.save(new Diary(
+                member_idx,
+                diary_subject,
+                diary_writer,
+                diary_content,
+                diary_keywords,
+                diary_analyze,
+                diary_publicable,
+                diary_analyze_publicable));
 
     }
+
 
 
 }
