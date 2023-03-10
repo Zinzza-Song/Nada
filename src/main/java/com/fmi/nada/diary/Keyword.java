@@ -5,18 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-<<<<<<< Updated upstream
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 키워드 테이블 엔티티
  * */
-=======
-import javax.persistence.*;
 
->>>>>>> Stashed changes
 @Entity
 @Table
 @Getter
@@ -32,8 +26,5 @@ public class Keyword {
 
     @Column(insertable = false, updatable = false, columnDefinition = "int default 1")
     private Long keyword_cnt;
-    /*public Keyword(String keyword_name) {
-        this.keyword_name = keyword_name;
-    }*/
 
 }
