@@ -50,9 +50,9 @@
     margin-right: 20px;
 }
 
-#banner {
-    background-image: url(./images/mainBanner5.jpg);
-}
+/*#banner {*/
+/*    background-image: url(./images/mainBanner5.jpg);*/
+/*}*/
 
 /* .img{
 width: 100%;
@@ -69,13 +69,26 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 20px;
 }
 
+
 /*#todayAdvice {*/
 /*    background-image: url(./images/list.PNG);*/
 /*}*/
-#todayAdvice {
-    background-image: url(/static/images/list.PNG);
+.homecard, .keywordcard{
+    background-image: url(/images/list.PNG);
+    background-repeat: round;
+    background-size: cover;
 }
-
+.diarycard{
+    background-image: url(/images/diarylist2.jpg);
+    background-repeat: round;
+    background-size: cover;
+}
+.dropdown-menu{
+    --bs-dropdown-link-hover-bg: #e3cab0;
+}
+.dropdown-menu[data-bs-popper]{
+    background: antiquewhite;
+}
 .top-nav {
     padding: 0;
 }
