@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+
+</head>
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<button type="button" style="width: 100px; height: 100px;"><a class="logbtn" th:href="@{/admin/log}">서비스 로그</a></button>
+<button type="button" style="width: 100px; height: 100px;"><a class="logbtn" th:href="@{/admin/comment}">댓글 로그</a></button>
+<button type="button" style="width: 100px; height: 100px;"><a class="logbtn" th:href="@{/admin/diary}">일기 관리</a></button>
+<button type="button" style="width: 100px; height: 100px;"><a class="logbtn" th:href="@{/admin/user}">회원 관리</a></button>
+<button type="button" style="width: 100px; height: 100px;"><a class="logbtn" th:href="@{/admin/report/}">신고 관리</a></button>
+
+
+<footer th:insert="~{fragment/footer.html::footer}"></footer>
+</body>
+</html>

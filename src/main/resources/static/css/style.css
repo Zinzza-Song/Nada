@@ -49,6 +49,11 @@
 #nickname {
     margin-right: 20px;
 }
+.logbtn{
+    text-decoration: none;
+    color: white;
+}
+
 
 /*#banner {*/
 /*    background-image: url(./images/mainBanner5.jpg);*/
