@@ -22,7 +22,7 @@ public class JoinController {
         return "user/join";
     }
 
-    @GetMapping("/mailCheck")
+    @GetMapping("/email_exist_check")
     @ResponseBody
     public String mailCheck(String username) throws Exception {
         boolean findCheck = memberService.CheckByEmail(username);
