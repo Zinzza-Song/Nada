@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="swmDB@swithme.ccewroo8on0a.ap-northeast-2.rds.amazonaws.com" uuid="d51606f9-7b70-42c9-90c4-fc9d864e27ae">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://swithme.ccewroo8on0a.ap-northeast-2.rds.amazonaws.com:3306/swmDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

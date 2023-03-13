@@ -113,13 +113,17 @@
         type: 'GET',
         url: '/user/join/email_exist_check?username=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
         success: function (data) {
-          if(codebox.css('display') === 'none'){
-            //코드 입력 박스를 보이도록 표시
-            codebox.css('display','inline-block');
+          if(data != "false") {
+            if (codebox.css('display') === 'none') {
+              //코드 입력 박스를 보이도록 표시
+              codebox.css('display', 'inline-block');
+            }
+            console.log("data : " + data);
+            code = data;
+            swal('인증번호가 전송되었습니다.');
+          }else {
+            swal('사용할 수 없는 이메일 입니다.');
           }
-          console.log("data : " + data);
-          code = data;
-          swal('인증번호가 전송되었습니다.');
         },error:function (){
           swal('사용할 수 없는 이메일 입니다.');
         }

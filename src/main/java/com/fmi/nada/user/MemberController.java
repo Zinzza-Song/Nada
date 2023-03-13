@@ -25,7 +25,7 @@ public class MemberController {
     public String mailCheck(String username) throws Exception {
         Member member= memberService.findByUsername(username);
         if (member!=null && member.getUsername().equals(username)){
-            return "redirect:user/join";
+            return "false";
         }else {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
