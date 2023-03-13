@@ -2,6 +2,7 @@ package com.fmi.nada.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,20 @@ public class MemberController {
     @GetMapping("/find_password")
     public String findPw(){
         return "user/find_password";
+    }
+
+    @GetMapping("/reset_password")
+    public String resetPassword(@RequestParam("username") String username, Model mo){
+        mo.addAttribute("username",username);
+        return "user/reset_password";
+    }
+
+    @PutMapping("/reset_password")
+    public String resetPassword(@ModelAttribute MemberJoinDto memberJoinDto){
+        Member member = memberService.findByUsername(memberJoinDto.getUsername());
+        member.setPassword(memberJoinDto.getPassword());
+
+        return "redirect:/";
     }
 
 }

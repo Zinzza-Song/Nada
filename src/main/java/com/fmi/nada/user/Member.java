@@ -3,6 +3,7 @@ package com.fmi.nada.user;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,6 +22,7 @@ import java.util.Collections;
 @Entity
 @Table
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @DynamicInsert
@@ -87,6 +89,7 @@ public class Member implements UserDetails {
         this.memberPhone = memberPhone;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton((GrantedAuthority) () -> authority);
@@ -115,5 +118,6 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
 }
