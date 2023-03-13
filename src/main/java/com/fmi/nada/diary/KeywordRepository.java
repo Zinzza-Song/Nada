@@ -9,8 +9,8 @@ import java.util.List;
  * */
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    public Keyword findByKeywordName(String keywordName);
+    Keyword findByKeywordName(String keywordName);
 
-    public List<Keyword> findTop5ByOrderByKeywordCntDesc();
+    List<Keyword> findTop5ByOrderByKeywordCntDesc();
 
 }
