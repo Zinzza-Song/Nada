@@ -3,15 +3,18 @@ package com.fmi.nada.diary;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+/**
+ * 키워드 테이블 엔티티
+ * */
 
 @Entity
 @Table
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Keyword {
 
@@ -21,8 +24,7 @@ public class Keyword {
 
     private String keyword_name;
 
-    public Keyword(String keyword_name) {
-        this.keyword_name = keyword_name;
-    }
+    @Column(insertable = false, updatable = false, columnDefinition = "int default 1")
+    private Long keyword_cnt;
 
 }
