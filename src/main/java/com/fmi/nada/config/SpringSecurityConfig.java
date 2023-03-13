@@ -2,6 +2,7 @@ package com.fmi.nada.config;
 
 import com.fmi.nada.jwt.JwtAuthenticationFilter;
 import com.fmi.nada.jwt.JwtAuthorizationFilter;
+import com.fmi.nada.jwt.JwtProperties;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberRepository;
 import com.fmi.nada.user.MemberService;
@@ -64,10 +65,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-                .deleteCookies();
+                .deleteCookies(JwtProperties.COOKIE_NAME);
     }
 
     @Override
