@@ -39,6 +39,9 @@ public class DiaryService {
 
     }
 
+    public Diary findByDiary_subject(String subject) {
+        return diaryRepository.findByDiary_subject(subject);
+    }
 
 
 }

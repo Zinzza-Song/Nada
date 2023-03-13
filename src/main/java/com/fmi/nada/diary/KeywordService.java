@@ -11,6 +11,10 @@ public class KeywordService {
 
     private final KeywordRepository keywordRepository;
 
+    public Keyword findByKeyword_name(String keyword_name) {
+        return keywordRepository.findByKeyword_name(keyword_name);
+    }
+
     public void register(Keyword keyword){
         keywordRepository.save(keyword);
     }
