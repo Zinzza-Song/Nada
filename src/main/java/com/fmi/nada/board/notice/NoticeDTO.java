@@ -13,10 +13,10 @@ import javax.validation.constraints.NotBlank;
 public class NoticeDTO {
 
     @NotBlank
-    private String notice_subject;
+    private String noticeSubject;
 
     @NotBlank
-    private String notice_content;
+    private String noticeContent;
 
-    private String notice_file;
+    private String noticeFile;
 }

@@ -22,51 +22,63 @@ import java.time.LocalDateTime;
 public class Diary {
 
     @Id
-    @GeneratedValue
-    private Long diary_idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
 
-    private Long member_idx;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
-    private String diary_subject;
+    @Column(name = "diary_subject")
+    private String diarySubject;
 
-    private String diary_writer;
+    @Column(name = "diary_writer")
+    private String diaryWriter;
 
-    private String diary_content;
+    @Column(name = "diary_content")
+    private String diaryContent;
 
     @CreatedDate
-    private LocalDateTime diary_date;
+    @Column(name = "diary_date")
+    private LocalDateTime diaryDate;
 
-    private String diary_keywords;
+    @Column(name = "diary_keywords")
+    private String diaryKeywords;
 
-    private String diary_analyze;
+    @Column(name = "diary_analyze")
+    private String diaryAnalyze;
 
-    private Boolean diary_publicable;
+    @Column(name = "diary_publicable")
+    private Boolean diaryPublicable;
 
-    private Boolean diary_analyze_publicable;
+    @Column(name = "diary_analyze_publicable")
+    private Boolean diaryAnalyzePublicable;
 
     @ColumnDefault("0")
-    private Long diary_cnt;
+    @Column(name = "diary_cnt")
+    private Long diaryCnt;
 
     @ColumnDefault("0")
-    private Long diary_sympathy_cnt;
+    @Column(name = "diary_sympathy_cnt")
+    private Long diarySympathyCnt;
 
-    public Diary(Long member_idx,
-                 String diary_subject,
-                 String diary_writer,
-                 String diary_content,
-                 String diary_keywords,
-                 String diary_analyze,
-                 Boolean diary_publicable,
-                 Boolean diary_analyze_publicable
+    public Diary(Long memberIdx,
+                 String diarySubject,
+                 String diaryWriter,
+                 String diaryContent,
+                 String diaryKeywords,
+                 String diaryAnalyze,
+                 Boolean diaryPublicable,
+                 Boolean diaryAnalyzePublicable
                  ) {
-        this.member_idx = member_idx;
-        this.diary_subject = diary_subject;
-        this.diary_writer = diary_writer;
-        this.diary_content = diary_content;
-        this.diary_keywords = diary_keywords;
-        this.diary_analyze = diary_analyze;
-        this.diary_publicable = diary_publicable;
-        this.diary_analyze_publicable = diary_analyze_publicable;
+        this.memberIdx = memberIdx;
+        this.diarySubject = diarySubject;
+        this.diaryWriter = diaryWriter;
+        this.diaryContent = diaryContent;
+        this.diaryKeywords = diaryKeywords;
+        this.diaryAnalyze = diaryAnalyze;
+        this.diaryPublicable = diaryPublicable;
+        this.diaryAnalyzePublicable = diaryAnalyzePublicable;
     }
 
 }

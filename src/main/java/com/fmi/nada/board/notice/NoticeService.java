@@ -26,14 +26,14 @@ public class NoticeService {
     }
 
     //공지사항 글 상세 페이지에서 보여지는 공지사항 글
-    public Notice getNotice(Long notice_idx) {
-        Optional<Notice> noticeOptional = noticeRepository.findById(notice_idx);
+    public Notice getNotice(Long noticeIdx) {
+        Optional<Notice> noticeOptional = noticeRepository.findById(noticeIdx);
         return noticeOptional.get();
     }
 
     //공지사항 삭제
-    public void deleteNotice(Long notice_idx) {
-        noticeRepository.deleteById(notice_idx);
+    public void deleteNotice(Long noticeIdx) {
+        noticeRepository.deleteById(noticeIdx);
         
     }
 

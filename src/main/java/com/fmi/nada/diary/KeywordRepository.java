@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * */
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    public Keyword findByKeyword_name(String keyword_name);
+    public Keyword findByKeywordName(String keywordName);
 
 }
