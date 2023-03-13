@@ -68,7 +68,7 @@ public class DiaryController {
         String keywordArr[] = diaryDTO.getDiaryKeywords().split(",");
         for (int i = 0; i < keywordArr.length; i++) {
             if (keywordArr[i] != null) {
-                Keyword keyword = keywordService.findByKeyword_name(keywordArr[i]);
+                Keyword keyword = keywordService.findByKeywordName(keywordArr[i]);
 
                 if (keyword != null) {
                     keyword.setKeywordCnt(keyword.getKeywordCnt() + 1);
