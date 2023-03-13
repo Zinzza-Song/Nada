@@ -15,8 +15,8 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public List<Comment> getCommentListByDiaryIndex(Long diaryIndex) {
-        List<Comment> commentList = commentRepository.getCommentListByDiaryIdx(diaryIndex);
+    public List<Comment> findAllByDiaryIdxOrderByCommentDateDesc(Long diaryIndex) {
+        List<Comment> commentList = commentRepository.findAllByDiaryIdxOrderByCommentDateDesc(diaryIndex);
         return commentList;
     }
 }

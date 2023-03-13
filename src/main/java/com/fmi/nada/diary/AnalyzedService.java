@@ -23,7 +23,7 @@ public class AnalyzedService {
 
 
     public Analyzed getAnalyzed(Long boardIndex) {
-        return analyzedRepository.getAnalyzedByBoardIdx(boardIndex);
+        return analyzedRepository.findByBoardIdx(boardIndex);
     }
 
 }

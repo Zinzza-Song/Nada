@@ -11,7 +11,7 @@ public class KeywordService {
 
     private final KeywordRepository keywordRepository;
 
-    public Keyword findByKeyword_name(String keywordName) {
+    public Keyword findByKeywordName(String keywordName) {
         return keywordRepository.findByKeywordName(keywordName);
     }
 

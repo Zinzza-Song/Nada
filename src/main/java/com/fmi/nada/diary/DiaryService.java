@@ -16,7 +16,7 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
     public List<Diary> getDiaryList() {
-        List<Diary> diaryList = diaryRepository.findAll();
+        List<Diary> diaryList = diaryRepository.findAllByOrderByDiaryDateDesc();
         return diaryList;
     }
 
@@ -49,4 +49,7 @@ public class DiaryService {
         return diaryRepository.getById(diaryIndex);
     }
 
+    public void deleteDiary(Long diaryIdx){
+        diaryRepository.deleteById(diaryIdx);
+    }
 }
