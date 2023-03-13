@@ -60,22 +60,22 @@
 
       <div class="form-group">
         <label>Address</label>
-        <input type="text" name="member_birth" id="member_address" th:field="*{member_address}"
+        <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}"
                class="form-control" th:attr="Enabled">
-        <p th:if="${#fields.hasErrors('member_address')}" th:errorclass="error" th:errors="*{member_address}" />
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}" />
       </div>
 
       <div class="form-group">
         <label>Phone</label>
-        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{member_phone}"
+        <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
                value="" autocomplete="off" th:attr="Enabled">
-        <p th:if="${#fields.hasErrors('member_phone')}" th:errorclass="error" th:errors="*{member_phone}" />
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
       </div>
 
     </div>
 
     <div id="login-btn-box">
-      <input type="button" id="btnSecession" value="회원 탈퇴" class="btn-dark btn">
+      <input type="button" id="btnSecession" onclick="deleteMember()" value="회원 탈퇴" class="btn-dark btn">
       <input type="submit" id="btnModify" value="수정" class="btn btn-light">
       <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
     </div>
@@ -84,6 +84,11 @@
   </div>
 </div>
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
+<script>
+  function deleteMember(){
 
+  }
+
+</script>
 </body>
 </html>
