@@ -107,7 +107,7 @@
   $(function (){
     $("#send_Mail_Btn").on('click',function () {
     	let codebox = $('.email_code_box');
-    	if(codebox.css('display') == 'none'){
+    	if(codebox.css('display') === 'none'){
     		codebox.css('display','inline-block');
     	}
    	  //	codebox.attr('style','display:block');
@@ -155,7 +155,7 @@
     var member_password_check = document.getElementById("member_password_check").value;
     //비밀번호 확인의 값
 
-    if (member_password == member_password_check) {
+    if (member_password === member_password_check) {
 
       document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치합니다.";
       document.getElementById("passwordCheckLabel").style.coler = "green";

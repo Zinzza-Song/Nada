@@ -37,4 +37,20 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
+    public Member findByEmail(String username) {
+        return memberRepository.findByUsername(username);
+
+    }
+    public boolean CheckByEmail(String username) {
+
+        Member member = memberRepository.findByUsername(username);
+        if(username!=null && member.getUsername().equals(username)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
 }
