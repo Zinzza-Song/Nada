@@ -3,23 +3,34 @@ package com.fmi.nada.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user/join")
-public class JoinController {
+public class MemberController {
 
     private final MemberService memberService;
+    private final MailAuthService mailAuthService;
 
     @GetMapping
     public String join(@ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto) {
         return "user/join";
+    }
+
+    @GetMapping("/email_exist_check")
+    @ResponseBody
+    public String mailCheck(String username) throws Exception {
+        Member member= memberService.findByUsername(username);
+        if (member!=null && member.getUsername().equals(username)){
+            return "redirect:user/join";
+        }else {
+            System.out.println("이메일 인증 요청이 들어옴!");
+            System.out.println("이메일 인증 이메일 : " + username);
+            return mailAuthService.sendSimpleMessage(username);
+        }
     }
 
     @PostMapping("/join_pro")
