@@ -45,17 +45,18 @@ public class DiaryService {
         return diaryRepository.findByDiarySubject(diarySubject);
     }
 
-<<<<<<< HEAD
+
     public List<Diary> findTop5ByOrderByDiaryDateDesc() {
         return diaryRepository.findTop5ByOrderByDiaryDateDesc();
     }
 
     public List<Diary> findTop5ByOrderByDiarySympathyCntDesc() {
         return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
-=======
+    }
+
     public Diary getDiaryDetail(Long diaryIndex) {
         return diaryRepository.getById(diaryIndex);
->>>>>>> kky-230313
+
     }
 
     public void deleteDiary(Long diaryIdx){

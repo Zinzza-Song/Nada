@@ -29,8 +29,8 @@ public class DiaryController {
     //좋아요를 위한 Like 가져와야 함.
 
     //다이어리 게시판 페이지
-    @GetMapping("/")
-    public String DiaryMain(@RequestParam("page") Integer page,
+    @GetMapping
+    public String DiaryMain(@RequestParam(value = "pageCnt", defaultValue = "1") Integer page,
                             Model model) {
         List<Diary> diaryList = diaryService.getDiaryList();
         model.addAttribute("allDiaryList", diaryList);
