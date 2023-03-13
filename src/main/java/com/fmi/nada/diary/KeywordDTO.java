@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class KeywordDTO {
 
-    private String keyword_name;
+    private String keywordName;
 
 
 

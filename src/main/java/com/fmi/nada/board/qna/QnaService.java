@@ -20,8 +20,8 @@ public class QnaService {
         return qnaRepository.findAll();
     }
 
-    public Qna get(Long qna_idx) {
-        Optional<Qna> qna = qnaRepository.findById(qna_idx);
+    public Qna get(Long qnaIdx) {
+        Optional<Qna> qna = qnaRepository.findById(qnaIdx);
         return qna.get();
     }
 
@@ -29,8 +29,8 @@ public class QnaService {
         qnaRepository.save(qna);
     }
 
-    public void deleteQna(Long qna_idx) {
-        qnaRepository.deleteById(qna_idx);
+    public void deleteQna(Long qnaIdx) {
+        qnaRepository.deleteById(qnaIdx);
     }
 
 }

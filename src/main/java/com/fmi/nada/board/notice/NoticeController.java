@@ -61,9 +61,9 @@ public class NoticeController {
             return "board/notice/write";
 
         Notice notice = new Notice();
-        notice.setNotice_subject(noticeDTO.getNotice_subject());
-        notice.setNotice_content(noticeDTO.getNotice_content());
-        notice.setNotice_file(noticeDTO.getNotice_file());
+        notice.setNoticeSubject(noticeDTO.getNoticeSubject());
+        notice.setNoticeContent(noticeDTO.getNoticeContent());
+        notice.setNoticeFile(noticeDTO.getNoticeFile());
         noticeService.registerNotice(notice);
         return "redirect:list";
     }
@@ -85,8 +85,8 @@ public class NoticeController {
             return "board/notice/modify";
 
         Notice notice = noticeService.getNotice(notice_idx);
-        notice.setNotice_subject(noticeDTO.getNotice_subject());
-        notice.setNotice_content(noticeDTO.getNotice_content());
+        notice.setNoticeSubject(noticeDTO.getNoticeSubject());
+        notice.setNoticeContent(noticeDTO.getNoticeContent());
         noticeService.updateNotice(notice);
         return "redirect:read";
     }
@@ -110,10 +110,10 @@ public class NoticeController {
                 // cookie 변수에 저장
                 cookie = cookies[i];
                 // 만약 cookie 값에 현재 게시글 번호가 없을 때
-                if (!cookie.getValue().contains("[" + notice.getNotice_idx() + "]")) {
+                if (!cookie.getValue().contains("[" + notice.getNoticeIdx() + "]")) {
                     // 해당 게시글 조회수를 증가시키고, 쿠키 값에 해당 게시글 번호를 추가
                     notice.addViewCount();
-                    cookie.setValue(cookie.getValue() + "[" + notice.getNotice_idx() + "]");
+                    cookie.setValue(cookie.getValue() + "[" + notice.getNoticeIdx() + "]");
                 }
                 isCookie = true;
                 break;
@@ -122,7 +122,7 @@ public class NoticeController {
         // 만약 noticeView라는 쿠키가 없으면 처음 접속한 것이므로 새로 생성
         if (!isCookie) {
             notice.addViewCount();
-            cookie = new Cookie("noticeView", "[" + notice.getNotice_idx() + "]"); // oldCookie에 새 쿠키 생성
+            cookie = new Cookie("noticeView", "[" + notice.getNoticeIdx() + "]"); // oldCookie에 새 쿠키 생성
         }
 
         // 쿠키 유지시간을 오늘 하루 자정까지로 설정

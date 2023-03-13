@@ -35,8 +35,8 @@ public class QnaController {
     public String qnaWrite(@Valid @ModelAttribute("writeQnaBean") QnaDto qnaDto){
 //        user 어쩌고 시큐리티 어쩌고 할곳
         Qna qna = new Qna();
-        qna.setQna_subject(qnaDto.getQna_subject());
-        qna.setQna_content(qnaDto.getQna_content());
+        qna.setQnaSubject(qnaDto.getQnaSubject());
+        qna.setQnaContent(qnaDto.getQnaContent());
         qnaService.writeQna(qna);
         return "redirect:read";
     }
@@ -58,8 +58,8 @@ public class QnaController {
     @PutMapping("/answer")
     public void answerQna(@ModelAttribute QnaDto qnaDto, @RequestParam("qna_idx") Long qna_idx){
         Qna qna = qnaService.get(qna_idx);
-        qna.setQna_answer(qnaDto.getQna_answer());
-        qna.setQna_isanswered(true);
+        qna.setQnaAnswer(qnaDto.getQnaAnswer());
+        qna.setQnaIsanswered(true);
         qnaService.answerQna(qna);
     }
 

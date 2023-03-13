@@ -19,14 +19,19 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class Friends {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long friends_idx;
+    @Column(name = "friends_idx")
+    private Long friendsIdx;
 
-    private Long member_idx;
-    private String friends_nickname;
+    @Column(name = "member_idx")
+    private Long memberIdx;
+
+    @Column(name = "friends_nickname")
+    private String friendsNickname;
 
     @CreatedDate
-    private LocalDateTime friends_date;
+    @Column(name = "friends_date")
+    private LocalDateTime friendsDate;
 
 }

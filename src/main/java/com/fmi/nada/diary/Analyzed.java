@@ -17,13 +17,17 @@ import javax.persistence.*;
 public class Analyzed {
 
     @Id
-    @GeneratedValue
-    private Long analyze_idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "analyze_idx")
+    private Long analyzeIdx;
 
-    private Long diary_idx;
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
 
-    private String analyze_result;
+    @Column(name = "analyze_result")
+    private String analyzeResult;
 
-    private Integer analyze_score;
+    @Column(name = "analyze_score")
+    private Integer analyzeScore;
 
 }

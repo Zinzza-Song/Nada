@@ -22,22 +22,28 @@ import java.time.LocalDateTime;
 public class Notice {
 
     @Id
-    @GeneratedValue
-    private Long notice_idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notice_idx")
+    private Long noticeIdx;
 
-    private String notice_subject;
+    @Column(name = "notice_subject")
+    private String noticeSubject;
 
     @CreatedDate
-    private LocalDateTime notice_date;
+    @Column(name = "notice_date")
+    private LocalDateTime noticeDate;
 
-    private String notice_content;
+    @Column(name = "notice_content")
+    private String noticeContent;
 
-    private String notice_file;
+    @Column(name = "notice_file")
+    private String noticeFile;
 
-    private Long notice_views;
+    @Column(name = "notice_views")
+    private Long noticeViews;
 
     public void addViewCount() {
-        this.notice_views++;
+        this.noticeViews++;
     }
 
 }
