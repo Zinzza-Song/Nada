@@ -6,13 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user/join")
-public class JoinController {
+public class MemberController {
 
     private final MemberService memberService;
     private final MailAuthService mailAuthService;
@@ -25,10 +23,9 @@ public class JoinController {
     @GetMapping("/email_exist_check")
     @ResponseBody
     public String mailCheck(String username) throws Exception {
-        boolean findCheck = memberService.CheckByEmail(username);
-        if (findCheck == true){
-            String msg = "사용할 수 없는 이메일입니다.";
-            return msg;
+        Member member= memberService.findByUsername(username);
+        if (member!=null && member.getUsername().equals(username)){
+            return "redirect:user/join";
         }else {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
