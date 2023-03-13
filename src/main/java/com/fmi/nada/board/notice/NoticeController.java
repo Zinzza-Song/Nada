@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -14,7 +15,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-
+/**
+ * 공지사항 컨트롤러
+ * */
 @Controller
 @RequestMapping("/board/notice")
 @RequiredArgsConstructor
@@ -52,7 +55,11 @@ public class NoticeController {
     // 공지사항 작성 서비스 로직 실행
     @PostMapping("/write_pro")
     public String writeNotice_pro(@Valid @ModelAttribute("addNoticeBean") NoticeDTO noticeDTO,
+                                  BindingResult bindingResult,
                                   Model model) {
+        if(bindingResult.hasErrors())
+            return "board/notice/write";
+
         Notice notice = new Notice();
         notice.setNotice_subject(noticeDTO.getNotice_subject());
         notice.setNotice_content(noticeDTO.getNotice_content());
@@ -72,7 +79,11 @@ public class NoticeController {
     // 공지사항 수정 서비스 로직 수행
     @PutMapping("/modify_pro")
     public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") NoticeDTO noticeDTO,
+                                   BindingResult bindingResult,
                                    @RequestParam("notice_idx") Long notice_idx) {
+        if(bindingResult.hasErrors())
+            return "board/notice/modify";
+
         Notice notice = noticeService.getNotice(notice_idx);
         notice.setNotice_subject(noticeDTO.getNotice_subject());
         notice.setNotice_content(noticeDTO.getNotice_content());
