@@ -31,6 +31,8 @@ public class DiaryController {
         return "diary/index";
     }
 
+
+
     @GetMapping("write")
     public String DiaryWrite(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
@@ -51,34 +53,34 @@ public class DiaryController {
         Member member = (Member) authentication.getPrincipal();
 
         diaryService.registerDiary(
-                member.getMember_idx(),
-                diaryDTO.getDiary_subject(),
-                diaryDTO.getDiary_writer(),
-                diaryDTO.getDiary_content(),
-                diaryDTO.getDiary_keywords(),
-                diaryDTO.getDiary_analyze(),
-                diaryDTO.getDiary_publicable(),
-                diaryDTO.getDiary_analyze_publicable()
+                member.getMemberIdx(),
+                diaryDTO.getDiarySubject(),
+                diaryDTO.getDiaryWriter(),
+                diaryDTO.getDiaryContent(),
+                diaryDTO.getDiaryKeywords(),
+                diaryDTO.getDiaryAnalyze(),
+                diaryDTO.getDiaryPublicable(),
+                diaryDTO.getDiaryAnalyzePublicable()
         );
 
-        Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiary_subject());
+        Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
 
-        String keywordArr[] = diaryDTO.getDiary_keywords().split(",");
+        String keywordArr[] = diaryDTO.getDiaryKeywords().split(",");
         for (int i = 0; i < keywordArr.length; i++) {
             if (keywordArr[i] != null) {
                 Keyword keyword = keywordService.findByKeyword_name(keywordArr[i]);
 
                 if (keyword != null) {
-                    keyword.setKeyword_cnt(keyword.getKeyword_cnt() + 1);
+                    keyword.setKeywordCnt(keyword.getKeywordCnt() + 1);
                     keywordService.register(keyword);
                 } else {
-                    keyword.setKeyword_name(keywordArr[i]);
+                    keyword.setKeywordName(keywordArr[i]);
                     keywordService.register(keyword);
                 }
             }
         }
 
-        return "redirect:/read/" + diary.getDiary_idx();
+        return "redirect:/read/" + diary.getDiaryIdx();
     }
 
 
