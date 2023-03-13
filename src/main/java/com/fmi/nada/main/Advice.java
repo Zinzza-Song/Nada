@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 오늘의 조언 엔티티
@@ -18,11 +15,15 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Advice {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long advice_idx;
+    @Column(name = "advice_idx")
+    private Long adviceIdx;
 
-    private String advice_content;
-    private String advice_author;
+    @Column(name = "advice_content")
+    private String adviceContent;
+
+    @Column(name = "advice_author")
+    private String adviceAuthor;
 
 }

@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 좋아요 목록 엔티티
@@ -18,11 +15,15 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Likes {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long like_idx;
+    @Column(name = "like_idx")
+    private Long likeIdx;
 
-    private Long member_idx;
-    private Long diary_idx;
+    @Column(name = "member_idx")
+    private Long memberIdx;
+
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
 
 }

@@ -15,22 +15,22 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     public Member join(
-            String member_email,
-            String member_password,
-            String member_name,
-            String member_nickname,
-            String member_birth,
-            String member_address,
-            String member_phone
+            String username,
+            String password,
+            String memberName,
+            String memberNickname,
+            String memberBirth,
+            String memberAddress,
+            String memberPhone
     ) {
-        return memberRepository.save(new Member(member_email,
-                passwordEncoder.encode(member_password),
+        return memberRepository.save(new Member(username,
+                passwordEncoder.encode(password),
                 "ROLE_USER",
-                member_name,
-                member_nickname,
-                member_birth,
-                member_address,
-                member_phone));
+                memberName,
+                memberNickname,
+                memberBirth,
+                memberAddress,
+                memberPhone));
     }
 
     public Member findByUsername(String username) {

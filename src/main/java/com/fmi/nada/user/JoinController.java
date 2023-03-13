@@ -46,11 +46,11 @@ public class JoinController {
         memberService.join(
                 memberJoinDto.getUsername(),
                 memberJoinDto.getPassword(),
-                memberJoinDto.getMember_name(),
-                memberJoinDto.getMember_nickname(),
-                memberJoinDto.getMember_birth(),
-                memberJoinDto.getMember_address(),
-                memberJoinDto.getMember_phone());
+                memberJoinDto.getMemberName(),
+                memberJoinDto.getMemberNickname(),
+                memberJoinDto.getMemberBirth(),
+                memberJoinDto.getMemberAddress(),
+                memberJoinDto.getMemberPhone());
 
         return "redirect:/";
     }
