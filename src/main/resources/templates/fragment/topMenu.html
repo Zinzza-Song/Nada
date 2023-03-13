@@ -46,9 +46,7 @@ function logout(){
                                 <li><a class="dropdown-item"
                                  th:href="@{/diary/write/{memberIdx}}">일기 작성</a></li>
                                 <li><a class="dropdown-item"
-                                th:href="@{/diary/}">일기 게시판</a></li>
-                                <li><a class="dropdown-item"
-                                       th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
+                                th:href="@{/diary?pageCnt=1}">일기 게시판</a></li>
                             </ul>
                         </li>
     
@@ -59,11 +57,11 @@ function logout(){
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item"
-                                th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
+                                th:href="@{/board/notice?pageCnt=1}">공지사항</a></li>
                                 <li><a class="dropdown-item"
-                                th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
+                                th:href="@{/board/QNA?pageCnt=1}">Q&A</a></li>
                                 <li><a class="dropdown-item"
-                                th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
+                                th:href="@{/board/report?pageCnt=1}">신고 게시판</a></li>
                             </ul>
                         </li>
                         <li class="nav-item col-md-7">
