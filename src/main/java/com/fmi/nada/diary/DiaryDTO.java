@@ -14,22 +14,22 @@ import javax.validation.constraints.NotNull;
 public class DiaryDTO {
 
     @NotBlank(message = "제목을 반드시 입력해 주세요")
-    private String diary_subject;
+    private String diarySubject;
 
-    private String diary_writer;
+    private String diaryWriter;
 
     @NotBlank(message = "일기 내용을 반드시 작성해 주세요")
-    private String diary_content;
+    private String diaryContent;
 
     @NotBlank(message = "1개 이상은 무조건 들어가야합니다.")
-    private String diary_keywords;
+    private String diaryKeywords;
 
-    private Boolean diary_publicable;
+    private Boolean diaryPublicable;
 
     @NotBlank
-    private String diary_analyze;
+    private String diaryAnalyze;
 
-    private Boolean diary_analyze_publicable;
+    private Boolean diaryAnalyzePublicable;
 
 
 }
