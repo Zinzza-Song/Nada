@@ -80,7 +80,7 @@
       <div class="form-group">
         <label>PW Check</label>
         <input type="password" name="member_password_check" id="member_password_check" class="form-control"
-               onkeypress="checkpassword(event)" autocomplete="off">
+               autocomplete="off">
         <label id="passwordCheckLabel"></label>
       </div>
 
@@ -91,7 +91,7 @@
         <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
       </div>
 
-      <div id="login-btn-box">
+      <div id="login-btn-box" >
         <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
       </div>
 
@@ -143,24 +143,42 @@
 
 
 
-  function checkpassword(event) {
-    var member_password = document.getElementById("password").value;
+  $('#member_password_check').blur(function () {
+    const member_password = $("#password").val();
     //비밀번호의 값
-    var member_password_check = document.getElementById("member_password_check").value;
+    const member_password_check = $("#member_password_check").val();
     //비밀번호 확인의 값
-
+    console.log(member_password);
+    console.log(member_password_check);
     if (member_password === member_password_check) {
 
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치합니다.";
-      document.getElementById("passwordCheckLabel").style.coler = "green";
+      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+      $("#passwordCheckLabel").css("color","green");
 
     } else {
 
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치하지 않습니다.";
-      document.getElementById("passwordCheckLabel").style.coler = " red";
-
+      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+      $("#passwordCheckLabel").css("color","red");
     }
-  }
+  });
+  $('#password').blur(function () {
+    const member_password = $("#password").val();
+    //비밀번호의 값
+    const member_password_check = $("#member_password_check").val();
+    //비밀번호 확인의 값
+    console.log(member_password);
+    console.log(member_password_check);
+    if (member_password === member_password_check) {
+
+      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+      $("#passwordCheckLabel").css("color","green");
+
+    } else {
+
+      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+      $("#passwordCheckLabel").css("color","red");
+    }
+  });
 
 
 </script>
