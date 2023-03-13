@@ -15,14 +15,14 @@
 <div id="container">
   <!-- login Box -->
 
-
-  <form th:action="@{/user/join/join_pro}" method="post" th:object="${memberJoinBean}">
+  <div class="memberInfoBackground">
+  <form th:action="@{/user/join/join_pro}" method="get" th:object="${memberInfoBean}">
     <div class="login-box" style="width: 500px;">
-      <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
+      <div class="loginBoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
       <div class="form-group">
         <label>Name</label>
         <input type="text" name="member_name" id="member_name" th:field="*{member_name}" required
-               class="form-control">
+               class="form-control" readonly>
         <p th:if="${#fields.hasErrors('member_name')}" th:errorclass="error" th:errors="*{member_name}" />
       </div>
 
@@ -58,17 +58,17 @@
       </div>
 
       <div class="form-group email_code_box" style="display:none;">
-          <label>E-mail Code</label>
+        <label>E-mail Code</label>
 
-              <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
-              <span id="mail-check-warn"></span>
+        <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
+        <span id="mail-check-warn"></span>
 
-          <div>
-              <input type="button" id="btnCertification" value="인증" class="btn btn-light">
-              
-          </div>
+        <div>
+          <input type="button" id="btnCertification" value="인증" class="btn btn-light">
 
-      </div> 
+        </div>
+
+      </div>
 
       <div class="form-group">
         <label id="pw_label">PW</label>
@@ -92,7 +92,8 @@
       </div>
 
       <div id="login-btn-box">
-        <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
+        <input type="submit" id="btnModify" value="수정" class="btn btn-light">
+        <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
       </div>
 
 
@@ -100,86 +101,9 @@
 
     <!-- login Box //-->
   </form>
+  </div>
 </div>
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
-<script>
-
-  $(function (){
-    $("#send_Mail_Btn").on('click',function () {
-    	let codebox = $('.email_code_box');
-
-    	if(codebox.css('display') == 'none'){
-    		codebox.css('display','inline-block');
-    	}
-   	  //	codebox.attr('style','display:block');
-    	    //코드 입력 박스를 보이도록 표시
-      const email = $('#member_email').val() // 이메일 주소값 얻어오기!
-
-      if(email!=){
-        alert('email 사용이 가능합니다.')
-      }
-      else{
-        alert('email  중복 됩니다.')
-      }
-
-      console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
-      const checkInput = $('.member_email_code') // 인증번호 입력하는곳
-      $.ajax({
-        type: 'GET',
-        url: '/user/email_exist_check/' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-        success: function (data) {
-          console.log("data : " + data);
-          //checkInput.attr('style', 'display:flex');
-          code = data;
-          swal('인증번호가 전송되었습니다.')
-        }
-      }); // end ajax
-      
-    });// end send eamil
-    
-    // 인증번호 비교
-    // blur -> focus가 벗어나는 경우 발생
-    $('.member_email_code').blur(function () {
-      const inputCode = $(this).val();
-      const $resultMsg = $('#mail-check-warn');
-
-      if (inputCode === code) {
-        $resultMsg.html('인증번호가 일치합니다.');
-        $resultMsg.css('color', 'green');
-        $('#send_Mail_Btn').attr('disabled', true);
-        $('#member_email').attr('readonly', true);
-        $('#member_email').attr('onChange', 'this.selectedIndex = this.initialSelect');
-      } else {
-        $resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
-        $resultMsg.css('color', 'red');
-      }
-    });
-  });
-
-
-
-  function checkpassword(event) {
-    var member_password = document.getElementById("member_password").value;
-    //비밀번호의 값
-    var member_password_check = document.getElementById("member_password_check").value;
-    //비밀번호 확인의 값
-
-    if (member_password == member_password_check) {
-
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치합니다.";
-      document.getElementById("passwordCheckLabel").style.coler = "green";
-
-    } else {
-
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치하지 않습니다.";
-      document.getElementById("passwordCheckLabel").style.coler = " red";
-
-    }
-  }
-
-
-</script>
-<!-- Bootstrap Bundle with Popper -->
 
 </body>
 </html>
