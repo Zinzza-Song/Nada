@@ -21,30 +21,30 @@
       <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
       <div class="form-group">
         <label>Name</label>
-        <input type="text" name="member_name" id="member_name" th:field="*{member_name}" required
+        <input type="text" name="member_name" id="member_name" th:field="*{memberName}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('member_name')}" th:errorclass="error" th:errors="*{member_name}" />
+        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}" />
       </div>
 
       <div class="form-group">
         <label>NickName</label>
-        <input type="text" name="member_nickname" id="member_nickname" th:field="*{member_nickname}" required
+        <input type="text" name="member_nickname" id="member_nickname" th:field="*{memberNickname}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('member_nickname')}" th:errorclass="error" th:errors="*{member_nickname}" />
+        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}" />
       </div>
 
       <div class="form-group">
         <label>Birth</label>
-        <input type="text" name="member_birth" id="member_birth" th:field="*{member_birth}"
+        <input type="text" name="member_birth" id="member_birth" th:field="*{memberBirth}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('member_birth')}" th:errorclass="error" th:errors="*{member_birth}" />
+        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}" />
       </div>
 
       <div class="form-group">
         <label>Address</label>
-        <input type="text" name="member_birth" id="member_address" th:field="*{member_address}"
+        <input type="text" name="member_birth" id="member_address" th:field="*{memberAddress}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('member_address')}" th:errorclass="error" th:errors="*{member_address}" />
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}" />
       </div>
 
       <div class="form-group">
@@ -86,9 +86,9 @@
 
       <div class="form-group">
         <label>Phone</label>
-        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{member_phone}"
+        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{memberPhone}"
                value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('member_phone')}" th:errorclass="error" th:errors="*{member_phone}" />
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
       </div>
 
       <div id="login-btn-box">
@@ -107,12 +107,21 @@
   $(function (){
     $("#send_Mail_Btn").on('click',function () {
     	let codebox = $('.email_code_box');
+
     	if(codebox.css('display') == 'none'){
     		codebox.css('display','inline-block');
     	}
    	  //	codebox.attr('style','display:block');
     	    //코드 입력 박스를 보이도록 표시
       const email = $('#member_email').val() // 이메일 주소값 얻어오기!
+
+      if(email!=){
+        alert('email 사용이 가능합니다.')
+      }
+      else{
+        alert('email  중복 됩니다.')
+      }
+
       console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
       const checkInput = $('.member_email_code') // 인증번호 입력하는곳
       $.ajax({
