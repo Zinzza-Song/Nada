@@ -20,24 +20,24 @@ public class DiaryService {
         return diaryList;
     }
 
-    public void registerDiary(Long member_idx,
-                              String diary_subject,
-                              String diary_writer,
-                              String diary_content,
-                              String diary_keywords,
-                              String diary_analyze,
-                              Boolean diary_publicable,
-                              Boolean diary_analyze_publicable
+    public void registerDiary(Long memberIdx,
+                              String diarySubject,
+                              String diaryWriter,
+                              String diaryContent,
+                              String diaryKeywords,
+                              String diaryAnalyze,
+                              Boolean diaryPublicable,
+                              Boolean diary_analyzePublicable
     ) {
         diaryRepository.save(new Diary(
-                member_idx,
-                diary_subject,
-                diary_writer,
-                diary_content,
-                diary_keywords,
-                diary_analyze,
-                diary_publicable,
-                diary_analyze_publicable));
+                memberIdx,
+                diarySubject,
+                diaryWriter,
+                diaryContent,
+                diaryKeywords,
+                diaryAnalyze,
+                diaryPublicable,
+                diary_analyzePublicable));
 
     }
 
@@ -45,5 +45,8 @@ public class DiaryService {
         return diaryRepository.findByDiarySubject(diarySubject);
     }
 
+    public Diary getDiaryDetail(Long diaryIndex) {
+        return diaryRepository.getById(diaryIndex);
+    }
 
 }

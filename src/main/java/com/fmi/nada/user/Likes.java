@@ -10,7 +10,7 @@ import javax.persistence.*;
  * 좋아요 목록 엔티티
  */
 @Entity
-@Table
+@Table(name = "LIKE")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Likes {
@@ -23,7 +23,7 @@ public class Likes {
     @Column(name = "member_idx")
     private Long memberIdx;
 
-    @Column(name = "diary_idx")
-    private Long diaryIdx;
+    @Column(name = "comment_idx")
+    private Long commentIdx;
 
 }
