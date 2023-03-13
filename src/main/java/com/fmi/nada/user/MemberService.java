@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 회원 서비스
  */
@@ -35,6 +37,14 @@ public class MemberService {
 
     public Member findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public List<Member> memberList() {
+        return memberRepository.findAllByOrderByMemberJoinDateDesc();
+    }
+
+    public void delMember(Long memberIdx) {
+        memberRepository.deleteMemberByMemberIdx(memberIdx);
     }
 
 }
