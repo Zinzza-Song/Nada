@@ -18,7 +18,7 @@
   <div class="memberInfoBackground">
   <form th:action="@{/user/modify/modify_pro}" method="get" th:object="${memberInfoBean}">
     <div class="login-box" style="width: 500px;">
-      <div class="loginBoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
+      <div class="BoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
       <div class="form-group">
         <label>이 름</label>
         <input type="text" name="memberName" id="memberName" th:text="${memberLoginBean.getmemberName}"

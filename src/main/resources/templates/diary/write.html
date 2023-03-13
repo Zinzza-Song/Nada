@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+    <link rel="stylesheet" href="/css/login.css"/>
+</head>
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}">
+    <div class="container">
+     <div class="card diary-write">
+        <div class="card-header BoxTitle">
+            다 이 어 리 쓰 기
+        </div>
+         <form th:action="@{diary/write_pro}" method="" th:object="writeDiaryBean">
+            <div class="card-body diary">
+                <h5 class="card-title diarySubject" th:field="${writeDiaryBean.diarySubject}">다이어리 제목</h5>
+                <p class="card-text diaryContent" th:field="${writeDiaryBean.diaryContent}">다이어리 내용</p>
+                <div>
+
+                </div>
+                <a href="#" class="btn btn-primary">버튼</a>
+            </div>
+         </form>
+     </div>
+    </div>
+</header>
+
+</body>
+</html>

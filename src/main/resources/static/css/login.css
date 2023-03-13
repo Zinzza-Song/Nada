@@ -7,7 +7,7 @@ body {
 .loginBox{
     display: inline;
 }
-.loginBoxTitle {
+.BoxTitle {
     color:#5e4322;
     font-weight: bold;
     font-size: 1.9rem;
@@ -50,14 +50,20 @@ input[type="button"] {
 
 }
 
-
-
-
 .btn-light{
     padding-left: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin:10px 0px 0px;
+}
+/*diary_write_css*/
+
+.diary-write{
+    width: 650px;
+    height: auto;
+    min-height: 975px;
+
+    background-image: url("../images/diarywrite.png");
 }
 
