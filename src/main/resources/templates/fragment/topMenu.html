@@ -29,6 +29,7 @@
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
+<<<<<<< HEAD
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,6 +46,44 @@
                                    th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
                         </ul>
                     </li>
+=======
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-5 mb-lg-0">
+                        <li class="nav-item dropdown col-md-7">
+                            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                감성일기
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                 th:href="@{/diary/write/{member_idx}}">일기 작성</a></li>
+                                <li><a class="dropdown-item"
+                                th:href="@{/diary}">일기 게시판</a></li>
+                            </ul>
+                        </li>
+    
+                        <li class="nav-item dropdown col-md-7">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                고객센터
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
+                                <li><a class="dropdown-item"
+                                th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
+                                <li><a class="dropdown-item"
+                                th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item col-md-7">
+                            <a class="nav-link" th:href="@{/user/read/{member_idx}}">MyPage</a>
+                            <a class="nav-link" th:href="@{/admin/}">adminPage</a>
+                        </li>
+                        <li class="nav-item col-md-10">
+>>>>>>> kky-230313
 
                     <li class="nav-item dropdown col-md-7">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

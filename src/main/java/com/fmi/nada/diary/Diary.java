@@ -81,4 +81,8 @@ public class Diary {
         this.diaryAnalyzePublicable = diaryAnalyzePublicable;
     }
 
+    public void addViewCount() {
+        this.diaryCnt++;
+    }
+
 }

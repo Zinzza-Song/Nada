@@ -31,5 +31,7 @@ public class DiaryDTO {
 
     private Boolean diaryAnalyzePublicable;
 
+    private Integer analyzeScore;
+
 
 }
