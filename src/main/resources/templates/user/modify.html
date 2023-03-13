@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<!-- 반응형 웹 미디어쿼리 선언부   -->
+<head th:insert="~{fragment/topMenu.html::header}">
+
+</head>
+
+
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+<div id="container">
+  <!-- login Box -->
+
+  <div class="memberInfoBackground">
+  <form th:action="@{/user/modify/modify_pro}" method="get" th:object="${memberInfoBean}">
+    <div class="login-box" style="width: 500px;">
+      <div class="loginBoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
+      <div class="form-group">
+        <label>이 름</label>
+        <input type="text" name="memberName" id="memberName" th:text="${memberLoginBean.getmemberName}"
+               class="form-control" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>닉네임</label>
+        <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
+               class="form-control" th:attr="Enabled" >
+        <p th:if="${#fields.hasErrors('member_nickname')}" th:errorclass="error" th:errors="*{memberInfoBean.getmemberNickname}" />
+      </div>
+
+      <div class="form-group">
+        <label>생년월일</label>
+        <input type="text" name="memberBirth" id="memberBirth" th:text="${memberLoginBean.memberBirth}"
+               class="form-control" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>이메일</label>
+        <input type="text" name="userName" id="userName" th:text="${memberLoginBean.userName}"
+               class="form-control" readonly>
+      </div>
+
+      <div class="form-group">
+        <label id="pw_label">비밀번호</label>
+        <input type="password" name="password" id="memberPassword" th:field="*{password}"
+               class="form-control" autocomplete="off" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+      </div>
+
+      <div class="form-group">
+        <label>비밀번호 확인</label>
+        <input type="password" name="member_password_check" id="member_password_check" class="form-control"
+               onkeypress="checkpassword(event)" autocomplete="off" th:attr="Enabled">
+        <label id="passwordCheckLabel"></label>
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" name="member_birth" id="member_address" th:field="*{member_address}"
+               class="form-control" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('member_address')}" th:errorclass="error" th:errors="*{member_address}" />
+      </div>
+
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{member_phone}"
+               value="" autocomplete="off" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('member_phone')}" th:errorclass="error" th:errors="*{member_phone}" />
+      </div>
+
+    </div>
+
+    <div id="login-btn-box">
+      <input type="button" id="btnSecession" value="회원 탈퇴" class="btn-dark btn">
+      <input type="submit" id="btnModify" value="수정" class="btn btn-light">
+      <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
+    </div>
+    <!-- login Box //-->
+  </form>
+  </div>
+</div>
+<footer th:insert="~{fragment/footer.html::footer}"></footer>
+
+</body>
+</html>
