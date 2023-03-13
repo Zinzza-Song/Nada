@@ -17,55 +17,60 @@
     <div class="col">
         <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="emoticon"></div><span th:text="${diary.diary_sympathy_cnt}">5</span>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100" th:each="diary :${allDiaryList}">
+        <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100" th:each="diary :${allDiaryList}">
+        <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100" th:each="diary :${allDiaryList}">
+        <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100" th:each="diary :${allDiaryList}">
+        <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>
     <div class="col">
-        <div class="card h-100" th:each="diary :${allDiaryList}">
+        <div class="card h-100 diaryListCard" th:each="diary :${allDiaryList}">
             <div class="card-body">
-                <h5 class="card-title" th:text="${diary.diary_subject}">일기 제목 <span th:text="${#temporals.format(diary.diary_date,'MM-DD')}">03-10</span>
-                    <span th:text="${diary.diary_keyords }">술 담배 라이터</span><span th:text="${diary.diary_sympathy_cnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diary_content}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate,'MM-DD')}">03-10</span>
+                    <span th:text="${diary.diaryKeyords }">술 담배 라이터</span><span th:text="${diary.diarySympathyCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="emoticon"></div><span th:text="${diary.diarySympathyCnt}">5</span>
             </div>
         </div>
     </div>

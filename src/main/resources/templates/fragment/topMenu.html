@@ -44,7 +44,7 @@ function logout(){
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item"
-                                 th:href="@{/diary/write/{member_idx}}">일기 작성</a></li>
+                                 th:href="@{/diary/write/{memberIdx}}">일기 작성</a></li>
                                 <li><a class="dropdown-item"
                                 th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
                             </ul>
@@ -65,7 +65,7 @@ function logout(){
                             </ul>
                         </li>
                         <li class="nav-item col-md-7">
-                            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/user/read/{member_idx}}">MyPage</a>
+                            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/user/read/{memberIdx}}">MyPage</a>
                             <a class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/}">adminPage</a>
                         </li>
                         <li class="nav-item col-md-10">
