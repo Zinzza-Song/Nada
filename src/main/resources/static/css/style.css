@@ -83,8 +83,18 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-repeat: round;
     background-size: cover;
 }
+.emoticon{
+    background-image: url(/images/emotion.PNG);
+    background-repeat: round;
+    background-size: cover;
+}
 .diarycard{
     background-image: url(/images/diarylist2.jpg);
+    background-repeat: round;
+    background-size: cover;
+}
+.diaryListCard{
+    background-image: url(/images/diarymain.jpg);
     background-repeat: round;
     background-size: cover;
 }
