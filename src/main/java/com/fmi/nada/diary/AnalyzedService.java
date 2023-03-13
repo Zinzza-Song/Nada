@@ -22,8 +22,5 @@ public class AnalyzedService {
     }
 
 
-    public Analyzed getAnalyzed(Long boardIndex) {
-        return analyzedRepository.findByBoardIdx(boardIndex);
-    }
 
 }

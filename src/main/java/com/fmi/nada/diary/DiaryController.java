@@ -25,6 +25,7 @@ public class DiaryController {
 
     private final CommentService commentService;
 
+    private final AnalyzedService analyzedService;
     //좋아요를 위한 Like 가져와야 함.
 
     //다이어리 게시판 페이지
@@ -91,6 +92,7 @@ public class DiaryController {
         );
 
         Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
+        analyzedService.resiterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
 
         String keywordArr[] = diaryDTO.getDiaryKeywords().split(",");
         for (int i = 0; i < keywordArr.length; i++) {

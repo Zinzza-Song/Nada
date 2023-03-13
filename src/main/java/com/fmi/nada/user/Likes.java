@@ -10,7 +10,7 @@ import javax.persistence.*;
  * 좋아요 목록 엔티티
  */
 @Entity
-@Table(name = "LIKE")
+@Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Likes {

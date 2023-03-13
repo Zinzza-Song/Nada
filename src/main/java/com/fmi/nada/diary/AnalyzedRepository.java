@@ -4,5 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnalyzedRepository extends JpaRepository<Analyzed, Long> {
 
-    Analyzed findByBoardIdx(Long boardIdx);
 }
