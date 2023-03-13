@@ -1,5 +1,7 @@
 package com.fmi.nada.main;
 
+import com.fmi.nada.diary.Diary;
+import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.diary.Keyword;
 import com.fmi.nada.diary.KeywordService;
 import com.fmi.nada.user.Member;
@@ -18,6 +20,7 @@ public class MainController {
 
     private final MainService mainService;
     private final KeywordService keywordService;
+    private final DiaryService diaryService;
 
     /**
      * 오늘의 조언 랜덤 조회
@@ -32,6 +35,12 @@ public class MainController {
 
         List<Keyword> keywordList = keywordService.findTop5ByOrderByKeywordCntDesc();
         model.addAttribute("keywordList", keywordList);
+
+        List<Diary> recentTop5DiaryList = diaryService.findTop5ByOrderByDiaryDateDesc();
+        model.addAttribute("recentTop5DiaryList", recentTop5DiaryList);
+
+        List<Diary> mostSympathyTop5DiaryList = diaryService.findTop5ByOrderByDiarySympathyCntDesc();
+        model.addAttribute("mostSympathyTop5DiaryList", mostSympathyTop5DiaryList);
 
         return "index";
     }
