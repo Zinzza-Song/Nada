@@ -24,13 +24,13 @@ public class MainController {
      */
     @GetMapping("/")
     public String main(Model model, Authentication authentication) {
-        Member member = null;
-        if(authentication != null)
-            member = (Member) authentication.getPrincipal();
+        if(authentication != null){
+            Member member = (Member) authentication.getPrincipal();
+            model.addAttribute("loginMember", member);
+        }
 
         Advice advice = mainService.findByAll().get(0);
         model.addAttribute("adviceModel", advice);
-        model.addAttribute("member", member);
 
         return "index";
     }
