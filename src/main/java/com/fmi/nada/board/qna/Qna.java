@@ -18,20 +18,38 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class Qna {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long qna_idx;
-    private Long member_idx;
-    private String qna_subject;
-    private String qna_writer;
+    @Column(name = "qna_idx")
+    private Long qnaIdx;
+
+    @Column(name = "member_idx")
+    private Long memberIdx;
+
+    @Column(name = "qna_subject")
+    private String qnaSubject;
+
+    @Column(name = "qna_writer")
+    private String qnaWriter;
+
+    @Column(name = "qna_date")
     @CreatedDate
-    private LocalDateTime qna_date;
-    private String qna_content;
-    private String qna_file;
-    @Column(insertable = false, updatable = false, columnDefinition = "int default 0")
-    private Long qna_views;
-    private String qna_answer;
-    private Boolean qna_isanswered;
+    private LocalDateTime qnaDate;
+
+    @Column(name = "qna_content")
+    private String qnaContent;
+
+    @Column(name = "qna_file")
+    private String qnaFile;
+
+    @Column(name = "qna_views", insertable = false, updatable = false, columnDefinition = "int default 0")
+    private Long qnaViews;
+
+    @Column(name = "qna_answer")
+    private String qnaAnswer;
+
+    @Column(name = "qna_isanswered")
+    private Boolean qnaIsanswered;
 
 
 }

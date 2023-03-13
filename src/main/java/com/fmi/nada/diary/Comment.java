@@ -19,21 +19,29 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
-    @GeneratedValue
-    private Long comment_idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_idx")
+    private Long commentIdx;
 
-    private Long diary_idx;
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
 
-    private Long member_idx;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
-    private String comment_content;
+    @Column(name = "comment_content")
+    private String commentContent;
 
-    private Integer comment_like_cnt;
+    @Column(name = "comment_like_cnt")
+    private Integer commentLikeCnt;
 
     @CreatedDate
-    private LocalDateTime comment_date;
+    @Column(name = "comment_date")
+    private LocalDateTime commentDate;
 
-    private String comment_writer;
+    @Column(name = "comment_writer")
+    private String commentWriter;
 
-    private String comment_writeremail;
+    @Column(name = "comment_writeremail")
+    private String commentWriteremail;
 }

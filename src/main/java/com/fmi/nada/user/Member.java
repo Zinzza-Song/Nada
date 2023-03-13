@@ -26,32 +26,43 @@ import java.util.Collections;
 @DynamicInsert
 public class Member implements UserDetails {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long member_idx;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
-    private String member_name;
+    @Column(name = "member_name")
+    private String memberName;
 
-    private String member_nickname;
+    @Column(name = "member_nickname")
+    private String memberNickname;
 
-    private String member_birth;
+    @Column(name = "member_birth")
+    private String memberBirth;
 
-    private String member_address;
+    @Column(name = "member_address")
+    private String memberAddress;
 
+    @Column(name = "member_email")
     private String username;
 
+    @Column(name = "member_password")
     private String password;
 
-    private String member_phone;
+    @Column(name = "member_phone")
+    private String memberPhone;
 
+    @Column(name = "member_emotion_score")
     @ColumnDefault("50")
-    private Integer member_emotion_score;
+    private Integer memberEmotionScore;
 
+    @Column(name = "member_join_date")
     @CreatedDate
-    private LocalDateTime member_join_date;
+    private LocalDateTime memberJoinDate;
 
+    @Column(name = "member_login_date")
     @CreatedDate
-    private LocalDateTime member_login_date;
+    private LocalDateTime memberLoginDate;
 
     @Column(name = "member_authority")
     private String authority;
@@ -60,20 +71,20 @@ public class Member implements UserDetails {
             String username,
             String password,
             String authority,
-            String member_name,
-            String member_nickname,
-            String member_birth,
-            String member_address,
-            String member_phone
+            String memberName,
+            String memberNickname,
+            String memberBirth,
+            String memberAddress,
+            String memberPhone
     ) {
         this.username = username;
         this.password = password;
         this.authority = authority;
-        this.member_name = member_name;
-        this.member_nickname = member_nickname;
-        this.member_birth = member_birth;
-        this.member_address = member_address;
-        this.member_phone = member_phone;
+        this.memberName = memberName;
+        this.memberNickname = memberNickname;
+        this.memberBirth = memberBirth;
+        this.memberAddress = memberAddress;
+        this.memberPhone = memberPhone;
     }
 
     @Override

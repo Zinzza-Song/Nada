@@ -19,14 +19,19 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class Ban {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long ban_idx;
+    @Column(name = "ban_idx")
+    private Long banIdx;
 
-    private String ban_email;
-    private Boolean ban_isbyadmin;
+    @Column(name = "ban_email")
+    private String banEmail;
+
+    @Column(name = "ban_isbyadmin")
+    private Boolean banIsbyadmin;
 
     @CreatedDate
-    private LocalDateTime ban_date;
+    @Column(name = "ban_date")
+    private LocalDateTime banDate;
 
 }

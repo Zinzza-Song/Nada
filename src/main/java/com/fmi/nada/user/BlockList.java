@@ -19,15 +19,22 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BlockList {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long block_member_idx;
+    @Column(name = "block_member_idx")
+    private Long blockMemberIdx;
 
-    private Long member_idx;
-    private String block_member_nickname;
-    private String block_member_reason;
+    @Column(name = "member_idx")
+    private Long memberIdx;
+
+    @Column(name = "block_member_nickname")
+    private String blockMemberNickname;
+
+    @Column(name = "block_member_reason")
+    private String blockMemberReason;
 
     @CreatedDate
-    private LocalDateTime block_member_date;
+    @Column(name = "block_member_date")
+    private LocalDateTime blockMemberDate;
 
 }

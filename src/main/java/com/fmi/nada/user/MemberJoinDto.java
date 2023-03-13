@@ -29,20 +29,20 @@ public class MemberJoinDto {
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     @Size(min = 2, max = 5, message = "이름은 2자에서 5자까지 입력 가능합니다.")
     @Pattern(regexp = "[가-힣]*$", message = "이름은 한글만 입력 가능합니다.")
-    private String member_name;
+    private String memberName;
 
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     @Size(min = 3, max = 8, message = "닉네임은 3자에서 8자까지 입력 가능합니다.")
-    private String member_nickname;
+    private String memberNickname;
 
     @NotBlank(message = "생년월일은 필수 입력 값입니다.")
-    private String member_birth;
+    private String memberBirth;
 
     @NotBlank(message = "주소는 필수 입력 값입니다.")
-    private String member_address;
+    private String memberAddress;
 
     @NotBlank(message = "전화번호는 필수 입력 값입니다.")
     @Pattern(regexp = "^01([0])-([0-9]{4})-([0-9]{4})$", message = "ex) 010-1234-5678")
-    private String member_phone;
+    private String memberPhone;
 
 }
