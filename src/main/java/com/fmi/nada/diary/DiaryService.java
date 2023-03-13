@@ -45,5 +45,12 @@ public class DiaryService {
         return diaryRepository.findByDiarySubject(diarySubject);
     }
 
+    public List<Diary> findTop5ByOrderByDiaryDateDesc() {
+        return diaryRepository.findTop5ByOrderByDiaryDateDesc();
+    }
+
+    public List<Diary> findTop5ByOrderByDiarySympathyCntDesc() {
+        return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
+    }
 
 }

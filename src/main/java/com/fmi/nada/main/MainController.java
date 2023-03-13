@@ -1,6 +1,9 @@
 package com.fmi.nada.main;
 
+import com.fmi.nada.diary.Diary;
+import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.diary.Keyword;
+import com.fmi.nada.diary.KeywordService;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -16,6 +19,8 @@ import java.util.List;
 public class MainController {
 
     private final MainService mainService;
+    private final KeywordService keywordService;
+    private final DiaryService diaryService;
 
     /**
      * 오늘의 조언 랜덤 조회
@@ -23,14 +28,19 @@ public class MainController {
      * @return 메인 페이지 view("/index.html")
      */
     @GetMapping("/")
-    public String main(Model model, Authentication authentication) {
-        if(authentication != null){
-            Member member = (Member) authentication.getPrincipal();
-            model.addAttribute("loginMember", member);
-        }
+    public String main(Model model) {
 
         Advice advice = mainService.findByAll().get(0);
         model.addAttribute("adviceModel", advice);
+
+        List<Keyword> keywordList = keywordService.findTop5ByOrderByKeywordCntDesc();
+        model.addAttribute("keywordList", keywordList);
+
+        List<Diary> recentTop5DiaryList = diaryService.findTop5ByOrderByDiaryDateDesc();
+        model.addAttribute("recentTop5DiaryList", recentTop5DiaryList);
+
+        List<Diary> mostSympathyTop5DiaryList = diaryService.findTop5ByOrderByDiarySympathyCntDesc();
+        model.addAttribute("mostSympathyTop5DiaryList", mostSympathyTop5DiaryList);
 
         return "index";
     }
