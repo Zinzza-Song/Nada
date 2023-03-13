@@ -18,13 +18,15 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Keyword {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long keyword_idx;
+    @Column(name = "keyword_idx")
+    private Long keywordIdx;
 
-    private String keyword_name;
+    @Column(name = "keyword_name")
+    private String keywordName;
 
-    @Column(insertable = false, updatable = false, columnDefinition = "int default 1")
-    private Long keyword_cnt;
+    @Column(name = "keyword_cnt", insertable = false, updatable = false, columnDefinition = "int default 1")
+    private Long keywordCnt;
 
 }
