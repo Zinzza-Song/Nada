@@ -105,15 +105,29 @@ public class MemberController {
     public String readMember(@PathVariable("memberIdx") Long memberIdx,
                             Authentication authentication,
                             Model model) {
-        List<Diary> myList = diaryService.findMyDiaryBymemberIdx(memberIdx);
         Member member = (Member) authentication.getPrincipal();
+        List<Diary> myDiaryList = diaryService.findMyDiaryBymemberIdx(memberIdx);
+        List<Friends> friendsList = memberService.friendsList(memberIdx);
+        List<BlockList> blockLists = memberService.blockLists(memberIdx);
+        model.addAttribute("friendsList",friendsList);
+        model.addAttribute("blockLists",blockLists);
         model.addAttribute("memberLoginBean",member);
-        model.addAttribute("myList",myList);
+        model.addAttribute("myDiaryList",myDiaryList);
         return "user/read";
     }
 
-    @GetMapping("/read")
-    public String myPage(){
+    @PostMapping("/friend_add/{memberIdx}")
+    public String addFriend(@PathVariable("memberIdx") Long memberIdx,
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
+        memberService.addFriends(memberIdx,friendsMemberIdx);
         return "user/read";
     }
+
+    @DeleteMapping("/friend_del/{memberIdx}")
+    public String delFriend(@PathVariable("memberIdx") Long memberIdx,
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
+        memberService.delFriends(memberIdx,friendsMemberIdx);
+        return "user/friend_list";
+    }
+
 }

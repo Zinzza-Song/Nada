@@ -3,6 +3,7 @@ package com.fmi.nada.user;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Friends {
@@ -27,11 +29,15 @@ public class Friends {
     @Column(name = "member_idx")
     private Long memberIdx;
 
-    @Column(name = "friends_nickname")
-    private String friendsNickname;
+    @Column(name = "friends_MemberIdx")
+    private Long friendsMemberIdx;
 
     @CreatedDate
     @Column(name = "friends_date")
     private LocalDateTime friendsDate;
 
+    public Friends(Long memberIdx, Long friendsMemberIdx){
+        this.memberIdx=memberIdx;
+        this.friendsMemberIdx=friendsMemberIdx;
+    }
 }
