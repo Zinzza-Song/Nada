@@ -2,12 +2,13 @@
 .advice-title {
     margin-top: 15px;
 }
+
 .list {
     margin-bottom: 12px;
 }
+
 #plus-recent,
-#plus-sympathy
-{
+#plus-sympathy {
     border-radius: 50px;
     float: right;
 }
@@ -49,7 +50,8 @@
 #nickname {
     margin-right: 20px;
 }
-.logbtn{
+
+.logbtn {
     text-decoration: none;
     color: black;
 }
@@ -64,10 +66,11 @@ width: 100%;
 height: 300px;
 background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
-.mainBody {
+.mainBody, .diarymain {
     background-image: url(/images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    flex-wrap: inherit;
 }
 
 #main {
@@ -78,72 +81,116 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 /*#todayAdvice {*/
 /*    background-image: url(./images/list.PNG);*/
 /*}*/
-.homecard, .keywordcard{
+.homecard, .keywordcard {
     background-image: url(/images/list.PNG);
     background-repeat: round;
     background-size: cover;
 }
-.emoticon{
+
+.emoticon {
     background-image: url(/images/emotion.PNG);
     background-repeat: round;
     background-size: cover;
 }
-.diarycard{
+
+.diarycard {
     background-image: url(/images/diarylist2.jpg);
     background-repeat: round;
     background-size: cover;
 }
-.diaryListCard{
+
+.diaryListCard {
     background-image: url(/images/diarymain.jpg);
     background-repeat: round;
     background-size: cover;
+    margin-top: 10px;
 }
-.dropdown-menu{
+.pageback{
+    color: #ffffff;
+    background-color: #937152;
+}
+.searchbar {
+    margin-top: 10px;
+
+}
+
+.selectSerch {
+    width: auto;
+}
+
+.page {
+    margin-left: 45%;
+    margin-top: 30px;
+}
+
+.dropdown-menu {
     --bs-dropdown-link-hover-bg: #e3cab0;
 }
-.dropdown-menu[data-bs-popper]{
+
+.dropdown-menu[data-bs-popper] {
     background: antiquewhite;
 }
+
 .top-nav {
     padding: 0;
 }
+
 .top-menu {
     height: 100%;
 }
-.userLoginBox{
+
+.userLoginBox {
     display: inline-block;
 }
-@media ( min-width : 992px)and (max-width :1300px){
-    #today{
+
+.diarymainbody {
+    height: 300px;
+}
+
+.d-flex {
+    display: flex !important;
+    margin-left: 40%;
+}
+
+@media ( min-width: 992px)and (max-width: 1300px) {
+    #today {
         width: 210px;
     }
-    .newestDiv{
+
+    .newestDiv {
         width: 350px;
     }
-    .emotionDiv{
+
+    .emotionDiv {
         width: 350px;
     }
 }
-@media(max-width: 992px){
-    #today{
+
+@media (max-width: 992px) {
+    #today {
         width: 200px;
         /* display: none; */
     }
-    .newestDiv{
+
+    .newestDiv {
         width: 500px;
     }
-    .emotionDiv{
+
+    .emotionDiv {
         width: 700px;
     }
 }
-@media(max-width:768px){
-    #today{
+
+@media (max-width: 768px) {
+    #today {
         width: 600px;
     }
-    .newestDiv{
+
+    .newestDiv {
         width: 600px;
     }
-    .emotionDiv{
+
+    .emotionDiv {
         width: 600px;
     }
 }
