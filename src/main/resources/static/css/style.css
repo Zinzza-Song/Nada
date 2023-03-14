@@ -66,8 +66,8 @@ width: 100%;
 height: 300px;
 background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
-.mainBody, .diarymain {
-    background-image: url(/images/mainBack2.jpg);
+.mainBody, .diarymain,.diary-write-body {
+    background-image: url(../images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     flex-wrap: inherit;
@@ -82,25 +82,25 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 /*    background-image: url(./images/list.PNG);*/
 /*}*/
 .homecard, .keywordcard {
-    background-image: url(/images/list.PNG);
+    background-image: url(../images/list.PNG);
     background-repeat: round;
     background-size: cover;
 }
 
 .emoticon {
-    background-image: url(/images/emotion.PNG);
+    background-image: url(../images/emotion.PNG);
     background-repeat: round;
     background-size: cover;
 }
 
 .diarycard {
-    background-image: url(/images/diarylist2.jpg);
+    background-image: url(../images/diarylist2.jpg);
     background-repeat: round;
     background-size: cover;
 }
 
 .diaryListCard {
-    background-image: url(/images/diarymain.jpg);
+    background-image: url(../images/diarymain.jpg);
     background-repeat: round;
     background-size: cover;
     margin-top: 10px;
@@ -260,4 +260,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+.navbar{
+    font-family: 'KCCChassam','Dovemayo_wild','TAEBAEKmilkyway';
 }
