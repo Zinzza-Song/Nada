@@ -2,7 +2,6 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <!-- 반응형 웹 미디어쿼리 선언부   -->
 <head th:insert="~{fragment/topMenu.html::header}">
@@ -23,58 +22,58 @@
         <label>Name</label>
         <input type="text" name="member_name" id="member_name" th:field="*{memberName}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}" />
+        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}"/>
       </div>
 
       <div class="form-group">
         <label>NickName</label>
         <input type="text" name="member_nickname" id="member_nickname" th:field="*{memberNickname}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}" />
+        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
       </div>
 
       <div class="form-group">
         <label>Birth</label>
         <input type="text" name="member_birth" id="member_birth" th:field="*{memberBirth}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}" />
+        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}"/>
       </div>
 
       <div class="form-group">
         <label>Address</label>
         <input type="text" name="member_birth" id="member_address" th:field="*{memberAddress}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}" />
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
       </div>
 
       <div class="form-group">
         <label>E-mail</label>
         <input type="text" name="username" id="member_email" th:field="*{username}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
         <div>
-          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
+          <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
         </div>
       </div>
 
       <div class="form-group email_code_box" style="display:none;">
-          <label>E-mail Code</label>
+        <label>E-mail Code</label>
 
-              <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
-              <span id="mail-check-warn"></span>
+        <input type="text" name="member_email_code" id="member_email_code" class="form-control">
+        <span id="mail-check-warn"></span>
 
-          <div>
-              <input type="button" id="btnCertification" value="인증" class="btn btn-light">
-              
-          </div>
+        <div>
+          <input type="button" id="btnCertification" value="인증" class="btn btn-light">
 
-      </div> 
+        </div>
+
+      </div>
 
       <div class="form-group">
         <label id="pw_label">PW</label>
         <input type="password" name="password" id="member_password" th:field="*{password}"
                class="form-control" autocomplete="off">
-        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
       </div>
 
       <div class="form-group">
@@ -88,7 +87,7 @@
         <label>Phone</label>
         <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{memberPhone}"
                value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
       </div>
 
       <div id="login-btn-box">
@@ -104,21 +103,20 @@
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
 <script>
 
-  $(function (){
-    $("#send_Mail_Btn").on('click',function () {
-    	let codebox = $('.email_code_box');
+  $(function () {
+    $("#send_Mail_Btn").on('click', function () {
+      let codebox = $('.email_code_box');
 
-    	if(codebox.css('display') == 'none'){
-    		codebox.css('display','inline-block');
-    	}
-   	  //	codebox.attr('style','display:block');
-    	    //코드 입력 박스를 보이도록 표시
+      if (codebox.css('display') == 'none') {
+        codebox.css('display', 'inline-block');
+      }
+      //	codebox.attr('style','display:block');
+      //코드 입력 박스를 보이도록 표시
       const email = $('#member_email').val() // 이메일 주소값 얻어오기!
 
-      if(email!=){
+      if (email != "") {
         alert('email 사용이 가능합니다.')
-      }
-      else{
+      } else {
         alert('email  중복 됩니다.')
       }
 
@@ -134,9 +132,9 @@
           swal('인증번호가 전송되었습니다.')
         }
       }); // end ajax
-      
+
     });// end send eamil
-    
+
     // 인증번호 비교
     // blur -> focus가 벗어나는 경우 발생
     $('.member_email_code').blur(function () {
@@ -155,7 +153,6 @@
       }
     });
   });
-
 
 
   function checkpassword(event) {
