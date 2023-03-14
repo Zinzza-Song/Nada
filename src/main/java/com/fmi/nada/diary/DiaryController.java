@@ -57,16 +57,15 @@ public class DiaryController {
     }
 
     // 다이어리 작성 페이지
-    @GetMapping("write/{memberIdx}")
-    public String DiaryWrite(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
-                             @PathVariable("memberIdx") Long memberIdx,
+    @GetMapping("/write")
+    public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
                              Authentication authentication,
                              Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
-        return "diary/write/" + memberIdx;
+        return "diary/write";
     }
 
     @PostMapping("write_pro")
@@ -75,7 +74,7 @@ public class DiaryController {
                                  Authentication authentication,
                                  Model model) {
         if (bindingResult.hasErrors())
-            return "diary/wirte";
+            return "diary/write";
 
         Member member = (Member) authentication.getPrincipal();
         diaryDTO.setDiaryWriter(member.getMemberNickname());

@@ -14,7 +14,7 @@
         <div class="card-header BoxTitle">
             다 이 어 리 쓰 기
         </div>
-         <form th:action="@{diary/write_pro}" method="" th:object="writeDiaryBean">
+         <form th:action="@{diary/write_pro}" method="" th:object="${writeDiaryBean}">
             <div class="card-body diary">
                 <h5 class="card-title diarySubject" th:field="${writeDiaryBean.diarySubject}">다이어리 제목</h5>
                 <p class="card-text diaryContent" th:field="${writeDiaryBean.diaryContent}">다이어리 내용</p>
