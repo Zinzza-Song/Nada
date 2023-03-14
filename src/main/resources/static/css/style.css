@@ -51,11 +51,16 @@
     margin-right: 20px;
 }
 
-.logbtn {
+.logAtag {
     text-decoration: none;
     color: black;
 }
+.logbtn{
+    width: 130px;
+    height: 130px;
+    margin: 5px;
 
+}
 
 /*#banner {*/
 /*    background-image: url(./images/mainBanner5.jpg);*/
@@ -113,7 +118,11 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 10px;
 
 }
-
+.logBtnBox{
+    display: flex;
+    justify-content: center;
+    margin-top: 300px;
+}
 .selectSerch {
     width: auto;
 }
@@ -194,6 +203,12 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         width: 600px;
     }
 }
+/* admin log페이지 부분*/
+.logHeader{
+    position: fixed;
+
+}
+
 
 /* @media(min-width: 1200px){
     #today{

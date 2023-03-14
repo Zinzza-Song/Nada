@@ -12,7 +12,7 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col" th:each="diary :${allDiaryList}">
+    <div class="col diarylist" th:each="diary :${allDiaryList}">
         <div class="card h-100 diaryListCard">
             <div class="card-body diarymainbody">
                 <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}">03-10</span>
@@ -52,18 +52,21 @@
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search">
-            <select class="form-select form-select-sm selectSerch" aria-label=".form-select-sm example">
-                <option selected value="content">내용</option>
-                <option value="writer">작성자</option>
-                <option value="keyword">키워드</option>
+        <form class="d-flex" role="search" th:action="@{/diary}" method="post">
+            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+                <option selected value="content" id="content">내용</option>
+                <option value="writer" id="writer">작성자</option>
+                <option value="keyword" id="keyword">키워드</option>
             </select>
-            <input class="form-control me-2" type="search" placeholder="" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" style="width: 100px">검색</button>
+            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
         </form>
     </div>
 </nav>
 <!--<footer th:insert="footer.html::footer"></footer>-->
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
+
+
+
 </body>
 </html>
