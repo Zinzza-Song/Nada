@@ -61,6 +61,7 @@
         <th scope="col">댓글</th>
         <th scope="col">유저</th>
         <th scope="col">작성된 일기번호</th>
+        <th scope="col">비고</th>
     </tr>
     </thead>
     <tbody class="table-group-divider logMoreData">
@@ -69,6 +70,7 @@
         <th scope="row" th:text="${comment.commentContent   }">댓글</th>
         <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
         <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
+        <th scope="row"><button type="button" class="btn btn-primary">삭제</button></th>
     </tr>
 
     </tbody>

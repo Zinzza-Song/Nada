@@ -116,7 +116,12 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 .searchbar {
     margin-top: 10px;
-
+}
+.createDiary{
+    margin-top: 20px;
+    float: right;
+    background-color: #a38969;
+    border-color: white;
 }
 .logBtnBox{
     display: flex;

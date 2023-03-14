@@ -29,6 +29,12 @@
     </div>
 </div>
 
+<form th:action="@{/diary/write}" th:method="get">
+    <div>
+        <button type="button" class="btn btn-primary createDiary">일기 작성</button>
+    </div>
+</form>
+
 <!-- 다이어리 하단 페이지 -->
 <nav aria-label="Page navigation example" class="page">
     <ul class="pagination">
@@ -50,6 +56,7 @@
     </ul>
 </nav>
 
+
 <nav class="navbar searchbar">
     <div class="container-fluid">
         <form class="d-flex" role="search" th:action="@{/diary}" method="post">
@@ -59,7 +66,7 @@
                 <option value="keyword" id="keyword">키워드</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
+            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 150px">검색</button>
         </form>
     </div>
 </nav>

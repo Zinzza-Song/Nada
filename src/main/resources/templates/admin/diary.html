@@ -65,6 +65,7 @@
         <th scope="col">날짜</th>
         <th scope="col">공감수</th>
         <th scope="col">조회수</th>
+        <th scope="col">비고</th>
     </tr>
     </thead>
     <tbody class="table-group-divider logMoreData">
@@ -75,6 +76,7 @@
         <th scope="row" th:text="${#temporals.format(diary.diaryDate   , 'yyyy-MM-dd')}">날짜</th>
         <th scope="row" th:text="${diary.diaryLikeCnt    }">공감수</th>
         <th scope="row" th:text="${diary.diaryCnt    }">조회수</th>
+        <th scope="row"><button type="button" class="btn btn-primary">삭제</button></th>
     </tr>
 
     </tbody>
