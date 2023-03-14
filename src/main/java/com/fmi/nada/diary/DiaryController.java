@@ -58,7 +58,7 @@ public class DiaryController {
 
     // 다이어리 작성 페이지
     @GetMapping("write/{memberIdx}")
-    public String DiaryWrite(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
+    public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
                              @PathVariable("memberIdx") Long memberIdx,
                              Authentication authentication,
                              Model model) {
