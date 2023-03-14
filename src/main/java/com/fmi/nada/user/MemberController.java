@@ -27,10 +27,10 @@ public class MemberController {
     @GetMapping("/join/email_exist_check")
     @ResponseBody
     public String mailCheck(String username) throws Exception {
-        Member member= memberService.findByUsername(username);
-        if (member!=null && member.getUsername().equals(username)){
+        Member member = memberService.findByUsername(username);
+        if (member != null && member.getUsername().equals(username)) {
             return "false";
-        }else {
+        } else {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             return mailAuthService.sendSimpleMessage(username);
@@ -41,13 +41,13 @@ public class MemberController {
     @GetMapping("/join/email_exist_check_pw")
     @ResponseBody
     public String mailCheckPw(String username, String memberName) throws Exception {
-        Member member= memberService.findByUsername(username);
-        if (member!=null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)){
+        Member member = memberService.findByUsername(username);
+        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             System.out.println("이메일 인증 유저 : " + memberName);
             return mailAuthService.sendSimpleMessage(username);
-        }else {
+        } else {
             return "false";
         }
     }
@@ -73,22 +73,24 @@ public class MemberController {
 
     //비밀번호 찾기페이지 경로매핑
     @GetMapping("/find_password")
-    public String findPw(){
+    public String findPw() {
         return "user/find_password";
     }
 
     //비밀번호 변경페이지 경로매핑
     @GetMapping("/reset_password")
-    public String resetPassword(@RequestParam("username") String username, Model mo){
-        mo.addAttribute("username",username);
+    public String resetPassword(@RequestParam("username") String username, Model mo) {
+        mo.addAttribute("username", username);
         return "user/reset_password";
     }
 
     //비밀번호 변경 서비스 수행 로직
     @PutMapping("/reset_password")
-    public String resetPassword(@ModelAttribute MemberJoinDto memberJoinDto){
-        Member member = memberService.findByUsername(memberJoinDto.getUsername());
-        member.setPassword(passwordEncoder.encode(memberJoinDto.getPassword()));
+    public String resetPassword(
+            @ModelAttribute @Valid FindPasswordDto findPasswordDto,
+            @RequestParam("username") String username) {
+        Member member = memberService.findByUsername(username);
+        member.setPassword(passwordEncoder.encode(findPasswordDto.getPassword()));
         memberService.updatePw(member);
         return "redirect:/";
     }
