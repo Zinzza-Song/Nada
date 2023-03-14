@@ -114,12 +114,6 @@
       //코드 입력 박스를 보이도록 표시
       const email = $('#member_email').val() // 이메일 주소값 얻어오기!
 
-      if (email != "") {
-        alert('email 사용이 가능합니다.')
-      } else {
-        alert('email  중복 됩니다.')
-      }
-
       console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
       $.ajax({
         type: 'GET',
