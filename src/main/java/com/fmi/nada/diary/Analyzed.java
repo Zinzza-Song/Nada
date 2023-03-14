@@ -30,4 +30,9 @@ public class Analyzed {
     @Column(name = "analyze_score")
     private Integer analyzeScore;
 
+    public Analyzed(Long diaryIdx, String analyzeResult, Integer analyzeScore){
+        this.diaryIdx = diaryIdx;
+        this.analyzeResult = analyzeResult;
+        this.analyzeScore = analyzeScore;
+    }
 }

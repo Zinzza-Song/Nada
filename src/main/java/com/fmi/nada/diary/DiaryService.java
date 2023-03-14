@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 다이어리 서비스
- * */
+ */
 @Service
 @RequiredArgsConstructor
 public class DiaryService {
@@ -16,29 +15,37 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
     public List<Diary> getDiaryList() {
-        List<Diary> diaryList = diaryRepository.findAll();
+        List<Diary> diaryList = diaryRepository.findAllByOrderByDiaryDateDesc();
         return diaryList;
     }
 
-    public void registerDiary(Long member_idx,
-                              String diary_subject,
-                              String diary_writer,
-                              String diary_content,
-                              String diary_keywords,
-                              String diary_analyze,
-                              Boolean diary_publicable,
-                              Boolean diary_analyze_publicable
+    public void registerDiary(Long memberIdx,
+                              String diarySubject,
+                              String diaryWriter,
+                              String diaryContent,
+                              String diaryKeywords,
+                              String diaryAnalyze,
+                              Boolean diaryPublicable,
+                              Boolean diary_analyzePublicable
     ) {
         diaryRepository.save(new Diary(
-                member_idx,
-                diary_subject,
-                diary_writer,
-                diary_content,
-                diary_keywords,
-                diary_analyze,
-                diary_publicable,
-                diary_analyze_publicable));
+                memberIdx,
+                diarySubject,
+                diaryWriter,
+                diaryContent,
+                diaryKeywords,
+                diaryAnalyze,
+                diaryPublicable,
+                diary_analyzePublicable));
 
+    }
+
+    public Diary findByDiaryIdx(Long diaryIdx) {
+        return diaryRepository.findByDiaryIdx(diaryIdx);
+    }
+
+    public void modifyDiary(Diary diary) {
+        diaryRepository.save(diary);
     }
 
     public Diary findByDiary_subject(String diarySubject) {
@@ -46,4 +53,20 @@ public class DiaryService {
     }
 
 
+    public List<Diary> findTop5ByOrderByDiaryDateDesc() {
+        return diaryRepository.findTop5ByOrderByDiaryDateDesc();
+    }
+
+    public List<Diary> findTop5ByOrderByDiarySympathyCntDesc() {
+        return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
+    }
+
+    public Diary getDiaryDetail(Long diaryIndex) {
+        return diaryRepository.getById(diaryIndex);
+
+    }
+
+    public void deleteDiary(Long diaryIdx) {
+        diaryRepository.deleteById(diaryIdx);
+    }
 }

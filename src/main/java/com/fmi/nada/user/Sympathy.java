@@ -23,7 +23,7 @@ public class Sympathy {
     @Column(name = "member_idx")
     private Long memberIdx;
 
-    @Column(name = "comment_idx")
-    private Long commentIdx;
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
 
 }

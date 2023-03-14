@@ -26,7 +26,7 @@ public class NoticeService {
     }
 
     //공지사항 글 상세 페이지에서 보여지는 공지사항 글
-    public Notice getNotice(Long noticeIdx) {
+    public Notice getNoticeDetail(Long noticeIdx) {
         Optional<Notice> noticeOptional = noticeRepository.findById(noticeIdx);
         return noticeOptional.get();
     }

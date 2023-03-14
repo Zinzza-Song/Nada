@@ -4,12 +4,6 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<script type="text/javascript">
-function logout(){
-	href.location="/user/logout";
-}
-
-</script>
 <head th:fragment="header">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,67 +14,74 @@ function logout(){
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <!-- <title>Bootstrap Example</title> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-	<title>NADA 나의 다이어리</title>
+    <title>NADA 나의 다이어리</title>
 </head>
 <body>
-        <!-- Example Code -->
-        <div th:fragment="nav">
-        <nav class="navbar navbar-expand-lg bg-light top-nav">
-            <div class="container-fluid top-menu" style="background-color: rgb(216, 174, 132); border-color: chocolate;">
-                <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}" style="width:50px; height:50px;"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+<!-- Example Code -->
+<div th:fragment="nav">
+    <nav class="navbar navbar-expand-lg bg-light top-nav">
+        <div class="container-fluid top-menu" style="background-color: rgb(216, 174, 132); border-color: chocolate;">
+            <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
+                                                                  style="width:50px; height:50px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
                     aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-5 mb-lg-0">
-                        <li class="nav-item dropdown col-md-7">
-                            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                감성일기
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                 th:href="@{/diary/write/{memberIdx}}">일기 작성</a></li>
-                                <li><a class="dropdown-item"
-                                th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
-                            </ul>
-                        </li>
-    
-                        <li class="nav-item dropdown col-md-7">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                고객센터
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
-                                <li><a class="dropdown-item"
-                                th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
-                                <li><a class="dropdown-item"
-                                th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item col-md-7">
-                            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/user/read/{memberIdx}}">MyPage</a>
-                            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/}">adminPage</a>
-                        </li>
-                        <li class="nav-item col-md-10">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-5 mb-lg-0">
+                    <li class="nav-item dropdown col-md-7">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            감성일기
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                   th:href="@{/diary/write/{memberIdx}}">일기 작성</a></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{/diary?page_cnt=1}">일기 게시판</a></li>
+                        </ul>
+                    </li>
 
-                            <a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
-                                th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
-                                th:href="@{/user/login}" >로그인</a>
-                            <span id="nickname" sec:authorize="isAuthenticated()" th:text="${#authentication.name}">(닉네임)</span>
-                            <button onclick="logout()" sec:authorize="isAuthenticated()">로그아웃</button></a>
+                    <li class="nav-item dropdown col-md-7">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            고객센터
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                   th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item col-md-7">
+                        <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/user/read/{memberIdx}}">MyPage</a>
+                        <a class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/}">adminPage</a>
+                    </li>
+                    <li class="nav-item col-md-10">
 
-                        </li>
-                    </ul>
-                </div>
+                        <a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
+                           th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
+                                                               sec:authorize="!isAuthenticated()"
+                                                               th:href="@{/user/login}">로그인</a>
+                        <span id="nickname" sec:authorize="isAuthenticated()"
+                              th:text="${#authentication.name}">(닉네임)</span>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" sec:authorize="isAuthenticated()" value="로그아웃">
+                        </form>
+
+                    </li>
+                </ul>
             </div>
-        </nav>
-      </div>
+        </div>
+    </nav>
+</div>
 </body>
 </html>
