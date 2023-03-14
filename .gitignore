@@ -263,3 +263,5 @@ gradle-app.setting
 
 HELP.md
 *.yml
+.idea
+/.idea/
