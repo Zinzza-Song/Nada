@@ -102,14 +102,13 @@
               <th scope="col">조회수</th>
             </tr>
             </thead>
-            <tbody >
-<!--                    class="table-group-divider" th:each="">-->
+            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
             <tr>
-<!--              <th scope="row" th:text="">일기 번호</th>-->
-<!--              <td th:text="">일기 제목</td>-->
-<!--              <td th:text="">일기 작성자</td>-->
-<!--              <td th:text="">일기 날짜</td>-->
-<!--              <td th:text="">일기 조회수</td>-->
+              <th scope="row" th:text="like.diaryIdx">일기 번호</th>
+              <td th:text="like.diarySubject">일기 제목</td>
+              <td th:text="like.diaryWriter">일기 작성자</td>
+              <td th:text="like.diaryDate">일기 날짜</td>
+              <td th:text="like.diaryCnt">일기 조회수</td>
             </tr>
             </tbody>
           </table>

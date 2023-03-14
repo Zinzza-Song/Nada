@@ -105,14 +105,28 @@ public class MemberController {
     public String readMember(Authentication authentication,
                             Model model) {
         Member member = (Member) authentication.getPrincipal();
-        Long memberIdx = member.getMemberIdx();
-        List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
-        List<Friends> friendsList = memberService.friendsList(memberIdx);
-        List<BlockList> blockLists = memberService.blockLists(memberIdx);
-        model.addAttribute("friendsList",friendsList);
-        model.addAttribute("blockLists",blockLists);
         model.addAttribute("memberLoginBean",member);
+
+        Long memberIdx = member.getMemberIdx();
+
+        Sympathy sympathy = memberService.getLikeIdx(memberIdx);
+        Long likeDiaryIdx = sympathy.getDiaryIdx();
+        System.out.println(likeDiaryIdx);
+
+
+        List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
         model.addAttribute("myDiaryList",myDiaryList);
+
+        List<Friends> friendsList = memberService.friendsList(memberIdx);
+        model.addAttribute("friendsList",friendsList);
+
+        List<BlockList> blockLists = memberService.blockLists(memberIdx);
+        model.addAttribute("blockLists",blockLists);
+
+//        List<Diary> likeDiaryList = diaryService.findLikeDiaryListById(likeDiaryIdx);
+//        model.addAttribute("likeDiaryList",likeDiaryList);
+
+
         return "user/read";
     }
 

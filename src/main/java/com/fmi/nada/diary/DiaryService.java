@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 다이어리 서비스
@@ -77,9 +78,7 @@ public class DiaryService {
         return diaryRepository.getById(diaryIndex);
     }
 
-    public List<Diary> findMyDiaryBymemberIdx(Long memberIdx){
-        return diaryRepository.findMyDiaryBymemberIdx(memberIdx);
-    }
+
 
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
