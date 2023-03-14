@@ -36,8 +36,9 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
-    }
+        return memberRepository.findByUsername(username);    }
+
+
 
     public List<Member> memberList() {
         return memberRepository.findAllByOrderByMemberJoinDateDesc();

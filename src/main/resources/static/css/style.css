@@ -210,3 +210,45 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         width: 100%;
     }
 } */
+
+/*폰트적용*/
+
+/*교보문고-손글씨-성지영*/
+@font-face {
+    font-family: 'KyoboHandwriting2021sjy';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2021sjy.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/*교보손글씨2019-*/
+@font-face {
+    font-family: 'KyoboHand';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/*KCC-차쌤체*/
+@font-face {
+    font-family: 'KCCChassam';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCCChassam.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/*거친둘기마요*/
+@font-face {
+    font-family: 'Dovemayo_wild';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/Dovemayo_wild.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/*태백 은하수체*/
+@font-face {
+    font-family: 'TAEBAEKmilkyway';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/*다이어리 작성 폰트 설정*/
+.diary{
+    font-family: 'KyoboHandwriting2021sjy','KyoboHand','KCCChassam';
+}

@@ -16,94 +16,79 @@
   <!-- login Box -->
 
   <div class="memberInfoBackground">
-  <form th:action="@{/user/join/join_pro}" method="get" th:object="${memberInfoBean}">
+  <form th:action="@{/user/modify/modify_pro}" method="get" th:object="${memberInfoBean}">
     <div class="login-box" style="width: 500px;">
-      <div class="loginBoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
+      <div class="BoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
       <div class="form-group">
-        <label>Name</label>
-        <input type="text" name="member_name" id="member_name" th:field="*{member_name}" required
-               class="form-control" readonly>
-        <p th:if="${#fields.hasErrors('member_name')}" th:errorclass="error" th:errors="*{member_name}" />
+        <label>이 름</label>
+        <input type="text" name="memberName" id="memberName" th:text="${memberLoginBean.getmemberName}"
+               class="form-control" th:readonly="readonly">
       </div>
 
       <div class="form-group">
-        <label>NickName</label>
-        <input type="text" name="member_nickname" id="member_nickname" th:field="*{member_nickname}" required
-               class="form-control">
-        <p th:if="${#fields.hasErrors('member_nickname')}" th:errorclass="error" th:errors="*{member_nickname}" />
+        <label>닉네임</label>
+        <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberInfoBean.memberNickname}" required
+               class="form-control" th:attr="Enabled" >
+        <p th:if="${#fields.hasErrors('member_nickname')}" th:errorclass="error" th:errors="*{memberInfoBean.getmemberNickname}" />
       </div>
 
       <div class="form-group">
-        <label>Birth</label>
-        <input type="text" name="member_birth" id="member_birth" th:field="*{member_birth}"
-               class="form-control">
-        <p th:if="${#fields.hasErrors('member_birth')}" th:errorclass="error" th:errors="*{member_birth}" />
+        <label>생년월일</label>
+        <input type="text" name="memberBirth" id="memberBirth" th:text="${memberLoginBean.getmemberBirth}"
+               class="form-control" th:readonly="readonly">
       </div>
 
       <div class="form-group">
-        <label>Address</label>
-        <input type="text" name="member_birth" id="member_address" th:field="*{member_address}"
-               class="form-control">
-        <p th:if="${#fields.hasErrors('member_address')}" th:errorclass="error" th:errors="*{member_address}" />
+        <label>이메일</label>
+        <input type="text" name="userName" id="userName" th:text="${memberLoginBean.getuserName}"
+               class="form-control" th:readonly="readonly">
       </div>
 
       <div class="form-group">
-        <label>E-mail</label>
-        <input type="text" name="username" id="member_email" th:field="*{username}"
-               class="form-control">
-        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
-        <div>
-          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
-        </div>
-      </div>
-
-      <div class="form-group email_code_box" style="display:none;">
-        <label>E-mail Code</label>
-
-        <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
-        <span id="mail-check-warn"></span>
-
-        <div>
-          <input type="button" id="btnCertification" value="인증" class="btn btn-light">
-
-        </div>
-
+        <label id="pw_label">비밀번호</label>
+        <input type="password" name="password" id="memberPassword" th:field="*{memberInfoBean.password}"
+               class="form-control" autocomplete="off" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{memberInfoBean.password}" />
       </div>
 
       <div class="form-group">
-        <label id="pw_label">PW</label>
-        <input type="password" name="password" id="member_password" th:field="*{password}"
-               class="form-control" autocomplete="off">
-        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
-      </div>
-
-      <div class="form-group">
-        <label>PW Check</label>
+        <label>비밀번호 확인</label>
         <input type="password" name="member_password_check" id="member_password_check" class="form-control"
-               onkeypress="checkpassword(event)" autocomplete="off">
+               onkeypress="checkpassword(event)" autocomplete="off" th:attr="Enabled">
         <label id="passwordCheckLabel"></label>
       </div>
 
       <div class="form-group">
+        <label>Address</label>
+        <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberInfoBean.memberAddress}"
+               class="form-control" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberInfoBean.memberAddress}" />
+      </div>
+
+      <div class="form-group">
         <label>Phone</label>
-        <input type="tel" name="member_phone" id="member_phone" class="form-control" th:field="*{member_phone}"
-               value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('member_phone')}" th:errorclass="error" th:errors="*{member_phone}" />
+        <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberInfoBean.memberPhone}"
+               value="" autocomplete="off" th:attr="Enabled">
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberInfoBean.memberPhone}" />
       </div>
-
-      <div id="login-btn-box">
-        <input type="submit" id="btnModify" value="수정" class="btn btn-light">
-        <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
-      </div>
-
 
     </div>
 
+    <div id="login-btn-box">
+      <input type="button" id="btnSecession" onclick="deleteMember()" value="회원 탈퇴" class="btn-dark btn">
+      <input type="submit" id="btnModify" value="수정" class="btn btn-light">
+      <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
+    </div>
     <!-- login Box //-->
   </form>
   </div>
 </div>
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
+<script>
+  function deleteMember(){
 
+  }
+
+</script>
 </body>
 </html>
