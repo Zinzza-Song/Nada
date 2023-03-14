@@ -3,7 +3,6 @@ package com.fmi.nada.diary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,4 +18,13 @@ public class CommentService {
         List<Comment> commentList = commentRepository.findAllByDiaryIdxOrderByCommentDateDesc(diaryIndex);
         return commentList;
     }
+
+    public List<Comment> findAllByOrderByCommentDateDesc() {
+        return commentRepository.findAllByOrderByCommentDateDesc();
+    }
+
+    public void deleteByCommentIdx(Long commentIdx) {
+        commentRepository.deleteByCommentIdx(commentIdx);
+    }
+
 }
