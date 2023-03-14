@@ -71,20 +71,17 @@ public class MemberController {
         return "redirect:/";
     }
 
-    //비밀번호 찾기 경로
     @GetMapping("/find_password")
     public String findPw(){
         return "user/find_password";
     }
 
-    //비밀번호 변경 경로
     @GetMapping("/reset_password")
     public String resetPassword(@RequestParam("username") String username, Model mo){
         mo.addAttribute("username",username);
         return "user/reset_password";
     }
 
-    //비밀번호 변경 서비스 수행 로직
     @PutMapping("/reset_password")
     public String resetPassword(@ModelAttribute MemberJoinDto memberJoinDto){
         Member member = memberService.findByUsername(memberJoinDto.getUsername());
