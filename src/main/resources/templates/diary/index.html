@@ -2,7 +2,6 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
 
@@ -15,14 +14,18 @@
     <div class="col" th:each="diary :${allDiaryList}">
         <div class="card h-100 diaryListCard">
             <div class="card-body diarymainbody">
-                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}">03-10</span>
-                    <span th:text="${diary.diaryKeywords }">술 담배 라이터</span><span th:text="${diary.diaryCnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span
+                        th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}">03-10</span>
+                    <span th:text="${diary.diaryKeywords }">술 담배 라이터</span><span
+                            th:text="${diary.diaryCnt}">5(조회수)</span></h5>
+                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as
+                    a natural lead-in to additional content. This content is a little bit longer.</p>
 
             </div>
             <div class="card-footer">
                 <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
-                <span th:text="${diary.diarySympathyCnt}" style="float: left; width: 33%; margin-left: 10px; margin-top: 10px;">5</span>
+                <span th:text="${diary.diarySympathyCnt}"
+                      style="float: left; width: 33%; margin-left: 10px; margin-top: 10px;">5</span>
                 <span th:text="${diary.diaryWriter}" style="float: right; margin-right: 30px">작성자</span>
             </div>
         </div>
@@ -37,11 +40,14 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li class="page-item"><a class="page-link pageback" th:href="@{/diary?pageCnt=1}">1</a></li>
-        <li class="page-item"><a class="page-link pageback" th:href="@{/diary?pageCnt=2}">2</a></li>
-        <li class="page-item"><a class="page-link pageback" th:href="@{/diary?pageCnt=3}">3</a></li>
-        <li class="page-item"><a class="page-link pageback" th:href="@{/diary?pageCnt=4}">4</a></li>
-        <li class="page-item"><a class="page-link pageback" th:href="@{/diary?pageCnt=5}">5</a></li>
+        <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+            <li class="page-item">
+                <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
+            </li>-
+            <li class="page-item">
+                <a th:if="${page!=nowPage}" th:href="@{/diary(page=${page})}" th:text="${page}"></a>
+            </li>
+        </th:block>
         <li class="page-item">
             <a class="page-link pageback" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -52,14 +58,14 @@
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search">
-            <select class="form-select form-select-sm selectSerch" aria-label=".form-select-sm example">
-                <option selected value="content">내용</option>
-                <option value="writer">작성자</option>
-                <option value="keyword">키워드</option>
+        <form class="d-flex" role="search" th:action="@{/diary}" method="post">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
+                <option selected value="content" id="content">내용</option>
+                <option value="writer" id="writer">작성자</option>
+                <option value="keyword" id="keyword">키워드</option>
             </select>
-            <input class="form-control me-2" type="search" placeholder="" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" style="width: 100px">검색</button>
+            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
         </form>
     </div>
 </nav>
