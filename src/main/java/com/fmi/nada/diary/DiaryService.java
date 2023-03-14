@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 다이어리 서비스
+ * Diary Service
  */
 @Service
 @RequiredArgsConstructor

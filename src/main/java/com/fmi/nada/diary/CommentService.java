@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 댓글 서비스
+ *  Comment Service
  */
 @Service
 @RequiredArgsConstructor

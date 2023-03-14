@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 다이어리 컨트롤러
+ * Diary Controller
  */
 @Controller
 @RequiredArgsConstructor
