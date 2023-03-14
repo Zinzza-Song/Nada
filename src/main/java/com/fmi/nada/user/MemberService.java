@@ -15,7 +15,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final BlockListRepository blockListRepository;
     private final FriendsRepository friendsRepository;
 
     public Member join(
@@ -56,14 +56,14 @@ public class MemberService {
 
     /* 친구리스트 */
     public List<Friends> friendsList(Long memberIdx){
-        return memberRepository.findFriendsByMemberIdx(memberIdx);
+        return friendsRepository.findFriendsByMemberIdx(memberIdx);
     }
 
 
 
     /* 블록유저 리스트 */
     public List<BlockList> blockLists(Long memberIdx){
-        return memberRepository.findBlockListByMemberIdx(memberIdx);
+        return blockListRepository.findBlockListByMemberIdx(memberIdx);
     }
 
     public List<Member> memberList() {

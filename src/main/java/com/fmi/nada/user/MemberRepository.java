@@ -12,7 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findAllByOrderByMemberJoinDateDesc();
     void deleteMemberByMemberIdx(Long memberIdx);
 
-    List<Friends> findFriendsByMemberIdx(Long memberIdx);
-    List<BlockList> findBlockListByMemberIdx(Long memberIdx);
+
+
 
 }

@@ -20,16 +20,18 @@
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
-<div class="BoxTitle"><span class="logo-text">M Y P A G E</span></div>
+<div class="card-header BoxTitle">
+    My Page
+</div>
 <div class="container-fluid">
   <div class="row mt-5">
     <div class="col-md-3">
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">프로필..? 아이콘이었던가</h5>
-          <p class="card-text">Name: 박건상.. 대충 사진들어가면됨</p>
-          <p class="card-text">Birth: 1992-01-07</p>
-          <p class="card-text">NickName: 건상이</p>
+          <h5 class="card-title">프로필? 아이콘이었던가</h5>
+          <p class="card-text" th:text="${memberLoginBean.username}">이메일</p>
+          <p class="card-text" th:text="${memberLoginBean.memberBirth}">생일</p>
+          <p class="card-text" th:text="${memberLoginBean.memberNickname}">닉네임</p>
         </div>
       </div>
       <div class="card mb-3">
@@ -61,13 +63,12 @@
               <th scope="col">조회수</th>
             </tr>
             </thead>
-            <tbody>
-<!--                    class="table-group-divider" th:each="">-->
+            <tbody class="table-group-divider" th:each="myDiary : ${myDiaryList}">
             <tr>
-<!--              <th scope="row" th:text="">일기 번호</th>-->
-<!--              <td th:text="">일기 제목</td>-->
-<!--              <td th:text="">일기 날짜</td>-->
-<!--              <td th:text="">일기 조회수</td>-->
+              <th scope="row" th:text="${myDiary.diaryIdx}">일기 번호</th>
+              <td th:text="${myDiary.diarySubject}">일기 제목</td>
+              <td th:text="myDiary.diaryDate">일기 날짜</td>
+              <td th:text="myDiary.diaryCnt">일기 조회수</td>
             </tr>
             </tbody>
           </table>
@@ -126,11 +127,10 @@
               <th scope="col">친구 먹은날</th>
             </tr>
             </thead>
-            <tbody >
-<!--                    class="table-group-divider" th:each="">-->
+            <tbody class="table-group-divider" th:each="friend : ${friendsList}">
             <tr>
-<!--              <th scope="row" th:text="">친구 이름</th>-->
-<!--              <td th:text="">친구 먹은날</td>-->
+              <th scope="row" th:text="${friend.friendsNickname}">친구 닉네임</th>
+              <td th:text="${friend.friendsDate}">친구 먹은날</td>
             </tr>
             </tbody>
           </table>
@@ -149,12 +149,11 @@
               <th scope="col">차단 날짜</th>
             </tr>
             </thead>
-            <tbody >
-<!--                    class="table-group-divider" th:each="">-->
+            <tbody class="table-group-divider" th:each="block : ${blockLists}">
             <tr>
-<!--              <th scope="row" th:text="">차단 유저 네임</th>-->
-<!--              <td th:text="">차단 사유</td>-->
-<!--              <td th:text="">차단 날짜</td>-->
+              <th scope="row" th:text="${block.blockMemberNickname}">차단 유저 네임</th>
+              <td th:text="${block.blockMemberReason}">차단 사유</td>
+              <td th:text="${block.blockMemberDate}">차단 날짜</td>
             </tr>
             </tbody>
           </table>
