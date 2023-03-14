@@ -47,4 +47,8 @@ public class MemberService {
         memberRepository.deleteMemberByMemberIdx(memberIdx);
     }
 
+    public void updatePw(Member member) {
+        memberRepository.save(member);
+    }
+
 }
