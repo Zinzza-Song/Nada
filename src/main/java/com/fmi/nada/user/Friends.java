@@ -32,6 +32,9 @@ public class Friends {
     @Column(name = "friends_MemberIdx")
     private Long friendsMemberIdx;
 
+    @Column(name = "friends_Nickname")
+    private String friendsNickname;
+
     @CreatedDate
     @Column(name = "friends_date")
     private LocalDateTime friendsDate;

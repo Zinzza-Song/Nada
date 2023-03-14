@@ -68,6 +68,10 @@ public class DiaryService {
         return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
     }
 
+    public List<Diary> findMyDiaryByMemberIdx(Long memberIdx){
+        return diaryRepository.findMyDiaryByMemberIdx(memberIdx);
+    }
+
     // 다이어리 상세 보기
     public Diary getDiaryDetail(Long diaryIndex) {
         return diaryRepository.getById(diaryIndex);
