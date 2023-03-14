@@ -88,6 +88,9 @@ public class Member implements UserDetails {
         this.memberAddress = memberAddress;
         this.memberPhone = memberPhone;
     }
+    public Member(String password){
+        this.password=password;
+    }
 
 
     @Override

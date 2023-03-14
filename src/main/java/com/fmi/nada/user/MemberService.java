@@ -36,6 +36,9 @@ public class MemberService {
     public Member findByUsername(String username) {
         return memberRepository.findByUsername(username);    }
 
+    public void updatePw(Member member){
+        memberRepository.save(member);
+    }
 
 
 }

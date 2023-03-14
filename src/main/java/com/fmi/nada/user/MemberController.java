@@ -1,6 +1,7 @@
 package com.fmi.nada.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MailAuthService mailAuthService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/join")
     public String join(@ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto) {
@@ -83,8 +85,8 @@ public class MemberController {
     @PutMapping("/reset_password")
     public String resetPassword(@ModelAttribute MemberJoinDto memberJoinDto){
         Member member = memberService.findByUsername(memberJoinDto.getUsername());
-        member.setPassword(memberJoinDto.getPassword());
-
+        member.setPassword(passwordEncoder.encode(memberJoinDto.getPassword()));
+        memberService.updatePw(member);
         return "redirect:/";
     }
 
