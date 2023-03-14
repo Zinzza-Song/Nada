@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class Qna {
 
+    @GeneratedValue
     @Id
     private Long qna_idx;
     private Long member_idx;
@@ -30,7 +31,7 @@ public class Qna {
     @Column(insertable = false, updatable = false, columnDefinition = "int default 0")
     private Long qna_views;
     private String qna_answer;
-    private boolean qna_isanswered;
+    private Boolean qna_isanswered;
 
 
 }
