@@ -101,21 +101,25 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/read/{memberIdx}")
-    public String readMember(@PathVariable("memberIdx") Long memberIdx,
-                            Authentication authentication,
-                            Model model) {
-        Member member = (Member) authentication.getPrincipal();
-        List<Diary> myDiaryList = diaryService.findMyDiaryBymemberIdx(memberIdx);
-        List<Friends> friendsList = memberService.friendsList(memberIdx);
-        List<BlockList> blockLists = memberService.blockLists(memberIdx);
-        model.addAttribute("friendsList",friendsList);
-        model.addAttribute("blockLists",blockLists);
-        model.addAttribute("memberLoginBean",member);
-        model.addAttribute("myDiaryList",myDiaryList);
+//    @GetMapping("/read/{memberIdx}")
+//    public String readMember(@PathVariable("memberIdx") Long memberIdx,
+//                            Authentication authentication,
+//                            Model model) {
+//        Member member = (Member) authentication.getPrincipal();
+//        List<Diary> myDiaryList = diaryService.findMyDiaryBymemberIdx(memberIdx);
+//        List<Friends> friendsList = memberService.friendsList(memberIdx);
+//        List<BlockList> blockLists = memberService.blockLists(memberIdx);
+//        model.addAttribute("friendsList",friendsList);
+//        model.addAttribute("blockLists",blockLists);
+//        model.addAttribute("memberLoginBean",member);
+//        model.addAttribute("myDiaryList",myDiaryList);
+//        return "user/read";
+//    }
+
+    @GetMapping("/read")
+    public String readMember(){
         return "user/read";
     }
-
     @PostMapping("/friend_add/{memberIdx}")
     public String addFriend(@PathVariable("memberIdx") Long memberIdx,
                             @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
