@@ -77,7 +77,10 @@ public class DiaryService {
         return diaryRepository.getById(diaryIndex);
     }
 
-    // 다이어리 삭제
+    public List<Diary> findMyDiaryBymemberIdx(Long memberIdx){
+        return diaryRepository.findMyDiaryBymemberIdx(memberIdx);
+    }
+
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
     }
