@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 다이어리 서비스
- * */
+ */
 @Service
 @RequiredArgsConstructor
 public class DiaryService {
@@ -41,6 +40,14 @@ public class DiaryService {
 
     }
 
+    public Diary findByDiaryIdx(Long diaryIdx) {
+        return diaryRepository.findByDiaryIdx(diaryIdx);
+    }
+
+    public void modifyDiary(Diary diary) {
+        diaryRepository.save(diary);
+    }
+
     public Diary findByDiary_subject(String diarySubject) {
         return diaryRepository.findByDiarySubject(diarySubject);
     }
@@ -59,7 +66,7 @@ public class DiaryService {
 
     }
 
-    public void deleteDiary(Long diaryIdx){
+    public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
     }
 }
