@@ -13,7 +13,11 @@ import java.util.Optional;
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
    Diary findByDiarySubject(String diarySubject);
+
    List<Diary> findTop5ByOrderByDiaryDateDesc();
    List<Diary> findTop5ByOrderByDiarySympathyCntDesc();
+
+   // 최신 다이어리 게시글부터 정렬
+   List<Diary> findAllByOrderByDiaryDateDesc();
 
 }

@@ -34,16 +34,16 @@ public class NoticeController {
     }
 
     // 공지사항 글 읽기 ( 조회수 증가 )
-    @GetMapping("/read")
-    public String read(@PathVariable("notice_idx") Long notice_idx,
+    @GetMapping("/read/{noticeIndex}")
+    public String read(@PathVariable("noticeIndex") Long notice_idx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model) {
 
-        Notice notice = noticeService.getNotice(notice_idx);
+        Notice notice = noticeService.getNoticeDetail(notice_idx);
         viewCountValidation(notice, request, response);
         model.addAttribute("readNoticeBean", notice);
-        return "board/notice/read";
+        return "board/notice/read/" + notice.getNoticeIdx();
     }
 
     // 공지사항 작성 페이지
@@ -69,32 +69,33 @@ public class NoticeController {
     }
 
     // 공지사항 수정 폼 페이지
-    @GetMapping("/modify")
-    public String modifyNotice(@RequestParam("notice_idx") Long notice_idx, Model model) {
-        Notice notice = noticeService.getNotice(notice_idx);
+    @GetMapping("/modify/{noticeIndex}")
+    public String modifyNotice(@RequestParam("noticeIndex") Long notice_idx, Model model) {
+        Notice notice = noticeService.getNoticeDetail(notice_idx);
         model.addAttribute("modifyNoticeBean", notice);
         return "board/notice/modify";
     }
 
     // 공지사항 수정 서비스 로직 수행
-    @PutMapping("/modify_pro")
+    @PutMapping("/modify_pro/{noticeIndex}")
     public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") NoticeDTO noticeDTO,
+                                   @RequestParam("noticeIndex") Long noticeIndex,
                                    BindingResult bindingResult,
                                    @RequestParam("notice_idx") Long notice_idx) {
         if(bindingResult.hasErrors())
-            return "board/notice/modify";
+            return "board/notice/modify/" + noticeIndex;
 
-        Notice notice = noticeService.getNotice(notice_idx);
+        Notice notice = noticeService.getNoticeDetail(notice_idx);
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
         noticeService.updateNotice(notice);
-        return "redirect:read";
+        return "redirect:read/" + noticeIndex;
     }
 
     // 공지사항 삭제 서비스 로직
-    @DeleteMapping("/delete")
-    public String deleteNotice(@RequestParam("notice_idx") Long notice_idx) {
-        noticeService.deleteNotice(notice_idx);
+    @DeleteMapping("/delete/{noticeIndex}")
+    public String deleteNotice(@RequestParam("noticeIndex") Long noticeIndex) {
+        noticeService.deleteNotice(noticeIndex);
         return "redirect:list";
     }
 
