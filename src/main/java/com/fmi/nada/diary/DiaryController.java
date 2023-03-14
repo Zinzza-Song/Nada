@@ -34,18 +34,18 @@ public class DiaryController {
 
     //다이어리 게시판 페이지
     @GetMapping
-    public String DiaryMain(@PageableDefault(page=0, size=3, sort="diaryDate", direction= Sort.Direction.DESC) Pageable pageable,
+    public String DiaryMain(@PageableDefault(page=0, size=6, sort="diaryDate", direction=Sort.Direction.DESC) Pageable pageable,
                             Model model) {
         /**
          * 페이징 처리
          *
          클라이언트에서 전달받은 pageCnt와 실제 접근 페이지는 다르다.
-         Page 객체는 0부터 시작하기 때문에 실제 접근 페이지는 pageNo - 1 해주어야 한다.
+         Page 객체는 0부터 시작하기 때문에 실제 접근 페이지는 pageNo + 1 해주어야 한다.
          */
         Page<Diary> diaryList = diaryService.getDiaryList(pageable);
         int nowPage = diaryList.getPageable().getPageNumber() + 1;
-        int startPage = Math.max(nowPage, 1);
-        int endPage = Math.min(nowPage+9, diaryList.getTotalPages());
+        int startPage = Math.max(nowPage - 5, 1);
+        int endPage = Math.min(startPage + 9, diaryList.getTotalPages());
 
         model.addAttribute("allDiaryList", diaryList);
         model.addAttribute("nowPage", nowPage);
@@ -53,7 +53,6 @@ public class DiaryController {
         model.addAttribute("endPage", endPage);
         return "diary/index";
     }
-
 
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
