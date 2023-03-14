@@ -12,7 +12,7 @@ public class AnalyzedService {
 
     private final AnalyzedRepository analyzedRepository;
 
-    public void resiterAnalyze(Long diaryIndex,
+    public void resisterAnalyze(Long diaryIndex,
                                String analyzeResult,
                                Integer analyzeScore){
         analyzedRepository.save(new Analyzed(

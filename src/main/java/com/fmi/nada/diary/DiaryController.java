@@ -37,7 +37,7 @@ public class DiaryController {
         return "diary/index";
     }
 
-    
+
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
     public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
@@ -62,7 +62,7 @@ public class DiaryController {
                              @PathVariable("memberIdx") Long memberIdx,
                              Authentication authentication,
                              Model model) {
-        
+
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -92,24 +92,13 @@ public class DiaryController {
         );
 
         Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
-        analyzedService.resiterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
+        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
 
-        String keywordArr[] = diaryDTO.getDiaryKeywords().split(",");
-        for (int i = 0; i < keywordArr.length; i++) {
-            if (keywordArr[i] != null) {
-                Keyword keyword = keywordService.findByKeywordName(keywordArr[i]);
+        insertKeywords(diaryDTO);
 
-                if (keyword != null) {
-                    keyword.setKeywordCnt(keyword.getKeywordCnt() + 1);
-                    keywordService.register(keyword);
-                } else {
-                    keyword.setKeywordName(keywordArr[i]);
-                    keywordService.register(keyword);
-                }
-            }
-        }
         return "redirect:/read/" + diary.getDiaryIdx();
     }
+
 
     // 다이어리 공감에 대한 ajax
     @GetMapping("sympathy/{diaryIdx}")
@@ -154,19 +143,28 @@ public class DiaryController {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
-        diaryService.registerDiary(
-                member.getMemberIdx(),
-                diaryDTO.getDiarySubject(),
-                diaryDTO.getDiaryWriter(),
-                diaryDTO.getDiaryContent(),
-                diaryDTO.getDiaryKeywords(),
-                diaryDTO.getDiaryAnalyze(),
-                diaryDTO.getDiaryPublicable(),
-                diaryDTO.getDiaryAnalyzePublicable()
-        );
+        Diary diary = diaryService.findByDiaryIdx(diaryIdx);
+        diary.setDiarySubject(diaryDTO.getDiarySubject());
+        diary.setDiaryContent(diaryDTO.getDiaryContent());
+        diary.setDiaryKeywords(diaryDTO.getDiaryKeywords());
+        diary.setDiaryAnalyze(diaryDTO.getDiaryAnalyze());
+        diary.setDiaryPublicable(diaryDTO.getDiaryPublicable());
+        diary.setDiaryAnalyzePublicable(diaryDTO.getDiaryAnalyzePublicable());
 
-        Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
+        insertKeywords(diaryDTO);
+        diaryService.modifyDiary(diary);
 
+        return "redirect:/read/" + diary.getDiaryIdx() + "?pageCnt=" + pageCnt;
+    }
+
+    // 다이어리 삭제 로직
+    @DeleteMapping("delete/{diaryIdx}")
+    public String deleteDiary(@PathVariable("diaryIdx") Long diaryIdx) {
+        diaryService.deleteDiary(diaryIdx);
+        return "redirect:index?pageNum=" + 1;
+    }
+
+    private void insertKeywords(DiaryDTO diaryDTO) {
         String keywordArr[] = diaryDTO.getDiaryKeywords().split(",");
         for (int i = 0; i < keywordArr.length; i++) {
             if (keywordArr[i] != null) {
@@ -181,14 +179,6 @@ public class DiaryController {
                 }
             }
         }
-        return "redirect:/read/" + diary.getDiaryIdx();
-    }
-
-    // 다이어리 삭제 로직
-    @DeleteMapping("delete/{diaryIdx}")
-    public String deleteDiary(@PathVariable("diaryIdx") Long diaryIdx){
-        diaryService.deleteDiary(diaryIdx);
-        return "redirect:index?pageNum=" + 1;
     }
 
 }
