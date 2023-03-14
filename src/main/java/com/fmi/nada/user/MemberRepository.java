@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByUsername(String name);
+
+    Member findByMemberIdx(Long memberIdx);
+
     List<Member> findAllByOrderByMemberJoinDateDesc();
 
     void deleteMemberByMemberIdx(Long memberIdx);
