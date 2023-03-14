@@ -66,6 +66,10 @@ public class DiaryService {
 
     }
 
+    public List<Diary> findMyDiaryBymemberIdx(Long memberIdx){
+        return diaryRepository.findMyDiaryBymemberIdx(memberIdx);
+    }
+
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
     }
