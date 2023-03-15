@@ -73,6 +73,10 @@ public class DiaryService {
         return diaryRepository.findMyDiaryByMemberIdx(memberIdx);
     }
 
+    public List<Diary> getLikeDiary(Long diaryIdx){
+        return diaryRepository.findLikeDiaryByDiaryIdx(diaryIdx);
+    }
+
     // 다이어리 상세 보기
     public Diary getDiaryDetail(Long diaryIndex) {
         return diaryRepository.getById(diaryIndex);

@@ -123,8 +123,8 @@ public class MemberController {
         List<BlockList> blockLists = memberService.blockLists(memberIdx);
         model.addAttribute("blockLists",blockLists);
 
-//        List<Diary> likeDiaryList = diaryService.findLikeDiaryListById(likeDiaryIdx);
-//        model.addAttribute("likeDiaryList",likeDiaryList);
+        List<Diary> likeDiaryList = diaryService.getLikeDiary(likeDiaryIdx);
+        model.addAttribute("likeDiaryList",likeDiaryList);
 
 
         return "user/read";
