@@ -170,6 +170,13 @@ public class MemberController {
         }
         return "user/read";
     }
+
+    @DeleteMapping("/delete")
+    public String deleteMember(@RequestParam("memberIdx") Long memberIdx){
+        memberService.delMember(memberIdx);
+        return "redirect:/";
+
+    }
 //    @GetMapping("/read")
 //    public String readMember(){
 //        return "user/read";

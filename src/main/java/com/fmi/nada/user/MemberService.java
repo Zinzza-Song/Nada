@@ -51,7 +51,7 @@ public class MemberService {
     }
 
     public void delMember(Long memberIdx) {
-        memberRepository.deleteMemberByMemberIdx(memberIdx);
+        memberRepository.deleteById(memberIdx);
     }
 
     public void updatePw(Member member) {
