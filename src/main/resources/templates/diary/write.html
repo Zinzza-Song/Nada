@@ -7,26 +7,111 @@
 <head th:insert="~{fragment/topMenu.html::header}">
     <link rel="stylesheet" href="/css/login.css"/>
 </head>
-<body>
-<header th:insert="~{fragment/topMenu.html::nav}">
+<body class="diary-write-body">
+
+<header th:insert="~{fragment/topMenu.html::nav}"/>
+
     <div class="container">
-     <div class="card diary-write">
-        <div class="card-header BoxTitle">
+     <div class="diary-write">
+        <div class="card-header BoxTitle text-center">
             다 이 어 리 쓰 기
         </div>
-         <form th:action="@{diary/write_pro}" method="" th:object="writeDiaryBean">
-            <div class="card-body diary">
-                <h5 class="card-title diarySubject" th:field="${writeDiaryBean.diarySubject}">다이어리 제목</h5>
-                <p class="card-text diaryContent" th:field="${writeDiaryBean.diaryContent}">다이어리 내용</p>
-                <div>
 
+         <form th:action="@{diary/write_pro}" method="post" th:object="${writeDiaryBean}" th:onsubmit="return false">
+
+             <div class="form-group">
+             <div class="card-body diary">
+
+             <div class="form-group public-check-box">
+<!--                 member의 다이어리 작성 공개/비공개 여부 라디오 버튼-->
+             <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio1" th:value="true" th:field="*{diaryPublicable}">
+                 <label class="form-check-label" for="publicRadio1">공개</label>
+             </div>
+
+             <div class="form-check form-check-inline">
+                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio2" th:value="false" th:field="*{diaryPublicable}">
+                 <label class="form-check-label" for="publicRadio2">비공개</label>
+             </div>
+
+             </div>
+
+
+                <div class="form-group">
+                    <input type="text" class="card-title diarySubject" placeholder="제목을 입력해주세요." th:field="*{diarySubject}"/>
                 </div>
-                <a href="#" class="btn btn-primary">버튼</a>
+
+
+                <div class="form-group">
+                    <textarea class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요." th:field="*{diaryContent}"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="button" id="englishBtn" name="englishBtn" onclick="translation()" value="영번역" class="btn btn-secondary englishBtn"/>
+                    <input type="reset" id="diaryResetBtn" name="diaryResetBtn" value="재작성" class="btn btn-secondary diaryResetBtn"/>
+                    <input type="button" id="diarySaveBtn" name="diarySaveBtn" onclick="diarySave()" value="저장" class="btn btn-secondary diarySaveBtn btn-right"/>
+                </div>
+
+<!--                키워드-->
+                <div class="form-group">
+                    <label>키워드</label>
+                    <p class="diary-keywords">
+                      <th:block th:each="keyword : ${diaryKeywords }">
+                          <button th:value="${keyword}" th:text="${keyword}" th:field="*{diaryKeywords}" onclick="keywordClick()"/>
+                      </th:block>
+                    </p>
+                </div>
             </div>
+                 <!-- 다이어리 제목부터 키워드까지 -->
+
+              <div class="form-group Analyze diary" id="Analyze" name="Analyze">
+
+                <div class="form-group public-check-box">
+
+<!--                    감정분석결과 공개/비공개 라디오버튼-->
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio1" th:value="true" th:field="*{diaryAnalyzePublicable}">
+                        <label class="form-check-label" for="diaryAnalyzeRadio1">공개</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio12" th:value="false" th:field="*{diaryAnalyzePublicable}">
+                        <label class="form-check-label" for="diaryAnalyzeRadio1">비공개</label>
+                    </div>
+                </div>
+                  </div>
+                  <div class="form-group">
+                    <label>감정 분석 결과</label>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="diaryAnalyze" th:readonly="readonly" th:text="${diaryAnalyze}" th:value="${diaryAnalyze}" th:field="*{diaryAnalyze}"/>
+                  </div>
+
+              </div>
+
+             <input type="submit" class="btn btn-dark btn-right" value="완료"/>
          </form>
      </div>
     </div>
-</header>
 
+
+<footer th:insert="~{fragment/footer.html::footer}"/>
+<script>
+
+
+    const diaryContent = document.getElementById('diaryContent');
+    function translation(){
+        //영번역 함수
+    }
+
+    function diarySave(){
+        //다이어리 저장 함수
+    }
+
+    function keywordClick(){
+        //키워드 클릭 함수
+    }
+
+
+</script>
 </body>
 </html>

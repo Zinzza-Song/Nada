@@ -1,6 +1,9 @@
 package com.fmi.nada.user;
 
+import com.fmi.nada.diary.Diary;
+import com.fmi.nada.diary.DiaryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +21,8 @@ public class MemberController {
     private final MemberService memberService;
     private final MailAuthService mailAuthService;
     private final PasswordEncoder passwordEncoder;
+
+    private final DiaryService diaryService;
 
     @GetMapping("/join")
     public String join(@ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto) {
@@ -93,6 +99,39 @@ public class MemberController {
         member.setPassword(passwordEncoder.encode(findPasswordDto.getPassword()));
         memberService.updatePw(member);
         return "redirect:/";
+    }
+
+//    @GetMapping("/read/{memberIdx}")
+//    public String readMember(@PathVariable("memberIdx") Long memberIdx,
+//                            Authentication authentication,
+//                            Model model) {
+//        Member member = (Member) authentication.getPrincipal();
+//        List<Diary> myDiaryList = diaryService.findMyDiaryBymemberIdx(memberIdx);
+//        List<Friends> friendsList = memberService.friendsList(memberIdx);
+//        List<BlockList> blockLists = memberService.blockLists(memberIdx);
+//        model.addAttribute("friendsList",friendsList);
+//        model.addAttribute("blockLists",blockLists);
+//        model.addAttribute("memberLoginBean",member);
+//        model.addAttribute("myDiaryList",myDiaryList);
+//        return "user/read";
+//    }
+
+    @GetMapping("/read")
+    public String readMember(){
+        return "user/read";
+    }
+    @PostMapping("/friend_add/{memberIdx}")
+    public String addFriend(@PathVariable("memberIdx") Long memberIdx,
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
+        memberService.addFriends(memberIdx,friendsMemberIdx);
+        return "user/read";
+    }
+
+    @DeleteMapping("/friend_del/{memberIdx}")
+    public String delFriend(@PathVariable("memberIdx") Long memberIdx,
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
+        memberService.delFriends(memberIdx,friendsMemberIdx);
+        return "user/friend_list";
     }
 
 }
