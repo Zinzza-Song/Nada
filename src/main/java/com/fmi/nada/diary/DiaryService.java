@@ -19,8 +19,11 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
     public Page<Diary> getDiaryList(Pageable pageable) {
-        Page<Diary> diaryList = diaryRepository.findAllByOrderByDiaryDateDesc(pageable);
-        return diaryList;
+        return diaryRepository.findAllByOrderByDiaryDateDesc(pageable);
+    }
+
+    public List<Diary> getDiaryList() {
+        return diaryRepository.findAllByOrderByDiaryDateDesc();
     }
 
     public void registerDiary(Long memberIdx,
@@ -81,8 +84,6 @@ public class DiaryService {
     public Diary getDiaryDetail(Long diaryIndex) {
         return diaryRepository.getById(diaryIndex);
     }
-
-
 
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);

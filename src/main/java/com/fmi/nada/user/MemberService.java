@@ -15,6 +15,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BlockListRepository blockListRepository;
+    private final FriendsRepository friendsRepository;
+    private final SympathyRepository sympathyRepository;
 
     public Member join(
             String username,
