@@ -24,6 +24,7 @@ public class Analyzed {
     @Column(name = "diary_idx")
     private Long diaryIdx;
 
+    @Lob
     @Column(name = "analyze_result")
     private String analyzeResult;
 

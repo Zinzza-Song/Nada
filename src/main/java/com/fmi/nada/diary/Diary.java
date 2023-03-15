@@ -38,6 +38,7 @@ public class Diary {
     @Column(name = "diary_writer")
     private String diaryWriter;
 
+    @Lob
     @Column(name = "diary_content")
     private String diaryContent;
 
@@ -48,6 +49,7 @@ public class Diary {
     @Column(name = "diary_keywords")
     private String diaryKeywords;
 
+    @Lob
     @Column(name = "diary_analyze")
     private String diaryAnalyze;
 
