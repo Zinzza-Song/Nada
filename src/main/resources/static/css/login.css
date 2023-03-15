@@ -14,7 +14,9 @@ body {
     text-transform: uppercase;
     padding: 5px;
     margin-bottom: 20px;
+    /*그레디언트가 이미지이기때문에*/
     background: linear-gradient(to right, #330f0e, #f5e2b4);
+    /*-webkit-사용-> 구글/사파리브라우저에 적용*/
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -60,17 +62,17 @@ input[type="button"] {
 .diary-container {
     align-items: center;
 }
+/*이미지 넣을 css 따로 분리해서 넣을 것*/
+/*.diary-write{*/
+/*    !*width: 1100px;*!*/
+/*    !*height: auto;*!*/
+/*    !*min-height: 1000px;*!*/
 
-.diary-write{
-    width: 1100px;
-    /*height: auto;*/
-    /*min-height: 1000px;*/
+/*    background-image: url(../images/diarywrite.png);*/
+/*    background-size: 1300px 600px;*/
 
-    background-image: url(../images/diarywrite.png);
-    background-size: 1300px 600px;
-
-    background-repeat: no-repeat;
-}
+/*    background-repeat: no-repeat;*/
+/*}*/
 .btn-right{
     padding-left: 80%;
     display: flex;
@@ -97,14 +99,24 @@ input[type="button"] {
     padding: 5px 10px;
     font-size: small;
 }
-.writeTitle{
-    font-size: medium;
-}
+/*.writeTitle{*/
+/*    font-size: medium;*/
+/*}*/
+/*.page{*/
+/*    align-items: center;*/
+/*}*/
+/*.page-item{*/
+/*    display: inline-block;*/
+/*}*/
 .page{
-    align-items: center;
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
-.page-item{
-    display: inline;
+.page li{
+    display: inline-block;
+    font-size: 20px;
 }
 
 
