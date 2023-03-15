@@ -101,8 +101,8 @@
                   </div>
 
                   <div class="form-group">
-                    <textarea class="diaryAnalyze" th:readonly="readonly" th:text="${diaryAnalyze}"
-                              th:value="${diaryAnalyze}" th:field="*{diaryAnalyze}">건상님 감정상태가 점점 좋아지고 있어요~</textarea>
+                    <textarea class="diaryAnalyze" th:readonly="readonly" id="diaryAnalyze"
+                              th:field="*{diaryAnalyze}">건상님 감정상태가 점점 좋아지고 있어요~</textarea>
                   </div>
 
 
@@ -125,12 +125,35 @@
 
     function diarySave(){
         //다이어리 저장 함수
+        const diarycontent = document.getElementById('diaryContent');
+        let msg = diarycontent.value;
+        msg += "\n위 텍스트에서 키워드를 단어로 나열해주고 감정분석해서 알려줘";
+        console.log(msg);
+
+        let diaryAnalyze = document.getElementById('diaryAnalyze');
+        diaryAnalyze.value = "일기를 분석 중입니다.";
+
+        let gptData = {
+            method: 'POST',
+            body: JSON.stringify({msg}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        fetch('http://localhost:8080/send', gptData)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+                let diaryAnalyze = document.getElementById('diaryAnalyze');
+                const resMsg = data.data;
+                diaryAnalyze.value = resMsg;
+            })
     }
 
     function keywordClick(){
         //키워드 클릭 함수
     }
-
 
 </script>
 </body>
