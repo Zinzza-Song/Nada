@@ -29,7 +29,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">프로필? 아이콘이었던가</h5>
-          <p class="card-text" th:text="${memberLoginBean.username}">이메일</p>
+          <p class="card-text" id="email" th:text="${memberLoginBean.username}">이메일</p>
           <p class="card-text" th:text="${memberLoginBean.memberBirth}">생일</p>
           <p class="card-text" th:text="${memberLoginBean.memberNickname}">닉네임</p>
         </div>
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div>
-        <input type="button" value="정보수정버튼">
+        <input type="button" value="회원정보수정" onclick="loc()">
       </div>
     </div>
     <div class="col-md-3">
@@ -161,6 +161,13 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  function loc(){
+    window.location="/user/modify";
+  }
+
+</script>
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
 </body>
 </html>

@@ -58,6 +58,8 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public void updateMember(Member member){memberRepository.save(member);}
+
     /* 친구추가 */
     public Friends addFriends(Long memberIdx,
                               Long friendsMemberIdx) {
@@ -71,9 +73,13 @@ public class MemberService {
                 friendsMemberIdx);
     }
 
-
     public Sympathy getLikeIdx(Long memberIdx){
-        return sympathyRepository.findByMemberIdx(memberIdx);
+        Sympathy likeIdx = sympathyRepository.findByMemberIdx(memberIdx);
+        if (likeIdx==null){
+            return null;
+        }else {
+            return likeIdx;
+        }
     }
 
     /* 친구리스트 */

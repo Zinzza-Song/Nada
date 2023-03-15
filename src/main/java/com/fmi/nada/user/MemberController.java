@@ -102,34 +102,74 @@ public class MemberController {
     }
 
     @GetMapping("/read")
-    public String readMember(Authentication authentication,
+    public String readMember(@ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
+                             Authentication authentication,
                             Model model) {
         Member member = (Member) authentication.getPrincipal();
+
         model.addAttribute("memberLoginBean",member);
 
         Long memberIdx = member.getMemberIdx();
 
         Sympathy sympathy = memberService.getLikeIdx(memberIdx);
-        Long likeDiaryIdx = sympathy.getDiaryIdx();
-        System.out.println(likeDiaryIdx);
+        if (sympathy==null){
+            List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
+            model.addAttribute("myDiaryList", myDiaryList);
 
+            List<Friends> friendsList = memberService.friendsList(memberIdx);
+            model.addAttribute("friendsList", friendsList);
 
-        List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
-        model.addAttribute("myDiaryList",myDiaryList);
+            List<BlockList> blockLists = memberService.blockLists(memberIdx);
+            model.addAttribute("blockLists", blockLists);
 
-        List<Friends> friendsList = memberService.friendsList(memberIdx);
-        model.addAttribute("friendsList",friendsList);
+        }else {
+            Long likeDiaryIdx = sympathy.getDiaryIdx();
+            System.out.println(likeDiaryIdx);
 
-        List<BlockList> blockLists = memberService.blockLists(memberIdx);
-        model.addAttribute("blockLists",blockLists);
+            List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
+            model.addAttribute("myDiaryList", myDiaryList);
 
-        List<Diary> likeDiaryList = diaryService.getLikeDiary(likeDiaryIdx);
-        model.addAttribute("likeDiaryList",likeDiaryList);
+            List<Friends> friendsList = memberService.friendsList(memberIdx);
+            model.addAttribute("friendsList", friendsList);
 
+            List<BlockList> blockLists = memberService.blockLists(memberIdx);
+            model.addAttribute("blockLists", blockLists);
 
+            List<Diary> likeDiaryList = diaryService.getLikeDiary(likeDiaryIdx);
+            model.addAttribute("likeDiaryList", likeDiaryList);
+
+        }
         return "user/read";
     }
 
+    @GetMapping("/modify")
+    public String modify(@ModelAttribute("memberInfoBean") MemberJoinDto memberJoinDto,
+                         Authentication authentication,Model model){
+        Member member = (Member) authentication.getPrincipal();
+        model.addAttribute("memberLoginBean",member);
+        return "user/modify";
+    }
+
+    @PutMapping("/modify_pro")
+    public String modify_pro(@Valid @ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
+                             @ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
+                             Authentication authentication,BindingResult bindingResult,Model model
+    ){
+        if (bindingResult.hasErrors()){
+            Member member = (Member) authentication.getPrincipal();
+            model.addAttribute("memberLoginBean",member);
+            return "user/read";
+        }else {
+            Member member = (Member) authentication.getPrincipal();
+            member.setMemberNickname(memberUpdateDto.getMemberNickname());
+            member.setPassword(passwordEncoder.encode(memberUpdateDto.getPassword()));
+            member.setMemberAddress(memberUpdateDto.getMemberAddress());
+            member.setMemberPhone(memberUpdateDto.getMemberPhone());
+            memberService.updateMember(member);
+            model.addAttribute("memberLoginBean",member);
+        }
+        return "user/read";
+    }
 //    @GetMapping("/read")
 //    public String readMember(){
 //        return "user/read";
