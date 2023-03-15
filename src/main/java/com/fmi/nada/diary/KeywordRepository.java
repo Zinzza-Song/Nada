@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * 키워드 레포지토리
+ * Keyword Repository
  * */
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 

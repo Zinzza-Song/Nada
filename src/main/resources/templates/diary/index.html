@@ -14,12 +14,13 @@
     <div class="col" th:each="diary :${allDiaryList}">
         <div class="card h-100 diaryListCard">
             <div class="card-body diarymainbody">
-                <h5 class="card-title" th:text="${diary.diarySubject}">일기 제목 <span
-                        th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}">03-10</span>
-                    <span th:text="${diary.diaryKeywords }">술 담배 라이터</span><span
-                            th:text="${diary.diaryCnt}">5(조회수)</span></h5>
-                <p class="card-text" th:text="${diary.diaryContent}">This is a longer card with supporting text below as
-                    a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title" th:text="${diary.diarySubject}">
+                <br>
+                    <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}"/>
+                    <span th:text="${diary.diaryKeywords }"/>
+                    <span th:text="${diary.diaryCnt}"/>
+                </h5>
+                <p class="card-text" th:text="${diary.diaryContent}"/>
 
             </div>
             <div class="card-footer">
@@ -33,28 +34,30 @@
 </div>
 
 <!-- 다이어리 하단 페이지 -->
-<nav aria-label="Page navigation example" class="page">
+<div aria-label="Page navigation" class="page">
     <ul class="pagination">
         <li class="page-item">
-            <a class="page-link pageback" href="#" aria-label="Previous">
+            <a class="page-link" href="#" aria-label="Previous" th:disabled="${nowPage == 1}"
+               th:href="@{/diary(page=${nowPage - 2})}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
             <li class="page-item">
-                <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
-            </li>-
+                <strong class="page-link now-page" th:if="${page == nowPage}" th:text="${page}"></strong>
+            </li>
             <li class="page-item">
-                <a th:if="${page!=nowPage}" th:href="@{/diary(page=${page})}" th:text="${page}"></a>
+                <a class="page-link" th:if="${page != nowPage}" th:href="@{/diary(page=${page - 1})}" th:text="${page}"></a>
             </li>
         </th:block>
         <li class="page-item">
-            <a class="page-link pageback" href="#" aria-label="Next">
+            <a class="page-link" href="#" aria-label="Next" th:disabled="${nowPage == allDiaryList.totalPages}"
+               th:href="@{/diary(page=${nowPage})}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
     </ul>
-</nav>
+</div>
 
 <nav class="navbar searchbar">
     <div class="container-fluid">

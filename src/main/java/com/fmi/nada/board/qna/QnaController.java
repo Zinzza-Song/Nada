@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * QnA Controller
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board/qna")

@@ -105,9 +105,13 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-size: cover;
     margin-top: 10px;
 }
-.pageback{
+.page-link {
     color: #ffffff;
     background-color: #937152;
+}
+.now-page {
+    color: #330f0e;
+    background-color: #e3cab0;
 }
 .searchbar {
     margin-top: 10px;
@@ -119,8 +123,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 .page {
-    margin-left: 45%;
-    margin-top: 30px;
+    padding: 30px;
 }
 
 .dropdown-menu {

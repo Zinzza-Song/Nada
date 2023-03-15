@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 다이어리 서비스
+ * Diary Service
  */
 @Service
 @RequiredArgsConstructor

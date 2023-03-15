@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 다이어리 레포지토리
+ * Diary Repository
  */
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
