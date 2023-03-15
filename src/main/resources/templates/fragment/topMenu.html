@@ -15,7 +15,6 @@
     <!-- <title>Bootstrap Example</title> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <title>NADA 나의 다이어리</title>
@@ -55,11 +54,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/notice?page_cnt=1}">공지사항</a></li>
+                                   th:href="@{/board/notice?pageCnt=1}">공지사항</a></li>
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/QNA?page_cnt=1}">Q&A</a></li>
+                                   th:href="@{/board/qna?pageCnt=1}">Q&A</a></li>
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/report?page_cnt=1}">신고 게시판</a></li>
+                                   th:href="@{/board/report?pageCnt=1}">신고 게시판</a></li>
                         </ul>
                     </li>
                     <li class="nav-item col-md-7">
@@ -67,11 +66,12 @@
                         <a class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/}">adminPage</a>
                     </li>
                     <li class="nav-item col-md-10">
+                        <div sec:authorize="!isAuthenticated()">
+                            <a class="nav-link userLoginBox"
+                                th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
+                                th:href="@{/user/login}">로그인</a>
+                        </div>
 
-                        <a class="nav-link userLoginBox" sec:authorize="!isAuthenticated()"
-                           th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
-                                                               sec:authorize="!isAuthenticated()"
-                                                               th:href="@{/user/login}">로그인</a>
                         <span id="nickname" sec:authorize="isAuthenticated()"
                               th:text="${#authentication.name}">(닉네임)</span>
                         <form th:action="@{/logout}" method="post">

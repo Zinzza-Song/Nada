@@ -11,23 +11,25 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col" th:each="diary :${allDiaryList}">
-        <div class="card h-100 diaryListCard">
-            <div class="card-body diarymainbody">
-                <h5 class="card-title" th:text="${diary.diarySubject}">
-                <br>
-                    <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}"/>
-                    <span th:text="${diary.diaryKeywords }"/>
-                    <span th:text="${diary.diaryCnt}"/>
-                </h5>
-                <p class="card-text" th:text="${diary.diaryContent}"/>
+    <div th:each="diary :${allDiaryList}">
+        <div class="col">
+            <div class="card h-100 diaryListCard">
+                <div class="card-body diarymainbody">
+                    <h5 class="card-title" th:text="${diary.diarySubject}">
+                        <br>
+                        <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}"/>
+                        <span th:text="${diary.diaryKeywords }"/>
+                        <span th:text="${diary.diaryCnt}"/>
+                    </h5>
+                    <p class="card-text" th:text="${diary.diaryContent}"/>
 
-            </div>
-            <div class="card-footer">
-                <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
-                <span th:text="${diary.diarySympathyCnt}"
-                      style="float: left; width: 33%; margin-left: 10px; margin-top: 10px;">5</span>
-                <span th:text="${diary.diaryWriter}" style="float: right; margin-right: 30px">작성자</span>
+                </div>
+                <div class="card-footer">
+                    <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
+                    <span th:text="${diary.diarySympathyCnt}"
+                          style="float: left; width: 33%; margin-left: 10px; margin-top: 10px;">5</span>
+                    <span th:text="${diary.diaryWriter}" style="float: right; margin-right: 30px">작성자</span>
+                </div>
             </div>
         </div>
     </div>

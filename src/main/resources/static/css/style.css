@@ -1,10 +1,10 @@
 
 .advice-title {
-    margin-top: 15px;
+    margin-top: 40px;
 }
 
 .list {
-    margin-bottom: 12px;
+    /*margin-bottom: 200px;*/
 }
 
 #plus-recent,
@@ -66,12 +66,22 @@ width: 100%;
 height: 300px;
 background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
-.mainBody, .diarymain,.diary-write-body {
+.mainBody, .diarymain,.diary-write-body, .noticeMain,
+.qnaMain, .reportMain, .noticeWriteForm, .noticeReadForm ,
+.noticeModifyForm, .qnaReadForm, .qnaWriteForm{
     background-image: url(../images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     flex-wrap: inherit;
 }
+.noticePage{
+    margin-left: 43%;
+}
+.noticeWriteBtn{
+    float: right;
+    margin: 30px 40px;
+}
+
 
 #main {
     margin-top: 20px;
@@ -85,6 +95,13 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-image: url(../images/list.PNG);
     background-repeat: round;
     background-size: cover;
+}
+.todayAdvice,.keywordcard{
+    width: 220px;
+    height: 200px;
+}
+#keywordContext{
+    margin-top: 6px;
 }
 
 .emoticon {
