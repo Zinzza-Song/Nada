@@ -1,10 +1,13 @@
 package com.fmi.nada.user;
 
+import com.fmi.nada.diary.Diary;
+import com.fmi.nada.diary.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 회원 서비스
@@ -15,6 +18,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BlockListRepository blockListRepository;
+    private final FriendsRepository friendsRepository;
+    private final SympathyRepository sympathyRepository;
+
 
     public Member join(
             String username,
@@ -35,12 +42,36 @@ public class MemberService {
                 memberPhone));
     }
 
+    /* 친구추가 */
+    public Friends addFriends(Long memberIdx,
+                              Long friendsMemberIdx) {
+        return friendsRepository.save(new Friends(memberIdx,
+                friendsMemberIdx));
+    }
+    public void delFriends(Long memberIdx,
+                           Long friendsMemberIdx){
+        friendsRepository.deleteFriendsByMemberIdxAndFriendsMemberIdx(
+                memberIdx,
+                friendsMemberIdx);
+    }
+
+
     public Member findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
-    public Member findByMemberIdx(Long memberIdx) {
-        return memberRepository.findByMemberIdx(memberIdx);
+    public Sympathy getLikeIdx(Long memberIdx){
+        return sympathyRepository.findByMemberIdx(memberIdx);
+    }
+
+    /* 친구리스트 */
+    public List<Friends> friendsList(Long memberIdx){
+        return friendsRepository.findFriendsByMemberIdx(memberIdx);
+    }
+
+    /* 블록유저 리스트 */
+    public List<BlockList> blockLists(Long memberIdx){
+        return blockListRepository.findBlockListByMemberIdx(memberIdx);
     }
 
     public List<Member> memberList() {
@@ -54,5 +85,7 @@ public class MemberService {
     public void updatePw(Member member) {
         memberRepository.save(member);
     }
+
+
 
 }

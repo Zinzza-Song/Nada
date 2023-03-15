@@ -13,7 +13,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberIdx(Long memberIdx);
 
     List<Member> findAllByOrderByMemberJoinDateDesc();
-
     void deleteMemberByMemberIdx(Long memberIdx);
+
+
+
 
 }

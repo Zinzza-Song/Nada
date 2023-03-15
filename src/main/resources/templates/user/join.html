@@ -2,6 +2,7 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <!-- 반응형 웹 미디어쿼리 선언부   -->
 <head th:insert="~{fragment/topMenu.html::header}">
@@ -17,51 +18,51 @@
 
   <form th:action="@{/user/join/join_pro}" method="post" th:object="${memberJoinBean}">
     <div class="login-box" style="width: 500px;">
-      <div class="BoxTitle"><span class="logo-text">J O I N</span></div>
+      <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
       <div class="form-group">
         <label>Name</label>
         <input type="text" name="memberName" id="memberName" th:field="*{memberName}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}"/>
+        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}" />
       </div>
 
       <div class="form-group">
         <label>NickName</label>
         <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
+        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}" />
       </div>
 
       <div class="form-group">
         <label>Birth</label>
         <input type="text" name="memberBirth" id="memberBirth" th:field="*{memberBirth}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}"/>
+        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}" />
       </div>
 
       <div class="form-group">
         <label>Address</label>
         <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}" />
       </div>
 
       <div class="form-group">
         <label>E-mail</label>
         <input type="text" name="username" id="username" th:field="*{username}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
+        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
         <div>
-          <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
+          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
         </div>
       </div>
 
       <div class="form-group email_code_box" style="display:none;">
         <label>E-mail Code</label>
-
-        <input type="text" name="member_email_code" id="member_email_code" class="form-control">
+        <div>
+          <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
+        </div>
         <span id="mail-check-warn"></span>
-
         <div>
           <input type="button" id="btnCertification" value="인증" class="btn btn-light">
 
@@ -73,13 +74,13 @@
         <label id="pw_label">PW</label>
         <input type="password" name="password" id="password" th:field="*{password}"
                class="form-control" autocomplete="off">
-        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
       </div>
 
       <div class="form-group">
         <label>PW Check</label>
         <input type="password" name="member_password_check" id="member_password_check" class="form-control"
-               onkeypress="checkpassword(event)" autocomplete="off">
+               autocomplete="off">
         <label id="passwordCheckLabel"></label>
       </div>
 
@@ -87,10 +88,10 @@
         <label>Phone</label>
         <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
                value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
       </div>
 
-      <div id="login-btn-box">
+      <div id="login-btn-box" >
         <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
       </div>
 
@@ -103,46 +104,34 @@
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
 <script>
 
-  $(function () {
-    $("#send_Mail_Btn").on('click', function () {
+  $(function (){
+    $("#send_Mail_Btn").on('click',function () {
       let codebox = $('.email_code_box');
-
-      if (codebox.css('display') == 'none') {
-        codebox.css('display', 'inline-block');
-      }
-      //	codebox.attr('style','display:block');
-      //코드 입력 박스를 보이도록 표시
-      const email = $('#member_email').val() // 이메일 주소값 얻어오기!
-
-      if (email != "") {
-        alert('email 사용이 가능합니다.')
-      } else {
-        alert('email  중복 됩니다.')
-      }
-
+      const email = $('#username').val() // 이메일 주소값 얻어오기!
+      const name = $('#memberName').val();
       console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
       $.ajax({
         type: 'GET',
-        url: '/user/join/email_exist_check?username=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+        url: '/user/join/email_exist_check?username=' + email +'&memberName='+name, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
         success: function (data) {
-          if(codebox.css('display') === 'none'){
-            //코드 입력 박스를 보이도록 표시
-            codebox.css('display','inline-block');
+          if(data != "false") {
+            if (codebox.css('display') === 'none') {
+              //코드 입력 박스를 보이도록 표시
+              codebox.css('display', 'inline-block');
+            }
+            console.log("data : " + data);
+            code = data;
+            swal('인증번호가 전송되었습니다.');
+          }else {
+            swal('사용할 수 없는 이메일 입니다.');
           }
-          console.log("data : " + data);
-          code = data;
-          swal('인증번호가 전송되었습니다.');
         },error:function (){
           swal('사용할 수 없는 이메일 입니다.');
         }
       }); // end ajax
-
     });// end send eamil
-
-    // 인증번호 비교
-    // blur -> focus가 벗어나는 경우 발생
-    $('.member_email_code').blur(function () {
-      const inputCode = $(this).val();
+    $('#btnCertification').on('click',function (){
+      const inputCode = $('#member_email_code').val();
       const $resultMsg = $('#mail-check-warn');
       if (inputCode === code) {
         $resultMsg.html('인증번호가 일치합니다.');
@@ -158,24 +147,43 @@
   });
 
 
-  function checkpassword(event) {
-    var member_password = document.getElementById("password").value;
-    //비밀번호의 값
-    var member_password_check = document.getElementById("member_password_check").value;
-    //비밀번호 확인의 값
 
+  $('#member_password_check').blur(function () {
+    const member_password = $("#password").val();
+    //비밀번호의 값
+    const member_password_check = $("#member_password_check").val();
+    //비밀번호 확인의 값
+    console.log(member_password);
+    console.log(member_password_check);
     if (member_password === member_password_check) {
 
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치합니다.";
-      document.getElementById("passwordCheckLabel").style.coler = "green";
+      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+      $("#passwordCheckLabel").css("color","green");
 
     } else {
 
-      document.getElementById("passwordCheckLabel").innerHTML = "비밀번호가 일치하지 않습니다.";
-      document.getElementById("passwordCheckLabel").style.coler = " red";
-
+      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+      $("#passwordCheckLabel").css("color","red");
     }
-  }
+  });
+  $('#password').blur(function () {
+    const member_password = $("#password").val();
+    //비밀번호의 값
+    const member_password_check = $("#member_password_check").val();
+    //비밀번호 확인의 값
+    console.log(member_password);
+    console.log(member_password_check);
+    if (member_password === member_password_check) {
+
+      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+      $("#passwordCheckLabel").css("color","green");
+
+    } else {
+
+      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+      $("#passwordCheckLabel").css("color","red");
+    }
+  });
 
 
 </script>

@@ -51,7 +51,6 @@ input[type="button"] {
 }
 
 .btn-light{
-    padding-left: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -65,5 +64,10 @@ input[type="button"] {
     min-height: 975px;
 
     background-image: url("../images/diarywrite.png");
+}
+.btn-right{
+    padding-left: 80%;
+    display: flex;
+    align-items: center;
 }
 
