@@ -59,15 +59,36 @@ input[type="button"] {
 /*diary_write_css*/
 
 .diary-write{
-    width: 650px;
+    width: 700px;
     height: auto;
     min-height: 975px;
+    padding-left: 5%;
 
-    background-image: url("../images/diarywrite.png");
+    background-image: url(../images/diarywrite.png);
+    background-size: 700px;
+    background-repeat: no-repeat;
 }
 .btn-right{
     padding-left: 80%;
     display: flex;
     align-items: center;
+    float: right;
+    margin-right: 45px;
 }
+.Analyze{
+    margin-top: 25px;
+}
+.diaryContent{
+    width: 85%;
+    height: 18rem;
+    border: none;
+    resize: none;
+}
+.text-center{
+    text-align: center;
+}
+.diarySubject{
+    white-space: pre-line;
+}
+
 
