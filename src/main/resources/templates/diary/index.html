@@ -10,8 +10,8 @@
 <body class="p-3 m-0 border-0 bd-example diarymain">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col" th:each="diary :${allDiaryList}">
+<div class="row">
+    <div class="col col-4 col-lg-6 col-md-12" th:each="diary :${allDiaryList}">
         <div class="card h-100 diaryListCard">
             <div class="card-body diarymainbody">
                 <h5 class="card-title" th:text="${diary.diarySubject}">
