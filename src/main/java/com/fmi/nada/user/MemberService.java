@@ -55,4 +55,32 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    /* 친구추가 */
+    public Friends addFriends(Long memberIdx,
+                              Long friendsMemberIdx) {
+        return friendsRepository.save(new Friends(memberIdx,
+                friendsMemberIdx));
+    }
+    public void delFriends(Long memberIdx,
+                           Long friendsMemberIdx){
+        friendsRepository.deleteFriendsByMemberIdxAndFriendsMemberIdx(
+                memberIdx,
+                friendsMemberIdx);
+    }
+
+
+    public Sympathy getLikeIdx(Long memberIdx){
+        return sympathyRepository.findByMemberIdx(memberIdx);
+    }
+
+    /* 친구리스트 */
+    public List<Friends> friendsList(Long memberIdx){
+        return friendsRepository.findFriendsByMemberIdx(memberIdx);
+    }
+
+    /* 블록유저 리스트 */
+    public List<BlockList> blockLists(Long memberIdx){
+        return blockListRepository.findBlockListByMemberIdx(memberIdx);
+    }
+
 }
