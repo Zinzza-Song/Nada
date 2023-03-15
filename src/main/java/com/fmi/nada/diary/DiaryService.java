@@ -2,6 +2,7 @@ package com.fmi.nada.diary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,11 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
     public Page<Diary> getDiaryList(Pageable pageable) {
+
+        // page는 index처럼 0부터 시작
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 6);
+
         return diaryRepository.findAllByOrderByDiaryDateDesc(pageable);
     }
 
@@ -33,10 +39,8 @@ public class DiaryService {
                               String diaryKeywords,
                               String diaryAnalyze,
                               Boolean diaryPublicable,
-                              Boolean diary_analyzePublicable
-    ) {
-        diaryRepository.save(new Diary(
-                memberIdx,
+                              Boolean diary_analyzePublicable) {
+        diaryRepository.save(new Diary(memberIdx,
                 diarySubject,
                 diaryWriter,
                 diaryContent,
@@ -44,7 +48,6 @@ public class DiaryService {
                 diaryAnalyze,
                 diaryPublicable,
                 diary_analyzePublicable));
-
     }
 
     // 다이어리 메인 게시판에서 보여지는 다이어리 리스트
@@ -72,11 +75,11 @@ public class DiaryService {
         return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
     }
 
-    public List<Diary> findMyDiaryByMemberIdx(Long memberIdx){
+    public List<Diary> findMyDiaryByMemberIdx(Long memberIdx) {
         return diaryRepository.findMyDiaryByMemberIdx(memberIdx);
     }
 
-    public List<Diary> getLikeDiary(Long diaryIdx){
+    public List<Diary> getLikeDiary(Long diaryIdx) {
         return diaryRepository.findLikeDiaryByDiaryIdx(diaryIdx);
     }
 
@@ -87,5 +90,30 @@ public class DiaryService {
 
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
+    }
+
+    // 다이어리 검색 페이징
+    public Page<Diary> findAllByDiaryWriterContaining(String diaryWriter, Pageable pageable) {
+        // page는 index처럼 0부터 시작
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 6);
+
+        return diaryRepository.findAllByDiaryWriterContaining(diaryWriter, pageable);
+    }
+
+    public Page<Diary> findAllByDiaryContentContaining(String diaryContent, Pageable pageable) {
+        // page는 index처럼 0부터 시작
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 6);
+
+        return diaryRepository.findAllByDiaryContentContaining(diaryContent, pageable);
+    }
+
+    public Page<Diary> findAllByDiaryKeywordsContaining(String diaryKeywords, Pageable pageable) {
+        // page는 index처럼 0부터 시작
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 6);
+
+        return diaryRepository.findAllByDiaryKeywordsContaining(diaryKeywords, pageable);
     }
 }

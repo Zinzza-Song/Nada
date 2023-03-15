@@ -109,6 +109,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     color: #ffffff;
     background-color: #937152;
 }
+.page-item {
+    display: inline-block;
+}
 .now-page {
     color: #330f0e;
     background-color: #e3cab0;
@@ -120,10 +123,6 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .selectSerch {
     width: auto;
-}
-
-.page {
-    padding: 30px;
 }
 
 .dropdown-menu {
@@ -256,14 +255,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-family: 'KyoboHandwriting2021sjy','KyoboHand','KCCChassam';
 }
 
-/*페이징 처리 관련 하단 버튼 css*/
-.paging-div {
-    padding: 15px 0 5px 10px;
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
+
 .navbar{
     font-family: 'KCCChassam','Dovemayo_wild','TAEBAEKmilkyway';
 }
