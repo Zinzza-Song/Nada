@@ -48,6 +48,8 @@ dependencies {
     implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    implementation 'com.google.code.gson:gson'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
