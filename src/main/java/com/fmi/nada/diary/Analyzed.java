@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 /**
- * 분석 테이블 엔티티
+ * Analyzed Entity
  * */
 @Entity
 @Getter

@@ -21,11 +21,14 @@ public class BlockList {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "block_member_idx")
-    private Long blockMemberIdx;
+    @Column(name = "block_idx")
+    private Long blockIdx;
 
     @Column(name = "member_idx")
     private Long memberIdx;
+
+    @Column(name = "block_member_idx")
+    private Long blockMemberIdx;
 
     @Column(name = "block_member_nickname")
     private String blockMemberNickname;

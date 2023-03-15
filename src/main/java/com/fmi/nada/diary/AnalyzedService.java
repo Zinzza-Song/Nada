@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * 다이어리의 분석 결과 서비스
+ * Analyzed Service
  */
 @Service
 @RequiredArgsConstructor

@@ -2,6 +2,10 @@ package com.fmi.nada.diary;
 
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 다이어리 컨트롤러
+ * Diary Controller
  */
 @Controller
 @RequiredArgsConstructor
@@ -30,13 +34,25 @@ public class DiaryController {
 
     //다이어리 게시판 페이지
     @GetMapping
-    public String DiaryMain(@RequestParam(value = "pageCnt", defaultValue = "1") Integer page,
+    public String DiaryMain(@PageableDefault(page=0, size=6, sort="diaryDate", direction=Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        List<Diary> diaryList = diaryService.getDiaryList();
+        /**
+         * 페이징 처리
+         *
+         클라이언트에서 전달받은 pageCnt와 실제 접근 페이지는 다르다.
+         Page 객체는 0부터 시작하기 때문에 실제 접근 페이지는 pageNo + 1 해주어야 한다.
+         */
+        Page<Diary> diaryList = diaryService.getDiaryList(pageable);
+        int nowPage = diaryList.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 5, 1);
+        int endPage = Math.min(startPage + 9, diaryList.getTotalPages());
+
         model.addAttribute("allDiaryList", diaryList);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "diary/index";
     }
-
 
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
@@ -57,16 +73,15 @@ public class DiaryController {
     }
 
     // 다이어리 작성 페이지
-    @GetMapping("write/{memberIdx}")
-    public String DiaryWrite(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
-                             @PathVariable("memberIdx") Long memberIdx,
+    @GetMapping("/write")
+    public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
                              Authentication authentication,
                              Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
-        return "diary/write/" + memberIdx;
+        return "diary/write";
     }
 
     @PostMapping("write_pro")
@@ -75,7 +90,7 @@ public class DiaryController {
                                  Authentication authentication,
                                  Model model) {
         if (bindingResult.hasErrors())
-            return "diary/wirte";
+            return "diary/write";
 
         Member member = (Member) authentication.getPrincipal();
         diaryDTO.setDiaryWriter(member.getMemberNickname());

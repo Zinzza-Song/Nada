@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * 다이어리 DTO
+ * Diary DTO
  * */
 @Getter
 @Setter

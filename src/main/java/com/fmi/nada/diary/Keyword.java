@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 /**
- * 키워드 테이블 엔티티
+ * Keyword Entity
  * */
 
 @Entity

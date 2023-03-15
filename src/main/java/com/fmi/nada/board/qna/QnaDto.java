@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * QnA DTO
+ */
 @Getter
 @Setter
 public class QnaDto {
