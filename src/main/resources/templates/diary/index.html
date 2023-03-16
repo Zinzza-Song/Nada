@@ -34,57 +34,75 @@
         </div>
     </div>
 </div>
-
-<form th:action="@{/diary/write}" th:method="get">
-    <div>
-        <button type="button" class="btn btn-primary createDiary">일기 작성</button>
-    </div>
-</form>
-
+<br>
 <!-- 다이어리 하단 페이지 -->
-<div aria-label="Page navigation" class="page">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous" th:disabled="${nowPage == 1}"
-               th:href="@{/diary(page=${nowPage - 2})}">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+<nav aria-label="Page navigation" class="page">
+    <!-- 변수값 초기화 -->
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(allDiaryList.number / 10) * 10 + 1},
+             last=(${start + 9 < allDiaryList.totalPages ? start + 9 : allDiaryList.totalPages})">
+
+        <th:block th:with="
+                firstPage=@{/diary(page=1)},
+                prevPage=@{/diary(page=${allDiaryList.number})},
+                nextPage=@{/diary(page=${allDiaryList.number + 2})},
+                lastPage=@{/diary(page=${allDiaryList.totalPages})}">
+
+            <!-- 첫 페이지로 이동 -->
             <li class="page-item">
-                <strong class="page-link now-page" th:if="${page == nowPage}" th:text="${page}"></strong>
+                <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                    <span aria-hidden="true">첫 페이지로</span>
+                </a>
             </li>
+            <!-- 이전 페이지로 이동 -->
+            <li class="page-item" th:class="${allDiaryList.first} ? 'disabled'">
+                <a class="page-link" th:href="${allDiaryList.first} ? '#' :${prevPage}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                th:class="${page == allDiaryList.number + 1} ? 'active'">
+                <a class="page-link" th:text="${page}" th:href="@{/diary(page=${page},type=${type},keyword=${keyword})}"></a>
+            </li>
+
+            <!-- 다음 페이지로 이동 -->
+            <li class="page-item" th:class="${allDiaryList.last} ? 'disabled'">
+                <a class="page-link" th:href="${allDiaryList.last} ? '#' :${nextPage}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <!-- 마지막 페이지로 이동 -->
             <li class="page-item">
-                <a class="page-link" th:if="${page != nowPage}" th:href="@{/diary(page=${page - 1})}" th:text="${page}"></a>
+                <a class="page-link" th:href="${lastPage}">
+                    <span aria-hidden="true">마지막 페이지로</span>
+                </a>
             </li>
         </th:block>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next" th:disabled="${nowPage == allDiaryList.totalPages}"
-               th:href="@{/diary(page=${nowPage})}">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
     </ul>
-</div>
+</nav>
 
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/diary}" method="post">
-            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+        <form class="d-flex" role="search" action="/diary/search" name="search-form">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type">
                 <option selected value="content" id="content">내용</option>
                 <option value="writer" id="writer">작성자</option>
                 <option value="keyword" id="keyword">키워드</option>
             </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 150px">검색</button>
+            <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해 주세요" id="inputSearch" aria-label="Search">
+            <input type="submit" class="btn btn-outline-success" id="searchBtn"
+                    style="width: 100px">검색</input>
         </form>
     </div>
 </nav>
 <!--<footer th:insert="footer.html::footer"></footer>-->
 <footer th:insert="~{fragment/footer.html::footer}"></footer>
-
-
 
 </body>
 </html>

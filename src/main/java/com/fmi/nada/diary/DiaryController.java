@@ -2,9 +2,7 @@ package com.fmi.nada.diary;
 
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -34,32 +32,34 @@ public class DiaryController {
 
     //다이어리 게시판 페이지
     @GetMapping
-    public String DiaryMain(@PageableDefault(page=0, size=6, sort="diaryDate", direction=Sort.Direction.DESC) Pageable pageable,
+    public String DiaryMain(@PageableDefault Pageable pageable,
                             Model model) {
-        /**
-         * 페이징 처리
-         *
-         클라이언트에서 전달받은 pageCnt와 실제 접근 페이지는 다르다.
-         Page 객체는 0부터 시작하기 때문에 실제 접근 페이지는 pageNo + 1 해주어야 한다.
-         */
-        Page<Diary> diaryList = diaryService.getDiaryList(pageable);
-        int nowPage = diaryList.getPageable().getPageNumber() + 1;
-        int startPage = Math.max(nowPage - 5, 1);
-        int endPage = Math.min(startPage + 9, diaryList.getTotalPages());
+        model.addAttribute("allDiaryList", diaryService.getDiaryList(pageable));
+        return "diary/index";
+    }
 
-        model.addAttribute("allDiaryList", diaryList);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+    @GetMapping("search")
+    public String DiarySearch(@PageableDefault Pageable pageable,
+                              @RequestParam("type") String type,
+                              @RequestParam("keyword") String keyword,
+                              Model model) {
+        if (type.isBlank() && keyword.isBlank()) {
+            model.addAttribute("allDiaryList", diaryService.getDiaryList(pageable));
+        } else if (type.equals("content")) {
+            model.addAttribute("allDiaryList", diaryService.findAllByDiaryContentContaining(keyword, pageable));
+        } else if (type.equals("writer")) {
+            model.addAttribute("allDiaryList", diaryService.findAllByDiaryWriterContaining(keyword, pageable));
+        } else if (type.equals("keyword")) {
+            model.addAttribute("allDiaryList", diaryService.findAllByDiaryKeywordsContaining(keyword, pageable));
+        }
+            model.addAttribute("type", type);
+            model.addAttribute("keyword", keyword);
         return "diary/index";
     }
 
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
-    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
-                            @RequestParam("pageNum") int pageNum,
-                            Authentication authentication,
-                            Model model) {
+    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageNum") int pageNum, Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -74,9 +74,7 @@ public class DiaryController {
 
     // 다이어리 작성 페이지
     @GetMapping("/write")
-    public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
-                             Authentication authentication,
-                             Model model) {
+    public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, Authentication authentication, Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
@@ -85,26 +83,13 @@ public class DiaryController {
     }
 
     @PostMapping("write_pro")
-    public String DiaryWrite_pro(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
-                                 BindingResult bindingResult,
-                                 Authentication authentication,
-                                 Model model) {
-        if (bindingResult.hasErrors())
-            return "diary/write";
+    public String DiaryWrite_pro(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
+        if (bindingResult.hasErrors()) return "diary/write";
 
         Member member = (Member) authentication.getPrincipal();
         diaryDTO.setDiaryWriter(member.getMemberNickname());
 
-        diaryService.registerDiary(
-                member.getMemberIdx(),
-                diaryDTO.getDiarySubject(),
-                diaryDTO.getDiaryWriter(),
-                diaryDTO.getDiaryContent(),
-                diaryDTO.getDiaryKeywords(),
-                diaryDTO.getDiaryAnalyze(),
-                diaryDTO.getDiaryPublicable(),
-                diaryDTO.getDiaryAnalyzePublicable()
-        );
+        diaryService.registerDiary(member.getMemberIdx(), diaryDTO.getDiarySubject(), diaryDTO.getDiaryWriter(), diaryDTO.getDiaryContent(), diaryDTO.getDiaryKeywords(), diaryDTO.getDiaryAnalyze(), diaryDTO.getDiaryPublicable(), diaryDTO.getDiaryAnalyzePublicable());
 
         Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
         analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
@@ -131,11 +116,7 @@ public class DiaryController {
 
     // 다이어리 수정 페이지
     @GetMapping("modify/{diaryIdx}")
-    public String modifyDiary(@PathVariable("diaryIdx") Long diaryIdx,
-                              @RequestParam("pageCnt") int pageCnt,
-                              @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
-                              Authentication authentication,
-                              Model model) {
+    public String modifyDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, Authentication authentication, Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
@@ -146,14 +127,8 @@ public class DiaryController {
 
     // 다이어리 수정 로직
     @PutMapping("modify_pro/{diaryIdx}")
-    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx,
-                                  @RequestParam("pageCnt") int pageCnt,
-                                  @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
-                                  BindingResult bindingResult,
-                                  Authentication authentication,
-                                  Model model) {
-        if (bindingResult.hasErrors())
-            return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
+    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
+        if (bindingResult.hasErrors()) return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);

@@ -27,4 +27,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findMyDiaryByMemberIdx(Long memberIdx);
 
     List<Diary> findLikeDiaryByDiaryIdx(Long diaryIdx);
+
+    // 검색 기능 페이징에 사용되는 JPQL
+    Page<Diary> findAllByDiaryWriterContaining(String diaryWriter, Pageable pageable);
+    Page<Diary> findAllByDiaryContentContaining(String diaryContent, Pageable pageable);
+    Page<Diary> findAllByDiaryKeywordsContaining(String diaryKeywords, Pageable pageable);
 }

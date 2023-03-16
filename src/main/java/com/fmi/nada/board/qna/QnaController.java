@@ -1,6 +1,7 @@
 package com.fmi.nada.board.qna;
 
 
+import com.fmi.nada.board.notice.Notice;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -8,7 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**

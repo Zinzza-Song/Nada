@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class DiaryDTO {
 
+
     @NotBlank(message = "제목을 반드시 입력해 주세요")
     private String diarySubject;
 
@@ -33,5 +34,8 @@ public class DiaryDTO {
 
     private Integer analyzeScore;
 
+    //검색 기능에 사용되는 변수 type, keyword
+    private String type;
+    private String keyword;
 
 }
