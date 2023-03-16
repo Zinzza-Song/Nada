@@ -2,9 +2,13 @@ package com.fmi.nada.board.notice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 /**
  * 공지사항 서비스
  * */
@@ -21,7 +25,14 @@ public class NoticeService {
     }
 
     // 공지사항 등록
-    public void registerNotice(Notice notice) {
+    public void registerNotice(Notice notice, MultipartFile file) throws Exception {
+        String projectPath = "D:/test";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath+fileName);
+        file.transferTo(saveFile);
+        notice.setNoticeFile(fileName);
+
         noticeRepository.save(notice);
     }
 

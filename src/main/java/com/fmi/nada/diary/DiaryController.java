@@ -58,8 +58,8 @@ public class DiaryController {
     }
 
     // 다이어리 상세 페이지
-    @GetMapping("read/{diaryIdx}")
-    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageNum") int pageNum, Authentication authentication, Model model) {
+    @GetMapping("/read")
+    public String readDiary(@RequestParam("diaryIdx") Long diaryIdx, @RequestParam("pageNum") int pageNum, Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 

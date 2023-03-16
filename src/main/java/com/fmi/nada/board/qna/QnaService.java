@@ -3,9 +3,12 @@ package com.fmi.nada.board.qna;
 import com.fmi.nada.diary.Diary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * QnA Service
@@ -16,7 +19,15 @@ public class QnaService {
 
     private final QnaRepository qnaRepository;
 
-    public void writeQna(Qna qna) {
+
+    public void writeQna(Qna qna, MultipartFile file) throws Exception {
+        String projectPath = "D:/test";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath+fileName);
+        file.transferTo(saveFile);
+        qna.setQnaFile(fileName);
+
         qnaRepository.save(qna);
     }
 
