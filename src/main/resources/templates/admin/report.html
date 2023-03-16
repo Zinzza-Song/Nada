@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
+    <script>
+        $(document).ready(function() {
+            var win = $(window);
+            var doc = $(document);
+
+            // Each time the user scrolls
+            win.scroll(function() {
+                // Vertical end reached?
+                if (doc.height() - win.height() == win.scrollTop()) {
+                    // New row
+                    var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+
+                    // Current number of columns to create
+                    var n_cols = $('.logMoreData tr:first-child th').length;
+                    for (var i = 0; i < n_cols; ++i)
+                        tr.append($('<td />'));
+                }
+
+                // Horizontal end reached?
+                if (doc.width() - win.width() == win.scrollLeft()) {
+                    // New column in the heading row
+                    $('.logMoreData tr:first-child').append($('<th />'));
+
+                    // New column in each row
+                    $('.logMoreData tr:not(:first-child)').each(function() {
+                        $(this).append($('<td />'));
+                    });
+                }
+            });
+        });
+    </script>
+
+
+</head>
+<body class="p-3 m-0 border-0 bd-example">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<!-- Example Code -->
+<nav class="navbar searchbar topfix">
+    <div class="container-fluid">
+        <form class="d-flex" role="search" th:action="@{/admin}" method="post">
+            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+                <option selected value="reportDate" id="reportDate">날짜</option>
+            </select>
+            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+        </form>
+    </div>
+</nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">신고 사유</th>
+        <th scope="col">신고 제목</th>
+        <th scope="col">신고 대상자</th>
+        <th scope="col">날짜</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider logMoreData">
+    <tr th:each="report:${allReportList }">
+        <th scope="row" th:text="${report.reportCategory}">신고사유</th>
+        <th scope="row"><a th:text="${report.reportSubject}" th:href="@{/board/report/read/{report_idx}}">신고 제목</a></th>
+        <th scope="row" th:text="${report.reportReportedmember}">신고 대상자</th>
+        <th scope="row" th:text="${#temporals.format(report.commentDate  , 'yyyy-MM-dd')}">날짜</th>
+    </tr>
+
+    </tbody>
+</table>
+
+<!-- End Example Code -->
+
+</body>
+
+
+
+</html>

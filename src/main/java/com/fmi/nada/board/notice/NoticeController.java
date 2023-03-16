@@ -27,7 +27,7 @@ public class NoticeController {
     NoticeService noticeService;
 
     //공지사항 메인 페이지
-    @GetMapping("/")
+    @GetMapping
     public String main(Model model) {
         model.addAttribute("noticeList",noticeService.getallNoticeList());
         return "board/notice/index";
