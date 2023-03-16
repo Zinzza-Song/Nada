@@ -45,7 +45,7 @@ public class Qna {
     @Column(name = "qna_file")
     private String qnaFile;
 
-    @Column(name = "qna_views", insertable = false, updatable = false, columnDefinition = "int default 0")
+    @Column(name = "qna_views", columnDefinition = "int default 0")
     private Long qnaViews;
 
     @Column(name = "qna_answer")
