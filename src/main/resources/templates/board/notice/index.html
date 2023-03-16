@@ -16,11 +16,11 @@
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/board/notice}" method="post">
+        <form class="d-flex" role="search" action="/diary" method="get">
             <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
                 <option selected value="content" id="content">제목</option>
             </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="검색어를 입력해 주세요" id="inputSearch" aria-label="Search">
             <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
         </form>
     </div>
@@ -35,11 +35,11 @@
         <th scope="col">조회수</th>
     </tr>
     </thead>
-    <tbody class="table-group-divider" th:each="notice: ${noticeList}">
+    <tbody class="table-group-divider" th:each="notice, index: ${noticeList}">
     <tr>
-        <th scope="row" th:text="${notice.noticeIdx}">1</th>
+        <th scope="row" th:text="${index.index + 1}"></th>
         <td>
-            <a th:href="@{/board/notice/read/${notice.noticeIdx}?pageCnt=1}" th:text="${notice.noticeSubject}">공지사항 제목</a>
+            <a th:href="@{/board/notice/read/${notice.noticeIdx}}" th:text="${notice.noticeSubject}">공지사항 제목</a>
         </td>
         <td th:text="${#temporals.format(notice.noticeDate, 'YY-MM-dd')}">날짜</td>
         <td th:text="${notice.noticeViews}">24</td>
@@ -48,21 +48,116 @@
     </tbody>
 </table>
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination noticePage">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-            </a>
-        </li>
+<nav aria-label="Page navigation" class="page">
+    <!-- 변수값 초기화 -->
+    <ul class="pagination page-bar justify-content-center"
+        th:with="start=${T(Math).floor(noticeList.number / 10) * 10 + 1},
+             last=${start + 9 < noticeList.totalPages ? start + 9 : noticeList.totalPages},
+             type=${param.type},
+             keyword=${param.keyword}">
+        <th:block th:if="${keyword != null}">
+            <th:block th:with="
+                firstPage=@{/notice(page=1,type=${type},keyword=${keyword})},
+                prevPage=@{/notice(page=${noticeList.number},type=${type},keyword=${keyword})},
+                nextPage=@{/notice(page=${noticeList.number + 2},type=${type},keyword=${keyword})},
+                lastPage=@{/notice(page=${noticeList.totalPages},type=${type},keyword=${keyword})}">
+                <!-- 페이지가 없는 경우 -->
+                <th:block th:if="${noticeList.totalPages < 1}">
+                    <button name="return-main">전체 페이지로 돌아가기</button>
+                </th:block>
+                <!-- 페이지가 있는 경우 -->
+                <th:block th:if="${noticeList.totalPages > 0}">
+
+                    <!-- 첫 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                            <span aria-hidden="true">첫 페이지로</span>
+                        </a>
+                    </li>
+                    <!-- 이전 페이지로 이동 -->
+                    <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
+                        <a class="page-link" th:href="${noticeList.first} ? '#' :${prevPage}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${page == noticeList.number + 1} ? 'active'">
+                        <a class="page-link" th:text="${page}"
+                           th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"></a>
+                    </li>
+
+                    <!-- 다음 페이지로 이동 -->
+                    <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
+                        <a class="page-link" th:href="${noticeList.last} ? '#' :${nextPage}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${lastPage}">
+                            <span aria-hidden="true">마지막 페이지로</span>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${keyword == null}">
+            <th:block th:with="
+                firstPage=@{/board/notice(page=1)},
+                prevPage=@{/board/notice(page=${noticeList.number})},
+                nextPage=@{/board/notice(page=${noticeList.number + 2})},
+                lastPage=@{/board/notice(page=${noticeList.totalPages})}">
+                <!-- 페이지가 없는 경우 -->
+                <th:block th:if="${noticeList.totalPages < 1}">
+                    <button name="return-main">전체 페이지로 돌아가기</button>
+                </th:block>
+                <!-- 페이지가 있는 경우 -->
+                <th:block th:if="${noticeList.totalPages > 0}">
+
+                    <!-- 첫 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                            <span aria-hidden="true">첫 페이지로</span>
+                        </a>
+                    </li>
+                    <!-- 이전 페이지로 이동 -->
+                    <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
+                        <a class="page-link" th:href="${noticeList.first} ? '#' :${prevPage}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${page == noticeList.number + 1} ? 'active'">
+                        <a class="page-link" th:text="${page}"
+                           th:href="@{notice(page=${page})}"></a>
+                    </li>
+
+                    <!-- 다음 페이지로 이동 -->
+                    <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
+                        <a class="page-link" th:href="${noticeList.last} ? '#' :${nextPage}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${lastPage}">
+                            <span aria-hidden="true">마지막 페이지로</span>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+        </th:block>
     </ul>
 </nav>
 

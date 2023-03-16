@@ -2,6 +2,9 @@ package com.fmi.nada.board.notice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +31,22 @@ public class NoticeController {
 
     //공지사항 메인 페이지
     @GetMapping
-    public String main(Model model) {
-        model.addAttribute("noticeList",noticeService.getallNoticeList());
+    public String main(@PageableDefault Pageable pageable,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "type", required = false) String keyword,
+            Model model) {
+
+        Page<Notice> noticeList = null;
+
+        if(keyword == null) {
+            noticeList = noticeService.findAllByOrderByNoticeDateDesc(pageable);
+        }
+        else if(type.equals("content") && keyword != null){
+            noticeList = noticeService.findAllByNoticeSubjectContaining(keyword, pageable);
+        }
+        model.addAttribute("noticeList",noticeList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "board/notice/index";
     }
 

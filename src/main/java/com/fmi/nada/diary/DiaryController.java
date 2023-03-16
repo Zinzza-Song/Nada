@@ -1,7 +1,9 @@
 package com.fmi.nada.diary;
 
+import com.fmi.nada.board.notice.Notice;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -10,7 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -33,43 +42,47 @@ public class DiaryController {
     //다이어리 게시판 페이지
     @GetMapping
     public String DiaryMain(@PageableDefault Pageable pageable,
+                            @RequestParam(value = "type", required = false) String type,
+                            @RequestParam(value = "keyword", required = false) String keyword,
                             Model model) {
-        model.addAttribute("allDiaryList", diaryService.getDiaryList(pageable));
-        return "diary/index";
-    }
 
-    @GetMapping("search")
-    public String DiarySearch(@PageableDefault Pageable pageable,
-                              @RequestParam("type") String type,
-                              @RequestParam("keyword") String keyword,
-                              Model model) {
-        if (type.isBlank() && keyword.isBlank()) {
-            model.addAttribute("allDiaryList", diaryService.getDiaryList(pageable));
+        Page<Diary> allDiaryList = null;
+
+        if (keyword == null) {
+            allDiaryList = diaryService.getDiaryList(pageable);
         } else if (type.equals("content")) {
-            model.addAttribute("allDiaryList", diaryService.findAllByDiaryContentContaining(keyword, pageable));
+            allDiaryList = diaryService.findAllByDiaryContentContaining(keyword, pageable);
         } else if (type.equals("writer")) {
-            model.addAttribute("allDiaryList", diaryService.findAllByDiaryWriterContaining(keyword, pageable));
+            allDiaryList = diaryService.findAllByDiaryWriterContaining(keyword, pageable);
         } else if (type.equals("keyword")) {
-            model.addAttribute("allDiaryList", diaryService.findAllByDiaryKeywordsContaining(keyword, pageable));
+            allDiaryList = diaryService.findAllByDiaryKeywordsContaining(keyword, pageable);
         }
-            model.addAttribute("type", type);
-            model.addAttribute("keyword", keyword);
+
+        model.addAttribute("allDiaryList", allDiaryList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "diary/index";
     }
 
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
-    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageNum") int pageNum, Authentication authentication, Model model) {
+    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
+                            @RequestParam("page") int page,
+                            HttpServletRequest request,
+                            HttpServletResponse response,
+                            Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
+        viewCountValidation(diary, request, response);
         model.addAttribute("diaryBean", diary);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
 
-        return "diary/read/" + diaryIdx + "?pageNum=" + pageNum;
+
+        return "diary/read/" + diaryIdx + "?pageNum=" + page;
     }
 
     // 다이어리 작성 페이지
@@ -170,5 +183,37 @@ public class DiaryController {
             }
         }
     }
+    private void viewCountValidation(Diary diary, HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = null;
+        boolean isCookie = false;
+        // request에 쿠키들이 있을 때
+        for (int i = 0; cookies != null && i < cookies.length; i++) {
+            // postView 쿠키가 있을 때
+            if (cookies[i].getName().equals("noticeView")) {
+                // cookie 변수에 저장
+                cookie = cookies[i];
+                // 만약 cookie 값에 현재 게시글 번호가 없을 때
+                if (!cookie.getValue().contains("[" + diary.getDiaryIdx() + "]")) {
+                    // 해당 게시글 조회수를 증가시키고, 쿠키 값에 해당 게시글 번호를 추가
+                    diary.addViewCount();
+                    cookie.setValue(cookie.getValue() + "[" + diary.getDiaryIdx() + "]");
+                }
+                isCookie = true;
+                break;
+            }
+        }
+        // 만약 noticeView라는 쿠키가 없으면 처음 접속한 것이므로 새로 생성
+        if (!isCookie) {
+            diary.addViewCount();
+            cookie = new Cookie("noticeView", "[" + diary.getDiaryIdx() + "]"); // oldCookie에 새 쿠키 생성
+        }
 
+        // 쿠키 유지시간을 오늘 하루 자정까지로 설정
+        long todayEndSecond = LocalDate.now().atTime(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC);
+        long currentSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        cookie.setPath("/"); // 모든 경로에서 접근 가능
+        cookie.setMaxAge((int) (todayEndSecond - currentSecond));
+        response.addCookie(cookie);
+    }
 }
