@@ -15,12 +15,12 @@
     <div class="col">
       <div class="card h-100 diaryListCard">
         <div class="card-body diarymainbody">
-          <h5 class="card-title" th:text="${diary.diarySubject}">
+          <a class="card-title" th:href="@{/diary/read(diaryIdx=${diary.diaryIdx})}" th:text="${diary.diarySubject}">
             <br>
             <span th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}"/>
             <span th:text="${diary.diaryKeywords }"/>
             <span th:text="${diary.diaryCnt}"/>
-          </h5>
+          </a>
           <p class="card-text" th:text="${diary.diaryContent}"/>
 
         </div>
