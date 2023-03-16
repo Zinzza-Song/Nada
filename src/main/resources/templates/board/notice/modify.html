@@ -13,10 +13,10 @@
 <body class="p-3 m-0 border-0 bd-example noticeModifyForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/notice/modify_pro/{noticeIdx}?pageCnt=num}" th:method="post" th:object="${modifyNoticeBean}">
+<form enctype="multipart/form-data" th:action="@{/board/notice/modify_pro/${noticeIdx}}" th:method="put" th:object="${modifyNoticeBean}">
     <div class="mb-3">
         <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
-               placeholder="공지사항 제목">
+              th:text="${readNoticeBean.noticeSubject}" placeholder="공지사항 제목">
     </div>
 
     <div class="mb-3">
@@ -25,7 +25,7 @@
     </div>
     <div class="mb-3">
         <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent}"
-                  placeholder="공지내용">
+                 th:text="${readNoticeBean.noticeContent}" placeholder="공지내용">
         </textarea>
     </div>
 

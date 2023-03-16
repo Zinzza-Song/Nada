@@ -39,11 +39,10 @@
     <tbody class="table-group-divider" th:each="report: ${allReportList}">
     <tr>
         <th scope="row" th:text="${report.reportIdx}">1</th>
-        <td><a th:href="@{/board/report/read/${report.reportIdx}?pageCnt=1}" th:text="${report.reportSubject}">Q&A 제목</a></td>
+        <td><a th:href="@{/board/report/read/${report.reportIdx}}" th:text="${report.reportSubject}">Q&A 제목</a></td>
         <td th:text="${#temporals.format(report.reportDate, 'YY-MM-dd')}">날짜</td>
         <td th:text="${report.reportViews}">24</td>
     </tr>
-
     </tbody>
 </table>
 
