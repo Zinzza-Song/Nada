@@ -21,10 +21,11 @@ public class QnaService {
 
 
     public void writeQna(Qna qna, MultipartFile file) throws Exception {
-        String projectPath = "D:/test";
+        String projectPath = System.getProperty("user.dir");
+        String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(projectPath+fileName);
+        File saveFile = new File(getFullPath,fileName);
         file.transferTo(saveFile);
         qna.setQnaFile(fileName);
 

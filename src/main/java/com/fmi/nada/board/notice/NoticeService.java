@@ -26,10 +26,11 @@ public class NoticeService {
 
     // 공지사항 등록
     public void registerNotice(Notice notice, MultipartFile file) throws Exception {
-        String projectPath = "D:/test";
+        String projectPath = System.getProperty("user.dir");
+        String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(projectPath+fileName);
+        File saveFile = new File(getFullPath,fileName);
         file.transferTo(saveFile);
         notice.setNoticeFile(fileName);
 
