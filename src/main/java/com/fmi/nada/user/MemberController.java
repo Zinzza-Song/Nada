@@ -2,6 +2,7 @@ package com.fmi.nada.user;
 
 import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
+import com.fmi.nada.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class MemberController {
     //회원가입 이메일인증
     @GetMapping("/join/email_exist_check")
     @ResponseBody
-    public String mailCheck(String username,String memberName) throws Exception {
+    public String mailCheck(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
         if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
             return "false";
@@ -104,15 +107,15 @@ public class MemberController {
     @GetMapping("/read")
     public String readMember(@ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
                              Authentication authentication,
-                            Model model) {
+                             Model model) {
         Member member = (Member) authentication.getPrincipal();
 
-        model.addAttribute("memberLoginBean",member);
+        model.addAttribute("memberLoginBean", member);
 
         Long memberIdx = member.getMemberIdx();
 
         Sympathy sympathy = memberService.getLikeIdx(memberIdx);
-        if (sympathy==null){
+        if (sympathy == null) {
             List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
             model.addAttribute("myDiaryList", myDiaryList);
 
@@ -122,7 +125,7 @@ public class MemberController {
             List<BlockList> blockLists = memberService.blockLists(memberIdx);
             model.addAttribute("blockLists", blockLists);
 
-        }else {
+        } else {
             Long likeDiaryIdx = sympathy.getDiaryIdx();
             System.out.println(likeDiaryIdx);
 
@@ -144,36 +147,41 @@ public class MemberController {
 
     @GetMapping("/modify")
     public String modify(@ModelAttribute("memberInfoBean") MemberJoinDto memberJoinDto,
-                         Authentication authentication,Model model){
+                         Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
-        model.addAttribute("memberLoginBean",member);
+        model.addAttribute("memberLoginBean", member);
         return "user/modify";
     }
 
     @PutMapping("/modify_pro")
     public String modify_pro(@Valid @ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
                              @ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
-                             Authentication authentication,BindingResult bindingResult,Model model
-    ){
-        if (bindingResult.hasErrors()){
+                             Authentication authentication, BindingResult bindingResult, Model model
+    ) {
+        if (bindingResult.hasErrors()) {
             Member member = (Member) authentication.getPrincipal();
-            model.addAttribute("memberLoginBean",member);
+            model.addAttribute("memberLoginBean", member);
             return "user/read";
-        }else {
+        } else {
             Member member = (Member) authentication.getPrincipal();
             member.setMemberNickname(memberUpdateDto.getMemberNickname());
             member.setPassword(passwordEncoder.encode(memberUpdateDto.getPassword()));
             member.setMemberAddress(memberUpdateDto.getMemberAddress());
             member.setMemberPhone(memberUpdateDto.getMemberPhone());
             memberService.updateMember(member);
-            model.addAttribute("memberLoginBean",member);
+            model.addAttribute("memberLoginBean", member);
         }
         return "user/read";
     }
 
     @DeleteMapping("/delete")
-    public String deleteMember(@RequestParam("memberIdx") Long memberIdx){
+    public String deleteMember(@RequestParam("memberIdx") Long memberIdx, HttpServletResponse res) {
         memberService.delMember(memberIdx);
+        
+        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+        cookie.setMaxAge(0);
+        res.addCookie(cookie);
+
         return "redirect:/";
 
     }
@@ -184,15 +192,15 @@ public class MemberController {
 
     @PostMapping("/friend_add/{memberIdx}")
     public String addFriend(@PathVariable("memberIdx") Long memberIdx,
-                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
-        memberService.addFriends(memberIdx,friendsMemberIdx);
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
+        memberService.addFriends(memberIdx, friendsMemberIdx);
         return "user/read";
     }
 
     @DeleteMapping("/friend_del/{memberIdx}")
     public String delFriend(@PathVariable("memberIdx") Long memberIdx,
-                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx){
-        memberService.delFriends(memberIdx,friendsMemberIdx);
+                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
+        memberService.delFriends(memberIdx, friendsMemberIdx);
         return "user/friend_list";
     }
 
