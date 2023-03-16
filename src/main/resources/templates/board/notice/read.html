@@ -13,25 +13,26 @@
 <body class="p-3 m-0 border-0 bd-example noticeReadForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="post" th:object="${modifyNoticeBean}">
+<form enctype="multipart/form-data" th:action="@{/board/notice/modify/${noticeIdx}}" th:method="get" th:object="${modifyNoticeBean}">
     <div class="mb-3">
-        <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject }"
+        <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
                placeholder="공지사항 제목" readonly>
     </div>
 
     <div class="mb-3">
         <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-               th:text="${#temporals.format(#modifyNoticeBean.noticeDate(),'yyyy-mm-dd')}" readonly>
+               th:text="${#temporals.format(#readNoticeBean.noticeDate,'yyyy-mm-dd')}" readonly>
+    </div>
     </div>
     <div class="mb-3">
         <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent }"
-                  placeholder="공지내용" readonly>
+                  th:text="${readNoticeBean.noticeContent}"    placeholder="공지내용" readonly>>
         </textarea>
     </div>
 
     <div class="mb-3">
         <label for="noticeFile" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="noticeFile" id="noticeFile" type="file" th:field="*{noticeFile}"
+        <input class="form-control form-control-sm" name="noticeFile" id="noticeFile" type="file" th:field="*{readNoticeBean.noticeFile}"
                readonly>
     </div>
 

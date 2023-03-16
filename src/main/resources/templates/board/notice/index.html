@@ -16,12 +16,15 @@
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search" action="/diary" method="get">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
+        <form class="d-flex" role="search" action="/board/notice" name="search-form" id="search-form">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type"
+                    style="width: 100px; margin-right: 10px;">
                 <option selected value="content" id="content">제목</option>
             </select>
-            <input class="form-control me-2" type="search" placeholder="검색어를 입력해 주세요" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
+            <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해 주세요" id="search-input"
+                   aria-label="Search" style="width: 300px;">
+            <input type="submit" class="btn btn-outline-success" id="searchBtn"
+                   style="width: 100px" th:value="검색">
         </form>
     </div>
 </nav>
@@ -39,7 +42,7 @@
     <tr>
         <th scope="row" th:text="${index.index + 1}"></th>
         <td>
-            <a th:href="@{/board/notice/read/${notice.noticeIdx}}" th:text="${notice.noticeSubject}">공지사항 제목</a>
+            <a th:href="@{/board/notice/read/{noticeIdx}(noticeIdx = ${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항 제목</a>
         </td>
         <td th:text="${#temporals.format(notice.noticeDate, 'YY-MM-dd')}">날짜</td>
         <td th:text="${notice.noticeViews}">24</td>

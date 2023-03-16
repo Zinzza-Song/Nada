@@ -33,7 +33,7 @@ public class NoticeController {
     @GetMapping
     public String main(@PageableDefault Pageable pageable,
             @RequestParam(value = "type", required = false) String type,
-            @RequestParam(value = "type", required = false) String keyword,
+            @RequestParam(value = "keyword", required = false) String keyword,
             Model model) {
 
         Page<Notice> noticeList = null;
@@ -51,8 +51,8 @@ public class NoticeController {
     }
 
     // 공지사항 글 읽기 ( 조회수 증가 )
-    @GetMapping("/read/{noticeIndex}")
-    public String read(@PathVariable("noticeIndex") Long notice_idx,
+    @GetMapping("/read/{noticeIdx}")
+    public String read(@PathVariable("noticeIdx") Long notice_idx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model) {
