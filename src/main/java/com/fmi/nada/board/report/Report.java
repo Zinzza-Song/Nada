@@ -64,6 +64,10 @@ public class Report {
     @ColumnDefault("처리중 입니다.")
     private String reportAdminMent;
 
+    @Column(name = "report_view")
+    @ColumnDefault("0")
+    private Long reportView;
+
     public Report(
             Long memberIdx,
             String reportSubject,
@@ -82,4 +86,7 @@ public class Report {
         this.reportFile = reportFile;
     }
 
+    public void addViewCount() {
+        this.reportView++;
+    }
 }
