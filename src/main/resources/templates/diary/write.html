@@ -4,23 +4,24 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/login.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body class="diary-write-body">
 
 <header th:insert="~{fragment/topMenu.html::nav}"/>
 
 <div class="container diary-container">
-  <div class="">
+  <div>
     <div class="card-header BoxTitle text-center">
       다 이 어 리 쓰 기
     </div>
 
-    <form class="" th:action="@{diary/write_pro}" method="post" th:object="${writeDiaryBean}"
+    <form class="diary-form" th:action="@{diary/write_pro}" method="post" th:object="${writeDiaryBean}"
           th:onsubmit="return false">
 
-      <div class="row diary-write">
+      <div class="diary-write row align-items-start col">
 
+      <div class="leftDiary diary-wrap diary-write">
         <div class="card-body diary col-6">
           <div class="form-group">
             <label class="writeTitle">일기 작성</label>
@@ -75,7 +76,8 @@
           </div>
         </div>
         <!-- 다이어리 제목부터 키워드까지 -->
-
+</div>
+        <div class="rightDiary diary-wrap col">
         <div class="card-body Analyze diary col-6" id="Analyze" name="Analyze">
           <div class="form-group">
             <label>감정 분석</label>
@@ -108,6 +110,7 @@
 
           <input type="submit" class="btn btn-dark btn-right" value="완료"/>
         </div>
+      </div>
       </div>
     </form>
   </div>
