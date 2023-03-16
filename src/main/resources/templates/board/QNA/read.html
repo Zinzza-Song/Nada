@@ -1,0 +1,85 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+    <!-- 반응형 웹 미디어쿼리 선언부   -->
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <script>
+        function answer() {
+            var answerText = $('#qnaAnswering').val(); // 운영자가 작성한 답변 텍스트
+
+            $.ajax({
+                url: '/board/qna/read/${qna.qnaIdx}',
+                type: 'POST',
+                data: {qnaAnswering: answerText},
+                success: function(data) {
+                    $('#qnaAnswer').val(answerText); // #qnaAnswer 요소의 값을 업데이트
+                    $('#qnaAnswering').val(''); // #qnaAnswering 요소의 값을 초기화
+                },
+                error: function(data) {
+                    alert('[ Error ] : ' + data.responseText);
+                }
+            });
+        }
+    </script>
+</head>
+<body class="p-3 m-0 border-0 bd-example qnaReadForm">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<form enctype="multipart/form-data" action="#" th:object="${qnaBean}">
+    <div class="mb-3">
+        <input class="form-control" id="qnaSubject" name="qnaSubject" placeholder="공지사항 제목" readonly
+               th:field="*{qnaSubject }" type="text">
+    </div>
+
+    <div class="mb-3">
+        <input class="form-control" id="qnaDate" name="qnaDate" readonly
+               th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" type="text">
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control" id="qnaContent " name="qnaContent" placeholder="공지내용" readonly
+                  rows="5" th:field="*{qnaContent }">
+        </textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="qnaFile">첨부파일</label>
+        <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:field="*{qnaFile}" type="file">
+    </div>
+
+<!-- 운영자 답변 -->
+    <div class="card-header bg-light">
+        운영자 답변
+    </div>
+
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <textarea class="form-control" id="qnaAnswer" th:field="*{qnaAnswer}" rows="3" readonly></textarea>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <textarea class="form-control" id="qnaAnswering" th:field="*{qnaAnswering}" rows="3"></textarea>
+                <button type="button" class="btn btn-dark mt-3" onclick="javascript:answer();">답변</button>
+            </li>
+        </ul>
+    </div>
+
+
+    <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="submit">수정</button>
+    <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="button"
+            onclick="location.href='/board/QNA/delete/{qnaIdx}?pageCnt=num'">삭제</button>
+    <button class="btn btn-primary" onclick="history.go(-1)" type="button">목록</button>
+</form>
+
+
+</body>
+</html>

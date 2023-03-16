@@ -1,0 +1,52 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+
+</head>
+<body class="p-3 m-0 border-0 bd-example qnaWriteForm">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<form enctype="multipart/form-data" th:action="@{/board/QNA/write_pro}" th:method="post" th:object="${addQnaBean}">
+  <div class="mb-3">
+    <input type="text" class="form-control" name="qnaSubject" id="qnaSubject" th:field="*{qnaSubject}"
+           placeholder="게시글 제목">
+  </div>
+
+  <div class="mb-3">
+    <input type="text" class="form-control" name="qnaWriter" id="qnaWriter" th:field="*{qnaWriter }"
+           th:text="${addQnaBean.qnaWriter}" readonly>
+  </div>
+
+  <div class="mb-3">
+    <input type="text" name="qnaDate" id="qnaDate" class="form-control" th:field="*{qnaDate}"
+           th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
+  </div>
+  <div class="mb-3">
+        <textarea class="form-control" name="qnaContent" id="qnaContent " rows="5" placeholder="게시글 내용"
+                  th:field="*{qnaContent}">
+        </textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="qnaFile" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm" name="qnaFile" id="qnaFile" type="file" th:field="*{qnaFile}">
+  </div>
+
+
+  <button type="reset" class="btn btn-primary">재작성</button>
+  <button type="submit" class="btn btn-primary">작성완료</button>
+  <button type="button" class="btn btn-primary" onclick="history.go(-1)">취소</button>
+</form>
+
+
+
+
+</body>
+</html>

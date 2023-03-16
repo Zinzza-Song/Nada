@@ -1,0 +1,47 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+    <!-- 반응형 웹 미디어쿼리 선언부   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+
+</head>
+<body class="p-3 m-0 border-0 bd-example noticeReadForm">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="post" th:object="${modifyNoticeBean}">
+    <div class="mb-3">
+        <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject }"
+               placeholder="공지사항 제목" readonly>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+               th:text="${#temporals.format(#modifyNoticeBean.noticeDate(),'yyyy-mm-dd')}" readonly>
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent }"
+                  placeholder="공지내용" readonly>
+        </textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="noticeFile" class="form-label">첨부파일</label>
+        <input class="form-control form-control-sm" name="noticeFile" id="noticeFile" type="file" th:field="*{noticeFile}"
+               readonly>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
+    <button type="button" class="btn btn-primary" onclick="history.go(-1)">목록</button>
+</form>
+
+
+
+
+</body>
+</html>
