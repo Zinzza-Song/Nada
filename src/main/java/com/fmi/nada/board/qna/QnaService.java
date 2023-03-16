@@ -26,10 +26,18 @@ public class QnaService {
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
         File saveFile = new File(getFullPath,fileName);
-        file.transferTo(saveFile);
-        qna.setQnaFile(fileName);
+        if (!saveFile.exists()){
+            saveFile.mkdirs();
+            file.transferTo(saveFile);
+            qna.setQnaFile(fileName);
 
-        qnaRepository.save(qna);
+            qnaRepository.save(qna);
+        }else {
+            file.transferTo(saveFile);
+            qna.setQnaFile(fileName);
+
+            qnaRepository.save(qna);
+        }
     }
 
     public List<Qna> getList() {

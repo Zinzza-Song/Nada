@@ -31,10 +31,18 @@ public class NoticeService {
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
         File saveFile = new File(getFullPath,fileName);
-        file.transferTo(saveFile);
-        notice.setNoticeFile(fileName);
+        if (!saveFile.exists()){
+            saveFile.mkdirs();
+            file.transferTo(saveFile);
+            notice.setNoticeFile(fileName);
 
-        noticeRepository.save(notice);
+            noticeRepository.save(notice);
+        }else {
+            file.transferTo(saveFile);
+            notice.setNoticeFile(fileName);
+
+            noticeRepository.save(notice);
+        }
     }
 
     //공지사항 글 상세 페이지에서 보여지는 공지사항 글
