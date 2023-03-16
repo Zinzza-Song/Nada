@@ -8,47 +8,30 @@
     <!-- 반응형 웹 미디어쿼리 선언부   -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <script>
-        function answer() {
-            var answerText = $('#qnaAnswering').val(); // 운영자가 작성한 답변 텍스트
 
-            $.ajax({
-                url: '/board/qna/read/${qna.qnaIdx}',
-                type: 'POST',
-                data: {qnaAnswering: answerText},
-                success: function(data) {
-                    $('#qnaAnswer').val(answerText); // #qnaAnswer 요소의 값을 업데이트
-                    $('#qnaAnswering').val(''); // #qnaAnswering 요소의 값을 초기화
-                },
-                error: function(data) {
-                    alert('[ Error ] : ' + data.responseText);
-                }
-            });
-        }
-    </script>
 </head>
 <body class="p-3 m-0 border-0 bd-example qnaReadForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" action="#" th:object="${qnaBean}">
+
     <div class="mb-3">
         <input class="form-control" id="qnaSubject" name="qnaSubject" placeholder="공지사항 제목" readonly
-               th:field="*{qnaSubject }" type="text">
+               th:value="${read.qnaSubject }" type="text">
     </div>
 
     <div class="mb-3">
         <input class="form-control" id="qnaDate" name="qnaDate" readonly
-               th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" type="text">
+               th:value="${read.qnaDate}" type="text">
     </div>
     <div class="mb-3">
         <textarea class="form-control" id="qnaContent " name="qnaContent" placeholder="공지내용" readonly
-                  rows="5" th:field="*{qnaContent }">
+                  rows="5" th:text="${read.qnaContent }">
         </textarea>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="qnaFile">첨부파일</label>
-        <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:field="*{qnaFile}" type="file">
+        <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:value="${read.qnaFile}" type="file">
     </div>
 
 <!-- 운영자 답변 -->
@@ -56,30 +39,42 @@
         운영자 답변
     </div>
 
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <textarea class="form-control" id="qnaAnswer" th:field="*{qnaAnswer}" rows="3" readonly></textarea>
-            </li>
-        </ul>
-    </div>
-
     <div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <textarea class="form-control" id="qnaAnswering" th:field="*{qnaAnswering}" rows="3"></textarea>
-                <button type="button" class="btn btn-dark mt-3" onclick="javascript:answer();">답변</button>
+                <textarea class="form-control" name="qnaAnswer" id="qnaAnswer" th:text="${read.qnaAnswer}" rows="3"></textarea>
+                <input type="hidden" id="qnaIdx" th:value="${read.qnaIdx}">
+                <button type="button" class="btn btn-dark mt-3" id="complete" >처리완료</button>
             </li>
         </ul>
     </div>
 
-
-    <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="submit">수정</button>
     <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="button"
             onclick="location.href='/board/QNA/delete/{qnaIdx}?pageCnt=num'">삭제</button>
     <button class="btn btn-primary" onclick="history.go(-1)" type="button">목록</button>
-</form>
 
+<script>
+    $(function (){
+        var answerText = $("#qnaAnswer").val();
+        console.log(answerText);
+        $("#complete").on('click',function (){
+
+            $.ajax({
+                url: '/board/qna/answer',
+                type: 'put',
+                data: {
+                    "qnaIdx" : $("#qnaIdx").val(),
+                    "qnaAnswer" : $("#qnaAnswer").val(),
+                },
+                success: function(data) {
+                    swal('답변이 완료 되었습니다.');
+                    $("#qnaAnswer").attr("readonly","true");
+
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

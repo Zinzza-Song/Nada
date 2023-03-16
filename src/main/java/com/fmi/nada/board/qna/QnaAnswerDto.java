@@ -10,11 +10,9 @@ import javax.validation.constraints.NotBlank;
  */
 @Getter
 @Setter
-public class QnaDto {
+public class QnaAnswerDto {
 
     @NotBlank
-    private String qnaContent;
-    @NotBlank
-    private String qnaSubject;
-    private String qnaFile;
+    private String qnaAnswer;
+
 }

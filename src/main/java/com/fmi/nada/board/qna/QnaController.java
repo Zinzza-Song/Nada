@@ -39,13 +39,16 @@ public class QnaController {
 
     //QNA 작성페이지
     @GetMapping("/write")
-    public String qnaWrite() {
+    public String qnaWrite(@ModelAttribute("addQnaBean") QnaDto qnaDto,
+                           Authentication authentication, Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        model.addAttribute("memberLoginBean",member);
         return "board/QNA/write";
     }
 
     //QNA 작성 프로세스 실행 이후 리다이렉트
     @PostMapping("/write_pro")
-    public String qnaWrite(@Valid @ModelAttribute("writeQnaBean") QnaDto qnaDto
+    public String qnaWrite(@Valid @ModelAttribute("addQnaBean") QnaDto qnaDto
             , Authentication authentication){
         //유저 정보를 로그인된 것을 기준으로 불러와서 member_idx를 불러옴
         Member member = (Member) authentication.getPrincipal();
@@ -55,8 +58,10 @@ public class QnaController {
         qna.setMemberIdx(memberIdx);
         qna.setQnaSubject(qnaDto.getQnaSubject());
         qna.setQnaContent(qnaDto.getQnaContent());
+        qna.setQnaFile(qnaDto.getQnaFile());
         qnaService.writeQna(qna);
-        return "redirect:read";
+
+        return "redirect:read?qnaIdx=" + qna.getQnaIdx();
 
     }
 
@@ -67,17 +72,21 @@ public class QnaController {
 
     //QNA 상세페이지
     @GetMapping("/read")
-    public String read(@RequestParam("qna_idx") Long qna_idx, Model mo) {
-        Qna qna = qnaService.get(qna_idx);
+    public String read(@ModelAttribute("qnaBean") QnaDto qnaDto,
+                       @ModelAttribute("qnaAdminBean") QnaAnswerDto qnaAnswerDto,
+                       @RequestParam("qnaIdx") Long qnaIdx, Model mo) {
+        Qna qna = qnaService.get(qnaIdx);
         mo.addAttribute("read", qna);
         return "board/QNA/read";
     }
 
     //QNA 답변페이지
     @PutMapping("/answer")
-    public void answerQna(@ModelAttribute QnaDto qnaDto, @RequestParam("qna_idx") Long qna_idx) {
-        Qna qna = qnaService.get(qna_idx);
-        qna.setQnaAnswer(qnaDto.getQnaAnswer());
+    @ResponseBody
+    public void answerQna(@ModelAttribute("qnaAdminBean") QnaAnswerDto qnaAnswerDto,
+                          Long qnaIdx,String qnaAnswer) {
+        Qna qna = qnaService.get(qnaIdx);
+        qna.setQnaAnswer(qnaAnswer);
         qna.setQnaIsanswered(true);
         qnaService.answerQna(qna);
     }

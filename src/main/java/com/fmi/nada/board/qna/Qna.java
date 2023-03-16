@@ -52,7 +52,7 @@ public class Qna {
     private String qnaAnswer;
 
     @Column(name = "qna_isanswered")
-    private Boolean qnaIsanswered;
+    private Boolean qnaIsanswered = false;
 
 
 }

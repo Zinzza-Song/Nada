@@ -1,5 +1,6 @@
 package com.fmi.nada.board.qna;
 
+import com.fmi.nada.diary.Diary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -64,7 +64,7 @@
                     </li>
                     <li class="nav-item col-md-7">
                         <a class="nav-link" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/user/read/{memberIdx}}">MyPage</a>
-                        <a class="nav-link"  th:href="@{/admin/}">adminPage</a>
+                        <a class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')"  th:href="@{/admin/}">adminPage</a>
                     </li>
                     <li class="nav-item col-md-10">
                         <div sec:authorize="!isAuthenticated()">
