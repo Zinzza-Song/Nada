@@ -59,16 +59,20 @@ public class QnaController {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("memberLoginBean",member);
         Long memberIdx = member.getMemberIdx();
-
+        if (result.hasErrors()){
+            return "board/QNA/write";
+        }
         //문의사항 작성 시 필요한 내용은 제목과 내용, 파일도 있네 잠깐만 추가하자
         Qna qna = new Qna();
         qna.setMemberIdx(memberIdx);
         qna.setQnaWriter(qnaDto.getQnaWriter());
         qna.setQnaSubject(qnaDto.getQnaSubject());
         qna.setQnaContent(qnaDto.getQnaContent());
-
-        qnaService.writeQna(qna,file);
-
+        if (file.isEmpty()){
+            qnaService.writeQna(qna);
+        }else {
+            qnaService.writeQnaFile(qna, file);
+        }
         return "redirect:read?qnaIdx=" + qna.getQnaIdx();
 
     }

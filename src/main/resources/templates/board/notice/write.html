@@ -17,6 +17,7 @@
     <div class="mb-3">
         <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
                placeholder="공지사항 제목">
+        <p th:if="${#fields.hasErrors('noticeSubject')}" th:errorclass="error" th:errors="*{noticeSubject}" />
     </div>
 
     <div class="mb-3">
@@ -27,6 +28,7 @@
         <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
                   th:field="*{noticeContent}">
         </textarea>
+        <p th:if="${#fields.hasErrors('noticeContent')}" th:errorclass="error" th:errors="*{noticeContent}" />
     </div>
 
     <div class="mb-3">

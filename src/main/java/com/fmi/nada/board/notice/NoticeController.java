@@ -15,6 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -76,14 +77,18 @@ public class NoticeController {
                                   BindingResult bindingResult,
                                   Model model,
                                   MultipartFile file) throws Exception {
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()) {
             return "board/notice/write";
-
+        }
         Notice notice = new Notice();
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
         notice.setNoticeViews(0L);
-        noticeService.registerNotice(notice,file);
+        if (file.isEmpty()){
+            noticeService.writeNotice(notice);
+        }else {
+            noticeService.writeNoticeFile(notice,file);
+        }
         return "redirect:read?noticeIdx="+notice.getNoticeIdx();
     }
 
@@ -100,14 +105,19 @@ public class NoticeController {
     @PutMapping("/modify_pro")
     public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") NoticeDTO noticeDTO,
                                    BindingResult bindingResult,
-                                   @RequestParam("noticeIdx") Long noticeIdx) {
-        if(bindingResult.hasErrors())
+                                   @RequestParam("noticeIdx") Long noticeIdx,
+                                   MultipartFile file) throws Exception {
+        if(bindingResult.hasErrors()) {
             return "board/notice/modify";
-
+        }
         Notice notice = noticeService.getNoticeDetail(noticeIdx);
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
-        noticeService.updateNotice(notice);
+        if (file.isEmpty()){
+            noticeService.updateNotice(notice);
+        }else {
+            noticeService.updateNoticeFile(notice,file);
+        }
         return "redirect:read?noticeIdx=" + noticeIdx;
     }
 

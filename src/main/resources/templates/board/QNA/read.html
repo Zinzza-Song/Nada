@@ -62,7 +62,7 @@
 
     <form id="delete" th:action="@{/board/qna/delete}" th:method="delete">
         <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-        <button type="submit" onclick="if(confirm('정말로 삭제하시겠습니까?')); " class="btn btn-danger">삭제</button>
+        <button type="submit" id="deleteBtn" class="btn btn-danger">삭제</button>
     </form>
     <button class="btn btn-primary" onclick="window.location='/board/qna'" type="button">목록</button>
 
@@ -71,6 +71,14 @@
         $("#answer").on('click',function (){
             $("#check").css('display','inline-block');
         });
+        $("#deleteBtn").on('click',function (){
+            var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
+            if (confirmCheck){
+                $("delete").submit();
+            }else{
+                return false;
+            }
+        })
         $("#complete").on('click',function (){
 
             $.ajax({
@@ -84,7 +92,9 @@
                 },
                 success: function() {
                     swal('답변이 완료 되었습니다.');
-                    window.location="/board/qna/";
+                    setTimeout(function (){
+                        window.location="/board/qna/";
+                    },2000);
                 }
             });
         });
