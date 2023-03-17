@@ -13,7 +13,7 @@
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/notice/write_pro?pageCnt=num}" th:method="post" th:object="${addNoticeBean}">
+<form enctype="multipart/form-data" th:action="@{/board/notice/write_pro}" th:method="post" th:object="${addNoticeBean}">
     <div class="mb-3">
         <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
                placeholder="공지사항 제목">
@@ -24,7 +24,7 @@
               th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
     </div>
     <div class="mb-3">
-        <textarea class="form-control" name="noticeContent" id="notice_content " rows="5" placeholder="공지내용"
+        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
                   th:field="*{noticeContent}">
         </textarea>
     </div>

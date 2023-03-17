@@ -46,7 +46,7 @@
     <div class="container-fluid">
         <form class="d-flex" role="search" th:action="@{/admin}" method="post">
             <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
-                <option selected value="memberEmail" id="memberEmail">회원ID</option>
+                <option selected value="username" id="username">회원ID</option>
                 <option value="name" id="name">회원이름</option>
                 <option value="birth" id="birth">생년월일</option>
             </select>
@@ -71,10 +71,10 @@
     <tbody class="table-group-divider logMoreData">
     <tr th:each="member:${adminMemberList}">
         <th scope="row" th:text="${member.memberIdx}">번호</th>
-        <th scope="row" th:text="${member.memberEmail  }">회원ID</th>
+        <th scope="row" th:text="${member.username  }">회원ID</th>
         <th scope="row" th:text="${member.memberNickname  }">닉네임</th>
         <th scope="row" th:text="${member.memberName  }">회원이름</th>
-        <th scope="row" th:text="${#temporals.format(member.memberBirth , 'yyyy-MM-dd')}">생년월일</th>
+        <th scope="row" th:text="${member.memberBirth}">생년월일</th>
         <th scope="row" th:text="${member.memberAddress}">주소</th>
         <th scope="row" th:text="${member.memberPhone }">연락처</th>
         <th scope="row"><button type="button" class="btn btn-primary">탈퇴</button></th>
