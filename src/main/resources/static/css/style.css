@@ -78,7 +78,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-image: url(../images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    flex-wrap: inherit;
+    flex-wrap: nowrap;
 }
 
 .noticePage {
