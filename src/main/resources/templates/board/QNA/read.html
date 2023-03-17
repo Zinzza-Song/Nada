@@ -9,22 +9,41 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
     <script>
-        function answer() {
-            var answerText = $('#qnaAnswering').val(); // 운영자가 작성한 답변 텍스트
-
-            $.ajax({
-                url: '/board/qna/read/${qna.qnaIdx}',
-                type: 'POST',
-                data: {qnaAnswering: answerText},
-                success: function(data) {
-                    $('#qnaAnswer').val(answerText); // #qnaAnswer 요소의 값을 업데이트
-                    $('#qnaAnswering').val(''); // #qnaAnswering 요소의 값을 초기화
-                },
-                error: function(data) {
-                    alert('[ Error ] : ' + data.responseText);
-                }
+        // jQuery와 AJAX를 이용한 코드
+        $(document).ready(function() {
+            // 수정 버튼 클릭 시
+            $("#editBtn").click(function() {
+                // 답변 버튼과 textarea 활성화
+                $("#answerBtn").prop("disabled", false);
+                $("#qnaAnswer").prop("readonly", false);
             });
-        }
+
+            var data = {
+                qnaIsanswered : true
+            };
+
+            // 답변 버튼 클릭 시
+            $("#answerBtn").click(function() {
+                // textarea에 적은 내용을 가져와서 AJAX 요청
+                var qnaAnswer = $("#qnaAnswer").val();
+                $("#qnaAnswer").innerText=qnaAnswer;
+
+                $.ajax({
+                    url: "/board/qna/answer/{qnaIdx}",
+                    type: "POST",
+                    data: data,
+                    success: function() {
+                        // 답변 버튼과 textarea 비활성화
+                        $("#answerBtn").prop("disabled", true);
+                        $("#qnaAnswer").prop("readonly", true);
+                    },
+                    error: function() {
+                        alert("답변 등록에 실패했습니다.");
+                    }
+                });
+            });
+        });
+
     </script>
 </head>
 <body class="p-3 m-0 border-0 bd-example qnaReadForm">
@@ -32,13 +51,13 @@
 
 <form enctype="multipart/form-data" action="#" th:object="${qnaBean}">
     <div class="mb-3">
-        <input class="form-control" id="qnaSubject" name="qnaSubject" placeholder="공지사항 제목" readonly
+        <input class="form-control" id="qnaSubject" name="qnaSubject" th:text="${qnaBean.qnaSubject}" readonly
                th:field="*{qnaSubject }" type="text">
     </div>
 
     <div class="mb-3">
         <input class="form-control" id="qnaDate" name="qnaDate" readonly
-               th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" type="text">
+               th:text="${#temporals.format(#qnaBean.qnaDate,'yyyy-mm-dd')}" type="text">
     </div>
     <div class="mb-3">
         <textarea class="form-control" id="qnaContent " name="qnaContent" placeholder="공지내용" readonly
@@ -46,9 +65,11 @@
         </textarea>
     </div>
 
+<!--    파일 어떻게 읽어오는지 생각 해 봐야함-->
     <div class="mb-3">
         <label class="form-label" for="qnaFile">첨부파일</label>
-        <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:field="*{qnaFile}" type="file">
+        <input class="form-control form-control-sm" id="qnaFile" name="qnaFile"  readonly
+               th:field="*{qnaFile}" type="file">
     </div>
 
 <!-- 운영자 답변 -->
@@ -59,16 +80,10 @@
     <div class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <textarea class="form-control" id="qnaAnswer" th:field="*{qnaAnswer}" rows="3" readonly></textarea>
-            </li>
-        </ul>
-    </div>
-
-    <div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <textarea class="form-control" id="qnaAnswering" th:field="*{qnaAnswering}" rows="3"></textarea>
-                <button type="button" class="btn btn-dark mt-3" onclick="javascript:answer();">답변</button>
+                <textarea class="form-control" id="qnaAnswer" th:field="*{qnaAnswer}" rows="3" readonly
+                          placeholder="답변 대기 중 입니다."></textarea>
+                <button type="button" class="btn btn-dark mt-3" id="answerBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')"
+                        onclick="answer();" disabled>답변</button>
             </li>
         </ul>
     </div>
@@ -76,7 +91,7 @@
 
     <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="submit">수정</button>
     <button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" type="button"
-            onclick="location.href='/board/QNA/delete/{qnaIdx}?pageCnt=num'">삭제</button>
+            onclick="location.href='/board/QNA/delete/{qnaIdx}'">삭제</button>
     <button class="btn btn-primary" onclick="history.go(-1)" type="button">목록</button>
 </form>
 

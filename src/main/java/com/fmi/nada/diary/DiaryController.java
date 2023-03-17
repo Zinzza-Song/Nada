@@ -38,7 +38,7 @@ public class DiaryController {
         return "diary/index";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public String DiarySearch(@PageableDefault Pageable pageable,
                               @RequestParam("type") String type,
                               @RequestParam("keyword") String keyword,
@@ -52,24 +52,26 @@ public class DiaryController {
         } else if (type.equals("keyword")) {
             model.addAttribute("allDiaryList", diaryService.findAllByDiaryKeywordsContaining(keyword, pageable));
         }
-            model.addAttribute("type", type);
-            model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "diary/index";
     }
 
     // 다이어리 상세 페이지
-    @GetMapping("read/{diaryIdx}")
-    public String readDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageNum") int pageNum, Authentication authentication, Model model) {
+    @GetMapping("/read/{diaryIdx}")
+    public String readDiary(@PathVariable Long diaryIdx,
+                            Authentication authentication,
+                            Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
-        model.addAttribute("diaryBean", diary);
+        model.addAttribute("readDiaryBean", diary);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
 
-        return "diary/read/" + diaryIdx + "?pageNum=" + pageNum;
+        return "diary/read";
     }
 
     // 다이어리 작성 페이지
@@ -78,25 +80,39 @@ public class DiaryController {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
+        diaryDTO.setDiaryWriter(member.getMemberNickname());
 
         return "diary/write";
     }
 
     @PostMapping("write_pro")
-    public String DiaryWrite_pro(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
-        if (bindingResult.hasErrors()) return "diary/write";
+    public String DiaryWrite_pro(
+            @Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        if (bindingResult.hasErrors()) {
+            for (int i = 0; i < bindingResult.getAllErrors().size(); ++i)
+                System.out.println(bindingResult.getAllErrors().get(i));
+            return "diary/write";
+        }
 
         Member member = (Member) authentication.getPrincipal();
-        diaryDTO.setDiaryWriter(member.getMemberNickname());
 
-        diaryService.registerDiary(member.getMemberIdx(), diaryDTO.getDiarySubject(), diaryDTO.getDiaryWriter(), diaryDTO.getDiaryContent(), diaryDTO.getDiaryKeywords(), diaryDTO.getDiaryAnalyze(), diaryDTO.getDiaryPublicable(), diaryDTO.getDiaryAnalyzePublicable());
+        Diary diary = diaryService.registerDiary(
+                member.getMemberIdx(),
+                diaryDTO.getDiarySubject(),
+                diaryDTO.getDiaryWriter(),
+                diaryDTO.getDiaryContent(),
+                diaryDTO.getDiaryKeywords(),
+                diaryDTO.getDiaryAnalyze(),
+                diaryDTO.getDiaryPublicable(),
+                diaryDTO.getDiaryAnalyzePublicable());
 
-        Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
-        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
+        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), Integer.parseInt(diaryDTO.getAnalyzeScore()));
 
         insertKeywords(diaryDTO);
 
-        return "redirect:/read/" + diary.getDiaryIdx();
+        return "redirect:/diary/read/" + diary.getDiaryIdx();
     }
 
 
@@ -161,11 +177,13 @@ public class DiaryController {
                 Keyword keyword = keywordService.findByKeywordName(keywordArr[i]);
 
                 if (keyword != null) {
-                    keyword.setKeywordCnt(keyword.getKeywordCnt() + 1);
+                    Integer a = keyword.getKeywordCnt();
+                    System.out.println(a);
+                    Integer b = a + 1;
+                    keyword.setKeywordCnt(b);
                     keywordService.register(keyword);
                 } else {
-                    keyword.setKeywordName(keywordArr[i]);
-                    keywordService.register(keyword);
+                    keywordService.register(new Keyword(keywordArr[i]));
                 }
             }
         }

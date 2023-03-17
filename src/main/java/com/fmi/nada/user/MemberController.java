@@ -18,14 +18,18 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class MemberController {
 
     private final MemberService memberService;
     private final MailAuthService mailAuthService;
     private final PasswordEncoder passwordEncoder;
-
     private final DiaryService diaryService;
+
+    @GetMapping("/loginfail")
+    public String loginFail() {
+        return "user/loginfail";
+    }
 
     @GetMapping("/join")
     public String join(@ModelAttribute("memberJoinBean") MemberJoinDto memberJoinDto) {
@@ -177,7 +181,7 @@ public class MemberController {
     @DeleteMapping("/delete")
     public String deleteMember(@RequestParam("memberIdx") Long memberIdx, HttpServletResponse res) {
         memberService.delMember(memberIdx);
-        
+
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
         cookie.setMaxAge(0);
         res.addCookie(cookie);

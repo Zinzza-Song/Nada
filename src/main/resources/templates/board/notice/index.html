@@ -39,7 +39,7 @@
     <tr>
         <th scope="row" th:text="${notice.noticeIdx}">1</th>
         <td>
-            <a th:href="@{/board/notice/read/${notice.noticeIdx}?pageCnt=1}" th:text="${notice.noticeSubject}">공지사항 제목</a>
+            <a th:href="@{/board/notice/read/${notice.noticeIdx}}" th:text="${notice.noticeSubject}">공지사항 제목</a>
         </td>
         <td th:text="${#temporals.format(notice.noticeDate, 'YY-MM-dd')}">날짜</td>
         <td th:text="${notice.noticeViews}">24</td>
@@ -66,7 +66,7 @@
     </ul>
 </nav>
 
-<form class="noticeWriteBtn" th:action="@{/board/notice/write}" th:method="get" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+<form class="noticeWriteBtn" th:action="@{/board/qna/write/${memberIdx}}" th:method="get" sec:authorize="hasAnyRole('ROLE_ADMIN')">
     <button type="submit" class="btn btn-outline-primary" >작성</button>
 
 </form>

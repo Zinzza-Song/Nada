@@ -1,8 +1,11 @@
 package com.fmi.nada.config;
 
+import com.fmi.nada.admin.Log;
+import com.fmi.nada.admin.LogRepository;
 import com.fmi.nada.jwt.JwtAuthenticationFilter;
 import com.fmi.nada.jwt.JwtAuthorizationFilter;
 import com.fmi.nada.jwt.JwtProperties;
+import com.fmi.nada.jwt.JwtUtils;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberRepository;
 import com.fmi.nada.user.MemberService;
@@ -21,6 +24,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.http.Cookie;
+import java.util.Arrays;
+
 /**
  * Security 설정
  */
@@ -31,6 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final LogRepository logRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,7 +47,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(
-                new JwtAuthenticationFilter(authenticationManager()),
+                new JwtAuthenticationFilter(authenticationManager(), logRepository),
                 UsernamePasswordAuthenticationFilter.class
         ).addFilterBefore(
                 new JwtAuthorizationFilter(memberRepository),
@@ -66,8 +73,29 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
+                .addLogoutHandler(((request, response, authentication) -> {
+                    String token = "";
+                    try {
+                        token = Arrays.stream(request.getCookies())
+                                .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME))
+                                .findFirst()
+                                .map(Cookie::getValue)
+                                .orElse(null);
+                    } catch (Exception ignored) {
+                    }
+                    String userName = JwtUtils.getUsername(token);
+                    Member member = memberRepository.findByUsername(userName);
+                    logRepository.save(new Log(
+                            member.getMemberIdx(),
+                            true,
+                            member.getUsername(),
+                            "로그아웃"
+                    ));
+                }))
+                .logoutSuccessHandler(((request, response, authentication) -> {
+                    response.sendRedirect("/user/login");
+                }))
                 .deleteCookies(JwtProperties.COOKIE_NAME);
     }
 

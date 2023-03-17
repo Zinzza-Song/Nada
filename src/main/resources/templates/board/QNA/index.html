@@ -36,10 +36,10 @@
         <th scope="col">조회수</th>
     </tr>
     </thead>
-    <tbody class="table-group-divider" th:each="qna: ${list}">
+    <tbody class="table-group-divider" th:each="qna: ${allQnaList}">
     <tr>
         <th scope="row" th:text="${qna.qnaIdx}">1</th>
-        <td><a th:href="@{/board/qna/read}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
+        <td><a th:href="@{/board/qna/read/${qnaIdx}}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
         <td th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
         <td th:text="${qna.qnaViews}">24</td>
     </tr>
@@ -65,7 +65,7 @@
     </ul>
 </nav>
 
-<form class="noticeWriteBtn" th:action="@{/board/qna/write}" th:method="get">
+<form class="noticeWriteBtn" th:action="@{/board/QNA/write/${memberIdx}}" th:method="get">
     <button type="submit" class="btn btn-outline-primary" >작성</button>
 
 </form>
