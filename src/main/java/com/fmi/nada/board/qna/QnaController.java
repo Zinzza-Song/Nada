@@ -1,24 +1,25 @@
 package com.fmi.nada.board.qna;
 
 
-import com.fmi.nada.board.notice.Notice;
+
 import com.fmi.nada.user.Member;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -91,6 +92,16 @@ public class QnaController {
         Qna qna = qnaService.get(qnaIdx);
         mo.addAttribute("qnaBean", qna);
         return "board/QNA/read";
+    }
+    @GetMapping("/download")
+    public ResponseEntity<Resource> download(@RequestParam("qnaIdx") Long qnaIdx)throws Exception{
+        Qna qna = qnaService.get(qnaIdx);
+        String projectPath = System.getProperty("user.dir");
+        String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
+        UrlResource resource = new UrlResource("file:"+getFullPath+"\\"+qna.getQnaFile());
+        String encodedFileName = UriUtils.encode(qna.getQnaFile(), StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
     }
 
     //QNA 답변페이지

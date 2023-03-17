@@ -1,21 +1,28 @@
 package com.fmi.nada.board.notice;
 
+import com.fmi.nada.board.qna.Qna;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -120,7 +127,16 @@ public class NoticeController {
         }
         return "redirect:read?noticeIdx=" + noticeIdx;
     }
-
+    @GetMapping("/download")
+    public ResponseEntity<Resource> download(@RequestParam("noticeIdx") Long noticeIdx)throws Exception{
+        Notice notice = noticeService.getNoticeDetail(noticeIdx);
+        String projectPath = System.getProperty("user.dir");
+        String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
+        UrlResource resource = new UrlResource("file:"+getFullPath+"\\"+notice.getNoticeFile());
+        String encodedFileName = UriUtils.encode(notice.getNoticeFile(), StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
+    }
     // 공지사항 삭제 서비스 로직
     @DeleteMapping("/delete")
     public String deleteNotice(@RequestParam("noticeIdx") Long noticeIdx) {

@@ -33,8 +33,10 @@
 
     <div class="mb-3">
         <label for="File" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="File" id="File" th:value="${readNoticeBean.noticeFile}"
-               readonly>
+        <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+            <input class="form-control form-control-sm" name="File" id="File"
+                   th:value="${readNoticeBean.noticeFile}" readonly>
+        </a>
     </div>
 
     <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
