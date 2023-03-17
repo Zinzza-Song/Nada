@@ -120,7 +120,7 @@ public class MemberController {
 
         Sympathy sympathy = memberService.getLikeIdx(memberIdx);
         if (sympathy == null) {
-            List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
+            List<Diary> myDiaryList = diaryService.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);
             model.addAttribute("myDiaryList", myDiaryList);
 
             List<Friends> friendsList = memberService.friendsList(memberIdx);
