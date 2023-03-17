@@ -2,10 +2,14 @@ package com.fmi.nada.board.notice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,27 +32,41 @@ public class NoticeController {
 
     //공지사항 메인 페이지
     @GetMapping
-    public String main(Model model) {
-        model.addAttribute("noticeList",noticeService.getallNoticeList());
+    public String main(@PageableDefault Pageable pageable,
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
+
+        Page<Notice> noticeList = null;
+
+        if(keyword == null) {
+            noticeList = noticeService.findAllByOrderByNoticeDateDesc(pageable);
+        }
+        else if(type.equals("content") && keyword != null){
+            noticeList = noticeService.findAllByNoticeSubjectContaining(keyword, pageable);
+        }
+        model.addAttribute("noticeList",noticeList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "board/notice/index";
     }
 
     // 공지사항 글 읽기 ( 조회수 증가 )
-    @GetMapping("/read/{noticeIndex}")
-    public String read(@PathVariable("noticeIndex") Long notice_idx,
+    @GetMapping("/read")
+    public String read(@RequestParam("noticeIdx") Long noticeIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model) {
 
-        Notice notice = noticeService.getNoticeDetail(notice_idx);
+        Notice notice = noticeService.getNoticeDetail(noticeIdx);
         viewCountValidation(notice, request, response);
         model.addAttribute("readNoticeBean", notice);
-        return "board/notice/read/" + notice.getNoticeIdx();
+        return "board/notice/read" ;
     }
 
     // 공지사항 작성 페이지
     @GetMapping("/write")
-    public String writeNotice() {
+    public String writeNotice(@ModelAttribute("addNoticeBean") NoticeDTO noticeDTO) {
         return "board/notice/write";
     }
 
@@ -56,47 +74,48 @@ public class NoticeController {
     @PostMapping("/write_pro")
     public String writeNotice_pro(@Valid @ModelAttribute("addNoticeBean") NoticeDTO noticeDTO,
                                   BindingResult bindingResult,
-                                  Model model) {
+                                  Model model,
+                                  MultipartFile file) throws Exception {
         if(bindingResult.hasErrors())
             return "board/notice/write";
 
         Notice notice = new Notice();
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
-        notice.setNoticeFile(noticeDTO.getNoticeFile());
-        noticeService.registerNotice(notice);
-        return "redirect:list";
+        notice.setNoticeViews(0L);
+        noticeService.registerNotice(notice,file);
+        return "redirect:read?noticeIdx="+notice.getNoticeIdx();
     }
 
     // 공지사항 수정 폼 페이지
-    @GetMapping("/modify/{noticeIndex}")
-    public String modifyNotice(@RequestParam("noticeIndex") Long notice_idx, Model model) {
+    @GetMapping("/modify")
+    public String modifyNotice(@RequestParam("noticeIdx") Long notice_idx, Model model) {
         Notice notice = noticeService.getNoticeDetail(notice_idx);
         model.addAttribute("modifyNoticeBean", notice);
+        model.addAttribute("readNoticeBean",notice);
         return "board/notice/modify";
     }
 
     // 공지사항 수정 서비스 로직 수행
-    @PutMapping("/modify_pro/{noticeIndex}")
+    @PutMapping("/modify_pro")
     public String modify_proNotice(@Valid @ModelAttribute("modifyNoticeBean") NoticeDTO noticeDTO,
-                                   @RequestParam("noticeIndex") Long noticeIndex,
                                    BindingResult bindingResult,
-                                   @RequestParam("notice_idx") Long notice_idx) {
+                                   @RequestParam("noticeIdx") Long noticeIdx) {
         if(bindingResult.hasErrors())
-            return "board/notice/modify/" + noticeIndex;
+            return "board/notice/modify";
 
-        Notice notice = noticeService.getNoticeDetail(notice_idx);
+        Notice notice = noticeService.getNoticeDetail(noticeIdx);
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
         noticeService.updateNotice(notice);
-        return "redirect:read/" + noticeIndex;
+        return "redirect:read?noticeIdx=" + noticeIdx;
     }
 
     // 공지사항 삭제 서비스 로직
-    @DeleteMapping("/delete/{noticeIndex}")
-    public String deleteNotice(@RequestParam("noticeIndex") Long noticeIndex) {
-        noticeService.deleteNotice(noticeIndex);
-        return "redirect:list";
+    @DeleteMapping("/delete")
+    public String deleteNotice(@RequestParam("noticeIdx") Long noticeIdx) {
+        noticeService.deleteNotice(noticeIdx);
+        return "redirect:/board/notice";
     }
 
     // 조회수 증가에 대한 중복 조회 방지 메서드 ( 24시간 기준으로 여러번 방문해도 조회수는 1 증가 )

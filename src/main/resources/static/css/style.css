@@ -134,7 +134,14 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 10px;
 
 }
-
+.Page-bar li {
+    display: inline-block;
+    font-size: 20px;
+}
+.Page-bar {
+    list-style-type: none;
+    text-align: center;
+}
 .page-link {
     color: #ffffff;
     background-color: #937152;

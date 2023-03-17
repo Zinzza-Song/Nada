@@ -21,7 +21,7 @@
 
     <div class="mb-3">
         <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-              th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
+              th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
     </div>
     <div class="mb-3">
         <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
@@ -30,14 +30,14 @@
     </div>
 
     <div class="mb-3">
-        <label for="noticeFile" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="noticeFile" id="noticeFile" type="file" th:field="*{noticeFile}">
+        <label for="file" class="form-label">첨부파일</label>
+        <input class="form-control form-control-sm" name="file" id="file" type="file">
     </div>
 
 
     <button type="reset" class="btn btn-primary">재작성</button>
     <button type="submit" class="btn btn-primary">작성완료</button>
-    <button type="button" class="btn btn-primary" onclick="history.go(-1)">취소</button>
+    <button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">취소</button>
 </form>
 
 

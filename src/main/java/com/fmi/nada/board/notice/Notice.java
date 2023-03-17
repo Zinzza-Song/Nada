@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -40,6 +41,7 @@ public class Notice {
     private String noticeFile;
 
     @Column(name = "notice_views")
+    @ColumnDefault("0")
     private Long noticeViews;
 
     public void addViewCount() {

@@ -14,8 +14,8 @@ public class QnaDto {
 
     @NotBlank
     private String qnaContent;
+    private String qnaWriter;
     @NotBlank
     private String qnaSubject;
-    @NotBlank
-    private String qnaAnswer;
+    private String qnaFile;
 }

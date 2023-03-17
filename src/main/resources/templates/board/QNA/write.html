@@ -12,31 +12,32 @@
 </head>
 <body class="p-3 m-0 border-0 bd-example qnaWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
-
-<form enctype="multipart/form-data" th:action="@{/board/QNA/write_pro}" th:method="post" th:object="${addQnaBean}">
+<!--enctype="multipart/form-data"-->
+<form enctype="multipart/form-data"  th:action="@{/board/qna/write_pro}" method="post" th:object="${addQnaBean}">
   <div class="mb-3">
     <input type="text" class="form-control" name="qnaSubject" id="qnaSubject" th:field="*{qnaSubject}"
            placeholder="게시글 제목">
+    <p th:if="${#fields.hasErrors('qnaSubject')}" th:errorclass="error" th:errors="*{qnaSubject}" />
   </div>
 
   <div class="mb-3">
-    <input type="text" class="form-control" name="qnaWriter" id="qnaWriter" th:field="*{qnaWriter }"
-           th:text="${addQnaBean.qnaWriter}" readonly>
+    <input type="text" class="form-control" name="qnaWriter" id="qnaWriter" th:value="${memberLoginBean.memberNickname}" readonly>
+
   </div>
 
   <div class="mb-3">
-    <input type="text" name="qnaDate" id="qnaDate" class="form-control" th:field="*{qnaDate}"
-           th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
+    <input type="text" name="qnaDate" id="qnaDate" class="form-control" th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
   </div>
   <div class="mb-3">
         <textarea class="form-control" name="qnaContent" id="qnaContent " rows="5" placeholder="게시글 내용"
                   th:field="*{qnaContent}">
         </textarea>
+    <p th:if="${#fields.hasErrors('qnaContent')}" th:errorclass="error" th:errors="*{qnaContent}" />
   </div>
 
   <div class="mb-3">
-    <label for="qnaFile" class="form-label">첨부파일</label>
-    <input class="form-control form-control-sm" name="qnaFile" id="qnaFile" type="file" th:field="*{qnaFile}">
+    <label for="file" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm" name="file" id="file" type="file">
   </div>
 
 
