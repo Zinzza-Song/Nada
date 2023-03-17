@@ -52,8 +52,8 @@ public class DiaryController {
         } else if (type.equals("keyword")) {
             model.addAttribute("allDiaryList", diaryService.findAllByDiaryKeywordsContaining(keyword, pageable));
         }
-            model.addAttribute("type", type);
-            model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "diary/index";
     }
 
@@ -80,21 +80,40 @@ public class DiaryController {
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
+        diaryDTO.setDiaryWriter(member.getMemberNickname());
 
         return "diary/write";
     }
 
     @PostMapping("write_pro")
-    public String DiaryWrite_pro(@Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
-        if (bindingResult.hasErrors()) return "diary/write";
+    public String DiaryWrite_pro(
+            @Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        if (bindingResult.hasErrors()) {
+            for (int i = 0; i < bindingResult.getAllErrors().size(); ++i)
+                System.out.println(bindingResult.getAllErrors().get(i));
+            return "diary/write";
+        }
 
         Member member = (Member) authentication.getPrincipal();
-        diaryDTO.setDiaryWriter(member.getMemberNickname());
 
-        diaryService.registerDiary(member.getMemberIdx(), diaryDTO.getDiarySubject(), diaryDTO.getDiaryWriter(), diaryDTO.getDiaryContent(), diaryDTO.getDiaryKeywords(), diaryDTO.getDiaryAnalyze(), diaryDTO.getDiaryPublicable(), diaryDTO.getDiaryAnalyzePublicable());
+        if (diaryDTO.getDiaryKeywords() == null)
+            System.out.println("널값뜸");
 
-        Diary diary = diaryService.findByDiary_subject(diaryDTO.getDiarySubject());
-        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), diaryDTO.getAnalyzeScore());
+        System.out.println(diaryDTO.getDiaryKeywords());
+
+        Diary diary = diaryService.registerDiary(
+                member.getMemberIdx(),
+                diaryDTO.getDiarySubject(),
+                diaryDTO.getDiaryWriter(),
+                diaryDTO.getDiaryContent(),
+                diaryDTO.getDiaryKeywords(),
+                diaryDTO.getDiaryAnalyze(),
+                diaryDTO.getDiaryPublicable(),
+                diaryDTO.getDiaryAnalyzePublicable());
+
+        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), Integer.parseInt(diaryDTO.getAnalyzeScore()));
 
         insertKeywords(diaryDTO);
 
@@ -163,11 +182,13 @@ public class DiaryController {
                 Keyword keyword = keywordService.findByKeywordName(keywordArr[i]);
 
                 if (keyword != null) {
-                    keyword.setKeywordCnt(keyword.getKeywordCnt() + 1);
+                    Integer a = keyword.getKeywordCnt();
+                    System.out.println(a);
+                    Integer b = a + 1;
+                    keyword.setKeywordCnt(b);
                     keywordService.register(keyword);
                 } else {
-                    keyword.setKeywordName(keywordArr[i]);
-                    keywordService.register(keyword);
+                    keywordService.register(new Keyword(keywordArr[i]));
                 }
             }
         }

@@ -1,5 +1,7 @@
 package com.fmi.nada.jwt;
 
+import com.fmi.nada.admin.Log;
+import com.fmi.nada.admin.LogRepository;
 import com.fmi.nada.user.Member;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,11 +21,14 @@ import java.util.ArrayList;
  */
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private final LogRepository logRepository;
+
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, LogRepository logRepository) {
         super(authenticationManager);
         this.authenticationManager = authenticationManager;
+        this.logRepository = logRepository;
     }
 
     /**
@@ -64,6 +69,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Member user = (Member) authResult.getPrincipal();
         String token = JwtUtils.createToken(user);
 
+        logRepository.save(new Log(
+                user.getMemberIdx(),
+                true,
+                user.getUsername(),
+                "로그인"
+        ));
+
         //쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
         cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키 만료시간 설정
@@ -88,7 +100,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed)
             throws IOException {
-        response.sendRedirect("/user/login");
+        response.sendRedirect("/user/loginfail");
     }
 }
 

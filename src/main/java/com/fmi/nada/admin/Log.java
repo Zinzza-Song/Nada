@@ -39,4 +39,15 @@ public class Log {
     @Column(name = "log_usedservice")
     private String logUsedService;
 
+    public Log(
+            Long memberIdx,
+            Boolean logIssuccessed,
+            String logMemberEmail,
+            String logUsedService) {
+        this.memberIdx = memberIdx;
+        this.logIssuccessed = logIssuccessed;
+        this.logMemberEmail = logMemberEmail;
+        this.logUsedService = logUsedService;
+    }
+
 }

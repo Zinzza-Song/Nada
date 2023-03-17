@@ -6,9 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Diary Service
@@ -32,15 +30,15 @@ public class DiaryService {
         return diaryRepository.findAllByOrderByDiaryDateDesc();
     }
 
-    public void registerDiary(Long memberIdx,
-                              String diarySubject,
-                              String diaryWriter,
-                              String diaryContent,
-                              String diaryKeywords,
-                              String diaryAnalyze,
-                              Boolean diaryPublicable,
-                              Boolean diary_analyzePublicable) {
-        diaryRepository.save(new Diary(memberIdx,
+    public Diary registerDiary(Long memberIdx,
+                               String diarySubject,
+                               String diaryWriter,
+                               String diaryContent,
+                               String diaryKeywords,
+                               String diaryAnalyze,
+                               Boolean diaryPublicable,
+                               Boolean diary_analyzePublicable) {
+        return diaryRepository.save(new Diary(memberIdx,
                 diarySubject,
                 diaryWriter,
                 diaryContent,

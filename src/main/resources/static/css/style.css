@@ -55,7 +55,8 @@
     text-decoration: none;
     color: black;
 }
-.logbtn{
+
+.logbtn {
     width: 130px;
     height: 130px;
     margin: 5px;
@@ -71,18 +72,20 @@ width: 100%;
 height: 300px;
 background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
-.mainBody, .diarymain,.diary-write-body, .noticeMain,
-.qnaMain, .reportMain, .noticeWriteForm, .noticeReadForm ,
-.noticeModifyForm, .qnaReadForm, .qnaWriteForm{
+.mainBody, .diarymain, .diary-write-body, .noticeMain,
+.qnaMain, .reportMain, .noticeWriteForm, .noticeReadForm,
+.noticeModifyForm, .qnaReadForm, .qnaWriteForm {
     background-image: url(../images/mainBack2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     flex-wrap: inherit;
 }
-.noticePage{
+
+.noticePage {
     margin-left: 43%;
 }
-.noticeWriteBtn{
+
+.noticeWriteBtn {
     float: right;
     margin: 30px 40px;
 }
@@ -101,11 +104,13 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-repeat: round;
     background-size: cover;
 }
-.todayAdvice,.keywordcard{
+
+.todayAdvice, .keywordcard {
     width: 220px;
     height: 200px;
 }
-#keywordContext{
+
+#keywordContext {
     margin-top: 6px;
     border: 1px solid #937152;
 }
@@ -129,31 +134,38 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 10px;
 
 }
+
 .page-link {
     color: #ffffff;
     background-color: #937152;
 }
+
 .page-item {
     display: inline-block;
 }
+
 .now-page {
     color: #330f0e;
     background-color: #e3cab0;
 }
+
 .searchbar {
     margin-top: 10px;
 }
-.createDiary{
+
+.createDiary {
     margin-top: 20px;
     float: right;
     background-color: #a38969;
     border-color: white;
 }
-.logBtnBox{
+
+.logBtnBox {
     display: flex;
     justify-content: center;
     margin-top: 300px;
 }
+
 .selectSerch {
     width: auto;
 }
@@ -229,8 +241,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         width: 600px;
     }
 }
+
 /* admin log페이지 부분*/
-.logHeader{
+.logHeader {
     position: fixed;
 
 }
@@ -261,6 +274,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-weight: normal;
     font-style: normal;
 }
+
 /*교보손글씨2019-*/
 @font-face {
     font-family: 'KyoboHand';
@@ -268,6 +282,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-weight: normal;
     font-style: normal;
 }
+
 /*KCC-차쌤체*/
 @font-face {
     font-family: 'KCCChassam';
@@ -275,6 +290,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-weight: normal;
     font-style: normal;
 }
+
 /*거친둘기마요*/
 @font-face {
     font-family: 'Dovemayo_wild';
@@ -282,6 +298,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-weight: normal;
     font-style: normal;
 }
+
 /*태백 은하수체*/
 @font-face {
     font-family: 'TAEBAEKmilkyway';
@@ -289,24 +306,31 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-weight: normal;
     font-style: normal;
 }
+
 /*다이어리 작성 폰트 설정*/
-.diary{
-    font-family: 'KyoboHandwriting2021sjy','KyoboHand','KCCChassam';
+.diary {
+    font-family: 'KyoboHandwriting2021sjy', 'KyoboHand', 'KCCChassam';
+    margin-left: 80px;
 }
-.navbar{
-    font-family: 'KCCChassam','Dovemayo_wild','TAEBAEKmilkyway';
+
+.navbar {
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
+
 body {
     font-size: 0.75rem;
 }
-#container{
+
+#container {
     padding: 5px;
 }
-.loginBox{
+
+.loginBox {
     display: inline;
 }
+
 .BoxTitle {
-    color:#5e4322;
+    color: #5e4322;
     font-weight: bold;
     font-size: 1.9rem;
     text-transform: uppercase;
@@ -318,76 +342,91 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.logo-text{
+
+.logo-text {
     margin: 0 auto;
 }
-.loginAct{
+
+.loginAct {
     margin: 0px 0px 5%;
 }
+
 input[type="button"] {
     font-size: 0.75rem;
     padding: 5px 10px;
 }
+
 .login-box {
-    margin:12% auto;
+    margin: 12% auto;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
-    padding:40px 30px;
-    border:5px solid #422f17;width:475px;
-    filter: drop-shadow(0px 0px 10px rgba(0,0,0,.5));
+    padding: 40px 30px;
+    border: 5px solid #422f17;
+    width: 475px;
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
 }
 
 .form-group label {
     font-size: 0.75rem;
-    margin:5px 0;
+    margin: 5px 0;
 }
-#login-btn-box{
+
+#login-btn-box {
     padding-left: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:10px 0px 10px;
+    margin: 10px 0px 10px;
 
 }
 
-.btn-light{
+.btn-light {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:10px 0px 0px;
+    margin: 10px 0px 0px;
 }
+
 /*diary_write_css*/
 .diary-container {
     align-items: center;
 }
 
-.leftDiary{
+.diary-write {
+    display: flex;
+}
+
+.leftDiary {
     background-image: url("../images/leftNote.png");
-    width: 700px;
+    width: 50%;
     height: 700px;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-
+    order: 1;
 }
-.rightDiary{
+
+.rightDiary {
     background-image: url("../images/rightNote.png");
-    width: 700px;
+    width: 50%;
     height: 700px;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
+    order: 2;
+}
 
+.diary-form {
+    width: 100%;
 }
-.diary-form{
-    width: 1400px;
-}
-.diary-wrap{
+
+.diary-wrap {
     align-items: center;
 }
-.diary{
-   margin-top:8% ;
+
+.diary {
+    margin-top: 8%;
 }
 
-.btn-right{
+.btn-right {
     margin-left: 80%;
     display: flex;
     align-items: center;
@@ -395,33 +434,87 @@ input[type="button"] {
     margin-right: 45px;
 }
 
-.diaryContent,.diaryAnalyze{
+.diaryContent, .diaryAnalyze {
     width: 80%;
     height: 18rem;
     resize: none;
 }
-.text-center{
+
+.text-center {
     text-align: center;
 }
-.diarySubject,.diaryContent{
+
+.diarySubject, .diaryContent {
     white-space: pre-line;
 }
-.diarySubject,.diaryContent,.diaryAnalyze{
+
+.diarySubject, .diaryContent, .diaryAnalyze {
     background-color: transparent;
 }
-.diaryWriteBtn>input{
+
+.diaryWriteBtn > input {
     padding: 5px 10px;
     font-size: small;
 }
-.page{
+
+.page {
     list-style-type: none;
     text-align: center;
     margin: 0;
     padding: 0;
 }
-.page li{
+
+.page li {
     display: inline-block;
     font-size: 20px;
+}
+
+.keywords {
+    border: 1px solid red;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.btn_close::before {
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    content: "";
+    top: 0px;
+    left: 0px;
+}
+
+.item span {
+    margin-left: 6px;
+    margin-right: 10px;
+}
+
+.blind {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.item {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 20px;
+    padding: 8px 16px;
+    background-color: saddlebrown;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    color: white;
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 300px;
 }
 
 
