@@ -13,36 +13,44 @@
 <body class="p-3 m-0 border-0 bd-example noticeReadForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/notice/modify/${noticeIdx}}" th:method="get" th:object="${modifyNoticeBean}">
-    <div class="mb-3">
-        <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject }"
-               placeholder="공지사항 제목" readonly>
-    </div>
+<!--<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="get" th:object="${readNoticeBean}">-->
+<input type="hidden" id="idx" name="idx" th:value="${readNoticeBean.noticeIdx}">
+<div class="mb-3">
+    <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:value="${readNoticeBean.noticeSubject }"
+           placeholder="공지사항 제목" readonly>
+</div>
 
-    <div class="mb-3">
-        <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-               th:text="${#temporals.format(#readNoticeBean.noticeDate,'yyyy-mm-dd')}" readonly>
-    </div>
-    <div class="mb-3">
-        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent }"
-              th:text="${readNoticeBean.noticeContent}"    placeholder="공지내용" readonly>
+<div class="mb-3">
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+           th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
+</div>
+<div class="mb-3">
+        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:text="${readNoticeBean.noticeContent }"
+                  placeholder="공지내용" readonly>
         </textarea>
-    </div>
+</div>
 
-<!--    첨부파일 어떻게 읽어오는지 수정 해야함-->
-    <div class="mb-3">
-        <label for="noticeFile" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="noticeFile" id="noticeFile" type="file" th:field="*{noticeFile}"
-               readonly>
-    </div>
+<div class="mb-3">
+    <label for="File" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm" name="File" id="File" th:value="${readNoticeBean.noticeFile}"
+           readonly>
+</div>
 
-
-    <button type="submit" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
-    <button type="button" class="btn btn-primary" onclick="history.go(-1)">목록</button>
+<form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
+    <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
+    <button type="submit" onclick="if(confirm('정말로 삭제하시겠습니까?')); " class="btn btn-danger">삭제</button>
 </form>
+<button type="button" class="btn btn-primary" onclick="modify() " sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
+<button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">목록</button>
+<!--</form>-->
 
+<script>
+    function modify(){
+        var noticeIdx = $("#idx").val();
+        window.location="/board/notice/modify?noticeIdx="+noticeIdx;
+    }
 
-
+</script>
 
 </body>
 </html>
