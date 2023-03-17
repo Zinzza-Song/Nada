@@ -59,9 +59,7 @@ input[type="button"] {
     margin:10px 0px 0px;
 }
 /*diary_write_css*/
-.diary-container {
-    align-items: center;
-}
+
 /*이미지 넣을 css 따로 분리해서 넣을 것*/
 /*.diary-write{*/
 /*    !*width: 1100px;*!*/
@@ -81,24 +79,10 @@ input[type="button"] {
     margin-right: 45px;
 }
 
-.diaryContent,.diaryAnalyze{
-    width: 85%;
-    height: 18rem;
-    resize: none;
-}
 .text-center{
     text-align: center;
 }
-.diarySubject,.diaryContent{
-    white-space: pre-line;
-}
-.diarySubject,.diaryContent,.diaryAnalyze{
-    background-color: transparent;
-}
-.diaryWriteBtn>input{
-    padding: 5px 10px;
-    font-size: small;
-}
+
 /*.writeTitle{*/
 /*    font-size: medium;*/
 /*}*/
@@ -108,15 +92,6 @@ input[type="button"] {
 /*.page-item{*/
 /*    display: inline-block;*/
 /*}*/
-.page{
-    list-style-type: none;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-.page li{
-    display: inline-block;
-    font-size: 20px;
-}
+
 
 

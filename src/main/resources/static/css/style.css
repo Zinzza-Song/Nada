@@ -524,5 +524,26 @@ input[type="button"] {
     border-radius: 300px;
 }
 
+.diarySubject,.diaryContent{
+    white-space: pre-line;
+}
+.diarySubject,.diaryContent,.diaryAnalyze{
+    background-color: transparent;
+}
+.diaryWriteBtn>input{
+    padding: 5px 10px;
+    font-size: small;
+}
+
+.diaryContent,.diaryAnalyze{
+    width: 85%;
+    height: 18rem;
+    resize: none;
+}
+
+.diary-container {
+    align-items: center;
+}
+
 
 
