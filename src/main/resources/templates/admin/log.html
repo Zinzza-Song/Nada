@@ -66,8 +66,8 @@
     <tbody class="table-group-divider logMoreData">
     <tr th:each="log:${adminAllLogList}">
         <th scope="row" th:text="${log.logIdx}">번호</th>
-        <th scope="row" th:if="${log.logIssuccessed }">성공</th>
-        <th scope="row" th:unless="${log.logIssuccessed }">성공</th>
+        <th scope="row" th:if="${log. logIssuccessed}">성공</th>
+        <th scope="row" th:unless="${log.logIssuccessed }">실패</th>
         <th scope="row" th:text="${log.logMemberEmail }">사용자</th>
         <th scope="row" th:text="${#temporals.format(log.logDate, 'yyyy-MM-dd HH:mm:ss')}">날짜</th>
         <th scope="row" th:text="${log.logUsedService}">서비스</th>
