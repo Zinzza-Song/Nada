@@ -24,6 +24,7 @@
         <input type="text" name="noticeDate" id="noticeDate" class="form-control"
                th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
     </div>
+    </div>
     <div class="mb-3">
         <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:text="${readNoticeBean.noticeContent }"
                   placeholder="공지내용" readonly>
