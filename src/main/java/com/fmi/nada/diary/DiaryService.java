@@ -38,14 +38,17 @@ public class DiaryService {
                                String diaryAnalyze,
                                Boolean diaryPublicable,
                                Boolean diary_analyzePublicable) {
-        return diaryRepository.save(new Diary(memberIdx,
+        Diary diary = new Diary(memberIdx,
                 diarySubject,
                 diaryWriter,
                 diaryContent,
                 diaryKeywords,
                 diaryAnalyze,
                 diaryPublicable,
-                diary_analyzePublicable));
+                diary_analyzePublicable);
+        diary.setDiaryCnt(1L);
+        diary.setDiarySympathyCnt(0L);
+        return diaryRepository.save(diary);
     }
 
     // 다이어리 메인 게시판에서 보여지는 다이어리 리스트

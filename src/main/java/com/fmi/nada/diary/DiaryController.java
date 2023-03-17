@@ -67,7 +67,7 @@ public class DiaryController {
     // 다이어리 상세 페이지
     @GetMapping("read/{diaryIdx}")
     public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
-                            @RequestParam("page") int page,
+                            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                             HttpServletRequest request,
                             HttpServletResponse response,
                             Authentication authentication, Model model) {
@@ -76,13 +76,13 @@ public class DiaryController {
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
         viewCountValidation(diary, request, response);
-        model.addAttribute("diaryBean", diary);
+        model.addAttribute("readDiaryBean", diary);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
 
 
-        return "diary/read/" + diaryIdx + "?pageNum=" + page;
+        return "diary/read";
     }
 
     // 다이어리 작성 페이지
