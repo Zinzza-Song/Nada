@@ -13,8 +13,7 @@
 <div class="container text-center">
 <!--readWrap시작-->
 
-  <form th:action="@{diary/modify.html}" th:object="${readDiaryBean}" method="get">
-  <div class="row readWrap">
+  <div class="row readWrap" th:object="${readDiaryBean}">
 <!--  leftRead시작  -->
     <div class="col leftRead">
 <!-- card 시작부분-->
@@ -68,7 +67,7 @@
                     <thead>
                     <tr>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" th:field="*{commentContent}"
+                            <input type="text" class="form-control" value=""
                                    placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
                                    aria-describedby="button-addon2">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2"
@@ -76,23 +75,13 @@
                         </div>
                     </tr>
                     </thead>
-                    <tbody class="table-group-divider">
+                    <tbody class="table-group-divider" th:each="list: ${commentList}">
                     <tr>
                         <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
+                        <td th:text="${list.commentWriter}">작성자</td>
+                        <td th:text="${list.commentContent}">댓글 내용</td>
+                        <td th:text="${list.commentDate}">작성 날짜</td>
+                        <td>좋아요 버튼</td>
                     </tr>
                     </tbody>
                 </table>
@@ -107,7 +96,6 @@
 <!--  rightRead끝  -->
   </div>
 <!--readWrap끝-->
-  </form>
 </div>
 
 

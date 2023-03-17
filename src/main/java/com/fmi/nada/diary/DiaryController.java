@@ -38,7 +38,7 @@ public class DiaryController {
         return "diary/index";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public String DiarySearch(@PageableDefault Pageable pageable,
                               @RequestParam("type") String type,
                               @RequestParam("keyword") String keyword,
@@ -58,8 +58,8 @@ public class DiaryController {
     }
 
     // 다이어리 상세 페이지
-    @GetMapping("read")
-    public String readDiary(@RequestParam(value = "diaryIdx", required = false) Long diaryIdx,
+    @GetMapping("/read/{diaryIdx}")
+    public String readDiary(@PathVariable Long diaryIdx,
                             Authentication authentication,
                             Model model) {
         Member member = (Member) authentication.getPrincipal();
@@ -98,11 +98,6 @@ public class DiaryController {
 
         Member member = (Member) authentication.getPrincipal();
 
-        if (diaryDTO.getDiaryKeywords() == null)
-            System.out.println("널값뜸");
-
-        System.out.println(diaryDTO.getDiaryKeywords());
-
         Diary diary = diaryService.registerDiary(
                 member.getMemberIdx(),
                 diaryDTO.getDiarySubject(),
@@ -117,7 +112,7 @@ public class DiaryController {
 
         insertKeywords(diaryDTO);
 
-        return "redirect:/read/" + diary.getDiaryIdx();
+        return "redirect:/diary/read/" + diary.getDiaryIdx();
     }
 
 
