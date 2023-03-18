@@ -128,7 +128,7 @@
 </div>
 
 
-<footer th:insert="~{fragment/footer.html::footer}"/>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
 <script>
 
 
@@ -246,10 +246,10 @@
           console.log(pos);
           console.log(neg);
 
-          if(isNaN(pos))
+          if (isNaN(pos))
             pos = 0;
 
-          if(isNaN(neg))
+          if (isNaN(neg))
             neg = 0;
 
           const score = parseInt(pos) * 10 - parseInt(neg) * 5;

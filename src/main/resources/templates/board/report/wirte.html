@@ -2,73 +2,72 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/report/write_pro}" th:method="post" th:object="${writeReportBean}">
-    <div class="mb-3">
-        <input type="text" class="form-control" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
-               placeholder="신고 제목">
-    </div>
+<form enctype="multipart/form-data" th:action="@{/board/report/write_pro}" th:method="post"
+      th:object="${writeReportBean}">
+  <div class="mb-3">
+    <input type="text" class="form-control" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
+           placeholder="신고 제목">
+  </div>
 
-    <div class="mb-3">
-        <input type="text" class="form-control" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
-               placeholder="신고자">
-    </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
+           placeholder="신고자">
+  </div>
 
-    <div class="mb-3">
-        <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-            th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
-    </div>
+  <div class="mb-3">
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
+  </div>
 
-    <div class="mb-3">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="">
-        <label class="form-check-label" for="flexRadioDefault1" th:value="욕설" th:field="reportCategory">
-            욕설
-        </label>
+  <div class="mb-3">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="">
+    <label class="form-check-label" for="flexRadioDefault1" th:value="욕설" th:field="reportCategory">
+      욕설
+    </label>
 
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
-        <label class="form-check-label" for="flexRadioDefault2" th:value="광고" th:field="reportCategory">
-            광고
-        </label>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+    <label class="form-check-label" for="flexRadioDefault2" th:value="광고" th:field="reportCategory">
+      광고
+    </label>
 
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
-        <label class="form-check-label" for="flexRadioDefault3" th:value="허위 게시글" th:field="reportCategory">
-            허위 게시글
-        </label>
-    </div>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+    <label class="form-check-label" for="flexRadioDefault3" th:value="허위 게시글" th:field="reportCategory">
+      허위 게시글
+    </label>
+  </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
         <textarea class="form-control" name="reportContent" id="reportContent " rows="5" placeholder="구체적인 신고내용"
                   th:field="*{reportContent }">
         </textarea>
-    </div>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
-               th:field="*{reportReportedmember}" placeholder="신고 대상자">
-    </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
+           th:field="*{reportReportedmember}" placeholder="신고 대상자">
+  </div>
 
-    <div class="mb-3">
-        <label for="reportFile" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="reportFile " id="reportFile" type="file" th:field="*{reportFile}">
-    </div>
+  <div class="mb-3">
+    <label for="reportFile" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm" name="reportFile " id="reportFile" type="file" th:field="*{reportFile}">
+  </div>
 
 
-    <button type="submit" class="btn btn-primary">신고</button>
-    <button type="reset" class="btn btn-primary">재작성</button>
-    <button type="button" class="btn btn-primary" onclick="history.go(-1)">취소</button>
+  <button type="submit" class="btn btn-primary">신고</button>
+  <button type="reset" class="btn btn-primary">재작성</button>
+  <button type="button" class="btn btn-primary" onclick="history.go(-1)">취소</button>
 </form>
-
-
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
 
 
 </body>

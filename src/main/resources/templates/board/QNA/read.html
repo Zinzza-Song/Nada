@@ -5,8 +5,8 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta content="width=device-width, initial-scale=1" name="viewport">
 
 
 </head>
@@ -14,96 +14,97 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 
-    <div class="mb-3">
-        <input class="form-control" id="qnaSubject" name="qnaSubject"  readonly
-               th:value="${qnaBean.qnaSubject }" type="text">
-    </div>
+<div class="mb-3">
+  <input class="form-control" id="qnaSubject" name="qnaSubject" readonly
+         th:value="${qnaBean.qnaSubject }" type="text">
+</div>
 
-    <div class="mb-3">
-        <input class="form-control" id="qnaWriter" name="qnaWriter" readonly
-               th:value="${qnaBean.qnaWriter }" type="text">
-    </div>
+<div class="mb-3">
+  <input class="form-control" id="qnaWriter" name="qnaWriter" readonly
+         th:value="${qnaBean.qnaWriter }" type="text">
+</div>
 
-    <div class="mb-3">
-        <input class="form-control" id="qnaDate" name="qnaDate" readonly
-               th:value="${#temporals.format(qnaBean.qnaDate,'yyyy-MM-dd')}">
-    </div>
-    <div class="mb-3">
+<div class="mb-3">
+  <input class="form-control" id="qnaDate" name="qnaDate" readonly
+         th:value="${#temporals.format(qnaBean.qnaDate,'yyyy-MM-dd')}">
+</div>
+<div class="mb-3">
         <textarea class="form-control" id="qnaContent " name="qnaContent" readonly
                   rows="5" th:text="${qnaBean.qnaContent }">
         </textarea>
-    </div>
+</div>
 
 <!--    파일 어떻게 읽어오는지 생각 해 봐야함-->
-    <div class="mb-3">
-        <label class="form-label" for="qnaFile">첨부파일</label>
-        <a th:href="@{/board/qna/download(qnaIdx=${qnaBean.qnaIdx})}">
-            <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:value="${qnaBean.qnaFile}">
-        </a>
-    </div>
+<div class="mb-3">
+  <label class="form-label" for="qnaFile">첨부파일</label>
+  <a th:href="@{/board/qna/download(qnaIdx=${qnaBean.qnaIdx})}">
+    <input class="form-control form-control-sm" id="qnaFile" name="qnaFile" readonly th:value="${qnaBean.qnaFile}">
+  </a>
+</div>
 
 <!-- 운영자 답변 -->
-    <div class="card-header bg-light">
-        운영자 답변
-    </div>
-        <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
-            <input type="button" id="answer" name="answer" class="btn btn-dark mt-3" value="답변하기">
-        </div>
-        <div sec:authorize="hasAnyRole('ROLE_USER')">
-            <textarea class="form-control" name="qnaAnswered" id="qnaAnswered"  th:text="${qnaBean.qnaAnswer}" rows="3" readonly></textarea>
-        </div>
+<div class="card-header bg-light">
+  운영자 답변
+</div>
+<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+  <input type="button" id="answer" name="answer" class="btn btn-dark mt-3" value="답변하기">
+</div>
+<div sec:authorize="hasAnyRole('ROLE_USER')">
+  <textarea class="form-control" name="qnaAnswered" id="qnaAnswered" th:text="${qnaBean.qnaAnswer}" rows="3"
+            readonly></textarea>
+</div>
 
-    <div class="card-body"  sec:authorize="hasAnyRole('ROLE_ADMIN')" >
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="check" style="display: none">
+<div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" id="check" style="display: none">
 
-                <textarea class="form-control" name="qnaAnswer" id="qnaAnswer"  th:text="${qnaBean.qnaAnswer}" rows="3"></textarea>
+      <textarea class="form-control" name="qnaAnswer" id="qnaAnswer" th:text="${qnaBean.qnaAnswer}" rows="3"></textarea>
 
-                <input type="hidden" id="idx" th:value="${qnaBean.qnaIdx}">
-                <button type="button" class="btn btn-dark mt-3" id="complete" >처리완료</button>
-            </li>
-        </ul>
-    </div>
+      <input type="hidden" id="idx" th:value="${qnaBean.qnaIdx}">
+      <button type="button" class="btn btn-dark mt-3" id="complete">처리완료</button>
+    </li>
+  </ul>
+</div>
 
-    <form id="delete" th:action="@{/board/qna/delete}" th:method="delete">
-        <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-        <button type="submit" id="deleteBtn" class="btn btn-danger">삭제</button>
-    </form>
-    <button class="btn btn-primary" onclick="window.location='/board/qna'" type="button">목록</button>
-
+<form id="delete" th:action="@{/board/qna/delete}" th:method="delete">
+  <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
+  <button type="submit" id="deleteBtn" class="btn btn-danger">삭제</button>
+</form>
+<button class="btn btn-primary" onclick="window.location='/board/qna'" type="button">목록</button>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
 <script>
-    $(function (){
-        $("#answer").on('click',function (){
-            $("#check").css('display','inline-block');
-        });
-        $("#deleteBtn").on('click',function (){
-            var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
-            if (confirmCheck){
-                $("delete").submit();
-            }else{
-                return false;
-            }
-        })
-        $("#complete").on('click',function (){
-
-            $.ajax({
-                url: '/board/qna/answer',
-                type: 'put',
-                data: {
-                    "qnaIdx" : $("#idx").val(),
-                    "qnaAnswer" : $("#qnaAnswer").val(),
-                    "qnaComplete" : $('#qnaSubject').val(),
-                    "qnaIsanswered" : true,
-                },
-                success: function() {
-                    swal('답변이 완료 되었습니다.');
-                    setTimeout(function (){
-                        window.location="/board/qna/";
-                    },2000);
-                }
-            });
-        });
+  $(function () {
+    $("#answer").on('click', function () {
+      $("#check").css('display', 'inline-block');
     });
+    $("#deleteBtn").on('click', function () {
+      var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
+      if (confirmCheck) {
+        $("delete").submit();
+      } else {
+        return false;
+      }
+    })
+    $("#complete").on('click', function () {
+
+      $.ajax({
+        url: '/board/qna/answer',
+        type: 'put',
+        data: {
+          "qnaIdx": $("#idx").val(),
+          "qnaAnswer": $("#qnaAnswer").val(),
+          "qnaComplete": $('#qnaSubject').val(),
+          "qnaIsanswered": true,
+        },
+        success: function () {
+          swal('답변이 완료 되었습니다.');
+          setTimeout(function () {
+            window.location = "/board/qna/";
+          }, 2000);
+        }
+      });
+    });
+  });
 </script>
 
 </body>

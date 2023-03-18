@@ -2,12 +2,11 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
 <body class="p-3 m-0 border-0 bd-example reportMain">
@@ -15,53 +14,53 @@
 
 
 <nav class="navbar searchbar">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/board/report}" method="post">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-                <option selected value="reportContent" id="reportContent">제목</option>
-                <option value="reportWriter" id="reportWriter">작성자</option>
-            </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" th:action="@{/board/report}" method="post">
+      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="reportContent" id="reportContent">제목</option>
+        <option value="reportWriter" id="reportWriter">작성자</option>
+      </select>
+      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+      <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
+    </form>
+  </div>
 </nav>
 
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">NO</th>
-        <th scope="col">신고 글</th>
-        <th scope="col">날짜</th>
-        <th scope="col">조회수</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider" th:each="report: ${allReportList}">
-    <tr>
-        <th scope="row" th:text="${report.reportIdx}">1</th>
-        <td><a th:href="@{/board/report/read/${report.reportIdx}}" th:text="${report.reportSubject}">Q&A 제목</a></td>
-        <td th:text="${#temporals.format(report.reportDate, 'YY-MM-dd')}">날짜</td>
-        <td th:text="${report.reportViews}">24</td>
-    </tr>
-    </tbody>
+  <thead>
+  <tr>
+    <th scope="col">NO</th>
+    <th scope="col">신고 글</th>
+    <th scope="col">날짜</th>
+    <th scope="col">조회수</th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider" th:each="report: ${allReportList}">
+  <tr>
+    <th scope="row" th:text="${report.reportIdx}">1</th>
+    <td><a th:href="@{/board/report/read/${report.reportIdx}}" th:text="${report.reportSubject}">Q&A 제목</a></td>
+    <td th:text="${#temporals.format(report.reportDate, 'YY-MM-dd')}">날짜</td>
+    <td th:text="${report.reportViews}">24</td>
+  </tr>
+  </tbody>
 </table>
 
 <nav aria-label="Page navigation example">
-    <ul class="pagination noticePage">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-            </a>
-        </li>
-    </ul>
+  <ul class="pagination noticePage">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">«</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">»</span>
+      </a>
+    </li>
+  </ul>
 </nav>
 
 

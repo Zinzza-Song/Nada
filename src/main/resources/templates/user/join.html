@@ -2,7 +2,6 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <!-- 반응형 웹 미디어쿼리 선언부   -->
 <head th:insert="~{fragment/topMenu.html::header}">
@@ -23,49 +22,50 @@
         <label>Name</label>
         <input type="text" name="memberName" id="memberName" th:field="*{memberName}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}" />
+        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}"/>
       </div>
 
       <div class="form-group">
         <label>NickName</label>
         <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}" />
+        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
       </div>
 
       <div class="form-group">
         <label>Birth</label>
         <input type="text" name="memberBirth" id="memberBirth" th:field="*{memberBirth}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}" />
+        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}"/>
       </div>
 
       <div class="form-group">
         <label>Address</label>
         <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
                class="form-control">
-        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}" /><br>
+        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/><br>
         <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
         <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
           <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-               style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-          </div>
+               style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+               alt="접기 버튼">
+        </div>
       </div>
 
       <div class="form-group">
         <label>E-mail</label>
         <input type="text" name="username" id="username" th:field="*{username}"
                class="form-control">
-        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
         <div>
-          <input type="button" id="send_Mail_Btn" value="전송"  class="btn btn-light">
+          <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
         </div>
       </div>
 
       <div class="form-group email_code_box" style="display:none;">
         <label>E-mail Code</label>
         <div>
-          <input type="text" name="member_email_code" id="member_email_code"  class="form-control">
+          <input type="text" name="member_email_code" id="member_email_code" class="form-control">
         </div>
         <span id="mail-check-warn"></span>
         <div>
@@ -79,7 +79,7 @@
         <label id="pw_label">PW</label>
         <input type="password" name="password" id="password" th:field="*{password}"
                class="form-control" autocomplete="off">
-        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
       </div>
 
       <div class="form-group">
@@ -93,10 +93,10 @@
         <label>Phone</label>
         <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
                value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}" />
+        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
       </div>
 
-      <div id="login-btn-box" >
+      <div id="login-btn-box">
         <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
       </div>
 
@@ -106,20 +106,20 @@
     <!-- login Box //-->
   </form>
 </div>
-<footer th:insert="~{fragment/footer.html::footer}"></footer>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
 
-  $(function (){
-    $("#send_Mail_Btn").on('click',function () {
+  $(function () {
+    $("#send_Mail_Btn").on('click', function () {
       let codebox = $('.email_code_box');
       const email = $('#username').val() // 이메일 주소값 얻어오기!
       const name = $('#memberName').val();
       console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
       $.ajax({
         type: 'GET',
-        url: '/user/join/email_exist_check?username=' + email +'&memberName='+name, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+        url: '/user/join/email_exist_check?username=' + email + '&memberName=' + name, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
         success: function (data) {
-          if(data != "false") {
+          if (data != "false") {
             if (codebox.css('display') === 'none') {
               //코드 입력 박스를 보이도록 표시
               codebox.css('display', 'inline-block');
@@ -127,15 +127,15 @@
             console.log("data : " + data);
             code = data;
             swal('인증번호가 전송되었습니다.');
-          }else {
+          } else {
             swal('사용할 수 없는 이메일 입니다.');
           }
-        },error:function (){
+        }, error: function () {
           swal('사용할 수 없는 이메일 입니다.');
         }
       }); // end ajax
     });// end send eamil
-    $('#btnCertification').on('click',function (){
+    $('#btnCertification').on('click', function () {
       const inputCode = $('#member_email_code').val();
       const $resultMsg = $('#mail-check-warn');
       if (inputCode === code) {
@@ -153,7 +153,6 @@
   });
 
 
-
   $('#member_password_check').blur(function () {
     const member_password = $("#password").val();
     //비밀번호의 값
@@ -162,16 +161,16 @@
     console.log(member_password);
     console.log(member_password_check);
     if (member_password === member_password_check
-            && member_password !=="" && member_password_check !==""
-            && member_password !=null && member_password_check !=null) {
+        && member_password !== "" && member_password_check !== ""
+        && member_password != null && member_password_check != null) {
 
       $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-      $("#passwordCheckLabel").css("color","green");
+      $("#passwordCheckLabel").css("color", "green");
 
     } else {
 
       $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-      $("#passwordCheckLabel").css("color","red");
+      $("#passwordCheckLabel").css("color", "red");
     }
   });
   $('#password').blur(function () {
@@ -182,16 +181,16 @@
     console.log(member_password);
     console.log(member_password_check);
     if (member_password === member_password_check
-            && member_password !=="" && member_password_check !==""
-            && member_password !=null && member_password_check !=null) {
+        && member_password !== "" && member_password_check !== ""
+        && member_password != null && member_password_check != null) {
 
       $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-      $("#passwordCheckLabel").css("color","green");
+      $("#passwordCheckLabel").css("color", "green");
 
     } else {
 
       $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-      $("#passwordCheckLabel").css("color","red");
+      $("#passwordCheckLabel").css("color", "red");
     }
   });
   // 우편번호 찾기 찾기 화면을 넣을 element

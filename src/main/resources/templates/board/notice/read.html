@@ -5,63 +5,65 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeReadForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <!--<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="get" th:object="${readNoticeBean}">-->
-    <input type="hidden" id="idx" name="idx" th:value="${readNoticeBean.noticeIdx}">
-    <div class="mb-3">
-        <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:value="${readNoticeBean.noticeSubject }"
-               placeholder="공지사항 제목" readonly>
-    </div>
+<input type="hidden" id="idx" name="idx" th:value="${readNoticeBean.noticeIdx}">
+<div class="mb-3">
+  <input type="text" class="form-control" name="noticeSubject" id="noticeSubject"
+         th:value="${readNoticeBean.noticeSubject }"
+         placeholder="공지사항 제목" readonly>
+</div>
 
-    <div class="mb-3">
-        <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-               th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
-    </div>
-    </div>
-    <div class="mb-3">
-        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:text="${readNoticeBean.noticeContent }"
+<div class="mb-3">
+  <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+         th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
+</div>
+</div>
+<div class="mb-3">
+        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5"
+                  th:text="${readNoticeBean.noticeContent }"
                   placeholder="공지내용" readonly>
         </textarea>
 </div>
 
-    <div class="mb-3">
-        <label for="File" class="form-label">첨부파일</label>
-        <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
-            <input class="form-control form-control-sm" name="File" id="File"
-                   th:value="${readNoticeBean.noticeFile}" readonly>
-        </a>
-    </div>
+<div class="mb-3">
+  <label for="File" class="form-label">첨부파일</label>
+  <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+    <input class="form-control form-control-sm" name="File" id="File"
+           th:value="${readNoticeBean.noticeFile}" readonly>
+  </a>
+</div>
 
-    <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
-    <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
-    <button type="submit" id="deleteBtn" class="btn btn-danger">삭제</button>
-    </form>
-    <button type="button" class="btn btn-primary" onclick="modify() " sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
-    <button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">목록</button>
-<!--</form>-->
-
+<form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
+  <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
+  <button type="submit" id="deleteBtn" class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN')">삭제</button>
+</form>
+<button type="button" class="btn btn-primary" onclick="modify() " sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
+<button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">목록</button>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
 <script>
-    $(function (){
-        $("#deleteBtn").on('click',function (){
-            var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
-            if (confirmCheck){
-                $("delete").submit();
-            }else{
-                return false;
-            }
-        });
+  $(function () {
+    $("#deleteBtn").on('click', function () {
+      var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
+      if (confirmCheck) {
+        $("delete").submit();
+      } else {
+        return false;
+      }
     });
-    function modify(){
-        var noticeIdx = $("#idx").val();
-        window.location="/board/notice/modify?noticeIdx="+noticeIdx;
-    }
+  });
+
+  function modify() {
+    var noticeIdx = $("#idx").val();
+    window.location = "/board/notice/modify?noticeIdx=" + noticeIdx;
+  }
 </script>
 
 </body>

@@ -1,14 +1,13 @@
 body {
     font-size: 0.75rem;
 }
-#container{
+
+#container {
     padding: 5px;
 }
-.loginBox{
-    display: inline;
-}
+
 .BoxTitle {
-    color:#5e4322;
+    color: #5e4322;
     font-weight: bold;
     font-size: 1.9rem;
     text-transform: uppercase;
@@ -20,44 +19,51 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.logo-text{
+
+.logo-text {
     margin: 0 auto;
 }
-.loginAct{
+
+.loginAct {
     margin: 0px 0px 5%;
 }
+
 input[type="button"] {
     font-size: 0.75rem;
     padding: 5px 10px;
 }
+
 .login-box {
-    margin:12% auto;
+    margin: 12% auto;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
-    padding:40px 30px;
-    border:5px solid #422f17;width:475px;
-    filter: drop-shadow(0px 0px 10px rgba(0,0,0,.5));
+    padding: 40px 30px;
+    border: 5px solid #422f17;
+    width: 475px;
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
 }
 
 .form-group label {
     font-size: 0.75rem;
-    margin:5px 0;
+    margin: 5px 0;
 }
-#login-btn-box{
+
+#login-btn-box {
     padding-left: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:10px 0px 10px;
+    margin: 10px 0px 10px;
 
 }
 
-.btn-light{
+.btn-light {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:10px 0px 0px;
+    margin: 10px 0px 0px;
 }
+
 /*diary_write_css*/
 
 /*이미지 넣을 css 따로 분리해서 넣을 것*/
@@ -71,7 +77,7 @@ input[type="button"] {
 
 /*    background-repeat: no-repeat;*/
 /*}*/
-.btn-right{
+.btn-right {
     padding-left: 80%;
     display: flex;
     align-items: center;
@@ -79,7 +85,7 @@ input[type="button"] {
     margin-right: 45px;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
