@@ -1,7 +1,9 @@
 package com.fmi.nada.board.qna;
 
-import com.fmi.nada.diary.Diary;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,29 +22,55 @@ public class QnaService {
     private final QnaRepository qnaRepository;
 
 
-    public void writeQna(Qna qna, MultipartFile file) throws Exception {
+    public void writeQnaFile(Qna qna, MultipartFile file) throws Exception {
         String projectPath = System.getProperty("user.dir");
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
         File saveFile = new File(getFullPath,fileName);
-        if (!saveFile.exists()){
-            saveFile.mkdirs();
-            file.transferTo(saveFile);
-            qna.setQnaFile(fileName);
-
+        if(file.getOriginalFilename()==null && file.getOriginalFilename()==""){
             qnaRepository.save(qna);
         }else {
-            file.transferTo(saveFile);
-            qna.setQnaFile(fileName);
+            if (!saveFile.exists()) {
+                saveFile.mkdirs();
+                file.transferTo(saveFile);
+                qna.setQnaFile(fileName);
 
-            qnaRepository.save(qna);
+                qnaRepository.save(qna);
+            } else {
+                file.transferTo(saveFile);
+                qna.setQnaFile(fileName);
+
+                qnaRepository.save(qna);
+            }
         }
     }
-
+    public void writeQna(Qna qna){
+        qnaRepository.save(qna);
+    }
     public List<Qna> getList() {
         return qnaRepository.findAll();
     }
+
+    public Page<Qna> findAllByOrderByQnaDateDesc(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return qnaRepository.findAllByOrderByQnaDateDesc(pageable);
+    }
+
+
+    public Page<Qna> findAllByQnaWriterContaining(String keyword, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return qnaRepository.findAllByQnaWriterContaining(keyword, pageable);
+    }
+
+    public Page<Qna> findAllByQnaSubjectContaining(String keyword, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return qnaRepository.findAllByQnaSubjectContaining(keyword, pageable);
+    }
+
 
     public Qna get(Long qnaIdx) {
         Optional<Qna> qna = qnaRepository.findById(qnaIdx);

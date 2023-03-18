@@ -30,6 +30,10 @@ public class DiaryService {
         return diaryRepository.findAllByOrderByDiaryDateDesc();
     }
 
+    public List<Diary> findTop6ByMemberIdxOrderByDiaryDateDesc(Long memberIdx) {
+        return diaryRepository.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);
+    }
+
     public Diary registerDiary(Long memberIdx,
                                String diarySubject,
                                String diaryWriter,

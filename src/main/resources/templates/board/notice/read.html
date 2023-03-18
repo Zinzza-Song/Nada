@@ -33,19 +33,31 @@
 
     <div class="mb-3">
         <label for="File" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="File" id="File" th:value="${readNoticeBean.noticeFile}"
-               readonly>
+        <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+            <input class="form-control form-control-sm" name="File" id="File"
+                   th:value="${readNoticeBean.noticeFile}" readonly>
+        </a>
     </div>
 
     <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
     <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
-    <button type="submit" onclick="if(confirm('정말로 삭제하시겠습니까?')); " class="btn btn-danger">삭제</button>
+    <button type="submit" id="deleteBtn" class="btn btn-danger">삭제</button>
     </form>
     <button type="button" class="btn btn-primary" onclick="modify() " sec:authorize="hasAnyRole('ROLE_ADMIN')">수정</button>
     <button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">목록</button>
 <!--</form>-->
 
 <script>
+    $(function (){
+        $("#deleteBtn").on('click',function (){
+            var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
+            if (confirmCheck){
+                $("delete").submit();
+            }else{
+                return false;
+            }
+        });
+    });
     function modify(){
         var noticeIdx = $("#idx").val();
         window.location="/board/notice/modify?noticeIdx="+noticeIdx;
