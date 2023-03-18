@@ -14,7 +14,7 @@ public class AnalyzedService {
 
     public void resisterAnalyze(Long diaryIndex,
                                String analyzeResult,
-                               Integer analyzeScore){
+                                Integer analyzeScore){
         analyzedRepository.save(new Analyzed(
                 diaryIndex,
                 analyzeResult,
