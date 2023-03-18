@@ -17,7 +17,7 @@
     <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
     <div class="mb-3">
         <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
-              th:text="${readNoticeBean.noticeSubject}" placeholder="공지사항 제목">
+              th:value="${readNoticeBean.noticeSubject}" placeholder="공지사항 제목">
     </div>
 
     <div class="mb-3">
@@ -31,8 +31,14 @@
     </div>
 
     <div class="mb-3">
-        <label for="file" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm" name="file" id="file" type="file">
+        <label for="file" class="form-label">변경 첨부파일</label>
+        <input class="form-control form-control-sm" name="file" id="file" type="file" >
+    </div>
+    <div class="mb-3">
+        <label for="file" class="form-label">기존 첨부파일</label>
+        <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+        <input class="form-control form-control-sm" name="file" id="readFile" th:field="${readNoticeBean.noticeFile}" readonly >
+        </a>
     </div>
 
 

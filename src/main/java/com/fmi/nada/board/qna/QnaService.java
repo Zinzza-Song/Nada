@@ -22,26 +22,32 @@ public class QnaService {
     private final QnaRepository qnaRepository;
 
 
-    public void writeQna(Qna qna, MultipartFile file) throws Exception {
+    public void writeQnaFile(Qna qna, MultipartFile file) throws Exception {
         String projectPath = System.getProperty("user.dir");
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(getFullPath, fileName);
-        if (!saveFile.exists()) {
-            saveFile.mkdirs();
-            file.transferTo(saveFile);
-            qna.setQnaFile(fileName);
-
+        File saveFile = new File(getFullPath,fileName);
+        if(file.getOriginalFilename()==null && file.getOriginalFilename()==""){
             qnaRepository.save(qna);
-        } else {
-            file.transferTo(saveFile);
-            qna.setQnaFile(fileName);
+        }else {
+            if (!saveFile.exists()) {
+                saveFile.mkdirs();
+                file.transferTo(saveFile);
+                qna.setQnaFile(fileName);
 
-            qnaRepository.save(qna);
+                qnaRepository.save(qna);
+            } else {
+                file.transferTo(saveFile);
+                qna.setQnaFile(fileName);
+
+                qnaRepository.save(qna);
+            }
         }
     }
-
+    public void writeQna(Qna qna){
+        qnaRepository.save(qna);
+    }
     public List<Qna> getList() {
         return qnaRepository.findAll();
     }
