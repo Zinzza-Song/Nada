@@ -15,13 +15,14 @@
 <!--<img th:src="@{/images/mainBanner5.jpg}" style="width:100%; height: 350px;">-->
 <div class="videoContainer">
 
-<!--  <video id="videoPlay" width="400px" height="300px" style="margin-top: 20px" autoplay muted loop>-->
-<!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
+<!--  <video id="videoPlay" width="100%" height="500px" style="margin-top: 20px" autoplay muted loop>-->
+<!--  <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />  -->
 <!--    메인 동영상-->
 <!--  </video>-->
 
-  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px" autoplay muted loop>
+  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px" autoplay muted loop playsinline>
     <source type="video/mp4" th:src="@{/videos/main_bannerVideo2.mp4}" />
+<!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
     메인 우측 동영상
   </video>
 
@@ -123,7 +124,17 @@
   </div>
 
 </div>
+<script>
 
+  $(function(){
+
+    $('#videoPlay2').bind('contextmenu',function() { return false; });
+
+
+
+  });
+
+</script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
 
