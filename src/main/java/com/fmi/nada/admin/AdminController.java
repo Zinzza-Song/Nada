@@ -118,7 +118,7 @@ public class AdminController {
 
         reportService.reportPro(reportIdx, reportProDto);
 
-        return "redirect:/board/report/" + reportIdx;
+        return "redirect:/board/report/read/" + reportIdx;
     }
 
     /**
