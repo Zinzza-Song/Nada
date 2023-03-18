@@ -60,7 +60,7 @@
             <tbody class="table-group-divider" th:each="diary : ${recentTop5DiaryList}">
             <tr>
               <th scope="row" th:text="${diary.diaryIdx}">최신순 일기 번호</th>
-              <td th:text="${diary.diarySubject }">최신순 일기 제목</td>
+              <td><a th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}" th:text="${diary.diarySubject }">최신순 일기 제목</a></td>
               <td th:text="${diary.diaryWriter}">최신순 일기 작성자</td>
               <td th:text="${#temporals.format(diary.diaryDate, 'YY-MM-dd')}">최신순 일기 날짜</td>
             </tr>
@@ -89,7 +89,7 @@
             <tbody class="table-group-divider" th:each="diary : ${mostSympathyTop5DiaryList}">
             <tr>
               <th scope="row" th:text="${diary.diaryIdx}">공감순 일기 번호</th>
-              <td th:text="${diary.diarySubject }">공감순 일기 제목</td>
+              <td><a th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}" th:text="${diary.diarySubject }">공감순 일기 제목</a></td>
               <td th:text="${diary.diaryWriter}">공감순 일기 작성자</td>
               <td th:text="${diary.diarySympathyCnt}">4</td>
             </tr>

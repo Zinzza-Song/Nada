@@ -54,11 +54,6 @@ html {
     margin-right: 20px;
 }
 
-.logAtag {
-    text-decoration: none;
-    color: black;
-}
-
 .logbtn {
     width: 130px;
     height: 130px;
@@ -85,6 +80,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     height: 100%;
     /*margin-bottom: 40px;*/
 }
+
 
 .noticePage {
     margin-left: 43%;
@@ -132,13 +128,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-size: cover;
 }
 
-.diaryListCard {
-    background-image: url(../images/diarymain.jpg);
-    background-repeat: round;
-    background-size: cover;
-    margin-top: 10px;
 
-}
 
 .Page-bar li {
     display: inline-block;
@@ -149,10 +139,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     list-style-type: none;
     text-align: center;
 }
-
 .page-link {
     color: #ffffff;
-    background-color: #937152;
+    background-color: #8d745d;
 }
 
 .page-item {
@@ -160,13 +149,14 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 .now-page {
-    color: #330f0e;
-    background-color: #e3cab0;
+    color: #ffffff;
+    background-color: #8d745d;
 }
 
 .searchbar {
     margin-top: 10px;
 }
+
 
 .createDiary {
     margin-top: 20px;
@@ -187,6 +177,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .dropdown-menu {
     --bs-dropdown-link-hover-bg: #e3cab0;
+    --bs-dropdown-link-active-bg: #d8ae84;
 }
 
 .dropdown-menu[data-bs-popper] {
@@ -205,9 +196,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     display: inline-block;
 }
 
-.diarymainbody {
-    height: 300px;
-}
+
 
 .d-flex {
     display: flex !important;
@@ -264,22 +253,6 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 
-/* @media(min-width: 1200px){
-    #today{
-        width: 200px;
-    }
-}  */
-/* @media ( min-width : 992px) {
-    .mainBody{
-        width: 990px;
-    }
-}
-@media ( min-width : 1200px) {
-    .mainBody{
-        width: 100%;
-    }
-} */
-
 /*폰트적용*/
 
 /*교보문고-손글씨-성지영*/
@@ -328,7 +301,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-left: 80px;
 }
 
-.navbar {
+.navbar{
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
 
@@ -347,7 +320,7 @@ body {
     display: flex;
 }
 
-.BoxTitle {
+.BoxTitle, .loginBoxTitle {
     color: #5e4322;
     font-weight: bold;
     font-size: 1.9rem;
@@ -491,6 +464,7 @@ input[type="button"] {
     text-align: center;
     margin: 0;
     padding: 0;
+    margin-top: 60px;
 }
 
 .page li {
@@ -571,3 +545,102 @@ input[type="button"] {
 
 
 
+/*다이어리 메인 게시판 /diary/index.html */
+
+.diaryListCard a{
+    text-decoration: none;
+    color: black;
+}
+#searchBtn{
+    --bs-btn-color: #9b6034;
+    --bs-btn-border-color: #9e8566;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #cebcab;
+    --bs-btn-hover-border-color: #cebcab;
+    --bs-btn-focus-shadow-rgb: 25,135,84;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #d1bbab;
+    --bs-btn-active-border-color: #d0baaa;
+}
+
+.cardListTitle{
+    font-size: 30px;
+    float: left;
+    display: -webkit-box;
+    width: 350px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.cardListContent{
+    font-size: 17px;
+    /* webkit-box는 지정한 줄 수만큼 라인을 줄이는 용도 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: 450px;
+}
+.diaryListCard {
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    background-image: url(../images/diarymain.jpg);
+    background-repeat: round;
+    background-size: cover;
+    margin-top: 10px;
+    height: 22rem;
+    width: 500px;
+}
+.diarySearchBar{
+    width: 85%;
+}
+.diarymainbody {
+    height: 300px;
+    justify-content: space-between;
+    display: flex;
+}
+.diaryKeywords{
+    float: left;
+    font-size: 15px;
+    width: 450px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.diaryDate{
+    float: right;
+    font-size: 20px;
+}
+/*------------------------------------------------------ */
+
+
+/*하단 페이지네이션 관련 스타일*/
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #6e502a;
+    border-color: #6c583e;
+}
+.pagination {
+    --bs-pagination-padding-x: 0.75rem;
+    --bs-pagination-padding-y: 0.375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: #6e502a;
+    --bs-pagination-bg: #6e502a;
+    --bs-pagination-border-width: 1px;
+    --bs-pagination-border-color: #dee2e6;
+    --bs-pagination-border-radius: 0.375rem;
+    --bs-pagination-hover-color: #ffffff;
+    --bs-pagination-hover-bg: #6e502a;
+    --bs-pagination-hover-border-color: #dee2e6;
+    --bs-pagination-focus-color: #ffffff;
+    --bs-pagination-focus-bg: #6e502a;
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #6e502a;
+    --bs-pagination-active-border-color: #6e502a;
+    --bs-pagination-disabled-color: #6c757d;
+    --bs-pagination-disabled-bg: #fff;
+    --bs-pagination-disabled-border-color: #dee2e6;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}

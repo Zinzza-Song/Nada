@@ -1,103 +1,103 @@
-body {
-    font-size: 0.75rem;
-}
-
-#container {
-    padding: 5px;
-}
-
-.BoxTitle {
-    color: #5e4322;
-    font-weight: bold;
-    font-size: 1.9rem;
-    text-transform: uppercase;
-    padding: 5px;
-    margin-bottom: 20px;
-    /*그레디언트가 이미지이기때문에*/
-    background: linear-gradient(to right, #330f0e, #f5e2b4);
-    /*-webkit-사용-> 구글/사파리브라우저에 적용*/
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logo-text {
-    margin: 0 auto;
-}
-
-.loginAct {
-    margin: 0px 0px 5%;
-}
-
-input[type="button"] {
-    font-size: 0.75rem;
-    padding: 5px 10px;
-}
-
-.login-box {
-    margin: 12% auto;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 10px;
-    padding: 40px 30px;
-    border: 5px solid #422f17;
-    width: 475px;
-    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
-}
-
-.form-group label {
-    font-size: 0.75rem;
-    margin: 5px 0;
-}
-
-#login-btn-box {
-    padding-left: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0px 10px;
-
-}
-
-.btn-light {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0px 0px;
-}
-
-/*diary_write_css*/
-
-/*이미지 넣을 css 따로 분리해서 넣을 것*/
-/*.diary-write{*/
-/*    !*width: 1100px;*!*/
-/*    !*height: auto;*!*/
-/*    !*min-height: 1000px;*!*/
-
-/*    background-image: url(../images/diarywrite.png);*/
-/*    background-size: 1300px 600px;*/
-
-/*    background-repeat: no-repeat;*/
+/*body {*/
+/*    font-size: 0.75rem;*/
 /*}*/
-.btn-right {
-    padding-left: 80%;
-    display: flex;
-    align-items: center;
-    float: right;
-    margin-right: 45px;
-}
 
-.text-center {
-    text-align: center;
-}
-
-/*.writeTitle{*/
-/*    font-size: medium;*/
+/*#container {*/
+/*    padding: 5px;*/
 /*}*/
-/*.page{*/
+
+/*.BoxTitle {*/
+/*    color: #5e4322;*/
+/*    font-weight: bold;*/
+/*    font-size: 1.9rem;*/
+/*    text-transform: uppercase;*/
+/*    padding: 5px;*/
+/*    margin-bottom: 20px;*/
+/*    !*그레디언트가 이미지이기때문에*!*/
+/*    background: linear-gradient(to right, #330f0e, #f5e2b4);*/
+/*    !*-webkit-사용-> 구글/사파리브라우저에 적용*!*/
+/*    -webkit-background-clip: text;*/
+/*    -webkit-text-fill-color: transparent;*/
+/*}*/
+
+/*.logo-text {*/
+/*    margin: 0 auto;*/
+/*}*/
+
+/*.loginAct {*/
+/*    margin: 0px 0px 5%;*/
+/*}*/
+
+/*input[type="button"] {*/
+/*    font-size: 0.75rem;*/
+/*    padding: 5px 10px;*/
+/*}*/
+
+/*.login-box {*/
+/*    margin: 12% auto;*/
+/*    background-color: rgba(255, 255, 255, 1);*/
+/*    border-radius: 10px;*/
+/*    padding: 40px 30px;*/
+/*    border: 5px solid #422f17;*/
+/*    width: 475px;*/
+/*    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));*/
+/*}*/
+
+/*.form-group label {*/
+/*    font-size: 0.75rem;*/
+/*    margin: 5px 0;*/
+/*}*/
+
+/*#login-btn-box {*/
+/*    padding-left: 80%;*/
+/*    display: flex;*/
 /*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin: 10px 0px 10px;*/
+
 /*}*/
-/*.page-item{*/
-/*    display: inline-block;*/
+
+/*.btn-light {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin: 10px 0px 0px;*/
 /*}*/
+
+/*!*diary_write_css*!*/
+
+/*!*이미지 넣을 css 따로 분리해서 넣을 것*!*/
+/*!*.diary-write{*!*/
+/*!*    !*width: 1100px;*!*!*/
+/*!*    !*height: auto;*!*!*/
+/*!*    !*min-height: 1000px;*!*!*/
+
+/*!*    background-image: url(../images/diarywrite.png);*!*/
+/*!*    background-size: 1300px 600px;*!*/
+
+/*!*    background-repeat: no-repeat;*!*/
+/*!*}*!*/
+/*.btn-right {*/
+/*    padding-left: 80%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    float: right;*/
+/*    margin-right: 45px;*/
+/*}*/
+
+/*.text-center {*/
+/*    text-align: center;*/
+/*}*/
+
+/*!*.writeTitle{*!*/
+/*!*    font-size: medium;*!*/
+/*!*}*!*/
+/*!*.page{*!*/
+/*!*    align-items: center;*!*/
+/*!*}*!*/
+/*!*.page-item{*!*/
+/*!*    display: inline-block;*!*/
+/*!*}*!*/
 
 
 

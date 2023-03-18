@@ -38,7 +38,6 @@
     <th scope="col">Q&A</th>
     <th scope="col">날짜</th>
     <th scope="col">작성자</th>
-    <th scope="col">조회수</th>
   </tr>
   </thead>
   <tbody class="table-group-divider" th:each="qna: ${allQnaList}">
@@ -47,7 +46,6 @@
     <td><a th:href="@{/board/qna/read(qnaIdx=${qna.qnaIdx})}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
     <td th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
     <td th:text="${qna.qnaWriter}">닉네임</td>
-    <td th:text="${qna.qnaViews}">24</td>
   </tr>
 
   </tbody>
