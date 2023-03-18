@@ -24,8 +24,11 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Page<Diary> findAllByOrderByDiaryDateDesc(Pageable pageable);
     List<Diary> findAllByOrderByDiaryDateDesc();
 
+    // 유저가 작성한 다이어리 불러오기
     List<Diary> findMyDiaryByMemberIdx(Long memberIdx);
+    List<Diary> findTop6ByMemberIdxOrderByDiaryDateDesc(Long memberIdx);
 
+    // 유저가 좋아요를 누른 다이어리 게시글 불러오기
     List<Diary> findLikeDiaryByDiaryIdx(Long diaryIdx);
 
     // 검색 기능 페이징에 사용되는 JPQL

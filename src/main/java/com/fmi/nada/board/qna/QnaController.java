@@ -4,6 +4,9 @@ package com.fmi.nada.board.qna;
 import com.fmi.nada.board.notice.Notice;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,16 +29,33 @@ import java.util.List;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board/qna")
+@RequestMapping("/board/QNA")
 public class QnaController {
     //서비스 주입
     private final QnaService qnaService;
 
     //QNA 메인
     @GetMapping
-    public String index(Model mo) {
-        List<Qna> li = qnaService.getList();
-        mo.addAttribute("allQnaList", li);
+    public String index(@PageableDefault Pageable pageable,
+                        Authentication authentication,
+                        @RequestParam(value = "type", required = false) String type,
+                        @RequestParam(value = "keyword", required = false) String keyword,
+                        Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        Page<Qna> li = null;
+        if(keyword == null) {
+            li = qnaService.findAllByOrderByQnaDateDesc(pageable);
+        }
+        else if(type.equals("qnaSubject")){
+            li = qnaService.findAllByQnaSubjectContaining(keyword, pageable);
+        }
+        else if(type.equals("qnaWriter")){
+            li = qnaService.findAllByQnaWriterContaining(keyword, pageable);
+        }
+        model.addAttribute("allQnaList", li);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("member", member);
         return "board/QNA/index";
     }
 

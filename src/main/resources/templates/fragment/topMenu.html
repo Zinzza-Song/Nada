@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
     <title>NADA 나의 다이어리</title>
 </head>
 <body>
@@ -54,11 +55,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/notice?pageCnt=1}">공지사항</a></li>
+                                   th:href="@{/board/notice?page=1}">공지사항</a></li>
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/qna?pageCnt=1}">Q&A</a></li>
+                                   th:href="@{/board/QNA?page=1}">Q&A</a></li>
                             <li><a class="dropdown-item"
-                                   th:href="@{/board/report?pageCnt=1}">신고 게시판</a></li>
+                                   th:href="@{/board/report?page=1}">신고 게시판</a></li>
                         </ul>
                     </li>
                     <li class="nav-item col-md-7">
