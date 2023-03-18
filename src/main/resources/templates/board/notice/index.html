@@ -1,12 +1,12 @@
 <!doctype html>
 <html
         lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
     <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
@@ -16,18 +16,19 @@
 
 <nav class="navbar searchbar">
     <div class="container-fluid">
-        <form class="d-flex" role="search" action="/board/notice" name="search-form" id="search-form">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type"
+        <form action="/board/notice" class="d-flex" id="search-form" name="search-form" role="search">
+            <select aria-label=".form-select-sm example" class="form-select form-select-sm" id="searchType" name="type"
                     style="width: 100px; margin-right: 10px;">
-                <option selected value="content" id="content">제목</option>
+                <option id="content" selected value="content">제목</option>
             </select>
-            <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해 주세요" id="search-input"
-                   aria-label="Search" style="width: 300px;">
-            <input type="submit" class="btn btn-outline-success" id="searchBtn"
-                   style="width: 100px" th:value="검색">
+            <input aria-label="Search" class="form-control me-2" id="search-input" name="keyword" placeholder="검색어를 입력해 주세요"
+                   style="width: 300px;" type="search">
+            <input class="btn btn-outline-success" id="searchBtn" style="width: 100px"
+                   th:value="검색" type="submit">
         </form>
-        <form class="noticeWriteBtn" th:action="@{/board/notice/write}" th:method="get" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-            <button type="submit" class="btn btn-outline-primary" style="width: 100px" >작성</button>
+        <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/notice/write}"
+              th:method="get">
+            <button class="btn btn-outline-primary" style="width: 100px" type="submit">작성</button>
 
         </form>
     </div>
@@ -46,7 +47,8 @@
     <tr>
         <th scope="row" th:text="${index.index + 1}"></th>
         <td>
-            <a th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항 제목</a>
+            <a th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항
+                제목</a>
         </td>
         <td th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd')}">날짜</td>
         <td th:text="${notice.noticeViews}">24</td>
@@ -77,29 +79,29 @@
 
                     <!-- 첫 페이지로 이동 -->
                     <li class="page-item">
-                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                        <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
                             <span aria-hidden="true">첫 페이지로</span>
                         </a>
                     </li>
                     <!-- 이전 페이지로 이동 -->
                     <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
-                        <a class="page-link" th:href="${noticeList.first} ? '#' :${prevPage}"
-                           aria-label="Previous">
+                        <a aria-label="Previous" class="page-link"
+                           th:href="${noticeList.first} ? '#' :${prevPage}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
 
                     <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
-                        th:class="${page == noticeList.number + 1} ? 'active'">
-                        <a class="page-link" th:text="${page}"
-                           th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"></a>
+                    <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
+                        th:each="page: ${#numbers.sequence(start, last)}">
+                        <a class="page-link" th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"
+                           th:text="${page}"></a>
                     </li>
 
                     <!-- 다음 페이지로 이동 -->
                     <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
-                        <a class="page-link" th:href="${noticeList.last} ? '#' :${nextPage}"
-                           aria-label="Next">
+                        <a aria-label="Next" class="page-link"
+                           th:href="${noticeList.last} ? '#' :${nextPage}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
@@ -129,29 +131,29 @@
 
                     <!-- 첫 페이지로 이동 -->
                     <li class="page-item">
-                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                        <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
                             <span aria-hidden="true">첫 페이지로</span>
                         </a>
                     </li>
                     <!-- 이전 페이지로 이동 -->
                     <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
-                        <a class="page-link" th:href="${noticeList.first} ? '#' :${prevPage}"
-                           aria-label="Previous">
+                        <a aria-label="Previous" class="page-link"
+                           th:href="${noticeList.first} ? '#' :${prevPage}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
 
                     <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
-                        th:class="${page == noticeList.number + 1} ? 'active'">
-                        <a class="page-link" th:text="${page}"
-                           th:href="@{notice(page=${page})}"></a>
+                    <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
+                        th:each="page: ${#numbers.sequence(start, last)}">
+                        <a class="page-link" th:href="@{notice(page=${page})}"
+                           th:text="${page}"></a>
                     </li>
 
                     <!-- 다음 페이지로 이동 -->
                     <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
-                        <a class="page-link" th:href="${noticeList.last} ? '#' :${nextPage}"
-                           aria-label="Next">
+                        <a aria-label="Next" class="page-link"
+                           th:href="${noticeList.last} ? '#' :${nextPage}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
@@ -168,9 +170,11 @@
     </ul>
 </nav>
 
-<form class="noticeWriteBtn" th:action="@{/board/qna/write/${memberIdx}}" th:method="get" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <button type="submit" class="btn btn-outline-primary" >작성</button>
+<form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/qna/write/${memberIdx}}"
+      th:method="get">
+    <button class="btn btn-outline-primary" type="submit">작성</button>
+</form>
 
-
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
 </body>
 </html>
