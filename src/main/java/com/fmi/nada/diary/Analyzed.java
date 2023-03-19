@@ -21,8 +21,9 @@ public class Analyzed {
     @Column(name = "analyze_idx")
     private Long analyzeIdx;
 
-    @Column(name = "diary_idx")
-    private Long diaryIdx;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diary_idx")
+    private Diary diary;
 
     @Lob
     @Column(name = "analyze_result")
@@ -31,8 +32,8 @@ public class Analyzed {
     @Column(name = "analyze_score")
     private Integer analyzeScore;
 
-    public Analyzed(Long diaryIdx, String analyzeResult, Integer analyzeScore){
-        this.diaryIdx = diaryIdx;
+    public Analyzed(Diary diary, String analyzeResult, Integer analyzeScore){
+        this.diary = diary;
         this.analyzeResult = analyzeResult;
         this.analyzeScore = analyzeScore;
     }

@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Diary Entity
@@ -67,6 +69,8 @@ public class Diary {
     @Column(name = "diary_sympathy_cnt")
     private Long diarySympathyCnt;
 
+    @OneToMany(mappedBy = "diary")
+    private List<Analyzed> analyzedList = new ArrayList<>();
     public Diary(Long memberIdx,
                  String diarySubject,
                  String diaryWriter,

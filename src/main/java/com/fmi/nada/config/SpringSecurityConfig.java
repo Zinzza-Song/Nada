@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -57,7 +58,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 //                .antMatchers("/", "/home", "/user/join/**", "/user/reset_password/**",
 //                        "/diary", "/diary/read", "/board/notice", "/board/notice/read", "/board/QNA",
-//                        "/user/login").permitAll()
+//                        "/user/login", "/denied").permitAll()
 //                .antMatchers("/user/modify/**", "/user/delete", "/user/read",
 //                        "/user/friend_list", "/user/friend_add", "/user/friend_del", "/user/block_list",
 //                        "/user/unblock", "/reporting/**", "/diary/**", "/board/QNA/write/**",
@@ -97,6 +98,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendRedirect("/user/login");
                 }))
                 .deleteCookies(JwtProperties.COOKIE_NAME);
+
+        http.exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler());
     }
 
     @Override
@@ -120,6 +124,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
             return member;
         };
+    }
+
+    /**
+     * 접근 거부 예외처리 구현
+     *
+     * @return accessDeniedHandler
+     */
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler("/denied");
+
+        return accessDeniedHandler;
     }
 
 }

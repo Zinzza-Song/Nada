@@ -26,6 +26,9 @@
       <span class="logo-text">N A D A</span>
     </div>
     <form method="post" th:action="@{/login}">
+      <div class="form-group" th:if="${error}" style="align-items: center; margin-bottom: 20px;">
+        <span th:text="${errorMsg}" class="alert alert-danger">에러메세지</span>
+      </div>
       <div class="form-group">
         <label>ID</label>
         <input

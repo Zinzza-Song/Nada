@@ -4,14 +4,11 @@ import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.diary.Keyword;
 import com.fmi.nada.diary.KeywordService;
-import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,6 +40,11 @@ public class MainController {
         model.addAttribute("mostSympathyTop5DiaryList", mostSympathyTop5DiaryList);
 
         return "index";
+    }
+
+    @GetMapping("/denied")
+    public String denied() {
+        return "denied";
     }
 
 }

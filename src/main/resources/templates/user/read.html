@@ -42,7 +42,15 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">감정상태 분석글</h5>
-          <p class="card-text">대충 긍정적인 분석</p>
+          <!-- 감정 점수가 아직 없는 경우-->
+          <th:block th:if="${analyzeScore} == null">
+            <p class="card-text">어서 빨리 일기를 작성해 주세요!!</p>
+          </th:block>
+          <!-- 감정 점수가 존재하는 경우-->
+          <th:block th:if="${analyzeScore} != null">
+            <input type="hidden" id="diaryScore" th:value="${analyzeScore}">
+          </th:block>
+          <p class="card-text" id="advice">대충 긍정적인 분석</p>
         </div>
       </div>
     </div>
@@ -161,10 +169,47 @@
 </div>
 
 <script type="text/javascript">
+  $(function () {
+    const diaryScore = document.getElementById("diaryScore");
+    let msg = diaryScore.value;
+    msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+    console.log(msg);
+
+    let advice = document.getElementById('advice');
+
+    let gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    let mainAdvice = '';
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+
+          const resMsg = data.data;
+          let resLines = resMsg.split('\n');
+
+          resLines.forEach(function (line) {
+            if (line.indexOf("조언:") != -1) {
+              mainAdvice = line;
+              console.log(mainAdvice);
+            }
+          });
+        })
+        .then(() => {
+          let resAdvice = mainAdvice.replace("조언 : ", "");
+          advice.innerText = resAdvice;
+        });
+  });
+
   function loc() {
     window.location = "/user/modify";
   }
-
 </script>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 </body>
