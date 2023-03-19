@@ -27,6 +27,7 @@ public class MemberController {
     private final MailAuthService mailAuthService;
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
+    private final AnalyzedService analyzedService;
 
 //    @GetMapping("/loginfail")
 //    public String loginFail() {
