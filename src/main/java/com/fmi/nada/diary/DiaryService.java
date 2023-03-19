@@ -21,7 +21,7 @@ public class DiaryService {
 
         // page는 index처럼 0부터 시작
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 6);
+        pageable = PageRequest.of(page, 12);
 
         return diaryRepository.findAllByOrderByDiaryDateDesc(pageable);
     }
