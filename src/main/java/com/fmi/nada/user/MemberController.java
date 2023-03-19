@@ -26,9 +26,20 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
 
-    @GetMapping("/loginfail")
-    public String loginFail() {
-        return "user/loginfail";
+//    @GetMapping("/loginfail")
+//    public String loginFail() {
+//        return "user/loginfail";
+//    }
+
+    @GetMapping("/login")
+    public String login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "errorMsg", required = false) String errorMsg,
+            Model model) {
+        model.addAttribute("error", error);
+        model.addAttribute("errorMsg", errorMsg);
+
+        return "user/login";
     }
 
     @GetMapping("/join")
