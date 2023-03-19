@@ -17,6 +17,8 @@ public class ReportDto {
 
     private String reportCategory;
 
+    private String reportWriter;
+
     @NotBlank(message = "신고 내용을 작성해주세요.")
     private String reportContent;
 

@@ -1,6 +1,5 @@
 package com.fmi.nada.board.report;
 
-import com.fmi.nada.board.qna.Qna;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +72,10 @@ public class ReportController {
             return "board/report/write";
 
         Member member = (Member) authentication.getPrincipal();
+
+        Report report = new Report();
+        report.setReportSubject(reportDto.getReportSubject());
+        report.setReportContent(reportDto.getReportContent());
 
         reportService.writeReport(member, reportDto, reportedMember);
 
