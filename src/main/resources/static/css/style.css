@@ -237,6 +237,10 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .container {
         max-width: 1920px;
     }
+    .diary-container{
+        max-width: 1600px;
+
+    }
 
     .videoContainer {
         margin-bottom: 50px;
@@ -408,7 +412,7 @@ body {
 .BoxTitle {
     color: #5e4322;
     font-weight: bold;
-    font-size: 1.9rem;
+    font-size: 2.9rem;
     text-transform: uppercase;
     padding: 5px;
     margin-bottom: 20px;
@@ -447,6 +451,7 @@ input[type="button"] {
     margin: 5px 0;
 }
 
+
 #login-btn-box {
     padding-left: 80%;
     display: flex;
@@ -473,21 +478,23 @@ input[type="button"] {
 }
 
 .leftDiary {
-    background-image: url("../images/leftNote.png");
+    background-image: url("../images/diary_note_fix2.png");
     width: 50%;
-    height: 700px;
+    height: 1200px;
     background-size: contain;
     background-repeat: no-repeat;
     order: 1;
+    padding-left: 20px;
 }
 
 .rightDiary {
-    background-image: url("../images/rightNote.png");
+    background-image: url("../images/diary_note_fix2.png");
     width: 50%;
-    height: 700px;
+    height: 1200px;
     background-size: contain;
     background-repeat: no-repeat;
     order: 2;
+    padding-left: 20px;
 }
 
 .diary-form {
@@ -519,6 +526,13 @@ input[type="button"] {
     align-items: center;
     float: right;
     margin-right: 45px;
+}
+.btn-diary-right{
+    /*display: flex;*/
+    align-items: center;
+    /*text-align: center;*/
+    float: right;
+    font-size: 25px;
 }
 
 .diaryContent, .diaryAnalyze {
@@ -556,10 +570,10 @@ input[type="button"] {
     padding: 0;
 }
 
-.diaryWriteBtn > input {
-    padding: 5px 10px;
-    font-size: small;
-}
+/*.diaryWriteBtn > input {*/
+/*    padding: 5px 10px;*/
+/*    font-size: small;*/
+/*}*/
 
 .dropdown-item {
     font-size: 23px;
@@ -583,6 +597,7 @@ input[type="button"] {
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 500px;
+    font-size: 25px;
 }
 
 .btn_close::before {
@@ -629,23 +644,53 @@ input[type="button"] {
     white-space: pre-line;
 }
 
-.diarySubject, .diaryContent, .diaryAnalyze {
+.diarySubject, .diaryContent, .diaryAnalyze, .diaryWriter {
     background-color: transparent;
 }
-
+.diarySubject{
+    width: 650px;
+    height: 70px;
+    font-size: 30px;
+    margin-bottom: 10px
+}
+.keywordSubject{
+    width: 650px;
+    height: 70px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.diaryWriter{
+    width: 300px;
+    height: 50px;
+    font-size: 30px;
+    margin-bottom: 10px
+}
+.diaryContent{
+    width: auto;
+    height: auto;
+    font-size: 40px;
+}
+.form-check-input{
+    font-size: 30px;
+    text-align: center;
+}
 .diaryWriteBtn > input {
     padding: 5px 10px;
-    font-size: small;
+    font-size: 25px;
 }
+
 
 .diaryContent, .diaryAnalyze {
     width: 85%;
     height: 18rem;
     resize: none;
 }
-
-.diary-container {
-    align-items: center;
+.diaryAnalyze{
+    font-size: 40px;
 }
+
+/*.diary-container {*/
+/*    align-items: center;*/
+/*}*/
 
 
