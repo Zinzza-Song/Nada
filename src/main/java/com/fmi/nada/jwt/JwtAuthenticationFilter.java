@@ -4,6 +4,8 @@ import com.fmi.nada.admin.Log;
 import com.fmi.nada.admin.LogRepository;
 import com.fmi.nada.user.Member;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -100,7 +103,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed)
             throws IOException {
-        response.sendRedirect("/user/loginfail");
+
+        String errorMessage = "이메일 혹은 비밀번호를 잘못 입력하였습니다.";
+        if (failed instanceof BadCredentialsException)
+            errorMessage = "이메일 혹은 비밀번호를 잘못 입력하였습니다.";
+        else if (failed instanceof InsufficientAuthenticationException)
+            errorMessage = "Invalid Secret Key";
+
+        errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
+
+        response.sendRedirect("/user/login?error=true&errorMsg=" + errorMessage);
     }
 }
 
