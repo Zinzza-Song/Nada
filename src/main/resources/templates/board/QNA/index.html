@@ -43,7 +43,7 @@
   <tbody class="table-group-divider" th:each="qna: ${allQnaList}">
   <tr>
     <th scope="row" th:text="${qna.qnaIdx}">게시글번호</th>
-    <td><a th:href="@{/board/qna/read(qnaIdx=${qna.qnaIdx})}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
+    <td><a th:href="@{/board/QNA/read(qnaIdx=${qna.qnaIdx})}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
     <td th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
     <td th:text="${qna.qnaWriter}">닉네임</td>
   </tr>
@@ -89,7 +89,7 @@
           <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
               th:class="${page == allQnaList.number + 1} ? 'active'">
             <a class="page-link" th:text="${page}"
-               th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"></a>
+               th:href="@{/QNA(page=${page},type=${type},keyword=${keyword})}"></a>
           </li>
 
           <!-- 다음 페이지로 이동 -->
@@ -141,7 +141,7 @@
           <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
               th:class="${page == allQnaList.number + 1} ? 'active'">
             <a class="page-link" th:text="${page}"
-               th:href="@{notice(page=${page})}"></a>
+               th:href="@{QNA(page=${page})}"></a>
           </li>
 
           <!-- 다음 페이지로 이동 -->

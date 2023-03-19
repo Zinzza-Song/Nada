@@ -2,6 +2,9 @@ package com.fmi.nada.board.report;
 
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +19,28 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     /**
+     * 전체 신고글 조회 서비스 - 페이징 처리
+     *
+     * @return Page<Report> 전체 신고글 객체가 담긴 리스트(최신순으로 정렬)
+     */
+    public Page<Report> findAllByOrderByReportDateDesc(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByOrderByReportDateDesc(pageable);
+    }
+    public Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByReportSubjectContaining(reportSubject, pageable);
+    }
+
+    /**
      * 전체 신고글 조회 서비스
      *
      * @return List<Report> 전체 신고글 객체가 담긴 리스트(최신순으로 정렬)
      */
-    public List<Report> findAllByOrderByReportDateDesc() {
-        return reportRepository.findAllByOrderByReportDateDesc();
+    public List<Report> findAllReport() {
+        return reportRepository.findAllReport();
     }
 
     /**
