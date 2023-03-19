@@ -6,7 +6,6 @@ import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -125,11 +124,11 @@ public class MemberController {
 
         // 작성한 다이어리 점수 10, 20, 30,... 문자열로 만들어 model에 담기
         String analyzeScore = "";
-        List<Analyzed> diaryScore = analyzedService.findTop6ByByDiaryMemberIdx(memberIdx);
+        List<Analyzed> diaryScore = analyzedService.findTop6ByDiaryMemberIdx(memberIdx);
         for (int index = 0; index < diaryScore.size(); index++) {
             analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
         }
-        analyzeScore.substring(0, analyzeScore.length() - 1);
+        analyzeScore.substring(0, analyzeScore.length() - 2);
 
         model.addAttribute("analyzeScore", analyzeScore);
 
