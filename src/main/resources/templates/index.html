@@ -15,15 +15,15 @@
 <!--<img th:src="@{/images/mainBanner5.jpg}" style="width:100%; height: 350px;">-->
 <div class="videoContainer">
 
-<!--  <video id="videoPlay" width="100%" height="500px" style="margin-top: 20px" autoplay muted loop>-->
-<!--  <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />  -->
-<!--    메인 동영상-->
-<!--  </video>-->
+  <video id="videoPlay" width="100%" height="500px" style="margin-top: 20px; display: block" autoplay muted >
+  <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />
+    메인 동영상
+  </video>
 
-  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px" autoplay muted loop playsinline>
+  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px; display: none" autoplay muted loop >
     <source type="video/mp4" th:src="@{/videos/main_bannerVideo2.mp4}" />
 <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
-    메인 우측 동영상
+    메인 동영상
   </video>
 
 </div>
@@ -68,17 +68,18 @@
               <th></th>
               <th></th>
               <th scope="col">게시글</th>
-              <th scope="col">제목</th>
+              <th scope="col" class="mainSubject" >제목</th>
               <th scope="col">글쓴이</th>
               <th scope="col">날짜</th>
             </tr>
             </thead>
-            <tbody class="table-group-divider" th:each="diary : ${recentTop5DiaryList}">
+            <!--            class="table-group-divider"-->
+            <tbody  th:each="diary : ${recentTop5DiaryList}">
             <tr>
               <th></th>
               <th></th>
               <th scope="row" th:text="${diary.diaryIdx}">최신순 일기 번호</th>
-              <td th:text="${diary.diarySubject }">최신순 일기 제목</td>
+              <td class="mainSubject" th:text="${diary.diarySubject }" >최신순 일기 제목</td>
               <td th:text="${diary.diaryWriter}">최신순 일기 작성자</td>
               <td th:text="${#temporals.format(diary.diaryDate, 'YY-MM-dd')}">최신순 일기 날짜</td>
             </tr>
@@ -105,13 +106,13 @@
               <th scope="col">공감수</th>
             </tr>
             </thead>
-
-            <tbody class="table-group-divider" th:each="diary : ${mostSympathyTop5DiaryList}">
+<!--            class="table-group-divider"-->
+            <tbody  th:each="diary : ${mostSympathyTop5DiaryList}">
             <tr>
               <th></th>
               <th></th>
               <th scope="row" th:text="${diary.diaryIdx}">공감순 일기 번호</th>
-              <td th:text="${diary.diarySubject }">공감순 일기 제목</td>
+              <td class="mainSubject" th:text="${diary.diarySubject }">공감순 일기 제목</td>
               <td th:text="${diary.diaryWriter}">공감순 일기 작성자</td>
               <td th:text="${diary.diarySympathyCnt}">4</td>
             </tr>
@@ -129,6 +130,17 @@
   $(function(){
 
     $('#videoPlay2').bind('contextmenu',function() { return false; });
+
+    $('#videoPlay').bind('ended',function (){
+        $('#videoPlay').css('display','none');
+        $('#videoPlay2').css('display','block');
+        $('#videoPlay2').play();
+    });
+    $('#videoPlay2').bind('ended',function (){
+      $('#videoPlay2').css('display','none');
+      $('#videoPlay').css('display','block');
+      $('#videoPlay').play();
+    });
 
 
 

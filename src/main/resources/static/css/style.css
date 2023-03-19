@@ -138,6 +138,15 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-bottom: 50px;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 15px;
+
+}
+.mainSubject{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100px;
+
 }
 
 .diaryListCard {
@@ -244,6 +253,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .newestDiv {
         width: 600px;
         margin-right: 100px;
+
     }
 
     .emotionDiv {
