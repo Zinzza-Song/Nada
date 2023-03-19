@@ -544,7 +544,7 @@ input[type="button"] {
 .nav-item {
     width: 200px;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     margin: 0;
     padding: 0;
@@ -555,7 +555,7 @@ input[type="button"] {
     font-size: small;
 }
 .dropdown-item{
-    font-size: 17px;
+    font-size: 23px;
 }
 .page {
     list-style-type: none;

@@ -129,8 +129,12 @@
 
   $(function(){
 
-    $('#videoPlay2').bind('contextmenu',function() { return false; });
-
+    $('#videoPlay2').bind('contextmenu',function() {
+      return false;
+    });
+    $('#videoPlay').bind('contextmenu',function() {
+      return false;
+    });
     $('#videoPlay').bind('ended',function (){
         $('#videoPlay').css('display','none');
         $('#videoPlay2').css('display','block');
