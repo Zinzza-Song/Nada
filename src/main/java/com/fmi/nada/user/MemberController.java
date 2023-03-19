@@ -1,5 +1,7 @@
 package com.fmi.nada.user;
 
+import com.fmi.nada.diary.Analyzed;
+import com.fmi.nada.diary.AnalyzedService;
 import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.jwt.JwtProperties;
@@ -25,6 +27,8 @@ public class MemberController {
     private final MailAuthService mailAuthService;
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
+
+    private final AnalyzedService analyzedService;
 
     @GetMapping("/loginfail")
     public String loginFail() {
@@ -117,6 +121,16 @@ public class MemberController {
         model.addAttribute("memberLoginBean", member);
 
         Long memberIdx = member.getMemberIdx();
+
+        // 작성한 다이어리 점수 10, 20, 30,... 문자열로 만들어 model에 담기
+        String analyzeScore = "";
+        List<Analyzed> diaryScore = analyzedService.findTop6ByDiaryMemberIdx(memberIdx);
+        for (int index = 0; index < diaryScore.size(); index++) {
+            analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
+        }
+        analyzeScore.substring(0, analyzeScore.length() - 2);
+
+        model.addAttribute("analyzeScore", analyzeScore);
 
         Sympathy sympathy = memberService.getLikeIdx(memberIdx);
         if (sympathy == null) {

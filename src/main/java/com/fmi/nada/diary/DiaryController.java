@@ -119,7 +119,7 @@ public class DiaryController {
                 diaryDTO.getDiaryPublicable(),
                 diaryDTO.getDiaryAnalyzePublicable());
 
-        analyzedService.resisterAnalyze(diary.getDiaryIdx(), diary.getDiaryAnalyze(), Integer.parseInt(diaryDTO.getAnalyzeScore()));
+        analyzedService.resisterAnalyze(diary, diary.getDiaryAnalyze(), Integer.parseInt(diaryDTO.getAnalyzeScore()));
 
         insertKeywords(diaryDTO);
 
