@@ -37,22 +37,20 @@ public class ReportService {
     /**
      * 신고글 작성 서비스
      *
-     * @param reporter       신고자
-     * @param reportDto      신고글 작성 내용이 들어있는 DTO
-     * @param reportedMember 신고 대상자
+     * @param reporter  신고자
+     * @param reportDto 신고글 작성 내용이 들어있는 DTO
+     * @return 작성된 Report 객체
      */
-    public void writeReport(
+    public Report writeReport(
             Member reporter,
-            ReportDto reportDto,
-            Member reportedMember) {
-        reportRepository.save(new Report(
+            ReportDto reportDto) {
+        return reportRepository.save(new Report(
                 reporter.getMemberIdx(),
                 reportDto.getReportSubject(),
-                reporter.getUsername(),
+                reportDto.getReportWriter(),
                 reportDto.getReportCategory(),
                 reportDto.getReportContent(),
-                reportedMember.getUsername(),
-                reportDto.getReportFile()
+                reportDto.getReportReportedMember()
         ));
     }
 

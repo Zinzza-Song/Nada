@@ -49,26 +49,26 @@
 <form enctype="multipart/form-data" action="#">
   <div class="mb-3">
     <input type="text" class="form-control" name="reportSubject " id="reportSubject"
-           th:text="${ReportBean.reportSubject}" readonly>
+           th:value="${ReportBean.reportSubject}" readonly>
   </div>
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportWriter " id="reportWriter"
-           th:text="${ReportBean.reportWriter}">
+           th:value="${ReportBean.reportWriter}" readonly>
   </div>
 
   <div class="mb-3">
     <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-           th:text="${#temporals.format(#ReportBean.reportDate,'yyyy-mm-dd')}" readonly>
+           th:value="${#temporals.format(ReportBean.reportDate,'YY-MM-dd')}" readonly>
   </div>
 
   <div class="mb-3">
-    <input type="text" th:text="${ReportBean.reportCategory}">
+    <input type="text" th:value="${ReportBean.reportCategory}" readonly>
   </div>
 
   <div class="mb-3">
         <textarea class="form-control" name="reportContent" id="reportContent " rows="5"
-                  th:text="${ReportBean.reportContent}">
+                  th:text="${ReportBean.reportContent}" readonly>
         </textarea>
   </div>
   <!--신고 처리 내용-->
@@ -82,7 +82,7 @@
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
-           th:text="${ReportBean.reportReportedMember}">
+           th:value="${ReportBean.reportReportedMember}" readonly>
   </div>
 
   <div class="mb-3">

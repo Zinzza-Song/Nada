@@ -21,48 +21,47 @@
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
-           placeholder="신고자">
+           placeholder="신고자" readonly>
   </div>
 
-  <!--  <div class="mb-3">-->
-  <!--    <input type="text" name="noticeDate" id="noticeDate" class="form-control"-->
-  <!--           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}">-->
-  <!--  </div>-->
+  <div class="mb-3">
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+           th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
+  </div>
 
   <div class="mb-3">
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="true"
+
+    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault1"
            th:field="*{reportCategory}" th:value="욕설">
     <label class="form-check-label" for="flexRadioDefault1">
       욕설
     </label>
-
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault2"
            th:field="*{reportCategory}" th:value="광고">
     <label class="form-check-label" for="flexRadioDefault2">
       광고
     </label>
-
-<!--    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"-->
-    <!--           th:field="*{reportCategory}" th:value="허위 게시글">-->
-    <!--    <label class="form-check-label" for="flexRadioDefault3">-->
-    <!--      허위 게시글-->
-    <!--    </label>-->
+    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault3"
+           th:field="*{reportCategory}" th:value="허위게시글">
+    <label class="form-check-label" for="flexRadioDefault3">
+      허위 게시글
+    </label>
   </div>
 
   <div class="mb-3">
         <textarea class="form-control" name="reportContent" id="reportContent " rows="5" placeholder="구체적인 신고내용"
-                  th:field="*{reportContent }">
+                  th:field="*{reportContent}">
         </textarea>
   </div>
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
-           th:field="*{reportReportedMember}" placeholder="신고 대상자">
+           th:field="*{reportReportedMember}" placeholder="신고 대상자" readonly>
   </div>
 
   <div class="mb-3">
     <label for="reportFile" class="form-label">첨부파일</label>
-    <input class="form-control form-control-sm" name="reportFile " id="reportFile" type="file" th:field="*{reportFile}">
+    <input class="form-control form-control-sm" name="reportFile " id="reportFile" type="file">
   </div>
 
 
