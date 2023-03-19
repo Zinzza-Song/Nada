@@ -1,9 +1,6 @@
 package com.fmi.nada.user;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
@@ -69,6 +66,9 @@ public class Member implements UserDetails {
     @Column(name = "member_authority")
     private String authority;
 
+    @Column(name = "member_provider")
+    private String provider;
+
     public Member(
             String username,
             String password,
@@ -87,6 +87,30 @@ public class Member implements UserDetails {
         this.memberBirth = memberBirth;
         this.memberAddress = memberAddress;
         this.memberPhone = memberPhone;
+    }
+
+    @Builder
+    public Member(
+            Long memberIdx,
+            String memberName,
+            String username,
+            String authority,
+            String provider) {
+        this.memberIdx = memberIdx;
+        this.memberName = memberName;
+        this.username = username;
+        this.authority = authority;
+        this.provider = provider;
+    }
+
+    public Member update(String memberName) {
+        this.memberName = memberName;
+
+        return this;
+    }
+
+    public String getAuthority() {
+        return this.authority;
     }
 
     @Override

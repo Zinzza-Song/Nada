@@ -39,7 +39,7 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+        return memberRepository.findByUsername(username).get();
     }
 
     public Member findByMemberIdx(Long memberIdx) {
@@ -58,7 +58,9 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void updateMember(Member member){memberRepository.save(member);}
+    public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
 
     /* 친구추가 */
     public Friends addFriends(Long memberIdx,
@@ -66,29 +68,30 @@ public class MemberService {
         return friendsRepository.save(new Friends(memberIdx,
                 friendsMemberIdx));
     }
+
     public void delFriends(Long memberIdx,
-                           Long friendsMemberIdx){
+                           Long friendsMemberIdx) {
         friendsRepository.deleteFriendsByMemberIdxAndFriendsMemberIdx(
                 memberIdx,
                 friendsMemberIdx);
     }
 
-    public Sympathy getLikeIdx(Long memberIdx){
+    public Sympathy getLikeIdx(Long memberIdx) {
         Sympathy likeIdx = sympathyRepository.findByMemberIdx(memberIdx);
-        if (likeIdx==null){
+        if (likeIdx == null) {
             return null;
-        }else {
+        } else {
             return likeIdx;
         }
     }
 
     /* 친구리스트 */
-    public List<Friends> friendsList(Long memberIdx){
+    public List<Friends> friendsList(Long memberIdx) {
         return friendsRepository.findFriendsByMemberIdx(memberIdx);
     }
 
     /* 블록유저 리스트 */
-    public List<BlockList> blockLists(Long memberIdx){
+    public List<BlockList> blockLists(Long memberIdx) {
         return blockListRepository.findBlockListByMemberIdx(memberIdx);
     }
 

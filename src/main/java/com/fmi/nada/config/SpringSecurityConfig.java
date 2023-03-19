@@ -72,6 +72,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .permitAll();
 
+//        http.oauth2Login()
+//                .loginPage("/oauth_login");
+
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .invalidateHttpSession(true)
@@ -86,7 +89,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     } catch (Exception ignored) {
                     }
                     String userName = JwtUtils.getUsername(token);
-                    Member member = memberRepository.findByUsername(userName);
+                    Member member = memberRepository.findByUsername(userName).get();
                     logRepository.save(new Log(
                             member.getMemberIdx(),
                             true,
