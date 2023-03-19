@@ -24,26 +24,29 @@
            placeholder="신고자">
   </div>
 
-  <div class="mb-3">
-    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
-  </div>
+  <!--  <div class="mb-3">-->
+  <!--    <input type="text" name="noticeDate" id="noticeDate" class="form-control"-->
+  <!--           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}">-->
+  <!--  </div>-->
 
   <div class="mb-3">
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="">
-    <label class="form-check-label" for="flexRadioDefault1" th:value="욕설" th:field="reportCategory">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="true"
+           th:field="*{reportCategory}" th:value="욕설">
+    <label class="form-check-label" for="flexRadioDefault1">
       욕설
     </label>
 
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-    <label class="form-check-label" for="flexRadioDefault2" th:value="광고" th:field="reportCategory">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+           th:field="*{reportCategory}" th:value="광고">
+    <label class="form-check-label" for="flexRadioDefault2">
       광고
     </label>
 
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-    <label class="form-check-label" for="flexRadioDefault3" th:value="허위 게시글" th:field="reportCategory">
-      허위 게시글
-    </label>
+<!--    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"-->
+    <!--           th:field="*{reportCategory}" th:value="허위 게시글">-->
+    <!--    <label class="form-check-label" for="flexRadioDefault3">-->
+    <!--      허위 게시글-->
+    <!--    </label>-->
   </div>
 
   <div class="mb-3">
@@ -54,7 +57,7 @@
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
-           th:field="*{reportReportedmember}" placeholder="신고 대상자">
+           th:field="*{reportReportedMember}" placeholder="신고 대상자">
   </div>
 
   <div class="mb-3">
