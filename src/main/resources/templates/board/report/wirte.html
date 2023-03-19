@@ -26,7 +26,7 @@
 
   <div class="mb-3">
     <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-mm-dd')}" readonly>
+           th:field="*{reportDate }" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
   </div>
 
   <div class="mb-3">
