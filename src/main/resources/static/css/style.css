@@ -72,9 +72,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 } */
 .mainBody, .diarymain, .diary-write-body, .noticeMain,
 .qnaMain, .reportMain, .noticeWriteForm, .noticeReadForm,
-.noticeModifyForm, .qnaReadForm, .qnaWriteForm {
-    background-image: url(../images/mainBack2.jpg);
-    background-repeat: no-repeat;
+.noticeModifyForm, .qnaReadForm, .qnaWriteForm, html,body {
+    background-image: url(../images/bgi2.png);
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     flex-wrap: inherit;
     height: 100%;
@@ -97,13 +97,16 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 
+
 /*#todayAdvice {*/
 /*    background-image: url(./images/list.PNG);*/
 /*}*/
 .homecard, .keywordcard {
-    background-image: url(../images/list.PNG);
+    background-image: url(../images/adviceAndkeword.png);
     background-repeat: round;
     background-size: cover;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 15px;
 }
 
 .todayAdvice, .keywordcard {
@@ -113,7 +116,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 #keywordContext {
     margin-top: 6px;
-    border: 1px solid #937152;
+    /*border: 1px solid #937152;*/
 }
 
 .emoticon {
@@ -123,12 +126,33 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 .diarycard {
-    background-image: url(../images/diarylist2.jpg);
+    background-image: url(../images/mainlist.png);
     background-repeat: round;
     background-size: cover;
+    background-color: rgba(255,255,255,0);
+    border: none;
+    margin-bottom: 50px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 15px;
+
+}
+.mainSubject{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100px;
+
 }
 
+.diaryListCard {
+    background-image: url(../images/diarymain.jpg);
+    background-repeat: round;
+    background-size: cover;
+    margin-top: 10px;
 
+
+}
 
 .Page-bar li {
     display: inline-block;
@@ -192,6 +216,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     height: 100%;
 }
 
+
 .userLoginBox {
     display: inline-block;
 }
@@ -203,19 +228,49 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-left: 40%;
 }
 
-@media ( min-width: 992px)and (max-width: 1300px) {
+@media (min-width: 1400px) {
+    .container{
+        max-width: 1920px;
+    }
+    .videoContainer{
+        margin-bottom: 50px;
+    }
+    .todayAdvice{
+        margin-bottom: 70px;
+
+    }
     #today {
-        width: 210px;
+        width: 250px;
+        margin-right: 100px;
+        margin-left: 100px;
     }
 
     .newestDiv {
-        width: 350px;
+        width: 600px;
+        margin-right: 100px;
+
     }
 
     .emotionDiv {
-        width: 350px;
+        width: 600px;
     }
+
 }
+
+/*@media ( min-width: 992px)and (max-width: 1300px) {*/
+/*    #today {*/
+/*        width: 210px;*/
+
+/*    }*/
+
+/*    .newestDiv {*/
+/*        width: 350px;*/
+/*    }*/
+
+/*    .emotionDiv {*/
+/*        width: 350px;*/
+/*    }*/
+/*}*/
 
 @media (max-width: 992px) {
     #today {
@@ -303,6 +358,11 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .navbar{
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    /*font-size: 30px;*/
+    /*font-weight: bold;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+
 }
 
 body {
@@ -311,6 +371,7 @@ body {
 
 #container {
     padding: 5px;
+
 }
 
 .loginBox {
@@ -453,12 +514,28 @@ input[type="button"] {
 .diarySubject, .diaryContent, .diaryAnalyze {
     background-color: transparent;
 }
+.navbar-brand{
+    width: 450px;
+}
+.join_login{
+    width: 500px;
+}
+.nav-item {
+    width: 200px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
 
 .diaryWriteBtn > input {
     padding: 5px 10px;
     font-size: small;
 }
-
+.dropdown-item{
+    font-size: 23px;
+}
 .page {
     list-style-type: none;
     text-align: center;
