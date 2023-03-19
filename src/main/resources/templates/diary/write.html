@@ -173,6 +173,8 @@
           resLines.forEach(function (line) {
             if (line.indexOf("키워드:") != -1)
               keywords = line;
+            else if(line.indexOf("단어:") != -1)
+              keywords = line;
             else if (line.indexOf("조언:") != -1)
               advice = line;
             else if (line.indexOf("긍정적 문장 개수:") != -1) {

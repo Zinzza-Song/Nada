@@ -99,6 +99,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 #main {
     margin-top: 20px;
 }
+.topMenu-items{
+    --bs-dropdown-link-active-bg: #785c4c;
+}
 
 
 /*#todayAdvice {*/
@@ -378,6 +381,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .diary {
     font-family: 'KyoboHandwriting2021sjy', 'KyoboHand', 'KCCChassam';
     margin-left: 80px;
+    font-size: medium;
 }
 
 .navbar {
@@ -472,7 +476,7 @@ input[type="button"] {
     display: flex;
 }
 
-.leftDiary {
+.leftDiary,.leftRead {
     background-image: url("../images/leftNote.png");
     width: 50%;
     height: 700px;
@@ -481,7 +485,7 @@ input[type="button"] {
     order: 1;
 }
 
-.rightDiary {
+.rightDiary,.rightRead {
     background-image: url("../images/rightNote.png");
     width: 50%;
     height: 700px;
@@ -489,7 +493,13 @@ input[type="button"] {
     background-repeat: no-repeat;
     order: 2;
 }
+.diary-Read{
+    font-family: 'KyoboHand' , 'KCCChassam' , 'KyoboHandwriting2021sjy';
 
+}
+.diaryReadCard{
+    margin: 5%;
+}
 .diary-form {
     width: 100%;
 }
@@ -535,7 +545,7 @@ input[type="button"] {
     white-space: pre-line;
 }
 
-.diarySubject, .diaryContent, .diaryAnalyze {
+.diarySubject, .diaryContent, .diaryAnalyze,.diaryReadCard{
     background-color: transparent;
 }
 
@@ -628,11 +638,6 @@ input[type="button"] {
 .diarySubject, .diaryContent {
     white-space: pre-line;
 }
-
-.diarySubject, .diaryContent, .diaryAnalyze {
-    background-color: transparent;
-}
-
 .diaryWriteBtn > input {
     padding: 5px 10px;
     font-size: small;
@@ -647,5 +652,22 @@ input[type="button"] {
 .diary-container {
     align-items: center;
 }
-
+/*닉네임드롭다운*/
+.nickNameBtn{
+    font-size: 16px;
+}
+/*공감버튼*/
+.sympathyBtn{
+    background-color: #4c3822;
+    color: #e3cab0;
+    box-shadow: 3px 5px 0 #330f0e;
+}
+.sympathyBtn:active{
+    box-shadow: 1px 1px 0 #330f0e;
+    transform: translateY(4px);
+}
+.sympathyBtn:hover{
+    background-color: #a38969;
+    opacity: .9;
+}
 
