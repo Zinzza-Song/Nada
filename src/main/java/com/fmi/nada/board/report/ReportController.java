@@ -41,8 +41,10 @@ public class ReportController {
     public String read(@PathVariable("reportIdx") Long reportIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
-                       Model model) {
+                       Model model,
+                       @ModelAttribute("reportProBean") ReportProDto reportProDto) {
         Report ReportBean = reportService.findByReportIdx(reportIdx);
+        reportProDto.setReportAdminMent(ReportBean.getReportAdminMent());
         viewCountValidation(ReportBean, request, response);
         model.addAttribute("ReportBean", ReportBean);
 

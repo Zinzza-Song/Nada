@@ -7,82 +7,51 @@
 <head th:insert="~{fragment/topMenu.html::header}">
   <!-- 반응형 웹 미디어쿼리 선언부   -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!--  관리자 답변 ajax  -->
-  <script>
-    $(document).ready(function () {
-      // 신고 접수 버튼 클릭 시
-      $('.btn-primary:eq(0)').on('click', function () {
-        // textarea 활성화
-        $('#reportAdminment').prop('readonly', false);
-      });
-
-      // 처리 완료 버튼 클릭 시
-      $('.btn-primary:eq(1)').on('click', function () {
-        // textarea 내용 저장
-        var answer = $('#reportAdminment').val();
-
-        // ajax 호출
-        $.ajax({
-          type: 'POST',
-          url: '/board/report/read/{reportIdx}',
-          data: {
-            reportAdminment: answer
-          },
-          success: function (response) {
-            // 처리 완료 메시지 출력
-            $('#reportAdminment').val('해당 유저는 탈퇴 처리 되었습니다.');
-            $('#reportAdminment').prop('readonly', true);
-          },
-          error: function (error) {
-            console.log(error);
-          }
-        });
-      });
-    });
-  </script>
-
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" action="#">
+<form enctype="multipart/form-data"
+      th:action="@{/admin/report_pro/{reportIdx}(reportIdx=${ReportBean?.reportIdx})}"
+      th:method="put" th:object="${reportProBean}">
   <div class="mb-3">
     <input type="text" class="form-control" name="reportSubject " id="reportSubject"
-           th:value="${ReportBean.reportSubject}" readonly>
+           th:value="${ReportBean?.reportSubject}" readonly>
   </div>
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportWriter " id="reportWriter"
-           th:value="${ReportBean.reportWriter}" readonly>
+           th:value="${ReportBean?.reportWriter}" readonly>
   </div>
 
   <div class="mb-3">
     <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-           th:value="${#temporals.format(ReportBean.reportDate,'YY-MM-dd')}" readonly>
+           th:value="${#temporals.format(ReportBean?.reportDate,'YY-MM-dd')}" readonly>
   </div>
 
   <div class="mb-3">
-    <input type="text" th:value="${ReportBean.reportCategory}" readonly>
+    <input type="text" th:value="${ReportBean?.reportCategory}" readonly>
   </div>
 
   <div class="mb-3">
         <textarea class="form-control" name="reportContent" id="reportContent " rows="5"
-                  th:text="${ReportBean.reportContent}" readonly>
+                  th:text="${ReportBean?.reportContent}" readonly>
         </textarea>
   </div>
   <!--신고 처리 내용-->
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        <textarea class="form-control" id="reportAdminment " placeholder="현재 처리 진행 중 입니다." rows="3" readonly></textarea>
+        <textarea th:field="*{reportAdminMent}" class="form-control" id="reportAdminment" placeholder="현재 처리 진행 중 입니다."
+                  rows="3" readonly></textarea>
       </li>
     </ul>
+    <p th:if="${#fields.hasErrors('reportAdminMent')}" th:errorclass="error" th:errors="*{reportAdminMent}"/>
   </div>
 
   <div class="mb-3">
     <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
-           th:value="${ReportBean.reportReportedMember}" readonly>
+           th:value="${ReportBean?.reportReportedMember}" readonly>
   </div>
 
   <div class="mb-3">
@@ -92,12 +61,22 @@
   </div>
 
 
-  <button type="button" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수</button>
-  <button type="submit" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
+  <button type="button" class="btn btn-primary" onclick="takeReport()" sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수
+  </button>
+  <input type="submit" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" value="처리 완료"/>
   <button type="button" class="btn btn-primary" onclick="history.go(-1)">목록</button>
 </form>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 
+<!--  관리자 답변 ajax  -->
+<script th:inline="javascript">
+  function takeReport() {
+    const reportAdminmentEl = document.querySelector('#reportAdminment');
+    reportAdminmentEl.readOnly = false;
+    reportAdminmentEl.focus();
+  }
+
+</script>
 
 </body>
 </html>

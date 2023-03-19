@@ -1,5 +1,7 @@
 package com.fmi.nada.admin;
 
+import com.fmi.nada.board.report.Report;
+import com.fmi.nada.board.report.ReportProDto;
 import com.fmi.nada.board.report.ReportService;
 import com.fmi.nada.diary.Comment;
 import com.fmi.nada.diary.CommentService;
@@ -10,11 +12,10 @@ import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -78,20 +79,20 @@ public class AdminController {
         return "redirect:/comment";
     }
 
-//    /**
-//     * 전체 신고글 조회
-//     *
-//     * @param model 전체 신고글 리트스를 담을 모델
-//     * @return 신고글 조회 뷰 페이지
-//     */
-//    @GetMapping("/report")
-//    public String report(Model model) {
-//        List<Report> allReportList = reportService.findAllByOrderByReportDateDesc();
-//        model.addAttribute("allReportList", allReportList);
-//
-//        return "admin/report";
-//    }
-//
+    /**
+     * 전체 신고글 조회
+     *
+     * @param model 전체 신고글 리트스를 담을 모델
+     * @return 신고글 조회 뷰 페이지
+     */
+    @GetMapping("/report")
+    public String report(Model model) {
+        List<Report> allReportList = reportService.findAllByOrderByReportDateDesc();
+        model.addAttribute("allReportList", allReportList);
+
+        return "admin/report";
+    }
+
 //    @GetMapping("/report_pro/{reportIdx}")
 //    public String reportPro(@PathVariable("reportIdx") Long reportIdx,
 //                            @ModelAttribute ReportProDto reportProDto) {
@@ -99,26 +100,30 @@ public class AdminController {
 //
 //        return "admin/repotPro";
 //    }
-//
-//    /**
-//     * 신고 처리
-//     *
-//     * @param reportIdx    신고 처리한 신고글의 PK
-//     * @param reportProDto 신고글 업데이트에 사용할 DTO
-//     * @return 해당 신고글 조회 페이지로 리다이렉트
-//     */
-//    @PutMapping("/report_pro/{reportIdx}")
-//    public String reportPro(
-//            @PathVariable("reportIdx") Long reportIdx,
-//            @Valid @ModelAttribute ReportProDto reportProDto,
-//            BindingResult result) {
-//        if (result.hasErrors())
-//            return "board/report/read";
-//
-//        reportService.reportPro(reportIdx, reportProDto);
-//
-//        return "redirect:/board/report/read/" + reportIdx;
-//    }
+
+    /**
+     * 신고 처리
+     *
+     * @param reportIdx    신고 처리한 신고글의 PK
+     * @param reportProDto 신고글 업데이트에 사용할 DTO
+     * @return 해당 신고글 조회 페이지로 리다이렉트
+     */
+    @PutMapping("/report_pro/{reportIdx}")
+    public String reportPro(
+            @PathVariable("reportIdx") Long reportIdx,
+            @Valid @ModelAttribute("reportProBean") ReportProDto reportProDto,
+            Model model,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            Report report = reportService.findByReportIdx(reportIdx);
+            model.addAttribute("ReportBean", report);
+            return "board/report/read";
+        }
+
+        reportService.reportPro(reportIdx, reportProDto);
+
+        return "redirect:/admin/report";
+    }
 
     /**
      * 전체 회원 조회
