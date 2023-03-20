@@ -55,12 +55,23 @@ public class MemberController {
         return "user/join";
     }
 
+    @GetMapping("join/nickname_exist_check")
+    @ResponseBody
+    public String nicknameCheck(String memberNickname) {
+        Member member = memberService.findByMemberNickname(memberNickname);
+
+        if(member != null)
+            return "no";
+        else
+            return "ok";
+    }
+
     //회원가입 이메일인증
     @GetMapping("/join/email_exist_check")
     @ResponseBody
     public String mailCheck(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
+        if (member != null) {
             return "false";
         } else {
             System.out.println("이메일 인증 요청이 들어옴!");
