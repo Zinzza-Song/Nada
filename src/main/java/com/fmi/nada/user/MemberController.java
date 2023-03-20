@@ -1,5 +1,7 @@
 package com.fmi.nada.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fmi.nada.diary.Analyzed;
 import com.fmi.nada.diary.AnalyzedService;
 import com.fmi.nada.diary.Diary;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -125,7 +130,7 @@ public class MemberController {
     @GetMapping("/read")
     public String readMember(@ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
                              Authentication authentication,
-                             Model model) {
+                             Model model) throws Exception {
         Member member = (Member) authentication.getPrincipal();
 
         model.addAttribute("memberLoginBean", member);
@@ -138,10 +143,29 @@ public class MemberController {
         for (int index = 0; index < diaryScore.size(); index++) {
             analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
         }
-        analyzeScore.substring(0, analyzeScore.length() - 2);
-
+        analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
         model.addAttribute("analyzeScore", analyzeScore);
 
+        // 작성한 다이어리 분석 점수 그래프에 띄우기
+        List<Integer> analyzeScoreArr = new ArrayList<>();
+
+        for (int i = 0; i < diaryScore.size(); i++) {
+            analyzeScoreArr.add(diaryScore.get(i).getAnalyzeScore());
+        }
+        model.addAttribute("analyzeScoreArr", analyzeScoreArr);
+
+        // 작성한 다이어리의 작성일을 그래프에 띄우기
+        List<Diary> getDiaryWriteDate = diaryService.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);
+        List<String> diaryWriteDateArr = new ArrayList<>();
+
+        for (int i = 0; i < getDiaryWriteDate.size(); i++) {
+            diaryWriteDateArr.add(getDiaryWriteDate.get(i).getDiaryDate().toString());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String diaryWriteDateJson = objectMapper.writeValueAsString(diaryWriteDateArr);
+        model.addAttribute("diaryWriteDateArr", diaryWriteDateJson);
+
+        // 공감이 있는 글인지 아닌지 여부에 따라 분리
         Sympathy sympathy = memberService.getLikeIdx(memberIdx);
         if (sympathy == null) {
             List<Diary> myDiaryList = diaryService.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);

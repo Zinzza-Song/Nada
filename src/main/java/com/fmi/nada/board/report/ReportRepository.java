@@ -1,6 +1,9 @@
 package com.fmi.nada.board.report;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -20,8 +23,12 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     /**
      * 전체 신고글 조회 쿼리
      *
-     * @return List<Report>(전체 신고글 객체가 담긴 리스트(최신순으로 정렬))
+     * @return Page<Report>(전체 신고글 객체가 담긴 리스트(최신순으로 정렬))
      */
-    List<Report> findAllByOrderByReportDateDesc();
+    @Query("SELECT r FROM Report r ORDER BY r.reportDate DESC")
+    List<Report> findAllReport();
 
+    Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
+
+    Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
 }

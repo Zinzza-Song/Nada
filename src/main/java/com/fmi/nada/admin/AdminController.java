@@ -87,7 +87,7 @@ public class AdminController {
      */
     @GetMapping("/report")
     public String report(Model model) {
-        List<Report> allReportList = reportService.findAllByOrderByReportDateDesc();
+        List<Report> allReportList = reportService.findAllReport();
         model.addAttribute("allReportList", allReportList);
 
         return "admin/report";

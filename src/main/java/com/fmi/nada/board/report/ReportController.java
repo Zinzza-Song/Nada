@@ -3,6 +3,9 @@ package com.fmi.nada.board.report;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,15 +31,26 @@ public class ReportController {
     private final MemberService memberService;
 
     @GetMapping
-    public String report(Model model) {
-        List<Report> allReportList = reportService.findAllByOrderByReportDateDesc();
-        model.addAttribute("allReportList", allReportList);
+    public String report(@PageableDefault Pageable pageable,
+                         @RequestParam(value = "type", required = false) String type,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         Model model) {
 
+        Page<Report> allReportList = null;
+        if(keyword == null) {
+            allReportList = reportService.findAllByOrderByReportDateDesc(pageable);
+        }
+        else if(keyword != null) {
+            allReportList = reportService.findAllByReportSubjectContaining(keyword, pageable);
+        }
+        model.addAttribute("allReportList", allReportList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "board/report/index";
     }
 
-    @GetMapping("/read/{reportIdx}")
-    public String read(@PathVariable("reportIdx") Long reportIdx,
+    @GetMapping("/read")
+    public String read(@RequestParam("reportIdx") Long reportIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model) {

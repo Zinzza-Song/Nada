@@ -59,7 +59,7 @@
 
   <div class="mb-3">
     <input type="text" name="noticeDate" id="noticeDate" class="form-control"
-           th:text="${#temporals.format(#ReportBean.reportDate,'yyyy-mm-dd')}" readonly>
+           th:text="${#temporals.format(ReportBean.reportDate,'yyyy-MM-dd')}" readonly>
   </div>
 
   <div class="mb-3">
