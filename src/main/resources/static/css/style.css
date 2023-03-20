@@ -811,9 +811,58 @@ input[type="button"] {
 .diaryAnalyze{
     font-size: 40px;
 }
+/*------------------------------------------------------*/
+#searchBtn{
+    --bs-btn-color: #9b6034;
+    --bs-btn-border-color: #9e8566;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #cebcab;
+    --bs-btn-hover-border-color: #cebcab;
+    --bs-btn-focus-shadow-rgb: 25,135,84;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #d1bbab;
+    --bs-btn-active-border-color: #d0baaa;
+}
+
+.diarySearchBar{
+    width: 85%;
+}
+
 
 /*.diary-container {*/
 /*    align-items: center;*/
 /*}*/
 
 
+/*하단 페이지네이션 관련 스타일*/
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #6e502a;
+    border-color: #6c583e;
+}
+.pagination {
+    --bs-pagination-padding-x: 0.75rem;
+    --bs-pagination-padding-y: 0.375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: #6e502a;
+    --bs-pagination-bg: #6e502a;
+    --bs-pagination-border-width: 1px;
+    --bs-pagination-border-color: #dee2e6;
+    --bs-pagination-border-radius: 0.375rem;
+    --bs-pagination-hover-color: #ffffff;
+    --bs-pagination-hover-bg: #6e502a;
+    --bs-pagination-hover-border-color: #dee2e6;
+    --bs-pagination-focus-color: #ffffff;
+    --bs-pagination-focus-bg: #6e502a;
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #6e502a;
+    --bs-pagination-active-border-color: #6e502a;
+    --bs-pagination-disabled-color: #6c757d;
+    --bs-pagination-disabled-bg: #fff;
+    --bs-pagination-disabled-border-color: #dee2e6;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}

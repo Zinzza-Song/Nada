@@ -89,7 +89,6 @@
                 <button class="btn btn-primary">친구추가</button>
               </div>
 
-
             </div>
           </div>
         </div>
@@ -143,5 +142,60 @@
   <!--readWrap끝-->
 </div>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
+
+<!-- 모달부분 form-->
+<div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">차단 하기</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/user/block_list/{memberidx}(memberIdx=${member.memberIdx})}" th:object="${blockmemberList}">
+          <div class="mb-3">
+            <label for="date" class="col-form-label">날짜</label>
+            <input type="text" class="form-control" id="date" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" th:field="*{blockMemberDate}" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="nickname" class="col-form-label">닉네임</label>
+            <input type="text" class="form-control" id="nickname" th:field="*{blockMemberNickname}">
+          </div>
+          <div class="mb-3">
+            <label for="blockContent" class="col-form-label">차단사유</label>
+            <textarea class="form-control" id="blockContent" th:field="*{blockMemberReason}"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">작성완료</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+<!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
+  function reportBtn(){
+    location.href="/board/report/write";
+  }
+
+  $(document).ready(function() {
+    $('#addFriend').click(function() {
+      $.ajax({
+        type: "POST",
+        url: "/user/friend_add/",
+        data :{
+          "memberIdx": $("#memberIdx").val()
+        },
+        success: function(response) {
+          swal('친구가 추가되었습니다.');
+        }
+      });
+    });
+  });
+
+</script>
 </body>
 </html>
