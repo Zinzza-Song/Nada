@@ -7,15 +7,15 @@
 
 </head>
 
-<body class="p-3 m-0 border-0 bd-example diarymain">
+<body class=" diarymain">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div th:each="diary :${allDiaryList}">
-    <div class="col">
-      <div class="card h-72 diaryListCard">
-        <a th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}">
-
+<div class="idiot" >
+  <div th:each="diary :${allDiaryList}" class="card diaryListCard">
+    <div>
+      <div >
+        <a class="diary_atag" th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}" style="text-decoration-line: none;color: black">
+          <figcaption>자세히보기</figcaption>
         <div class="card-body diarymainbody">
 <!--          <h5 class="card-title cardListTitle" th:text="${diary.diarySubject}">-->
 <!--            <p th:text="${#temporals.format(diary.diaryDate, 'MM-dd')}">-->
@@ -25,10 +25,10 @@
 <!--          <hr style="border:solid 3px black">-->
 <!--          <p class="card-text cardListContent" th:text="${diary.diaryContent}"/>-->
           <div>
-            <p class="card-title cardListTitle" th:text="${diary.diarySubject}">제목</p>
-            <p class="diaryDate" th:text="${#temporals.format(diary.diaryDate, 'yyyy-MM-dd')}">날짜</p>
+            <p class="card-title cardListTitle" style="width: 250px" th:text="${diary.diarySubject}">제목</p>
+            <p class="diaryDate" style="margin-bottom: 10px" th:text="${#temporals.format(diary.diaryDate, 'yyyy-MM-dd')}">날짜</p>
           <div>
-            <p class="diaryKeywords" th:text="${diary.diaryKeywords}">키워드</p>
+            <p class="diaryKeywords" style="margin-bottom: 10px" th:text="${diary.diaryKeywords}">키워드</p>
           </div>
             <p class="card-text cardListContent" th:text="${diary.diaryContent}"></p>
          </div>
@@ -36,7 +36,7 @@
         <div class="card-footer">
           <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
           <span th:text="${diary.diarySympathyCnt}"
-                style="float: left; width: 5%; margin-left: 8px; margin-top: 5px; font-size: 20px;">5</span>
+                style="float: left; width: 10%; margin-left: 8px; margin-top: 5px; font-size: 20px;">5</span>
           <span style="font-size: 20px;margin-top: 5px;float: left;">조회수</span>
           <span style="float:left; font-size: 20px; margin-top: 5px;margin-left: 5px;" th:text="${diary.diaryCnt}"></span>
           <span th:text="${diary.diaryWriter}" style="float: right; margin-right: 30px; font-size: 25px;" >작성자</span>
@@ -178,7 +178,7 @@
   </div>
 </nav>
 <!--<footer th:insert="footer.html::footer"></footer>-->
-<footer th:replace="~{fragment/footer.html::footer}"></footer>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
   $(document).ready(function () {
     $('#searchType').change(function () {
