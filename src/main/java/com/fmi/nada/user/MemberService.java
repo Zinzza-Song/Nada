@@ -46,6 +46,10 @@ public class MemberService {
         return memberRepository.findByMemberIdx(memberIdx);
     }
 
+    public Member findByMemberNickname(String memberNickname) {
+        return memberRepository.findByMemberNickname(memberNickname);
+    }
+
     public List<Member> memberList() {
         return memberRepository.findAllByOrderByMemberJoinDateDesc();
     }
@@ -58,13 +62,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void updateMember(Member member){memberRepository.save(member);}
+    public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
 
-    public Sympathy getLikeIdx(Long memberIdx){
+    public Sympathy getLikeIdx(Long memberIdx) {
         Sympathy likeIdx = sympathyRepository.findByMemberIdx(memberIdx);
-        if (likeIdx==null){
+        if (likeIdx == null) {
             return null;
-        }else {
+        } else {
             return likeIdx;
         }
     }
@@ -78,21 +84,21 @@ public class MemberService {
                 friendMember.getMemberNickname()));
     }
 
-    public List<Friends> findFriendsByMemberIdxAndFriendsMemberIdx (Member member, Member friendMember) {
+    public List<Friends> findFriendsByMemberIdxAndFriendsMemberIdx(Member member, Member friendMember) {
         return friendsRepository.findByMemberIdxAndFriendsMemberIdx(
                 member.getMemberIdx(),
                 friendMember.getMemberIdx());
     }
 
     public void delFriends(Long memberIdx,
-                           Long friendsMemberIdx){
+                           Long friendsMemberIdx) {
         friendsRepository.deleteFriendsByMemberIdxAndFriendsMemberIdx(
                 memberIdx,
                 friendsMemberIdx);
     }
 
     /* 친구리스트 */
-    public List<Friends> friendsList(Long memberIdx){
+    public List<Friends> friendsList(Long memberIdx) {
         return friendsRepository.findFriendsByMemberIdx(memberIdx);
     }
 
@@ -101,7 +107,7 @@ public class MemberService {
     }
 
     /* 블록유저 리스트 */
-    public List<BlockList> blockLists(Long memberIdx){
+    public List<BlockList> blockLists(Long memberIdx) {
         return blockListRepository.findBlockListByMemberIdx(memberIdx);
     }
 
