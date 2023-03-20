@@ -3,6 +3,7 @@ package com.fmi.nada.diary;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * */
 @Entity
 @Getter
+@Setter
 @Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
@@ -44,4 +46,16 @@ public class Comment {
 
     @Column(name = "comment_writeremail")
     private String commentWriteremail;
+
+    public Comment(Long memberIdx,
+                   Long diaryIdx,
+                   String commentContent,
+                   String commentWriter,
+                   String commentWriteremail){
+        this.memberIdx = memberIdx;
+        this.diaryIdx = diaryIdx;
+        this.commentContent = commentContent;
+        this.commentWriter = commentWriter;
+        this.commentWriteremail = commentWriteremail;
+    }
 }

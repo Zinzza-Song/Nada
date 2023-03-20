@@ -237,10 +237,6 @@ public class MemberController {
         return "redirect:/";
 
     }
-//    @GetMapping("/read")
-//    public String readMember(){
-//        return "user/read";
-//    }
 
     @PostMapping("/friend_add/{memberIdx}")
     public String addFriend(@PathVariable("memberIdx") Long memberIdx,

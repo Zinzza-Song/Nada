@@ -15,5 +15,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 전체 댓글 조회
     List<Comment> findAllByOrderByCommentDateDesc();
 
+    // 댓글 삭제
     void deleteByCommentIdx(Long commentIdx);
 }
