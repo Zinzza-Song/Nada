@@ -61,11 +61,20 @@ public class MemberService {
     public void updateMember(Member member){memberRepository.save(member);}
 
     /* 친구추가 */
-    public Friends addFriends(Long memberIdx,
-                              Long friendsMemberIdx) {
-        return friendsRepository.save(new Friends(memberIdx,
-                friendsMemberIdx));
+    public Friends addFriends(Member member,
+                              Member friendMember) {
+        return friendsRepository.save(new Friends(
+                member.getMemberIdx(),
+                friendMember.getMemberIdx(),
+                friendMember.getMemberNickname()));
     }
+
+    public List<Friends> findFriendsByMemberIdxAndFriendsMemberIdx (Member member, Member friendMember) {
+        return friendsRepository.findByMemberIdxAndFriendsMemberIdx(
+                member.getMemberIdx(),
+                friendMember.getMemberIdx());
+    }
+
     public void delFriends(Long memberIdx,
                            Long friendsMemberIdx){
         friendsRepository.deleteFriendsByMemberIdxAndFriendsMemberIdx(
@@ -90,6 +99,10 @@ public class MemberService {
     /* 블록유저 리스트 */
     public List<BlockList> blockLists(Long memberIdx){
         return blockListRepository.findBlockListByMemberIdx(memberIdx);
+    }
+
+    public BlockList findByBlockMemberIdxAAndMemberIdx(Long blockMemberIdx, Long memberIDx) {
+        return blockListRepository.findByBlockMemberIdxAndMemberIdx(blockMemberIdx, memberIDx);
     }
 
 }

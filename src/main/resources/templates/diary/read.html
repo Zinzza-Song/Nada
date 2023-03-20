@@ -193,15 +193,23 @@
 
   $(document).ready(function() {
     $('#addFriend').click(function() {
+
+      const friendsDto = {
+        "friendsIdx": $("#memberIdx").val()
+      };
+
       $.ajax({
         type: "POST",
-        url: "/user/friend_add/",
-        data :{
-          "memberIdx": $("#memberIdx").val()
-        },
-        success: function(response) {
-          swal('친구가 추가되었습니다.');
-        }
+        url: "/user/friend_add",
+        data : friendsDto
+      }).done(function (msg) {
+        console.log(msg);
+        if(msg == 'ok')
+          alert("친구가 정상적으로 추가되었습니다.");
+        else if(msg == 'already')
+          alert("이미 친구입니다.");
+        else
+          alert("차단 대상자 입니다.");
       });
     });
   });

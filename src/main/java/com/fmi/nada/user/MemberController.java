@@ -242,11 +242,25 @@ public class MemberController {
 //        return "user/read";
 //    }
 
-    @PostMapping("/friend_add/{memberIdx}")
-    public String addFriend(@PathVariable("memberIdx") Long memberIdx,
-                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
-        memberService.addFriends(memberIdx, friendsMemberIdx);
-        return "user/read";
+    @PostMapping("/friend_add")
+    @ResponseBody
+    public String addFriend(FriendsDto friendsDto, Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        Member friendMember = memberService.findByMemberIdx(friendsDto.getFriendsIdx());
+
+        List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, friendMember);
+        if(!friends.isEmpty())
+            return "already";
+
+        BlockList blockList = memberService.findByBlockMemberIdxAAndMemberIdx(
+                friendMember.getMemberIdx(),
+                member.getMemberIdx());
+        if(blockList == null) {
+            memberService.addFriends(member, friendMember);
+            return "ok";
+        }
+
+        return "fail";
     }
 
     @DeleteMapping("/friend_del/{memberIdx}")
