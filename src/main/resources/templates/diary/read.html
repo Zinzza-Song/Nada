@@ -153,7 +153,7 @@
       </div>
       <div class="modal-body">
         <form th:action="@{/user/block_list/{memberidx}(memberIdx=${member.memberIdx})}" th:object="${blockmemberList}">
-          <div class="mb-3">
+          <!--<div class="mb-3">
             <label for="date" class="col-form-label">날짜</label>
             <input type="text" class="form-control" id="date" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" th:field="*{blockMemberDate}" readonly>
           </div>
@@ -164,7 +164,7 @@
           <div class="mb-3">
             <label for="blockContent" class="col-form-label">차단사유</label>
             <textarea class="form-control" id="blockContent" th:field="*{blockMemberReason}"></textarea>
-          </div>
+          </div>-->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="submit" class="btn btn-primary">작성완료</button>
