@@ -252,7 +252,7 @@ public class MemberController {
         if(!friends.isEmpty())
             return "already";
 
-        BlockList blockList = memberService.findByBlockMemberIdxAAndMemberIdx(
+        BlockList blockList = memberService.findByBlockMemberIdxAndMemberIdx(
                 friendMember.getMemberIdx(),
                 member.getMemberIdx());
         if(blockList == null) {
@@ -268,6 +268,17 @@ public class MemberController {
                             @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
         memberService.delFriends(memberIdx, friendsMemberIdx);
         return "user/friend_list";
+    }
+
+    @PostMapping("/blockList_add")
+    @ResponseBody
+    public String addBlockList(
+            BlockListDto blockListDto,
+            Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        memberService.addBlockList(member, blockListDto);
+
+        return "ok";
     }
 
 }
