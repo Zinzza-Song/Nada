@@ -60,7 +60,17 @@
                       <tbody class="table-group-divider" th:each="list: ${commentList}">
                       <tr>
                         <th scope="row"></th>
-                        <td th:text="${list.commentWriter}">작성자</td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false" th:text="${list.commentWriter}">작성자</button>
+                            <ul class="dropdown-menu" style="">
+                              <li class="dropdown-item" id="addFriend">친구추가</li>
+                              <input type="hidden" id="memberIdx" name="memberIdx" th:value="${list.memberIdx}">
+                              <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">차단</li>
+                              <li class="dropdown-item" onclick="reportBtn()">댓글 신고</li>
+                            </ul>
+                          </div>
+                        </td>
                         <td th:text="${list.commentContent}">댓글 내용</td>
                         <td th:text="${list.commentDate}">작성 날짜</td>
                         <td>좋아요 버튼</td>
