@@ -66,9 +66,9 @@
     <tbody class="table-group-divider logMoreData">
     <tr th:each="report:${allReportList }">
         <th scope="row" th:text="${report.reportCategory}">신고사유</th>
-        <th scope="row"><a th:text="${report.reportSubject}" th:href="@{/board/report/read/{report_idx}}">신고 제목</a></th>
-        <th scope="row" th:text="${report.reportReportedmember}">신고 대상자</th>
-        <th scope="row" th:text="${#temporals.format(report.commentDate  , 'yyyy-MM-dd')}">날짜</th>
+        <th scope="row"><a th:text="${report.reportSubject}" th:href="@{/board/report/read/{reportIdx}(reportIdx=${report.reportIdx})}">신고 제목</a></th>
+        <th scope="row" th:text="${report.reportReportedMember}">신고 대상자</th>
+        <th scope="row" th:text="${#temporals.format(report.reportDate  , 'yyyy-MM-dd')}">날짜</th>
     </tr>
 
     </tbody>

@@ -93,13 +93,13 @@ public class AdminController {
         return "admin/report";
     }
 
-    @GetMapping("/report_pro/{reportIdx}")
-    public String reportPro(@PathVariable("reportIdx") Long reportIdx,
-                            @ModelAttribute ReportProDto reportProDto) {
-
-
-        return "admin/repotPro";
-    }
+//    @GetMapping("/report_pro/{reportIdx}")
+//    public String reportPro(@PathVariable("reportIdx") Long reportIdx,
+//                            @ModelAttribute ReportProDto reportProDto) {
+//
+//
+//        return "admin/repotPro";
+//    }
 
     /**
      * 신고 처리
@@ -111,14 +111,18 @@ public class AdminController {
     @PutMapping("/report_pro/{reportIdx}")
     public String reportPro(
             @PathVariable("reportIdx") Long reportIdx,
-            @Valid @ModelAttribute ReportProDto reportProDto,
+            @Valid @ModelAttribute("reportProBean") ReportProDto reportProDto,
+            Model model,
             BindingResult result) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
+            Report report = reportService.findByReportIdx(reportIdx);
+            model.addAttribute("ReportBean", report);
             return "board/report/read";
+        }
 
         reportService.reportPro(reportIdx, reportProDto);
 
-        return "redirect:/board/report/read/" + reportIdx;
+        return "redirect:/admin/report";
     }
 
     /**
