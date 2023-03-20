@@ -60,7 +60,8 @@ public class MemberController {
     @ResponseBody
     public String mailCheck(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
+//        && member.getMemberName().equals(memberName)
+        if (member != null && member.getUsername().equals(username) ) {
             return "false";
         } else {
             System.out.println("이메일 인증 요청이 들어옴!");
@@ -74,7 +75,8 @@ public class MemberController {
     @ResponseBody
     public String mailCheckPw(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
+//        && member.getMemberName().equals(memberName)
+        if (member != null && member.getUsername().equals(username) ) {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             System.out.println("이메일 인증 유저 : " + memberName);
@@ -242,11 +244,11 @@ public class MemberController {
 //        return "user/read";
 //    }
 
-    @PostMapping("/friend_add/{memberIdx}")
-    public String addFriend(@PathVariable("memberIdx") Long memberIdx,
+    @PostMapping("/friend_add")
+    public void addFriend(@RequestParam("memberIdx") Long memberIdx,
                             @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
         memberService.addFriends(memberIdx, friendsMemberIdx);
-        return "user/read";
+
     }
 
     @DeleteMapping("/friend_del/{memberIdx}")

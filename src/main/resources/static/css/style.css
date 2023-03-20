@@ -203,6 +203,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .dropdown-menu[data-bs-popper] {
     background: antiquewhite;
+
 }
 
 .top-nav {
@@ -233,6 +234,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .containerRead{
         max-width: 1500px;
     }
+    .diary-write{
+        max-width: 1600px;
+    }
 }
 .containerRead{
     height: auto;
@@ -244,6 +248,10 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 30px;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
+.diary_read_btn{
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+}
+
 .leftRead{
     justify-content: center;
     width: 1400px;
@@ -362,9 +370,10 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     }
     .diary-container{
         max-width: 1600px;
-
     }
-
+    .diary-write{
+        max-width: 1600px;
+    }
     .videoContainer {
         margin-bottom: 50px;
     }
@@ -420,6 +429,15 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .emotionDiv {
         width: 700px;
     }
+    .diaryMedia{
+        width: 700px;
+    }
+    .leftDiary{
+        width: 400px;
+    }
+    .rightDiary{
+        width: 400px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -430,9 +448,17 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .newestDiv {
         width: 600px;
     }
-
+    .readContent{
+        width: 600px;
+    }
     .emotionDiv {
         width: 600px;
+    }
+    .leftDiary{
+        width: 400px;
+    }
+    .rightDiary{
+        width: 400px;
     }
 }
 
@@ -594,6 +620,7 @@ input[type="button"] {
 /*diary_write_css*/
 .diary-container {
     align-items: center;
+
 }
 
 .diary-write {
@@ -608,6 +635,8 @@ input[type="button"] {
     background-repeat: no-repeat;
     order: 1;
     padding-left: 20px;
+    border-radius: 1rem;
+    margin: 0 auto;
 }
 
 .rightDiary {
@@ -618,6 +647,8 @@ input[type="button"] {
     background-repeat: no-repeat;
     order: 2;
     padding-left: 20px;
+    border-radius: 1rem;
+    font-family: 'KyoboHandwriting2021sjy', 'KyoboHand', 'KCCChassam';
 }
 
 .diary-form {
@@ -626,6 +657,7 @@ input[type="button"] {
 
 .diary-wrap {
     align-items: center;
+
 }
 
 .diary {
@@ -657,7 +689,16 @@ input[type="button"] {
     float: right;
     font-size: 25px;
 }
-
+.btn-primary_read{
+    font-size: 25px;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    background-color: rgba(255,255,255,0);
+    border: none;
+}
 .diaryContent, .diaryAnalyze {
     width: 80%;
     height: 18rem;
@@ -668,11 +709,11 @@ input[type="button"] {
     text-align: center;
 }
 
-.diarySubject, .diaryContent {
+.diarySubject, .diaryContent,.diaryReadContent {
     white-space: pre-line;
 }
 
-.diarySubject, .diaryContent, .diaryAnalyze {
+.diarySubject, .diaryContent, .diaryAnalyze, .diaryReadContent {
     background-color: transparent;
 }
 
@@ -700,6 +741,7 @@ input[type="button"] {
 
 .dropdown-item {
     font-size: 23px;
+
 }
 
 .page {
@@ -715,14 +757,15 @@ input[type="button"] {
 }
 
 .keywords {
-    border: 1px solid red;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    width: 500px;
-    font-size: 25px;
+    width: 600px;
+    font-size: 30px;
 }
-
+.keywords_item{
+    font-size: 30px;
+}
 .btn_close::before {
     position: absolute;
     display: block;
@@ -749,10 +792,10 @@ input[type="button"] {
 .item {
     margin-right: 10px;
     margin-bottom: 10px;
-    height: 20px;
+    height: 50px;
     padding: 8px 16px;
     background-color: saddlebrown;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 16px;
     color: white;
