@@ -866,3 +866,26 @@ input[type="button"] {
     padding-left: 0;
     list-style: none;
 }
+
+/* user/read페이지*/
+.more-btn {
+    appearance: none;
+    border: 1px solid black;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    float: right;
+}
+.mypageSubject{
+    color: #bf8e65;
+    text-decoration: none;
+    overflow: hidden;
+    display:-webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100px;
+}
+.adviceText{
+    font-variant: all-small-caps;
+    font-size: 18px;
+}
