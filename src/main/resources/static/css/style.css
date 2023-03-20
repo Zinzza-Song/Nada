@@ -208,12 +208,39 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .top-nav {
     padding: 0;
 }
-
+/*topmenu custom css*/
 .top-menu {
     height: 100%;
 }
-
-
+.menu a{
+    color: #77493b;
+}
+.menu a:hover{
+    transform: translateY(-5px);
+    color: #330f0e;
+}
+.menu>li:hover .submenu{
+    height: 150px;
+    transition-duration: .5s;
+}
+.dropShow{
+    --bs-dropdown-link-active-bg: #eed7be;
+}
+.logoutBtn{
+    margin-top: 2px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+    background-color: #a38969;
+    box-shadow: 2px 4px 0 #330f0e;
+    color: #330f0e;
+    transition: .3s;
+    border-radius: 5px;
+}
+.logoutBtn:active{
+    box-shadow: 0px 1px 0 #330f0e;
+    transform: translateY(3px);
+}
 .userLoginBox {
     display: inline-block;
 }

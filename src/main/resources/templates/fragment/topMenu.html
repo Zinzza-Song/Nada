@@ -26,7 +26,7 @@
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg top-nav">
         <div class="container-fluid top-menu">
-            <a class="navbar-brand  col-md-3" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
+            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
                                                                   style="width:100px; height:100px;"></a>
             <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -34,14 +34,14 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+            <div class="collapse navbar-collapse menu" id="navbarSupportedContent" >
                 <ul class="navbar-nav me-auto mb-5 mb-lg-0">
                     <li class="nav-item dropdown col-md-7">
                         <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             감성일기
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropShow">
                             <li><a class="dropdown-item"
                                    th:href="@{/diary/write}">일기 작성</a></li>
                             <li><a class="dropdown-item"
@@ -75,7 +75,7 @@
                         <span id="nickname" sec:authorize="isAuthenticated()"
                               th:text="${#authentication.name}">(닉네임)</span>
                         <form th:action="@{/logout}" method="post">
-                            <input type="submit" sec:authorize="isAuthenticated()" value="로그아웃">
+                            <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
                         </form>
 
                     </li>
