@@ -50,8 +50,8 @@ public class ReportController {
         return "board/report/index";
     }
 
-    @GetMapping("/read")
-    public String read(@RequestParam("reportIdx") Long reportIdx,
+    @GetMapping("/read/{reportIdx}")
+    public String read(@PathVariable("reportIdx") Long reportIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model,
@@ -95,7 +95,7 @@ public class ReportController {
         if (file == null)
             report = reportService.writeReport(member, reportDto);
 
-        return "redirect:/board/report/read/" + report.getReportIdx() + "?pageCnt=1";
+        return "redirect:/board/report/read/" + report.getReportIdx() + "?page=1";
     }
 
     private void viewCountValidation(Report report, HttpServletRequest request, HttpServletResponse response) {
