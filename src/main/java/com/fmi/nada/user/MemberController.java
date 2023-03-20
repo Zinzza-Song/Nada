@@ -69,7 +69,7 @@ public class MemberController {
     //회원가입 이메일인증
     @GetMapping("/join/email_exist_check")
     @ResponseBody
-    public String mailCheck(String username, String memberName) throws Exception {
+    public String mailCheck(String username) throws Exception {
         Member member = memberService.findByUsername(username);
         if (member != null) {
             return "false";
