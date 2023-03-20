@@ -2,6 +2,9 @@ package com.fmi.nada.board.report;
 
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +19,28 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     /**
+     * 전체 신고글 조회 서비스 - 페이징 처리
+     *
+     * @return Page<Report> 전체 신고글 객체가 담긴 리스트(최신순으로 정렬)
+     */
+    public Page<Report> findAllByOrderByReportDateDesc(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByOrderByReportDateDesc(pageable);
+    }
+    public Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByReportSubjectContaining(reportSubject, pageable);
+    }
+
+    /**
      * 전체 신고글 조회 서비스
      *
      * @return List<Report> 전체 신고글 객체가 담긴 리스트(최신순으로 정렬)
      */
-    public List<Report> findAllByOrderByReportDateDesc() {
-        return reportRepository.findAllByOrderByReportDateDesc();
+    public List<Report> findAllReport() {
+        return reportRepository.findAllReport();
     }
 
     /**
@@ -37,22 +56,20 @@ public class ReportService {
     /**
      * 신고글 작성 서비스
      *
-     * @param reporter       신고자
-     * @param reportDto      신고글 작성 내용이 들어있는 DTO
-     * @param reportedMember 신고 대상자
+     * @param reporter  신고자
+     * @param reportDto 신고글 작성 내용이 들어있는 DTO
+     * @return 작성된 Report 객체
      */
-    public void writeReport(
+    public Report writeReport(
             Member reporter,
-            ReportDto reportDto,
-            Member reportedMember) {
-        reportRepository.save(new Report(
+            ReportDto reportDto) {
+        return reportRepository.save(new Report(
                 reporter.getMemberIdx(),
                 reportDto.getReportSubject(),
-                reporter.getUsername(),
+                reportDto.getReportWriter(),
                 reportDto.getReportCategory(),
                 reportDto.getReportContent(),
-                reportedMember.getUsername(),
-                reportDto.getReportFile()
+                reportDto.getReportReportedMember()
         ));
     }
 

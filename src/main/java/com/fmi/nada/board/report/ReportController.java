@@ -3,11 +3,15 @@ package com.fmi.nada.board.report;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +32,21 @@ public class ReportController {
     private final MemberService memberService;
 
     @GetMapping
-    public String report(Model model) {
-        List<Report> allReportList = reportService.findAllByOrderByReportDateDesc();
-        model.addAttribute("allReportList", allReportList);
+    public String report(@PageableDefault Pageable pageable,
+                         @RequestParam(value = "type", required = false) String type,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         Model model) {
 
+        Page<Report> allReportList = null;
+        if(keyword == null) {
+            allReportList = reportService.findAllByOrderByReportDateDesc(pageable);
+        }
+        else if(keyword != null) {
+            allReportList = reportService.findAllByReportSubjectContaining(keyword, pageable);
+        }
+        model.addAttribute("allReportList", allReportList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "board/report/index";
     }
 
@@ -39,8 +54,10 @@ public class ReportController {
     public String read(@PathVariable("reportIdx") Long reportIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
-                       Model model) {
+                       Model model,
+                       @ModelAttribute("reportProBean") ReportProDto reportProDto) {
         Report ReportBean = reportService.findByReportIdx(reportIdx);
+        reportProDto.setReportAdminMent(ReportBean.getReportAdminMent());
         viewCountValidation(ReportBean, request, response);
         model.addAttribute("ReportBean", ReportBean);
 
@@ -57,7 +74,8 @@ public class ReportController {
         model.addAttribute("member", member);
 
         Member reportedMember = memberService.findByMemberIdx(reportedMemberIdx);
-        model.addAttribute("reportedMember", reportedMember);
+        reportDto.setReportWriter(member.getMemberNickname());
+        reportDto.setReportReportedMember(reportedMember.getMemberNickname());
 
         return "board/report/write";
     }
@@ -65,21 +83,19 @@ public class ReportController {
     @PostMapping("/write_pro")
     public String writePro(
             @Valid @ModelAttribute("writeReportBean") ReportDto reportDto,
-            @RequestParam("reportedMember") Member reportedMember,
             Authentication authentication,
-            BindingResult result) {
+            BindingResult result,
+            MultipartFile file) throws Exception {
         if (result.hasErrors())
             return "board/report/write";
 
         Member member = (Member) authentication.getPrincipal();
 
-        Report report = new Report();
-        report.setReportSubject(reportDto.getReportSubject());
-        report.setReportContent(reportDto.getReportContent());
+        Report report = null;
+        if (file == null)
+            report = reportService.writeReport(member, reportDto);
 
-        reportService.writeReport(member, reportDto, reportedMember);
-
-        return "redirect:/board/report?pageCnt=1";
+        return "redirect:/board/report/read/" + report.getReportIdx() + "?page=1";
     }
 
     private void viewCountValidation(Report report, HttpServletRequest request, HttpServletResponse response) {

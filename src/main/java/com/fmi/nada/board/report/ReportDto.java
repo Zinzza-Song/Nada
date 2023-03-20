@@ -24,8 +24,6 @@ public class ReportDto {
 
     private String reportReportedMember;
 
-    private String reportFile;
-
     private Boolean reportIsCompleted;
 
 }

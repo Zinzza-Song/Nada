@@ -74,8 +74,7 @@ public class Report {
             String reportWriter,
             String reportCategory,
             String reportContent,
-            String reportReportedMember,
-            String reportFile
+            String reportReportedMember
     ) {
         this.memberIdx = memberIdx;
         this.reportSubject = reportSubject;
@@ -83,7 +82,6 @@ public class Report {
         this.reportCategory = reportCategory;
         this.reportContent = reportContent;
         this.reportReportedMember = reportReportedMember;
-        this.reportFile = reportFile;
     }
 
     public void addViewCount() {
