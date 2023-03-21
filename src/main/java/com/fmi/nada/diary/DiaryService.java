@@ -1,5 +1,7 @@
 package com.fmi.nada.diary;
 
+import com.fmi.nada.user.Sympathy;
+import com.fmi.nada.user.SympathyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,7 @@ import java.util.List;
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
+    private final SympathyRepository sympathyRepository;
 
     public Page<Diary> getDiaryList(Pageable pageable) {
 
@@ -121,4 +124,9 @@ public class DiaryService {
 
         return diaryRepository.findAllByDiaryKeywordsContaining(diaryKeywords, pageable);
     }
+
+    public Sympathy checkSympathyDiary(Long memberIdx, Long diaryIdx) {
+        return sympathyRepository.findByMemberIdxAndDiaryIdx(memberIdx, diaryIdx);
+    }
+
 }
