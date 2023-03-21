@@ -98,55 +98,11 @@
                 <button class="btn btn-primary" th:field="${readDiaryBean.diarySympathyCnt}">공감</button>
                 <button class="btn btn-primary">친구추가</button>
               </div>
-
             </div>
           </div>
         </div>
       </div>
       <!--  leftRead끝  -->
-
-<!--      &lt;!&ndash;  rightRead시작  &ndash;&gt;-->
-<!--      <div class="col rightRead">-->
-<!--        <div class="card row" style="width: 48rem;">-->
-<!--          <div class="card-body">-->
-<!--            <h5 class="card-title">감정 분석 결과</h5>-->
-<!--            <p class="card-text" th:text="${readDiaryBean.diaryAnalyze }"></p>-->
-<!--          </div>-->
-<!--          <div class="card-body">-->
-<!--            <table class="table">-->
-<!--              <thead>-->
-<!--              <tr>-->
-<!--                <div class="input-group mb-3">-->
-<!--                  <input type="text" class="form-control" value=""-->
-<!--                         placeholder="댓글을 작성해주세요." aria-label="Recipient's username"-->
-<!--                         aria-describedby="button-addon2">-->
-<!--                  <button class="btn btn-outline-secondary" type="button" id="button-addon2"-->
-<!--                          th:onclick="commentWrite()">작성-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </tr>-->
-<!--              </thead>-->
-<!--              <th:block th:if="${commentList != null}">-->
-<!--                <tbody class="table-group-divider" th:each="list: ${commentList}">-->
-<!--                <tr>-->
-<!--                  <th scope="row"></th>-->
-<!--                  <td th:text="${list.commentWriter}">작성자</td>-->
-<!--                  <td th:text="${list.commentContent}">댓글 내용</td>-->
-<!--                  <td th:text="${list.commentDate}">작성 날짜</td>-->
-<!--                  <td>좋아요 버튼</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--              </th:block>-->
-<!--            </table>-->
-<!--          </div>-->
-<!--          <div class="btnWrap">-->
-<!--            <button class="btn btn-dark" type="button" th:value="삭제" onclick=""></button>-->
-<!--            <button class="btn btn-dark" type="submit" th:value="수정"></button>-->
-<!--            <a class="btn btn-dark" th:href="@{diary/index.html}" th:value="목록"></a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-      <!--  rightRead끝  -->
     </div>
   </div>
   <!--readWrap끝-->

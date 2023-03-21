@@ -85,6 +85,26 @@ public class DiaryController {
         return "diary/read";
     }
 
+    @GetMapping("read2/{diaryIdx}")
+    public String readDiary2(@PathVariable("diaryIdx") Long diaryIdx,
+                            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
+                            HttpServletRequest request,
+                            HttpServletResponse response,
+                            Authentication authentication, Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        model.addAttribute("member", member);
+
+        Diary diary = diaryService.getDiaryDetail(diaryIdx);
+        viewCountValidation(diary, request, response);
+        model.addAttribute("readDiaryBean", diary);
+
+        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+        model.addAttribute("commentList", commentList);
+
+
+        return "diary/read2";
+    }
+
     // 다이어리 작성 페이지
     @GetMapping("/write")
     public String DiaryWrite(@ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO, Authentication authentication, Model model) {
