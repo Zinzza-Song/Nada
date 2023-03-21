@@ -2,6 +2,7 @@ package com.fmi.nada.diary;
 
 import com.fmi.nada.user.BlockListDto;
 import com.fmi.nada.user.Member;
+import com.fmi.nada.user.Sympathy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +76,10 @@ public class DiaryController {
                             @ModelAttribute("blockListDto") BlockListDto blockListDto) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
+
+        Sympathy sympathy = diaryService.checkSympathyDiary(member.getMemberIdx(), diaryIdx);
+        if (sympathy != null)
+            model.addAttribute("sympathyBean", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
         viewCountValidation(diary, request, response);

@@ -209,39 +209,12 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .top-nav {
     padding: 0;
 }
-/*topmenu custom css*/
+
 .top-menu {
     height: 100%;
 }
-.menu a{
-    color: #77493b;
-}
-.menu a:hover{
-    transform: translateY(-5px);
-    color: #330f0e;
-}
-.menu>li:hover .submenu{
-    height: 150px;
-    transition-duration: .5s;
-}
-.dropShow{
-    --bs-dropdown-link-active-bg: #eed7be;
-}
-.logoutBtn{
-    margin-top: 2px;
-    text-align: center;
-    display: flex;
-    font-size: 20px;
-    background-color: #a38969;
-    box-shadow: 2px 4px 0 #330f0e;
-    color: #330f0e;
-    transition: .3s;
-    border-radius: 5px;
-}
-.logoutBtn:active{
-    box-shadow: 0px 1px 0 #330f0e;
-    transform: translateY(3px);
-}
+
+
 .userLoginBox {
     display: inline-block;
 }
@@ -249,14 +222,16 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .diarymainbody {
     height: 300px;
 }
-
+.diarymain{
+    height: 1400px;
+}
 .d-flex {
     display: flex !important;
     margin-left: 40%;
 }
 @media (min-width: 900px) {
     .idiot{
-      max-width: 1700px;
+        max-width: 1700px;
     }
     .containerRead{
         max-width: 1500px;
@@ -302,7 +277,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .idiot{
 
-    height: auto;
+    height: 1100px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -343,7 +318,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     transition: 0.3s;
 }
 .diaryListCard:hover figcaption,.diaryListCard:focus figcaption{
- opacity: 1;
+    opacity: 1;
 }
 /*.diaryListCard:after{*/
 /*    display: block;*/
@@ -1075,11 +1050,6 @@ input[type="button"] {
         border: none;
         resize: none;
         margin: 0 auto;
-.customBtn{
-    border-radius: 5px;
-    background-color: #6c583e;
-    text-align: center;
-    cursor: pointer;
 
         /*margin-bottom: 20px;*/
     }
@@ -1207,28 +1177,14 @@ input[type="button"] {
         max-width: 1600px;
     }
 }
-/* user/read페이지*/
-.more-btn {
-    appearance: none;
-    border: 1px solid black;
-    padding: 0.5em;
-    border-radius: 0.25em;
+/*여기까지 건상 */
+
+/*여기부터 한희 */
+.customBtn{
+    border-radius: 5px;
+    background-color: #6c583e;
+    text-align: center;
     cursor: pointer;
-    float: right;
-}
-.mypageSubject{
-    color: #bf8e65;
-    text-decoration: none;
-    overflow: hidden;
-    display:-webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    width: 100px;
-}
-.adviceText{
-    font-variant: all-small-caps;
-    font-size: 18px;
-}
 
     color: #e3cab0;
     transition: all .9s,color.3s;
@@ -1237,7 +1193,7 @@ input[type="button"] {
 .customBtn:hover{
     color: #e3cab0;
     box-shadow: 0 80px 0 0 rgba(0,0,0,.25) inset,
-                0 -80px 0 0 rgba(0,0,0,.25) inset;
+    0 -80px 0 0 rgba(0,0,0,.25) inset;
 }
 /*footer 고정*/
 body{
@@ -1254,4 +1210,54 @@ main{
     left: 0;
     flex-shrink: 0;
     background-color: #ccc;
+}
+/*topmenu custom css*/
+.top-menu {
+    height: 100%;
+}
+.menu a{
+    color: #77493b;
+}
+.menu a:hover{
+    transform: translateY(-5px);
+    color: #330f0e;
+}
+.menu>li:hover .submenu{
+    height: 150px;
+    transition-duration: .5s;
+}
+.dropShow{
+    --bs-dropdown-link-active-bg: #eed7be;
+}
+.logoutBtn{
+    margin-top: 2px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+    background-color: #a38969;
+    box-shadow: 2px 4px 0 #330f0e;
+    color: #330f0e;
+    transition: .3s;
+    border-radius: 5px;
+}
+.logoutBtn:active{
+    box-shadow: 0px 1px 0 #330f0e;
+    transform: translateY(3px);
+}
+/*여기까지 한희*/
+
+/*여기부터 요한*/
+
+.mypageSubject{
+    color: #bf8e65;
+    text-decoration: none;
+    overflow: hidden;
+    display:-webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100px;
+}
+.adviceText{
+    font-variant: all-small-caps;
+    font-size: 18px;
 }
