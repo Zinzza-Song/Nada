@@ -55,12 +55,23 @@ public class MemberController {
         return "user/join";
     }
 
+    @GetMapping("join/nickname_exist_check")
+    @ResponseBody
+    public String nicknameCheck(String memberNickname) {
+        Member member = memberService.findByMemberNickname(memberNickname);
+
+        if(member != null)
+            return "no";
+        else
+            return "ok";
+    }
+
     //회원가입 이메일인증
     @GetMapping("/join/email_exist_check")
     @ResponseBody
-    public String mailCheck(String username, String memberName) throws Exception {
+    public String mailCheck(String username) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
+        if (member != null) {
             return "false";
         } else {
             System.out.println("이메일 인증 요청이 들어옴!");
@@ -238,11 +249,25 @@ public class MemberController {
 
     }
 
-    @PostMapping("/friend_add/{memberIdx}")
-    public String addFriend(@PathVariable("memberIdx") Long memberIdx,
-                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
-        memberService.addFriends(memberIdx, friendsMemberIdx);
-        return "user/read";
+    @PostMapping("/friend_add")
+    @ResponseBody
+    public String addFriend(FriendsDto friendsDto, Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        Member friendMember = memberService.findByMemberIdx(friendsDto.getFriendsIdx());
+
+        List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, friendMember);
+        if(!friends.isEmpty())
+            return "already";
+
+        BlockList blockList = memberService.findByBlockMemberIdxAndMemberIdx(
+                friendMember.getMemberIdx(),
+                member.getMemberIdx());
+        if(blockList == null) {
+            memberService.addFriends(member, friendMember);
+            return "ok";
+        }
+
+        return "fail";
     }
 
     @DeleteMapping("/friend_del/{memberIdx}")
@@ -250,6 +275,17 @@ public class MemberController {
                             @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
         memberService.delFriends(memberIdx, friendsMemberIdx);
         return "user/friend_list";
+    }
+
+    @PostMapping("/blockList_add")
+    @ResponseBody
+    public String addBlockList(
+            BlockListDto blockListDto,
+            Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        memberService.addBlockList(member, blockListDto);
+
+        return "ok";
     }
 
 }

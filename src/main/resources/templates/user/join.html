@@ -30,6 +30,7 @@
         <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
                class="form-control">
         <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
+        <span id="nick-check-warn"></span>
       </div>
 
       <div class="form-group">
@@ -109,6 +110,25 @@
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
 
+  $('#memberNickname').keyup(function () {
+    console.log('눌림');
+    $.ajax({
+      type: 'GET',
+      url: '/user/join/nickname_exist_check?memberNickname=' + $('#memberNickname').val(),
+      success: function (data) {
+        const nickCheckMsg = $('#nick-check-warn');
+        if(data == "ok" && $('#memberNickname').val().length >= 3 && $('#memberNickname').val().length <= 8) {
+          console.log(data)
+          nickCheckMsg.html("사용 가능한 닉네임 입니다.");
+          nickCheckMsg.css('color', 'green');
+        } else {
+          nickCheckMsg.html("사용 불가능한 닉네임 입니다.");
+          nickCheckMsg.css('color', 'red');
+        }
+      }
+    });
+  });
+
   $(function () {
     $("#send_Mail_Btn").on('click', function () {
       let codebox = $('.email_code_box');
@@ -117,7 +137,7 @@
       console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
       $.ajax({
         type: 'GET',
-        url: '/user/join/email_exist_check?username=' + email + '&memberName=' + name, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+        url: '/user/join/email_exist_check?username=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
         success: function (data) {
           if (data != "false") {
             if (codebox.css('display') === 'none') {
@@ -130,7 +150,8 @@
           } else {
             swal('사용할 수 없는 이메일 입니다.');
           }
-        }, error: function () {
+        },
+        error: function () {
           swal('사용할 수 없는 이메일 입니다.');
         }
       }); // end ajax

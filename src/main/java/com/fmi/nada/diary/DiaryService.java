@@ -71,13 +71,13 @@ public class DiaryService {
     }
 
     // 최슨 작성된 5개의 다이어리
-    public List<Diary> findTop5ByOrderByDiaryDateDesc() {
-        return diaryRepository.findTop5ByOrderByDiaryDateDesc();
+    public List<Diary> findTop8ByOrderByDiaryDateDesc() {
+        return diaryRepository.findTop8ByOrderByDiaryDateDesc();
     }
 
     // 공감 수 상위 5개의 다이어리
-    public List<Diary> findTop5ByOrderByDiarySympathyCntDesc() {
-        return diaryRepository.findTop5ByOrderByDiarySympathyCntDesc();
+    public List<Diary> findTop8ByOrderByDiarySympathyCntDesc() {
+        return diaryRepository.findTop8ByOrderByDiarySympathyCntDesc();
     }
 
     public List<Diary> findMyDiaryByMemberIdx(Long memberIdx) {

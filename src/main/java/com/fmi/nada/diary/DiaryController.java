@@ -1,6 +1,7 @@
 package com.fmi.nada.diary;
 
 import com.fmi.nada.board.notice.Notice;
+import com.fmi.nada.user.BlockListDto;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,7 +72,9 @@ public class DiaryController {
                             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                             HttpServletRequest request,
                             HttpServletResponse response,
-                            Authentication authentication, Model model) {
+                            Authentication authentication,
+                            Model model,
+                            @ModelAttribute("blockListDto") BlockListDto blockListDto) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -81,7 +84,6 @@ public class DiaryController {
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
-
 
         return "diary/read";
     }
