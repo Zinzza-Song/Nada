@@ -235,6 +235,36 @@
   function addBlock(e) {
     const blockMemberIdx = $(e).siblings('.memberIdx').val();
     const blockMemberNickname = $(e).parents().siblings('.commentWriter').text();
+    function registerComment() {
+        $.ajax({
+            type: "POST",
+            url: "/diary/comment_write",
+            dataType: "JSON",
+            data: {
+                diaryIdx: $("#diaryIdx").val(),
+                commentInput: $("#commentInput").val()
+            },
+            success: function (result) {
+                // window.location.reload();
+                // commentList 삭제
+                $("#commentList").remove();
+                // 새로운 commentList 생성
+                let newCommentList = $("#commentBlock");
+                // 각각의 댓글을 순회하면서 테이블 row 생성
+                $.each(result, function (index, comment) {
+                        console.log('test')
+                        let newbody = $(`<tbody class="table-group-divider" id="commentListWrapper">`)
+                        let newRow = $(`<tr>`);
+                        let newScope = $(`<th scope="row">`);
+                        let dropdown = $(`<td>`);
+                        let dropdownDiv = $(`<div class="dropdown">`);
+                        let dropdownBtn = $(`<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">`)
+                            .text(comment.commentWriter);
+                        let dropdownMenu = $(`<ul class="dropdown-menu">`);
+                        let dropdownHidden = $(`<input type="hidden" id="memberIdx" name="memberIdx" th:value="${comment.memberIdx}">`);
+                        let dropdownAddFr = $(`<li className="dropdown-item" id="addFriend">`).text('친구추가');
+                        let dropdownBlock = $(`<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">`).text('차단');
+                        let dropdownRep = $(`<li class="dropdown-item" onclick="reportBtn()">`).text('댓글 신고');
 
     $('#blockMemberNickname').val(blockMemberNickname);
     $('#blockMemberIdx').val(blockMemberIdx);
