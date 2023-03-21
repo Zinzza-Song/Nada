@@ -271,11 +271,17 @@ public class MemberController {
         return "fail";
     }
 
-    @DeleteMapping("/friend_del/{memberIdx}")
-    public String delFriend(@PathVariable("memberIdx") Long memberIdx,
-                            @RequestParam("friendsMemberIdx") Long friendsMemberIdx) {
-        memberService.delFriends(memberIdx, friendsMemberIdx);
-        return "user/friend_list";
+    @DeleteMapping("/friend_del")
+    public String delFriend(MemberDeleteDto memberDeleteDto,
+                            Authentication authentication,
+                            Model model) {
+        Member member=(Member)authentication.getPrincipal();
+
+        memberService.delFriends(member.getMemberIdx(), memberDeleteDto.getFriendsIdx());
+        List<Friends> friendsList= memberService.friendsList(member.getMemberIdx());
+        model.addAttribute("friendsList",friendsList);
+
+        return "/user/read :: #friendsList";
     }
 
     @PostMapping("/blockList_add")

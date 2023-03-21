@@ -35,10 +35,8 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">감정상태 분석</h5>
-<!--                    <p class="card-text">통계로보기</p>-->
-<!--                    <p class="card-text">그래프로보기</p>-->
-                        <p class="card-text"><button type="button" onclick="lineChart()">선그래프</button></p>
-                        <p class="card-text"><button type="button" onclick="barChart()">막대그래프</button></p>
+                    <button type="button" onclick="changeChartType('line')">선그래프</button>
+                    <button type="button" onclick="changeChartType('bar')">막대그래프</button>
                 </div>
             </div>
             <div class="card mb-3">
@@ -139,12 +137,15 @@
                             <th scope="col">친구 만난 날</th>
                         </tr>
                         </thead>
+                        <div id="friendsList">
                         <tbody class="table-group-divider" th:each="friend : ${friendsList}">
                         <tr>
                             <th scope="row" th:text="${friend.friendsNickname}">친구 닉네임</th>
-                            <td th:text="${friend.friendsDate}">친구 먹은날</td>
+                            <input type="hidden" th:value="${friend.friendsMemberIdx}" id="friendsIdx">
+                            <td th:text="${#temporals.format(friend.friendsDate,'yyyy-MM-dd')}">친구 먹은날</td>
                         </tr>
                         </tbody>
+                        </div>
                     </table>
                 </div>
             </div>
@@ -167,7 +168,7 @@
                         <tr>
                             <th scope="row" th:text="${block.blockMemberNickname}">차단 유저 네임</th>
                             <td th:text="${block.blockMemberReason}">차단 사유</td>
-                            <td th:text="${block.blockMemberDate}">차단 날짜</td>
+                            <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날짜</td>
                         </tr>
                         </tbody>
                     </table>
@@ -229,6 +230,7 @@
                     <tr>
                         <th scope="col">차단 이름</th>
                         <th scope="col">차단 이유</th>
+                        <th scope="col">차단 날짜</th>
                         <th scope="col">삭제유무</th>
                     </tr>
                     </thead>
@@ -236,6 +238,7 @@
                     <tr>
                         <td th:text="${block.blockMemberNickname}">Mark</td>
                         <td th:text="${block.blockMemberReason}">차단 이유</td>
+                        <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날</td>
                         <td><button onclick="deleteBlock()">삭제</button></td>
                     </tr>
                     </tbody>
@@ -297,6 +300,18 @@
     // 그래프에 삽입되는 일기 작성 날짜
     let diaryWriteDateArrInput = document.getElementById("diaryWriteDateArr");
     let diaryWriteDateArr = JSON.parse(diaryWriteDateArrInput.value.replace(/&quot;/g,'"'));
+
+    let chartType = 'line'; // 초기값은 선그래프
+
+    function changeChartType(type) {
+        chartType = type;
+        chart.updateOptions({
+            chart: {
+                type: chartType
+            }
+        });
+    }
+
 
     let options = {
         series: [
@@ -369,108 +384,52 @@
     };
 
     let chart = new ApexCharts(document.querySelector("#chart"), options);
-    // chart.render();
+    chart.render();
 
-    onload(chart.render());
-
-    function lineChart(){
-        chart.render();
-    }
-
-    function barChart(){
-        let options = {
-            series: [
-                {
-                    name: "매일매일 달라지는 나의 하루",
-                    data: analyzeScoreArr.reverse()
-                },
-            ],
-            chart: {
-                height: 350,
-                type: 'bar',
-                dropShadow: {
-                    enabled: true,
-                    color: '#000',
-                    top: 18,
-                    left: 7,
-                    blur: 10,
-                    opacity: 0.2
-                },
-                toolbar: {
-                    show: false
-                }
-            },
-            colors: ['#77B6EA', '#545454'],
-            dataLabels: {
-                enabled: true,
-            },
-            title: {
-                text: 'Your Date Temperature',
-                align: 'left'
-            },
-            grid: {
-                borderColor: '#e7e7e7',
-                row: {
-                    colors: ['#f3f3f3', 'transparent'],
-                    opacity: 0.5
-                },
-            },
-            xaxis: {
-                categories: diaryWriteDateArr.map((date) => {
-                    const year = date.slice(0, 4);
-                    const month = date.slice(5, 7);
-                    const day = date.slice(8, 10);
-                    return `${year}-${month}-${day}`;
-                }).reverse(),
-                title: {
-                    text: '최근 6일 동안의 나의 하루 점수'
-                }
-            },
-            yaxis: {
-                title: {
-                    text: '하루 기분 점수'
-                },
-                min: 0,
-                max: 100
-            },
-            legend: {
-                position: 'top',
-                horizontalAlign: 'right',
-                floating: true,
-                offsetY: -25,
-                offsetX: -5
-            }
-        };
-
-        let chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-    }
 
     function loc() {
         window.location = "/user/modify";
     }
 
 //     친구리스트 모달에서 친구삭제
-    function deleteFriend(){
-        var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
-        var row = $(this).closest('tr'); // 삭제할 행 가져오기
+//     function deleteFriend(){
+//         var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
+//         var row = $(this).closest('tr'); // 삭제할 행 가져오기
+//
+//         // 서버에 Ajax 요청 보내기
+//         $.ajax({
+//             type: 'DELETE',
+//             url: '/user/friend_del/',
+//             data : {
+//                 "memberIdx" : $("#memberIdx").val(),
+//                 friendsMemberIdx
+//             },
+//             success: function(result) {
+//                 // 서버에서 친구 정보를 삭제한 후, 행을 삭제
+//                 row.remove();
+//                 swal('친구가 삭제되었습니다.');
+//             },
+//             error: function(xhr, status, error) {
+//                 // Ajax 요청이 실패한 경우 에러 메시지 출력
+//                 console.log('Error:', error);
+//             }
+//         });
+//     }
 
-        // 서버에 Ajax 요청 보내기
+    function deleteFriend() {
+        console.log($("#friendsIdx").val());
+        const memberDeleteDto={
+            "friendsIdx": $("#friendsIdx").val()
+        }
+
+        // Ajax 요청을 보냅니다.
         $.ajax({
-            type: 'DELETE',
-            url: '/user/friend_del/',
-            data : {
-                "memberIdx" : $("#memberIdx").val(),
-                friendsMemberIdx
-            },
-            success: function(result) {
-                // 서버에서 친구 정보를 삭제한 후, 행을 삭제
-                row.remove();
-                swal('친구가 삭제되었습니다.');
-            },
-            error: function(xhr, status, error) {
-                // Ajax 요청이 실패한 경우 에러 메시지 출력
-                console.log('Error:', error);
+            type: "DELETE",
+            url: "/user/friend_del/",
+            data: memberDeleteDto,
+            success: function(response) {
+                // 서버에서 삭제가 완료된 후에 친구 목록을 다시 불러옵니다.
+                $("#friendsList").replaceWith(response);
             }
         });
     }
