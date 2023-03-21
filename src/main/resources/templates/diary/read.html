@@ -89,40 +89,41 @@
                placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
                aria-describedby="button-addon2">
         <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                th:onclick="commentWrite()">작성
+                th:onclick="registerComment()">작성
         </button>
       </div>
       <div class="card-body commentList"
            style="width: 750px;height: 500px;margin-bottom: 10px;margin-left: 30px;overflow: scroll;overflow-x:hidden;">
         <table class="table" style="width: 650px;height: 300px;margin-bottom: 10px;margin-left: 55px;">
-
-
-          <th:block th:if="${commentList != null}">
-            <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
-            <tr>
-              <th scope="row"></th>
-              <td>
-                <div class="dropdown">
-                  <button type="button" class="btn" data-bs-toggle="dropdown"
-                          aria-expanded="false" th:text="${list.commentWriter}">작성자
-                  </button>
-                  <ul class="dropdown-menu" style="">
-                    <li class="dropdown-item" id="addFriend">친구추가</li>
-                    <input type="hidden" id="memberIdx" name="memberIdx"
-                           th:value="${list.memberIdx}">
-                    <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">
-                      차단
-                    </li>
-                    <li class="dropdown-item" onclick="reportBtn()">댓글 신고</li>
-                  </ul>
-                </div>
-              </td>
-              <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
-              <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
-              <td>좋아요 버튼</td>
-            </tr>
-            </tbody>
-          </th:block>
+          <div id="commentDiv">
+            <th:block th:if="${commentList != null}">
+              <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
+              <tr>
+                <th scope="row"></th>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
+                            aria-expanded="false" th:text="${list.commentWriter}">작성자
+                    </button>
+                    <ul class="dropdown-menu" style="">
+                      <li class="dropdown-item addFriend">친구추가</li>
+                      <input type="hidden" id="memberIdx" name="memberIdx"
+                             th:value="${list.memberIdx}">
+                      <li class="dropdown-item addBlock" onclick="addBlock(this)" data-bs-toggle="modal"
+                          data-bs-target="#block">
+                        차단
+                      </li>
+                      <li class="dropdown-item" onclick="reportBtn()">댓글 신고</li>
+                    </ul>
+                  </div>
+                </td>
+                <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
+                <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
+                <td>좋아요 버튼</td>
+              </tr>
+              </tbody>
+            </th:block>
+          </div>
         </table>
       </div>
       <div class="btnWrap" style="float: right">
@@ -139,48 +140,163 @@
 </div>
 <input type="hidden" class="idx" th:value="${member.memberIdx}">
 
-<script>
+<!-- 모달부분 form-->
+<div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">차단 하기</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div th:object="${blockListDto}">
+          <div class="mb-3">
+            <label for="date" class="col-form-label">날짜</label>
+            <input type="text" class="form-control" id="date"
+                   th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="blockMemberNickname" class="col-form-label">닉네임</label>
+            <input type="text" class="form-control" id="blockMemberNickname" name="blockMemberNickname"
+                   th:field="*{blockMemberNickname}"
+                   readonly value="">
 
+          </div>
+          <div class="mb-3">
+            <label for="blockMemberReason" class="col-form-label">차단사유</label>
+            <textarea class="form-control" id="blockMemberReason" name="blockMemberReason"
+                      th:field="*{blockMemberReason}"></textarea>
+          </div>
+          <input type="hidden" id="blockMemberIdx" name="blockMemberIdx" th:field="*{blockMemberIdx}"
+                 value="">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button" onclick="postBlock()" class="btn btn-primary">작성완료</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
+<script>
+  <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   function reportBtn() {
     location.href = "/board/report/write";
   }
 
-  $(function () {
+  $(document).ready(function () {
+    $('.addFriend').click(function () {
 
-    $('#addFriend').click(function () {
+      const friendsDto = {
+        "friendsIdx": $("#memberIdx").val()
+      };
+
       $.ajax({
         type: "POST",
         url: "/user/friend_add",
-        data: {
-          "memberIdx": $(".idx").val(),
-          "friendsMemberIdx": $("#memberIdx").val(),
-        },
-        success: function () {
-          swal('친구가 추가되었습니다.');
-        }
+        data: friendsDto
+      }).done(function (msg) {
+        console.log(msg);
+        if (msg == 'ok')
+          alert("친구가 정상적으로 추가되었습니다.");
+        else if (msg == 'already')
+          alert("이미 친구입니다.");
+        else
+          alert("차단 대상자 입니다.");
       });
     });
-    // $('.addFriend').click(function () {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/user/friend_add",
-    //         data: {
-    //             "memberIdx": $(".idx").val(),
-    //             "friendsMemberIdx":$(".memberIdx").val(),
-    //         },
-    //         success: function () {
-    //             swal('친구가 추가되었습니다.');
-    //         }
-    //     });
-    // });
+
     const writerIdx = $('.memberIdx').val(); // 게시글 작성자
     const memberIdx = $('.idx').val(); //현재 로그인한 사용자
     if (writerIdx === memberIdx) {
       $('.writerBtn').show();
     }
-    // $('.writerBtn').show();
   });
 
+  function addBlock(e) {
+    const blockMemberIdx = $(e).siblings('.memberIdx').val();
+    const blockMemberNickname = $(e).parents().siblings('.commentWriter').text();
+
+    $('#blockMemberNickname').val(blockMemberNickname);
+    $('#blockMemberIdx').val(blockMemberIdx);
+  }
+
+  function postBlock() {
+    const blockListDto = {
+      "blockMemberNickname": $('#blockMemberNickname').val(),
+      "blockMemberReason": $('#blockMemberReason').val(),
+      "blockMemberIdx": $('#blockMemberIdx').val()
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/user/blockList_add",
+      data: blockListDto
+    }).done(function (msg) {
+      if (msg == 'ok')
+        alert("차단리스트에 정상적으로 등록되었습니다.");
+      $('#block').modal('hide');
+    });
+  }
+
+  function registerComment() {
+    $.ajax({
+      type: "POST",
+      url: "/diary/comment_write",
+      dataType: "JSON",
+      data: {
+        diaryIdx: $("#diaryIdx").val(),
+        commentInput: $("#commentInput").val()
+      },
+      success: function (result) {
+        // window.location.reload();
+        // commentList 삭제
+        $("#commentList").remove();
+        // 새로운 commentList 생성
+        let newCommentList = $("#commentBlock");
+        // 각각의 댓글을 순회하면서 테이블 row 생성
+        $.each(result, function (index, comment) {
+              console.log('test')
+              let newbody = $(`<tbody class="table-group-divider" id="commentListWrapper">`)
+              let newRow = $(`<tr>`);
+              let newScope = $(`<th scope="row">`);
+              let dropdown = $(`<td>`);
+              let dropdownDiv = $(`<div class="dropdown">`);
+              let dropdownBtn = $(`<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">`)
+                  .text(comment.commentWriter);
+              let dropdownMenu = $(`<ul class="dropdown-menu">`);
+              let dropdownHidden = $(`<input type="hidden" id="memberIdx" name="memberIdx" th:value="${comment.memberIdx}">`);
+              let dropdownAddFr = $(`<li className="dropdown-item" id="addFriend">`).text('친구추가');
+              let dropdownBlock = $(`<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">`).text('차단');
+              let dropdownRep = $(`<li class="dropdown-item" onclick="reportBtn()">`).text('댓글 신고');
+
+              let tdContent = $(`<td>`).text(comment.commentContent);
+              let tdDate = $(`<td>`).text(comment.commentDate);
+              let likeBtn = $(`<td>`).text('좋아요 버튼');
+
+              newRow.append(newScope);
+              newRow.append(dropdown);
+              dropdown.append(dropdownDiv);
+              dropdown.append(dropdownBtn);
+              dropdown.append(dropdownMenu);
+              dropdownMenu.append(dropdownHidden);
+              dropdownMenu.append(dropdownAddFr);
+              dropdownMenu.append(dropdownBlock);
+              dropdownMenu.append(dropdownRep);
+              newRow.append(tdContent);
+              newRow.append(tdDate);
+              newRow.append(likeBtn);
+              // 테이블 row 내용 생성 생략
+              newbody.append(newRow);
+              newCommentList.append(newbody);
+              console.log(newCommentList);
+            }
+        )
+      }
+    });
+  }
 </script>
 </body>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
