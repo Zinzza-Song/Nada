@@ -4,208 +4,285 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body class="diary-write-body">
 
 <header th:insert="~{fragment/topMenu.html::nav}"/>
 
 <div class="containerRead text-center">
-  <!--readWrap시작-->
-  <div th:object="${readDiaryBean}">
-    <div class=" readWrap">
-      <!--  leftRead시작  -->
-      <div class=" leftRead">
-        <!-- card 시작부분-->
-        <div class="">
-          <!--        제목/내용-->
-          <div class="">
-            <div class="card">
-              <div class="card-body">
-                <label class="diaryReadTitle" ></label>
-                <h5 class="diaryReadTitle" style="" th:text="${readDiaryBean.diarySubject}"></h5>
-                <label class="diaryReadWriter"></label>
-                <p class="diaryReadWriter"  th:text="${readDiaryBean.diaryWriter}"></p>
-                <label class="diaryReadContent"></label>
-                <p class="diaryReadContent" style="font-size: 35px; text-align: left" th:text="${readDiaryBean.diaryContent}"></p>
+    <!--readWrap시작-->
+    <div th:object="${readDiaryBean}">
+        <div class=" readWrap">
+            <!--  leftRead시작  -->
+            <div class=" leftRead">
+                <!-- card 시작부분 -->
+                <div class="">
+                    <!-- 제목/내용 -->
+                    <div class="">
+                        <div class="card">
+                            <div class="card-body">
+                                <label class="diaryReadTitle"></label>
+                                <h5 class="diaryReadTitle" style="" th:text="${readDiaryBean.diarySubject}"></h5>
+                                <label class="diaryReadWriter"></label>
+                                <p class="diaryReadWriter" th:text="${readDiaryBean.diaryWriter}"></p>
+                                <label class="diaryReadContent"></label>
+                                <p class="diaryReadContent" style="font-size: 35px; text-align: left"
+                                   th:text="${readDiaryBean.diaryContent}"></p>
 
-                <div class="keywords">
-                  <label>키워드 :</label>
-                  <p>
-                                      <th:block th:each="keyword : ${readDiaryBean.diaryKeywords }">
-                                        <label th:text="${keyword}" />
-                                      </th:block>
+                                <div class="keywords">
+                                    <label>키워드 :</label>
+                                    <p>
+                                        <th:block th:each="keyword : ${readDiaryBean.diaryKeywords }">
+                                            <label th:text="${keyword}"/>
+                                        </th:block>
 
-                  </p>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">감정 분석 결과</h5>
-                  <p class="card-text" th:text="${readDiaryBean.diaryAnalyze }"></p>
-                </div>
-                <div class="card-body">
-                  <table class="table">
-                    <thead>
-                    <tr>
-                      <div class="input-group mb-3">
-                        <input type="text" class="form-control" value=""
-                               placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
-                               aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                                th:onclick="commentWrite()">작성
-                        </button>
-                      </div>
-                    </tr>
-                    </thead>
-                    <th:block th:if="${commentList != null}">
-                      <tbody class="table-group-divider" th:each="list: ${commentList}">
-                      <tr>
-                        <th scope="row"></th>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false" th:text="${list.commentWriter}">작성자</button>
-                            <ul class="dropdown-menu" style="">
-                              <li class="dropdown-item" id="addFriend">친구추가</li>
-                              <input type="hidden" id="memberIdx" name="memberIdx" th:value="${list.memberIdx}">
-                              <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">차단</li>
-                              <li class="dropdown-item" onclick="reportBtn()">댓글 신고</li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td th:text="${list.commentContent}">댓글 내용</td>
-                        <td th:text="${list.commentDate}">작성 날짜</td>
-                        <td>좋아요 버튼</td>
-                      </tr>
-                      </tbody>
-                    </th:block>
-                  </table>
-                </div>
-                <div class="btnWrap">
-                  <button class="btn btn-dark" type="button" th:value="삭제" onclick=""></button>
-                  <button class="btn btn-dark" type="submit" th:value="수정"></button>
-                  <a class="btn btn-dark" th:href="@{diary/index.html}" th:value="목록"></a>
-                </div>
-              </div>
-            </div>
-              </div>
-            </div>
-          </div>
-          <!--        조회수/공감 등-->
-          <div class="whatthe">
-            <div class="writeOptions">
-              <div class="">
-                <label th:text="${readDiaryBean.diaryCnt}" >조회수</label>
-                <a class="btn btn-primary" role="button" th:href="@{/board/report/index}">신고</a>
-                <button class="btn btn-primary" th:field="${readDiaryBean.diarySympathyCnt}">공감</button>
-                <button class="btn btn-primary">친구추가</button>
-              </div>
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">감정 분석 결과</h5>
+                                    <p class="card-text" th:text="${readDiaryBean.diaryAnalyze }"></p>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" value="" id="commentInput"
+                                                       placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
+                                                       aria-describedby="button-addon2">
+                                                <input type="hidden" id="diaryIdx" th:value="${readDiaryBean.diaryIdx}">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                        id="button-addon2"
+                                                        onclick="registerComment()">작성
+                                                </button>
+                                            </div>
+                                        </tr>
+                                        </thead>
+                                        <div id="commentDiv">
+                                            <th:block th:if="${commentList != null}" id="commentBlock">
 
+                                                <tbody class="table-group-divider" th:each="list: ${commentList}"
+                                                       id="commentListWrapper">
+
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                    th:text="${list.commentWriter}">작성자
+                                                            </button>
+                                                            <ul class="dropdown-menu" style="">
+                                                                <li class="dropdown-item" id="addFriend">친구추가</li>
+                                                                <input type="hidden" id="memberIdx" name="memberIdx"
+                                                                       th:value="${list.memberIdx}">
+                                                                <li class="dropdown-item" data-bs-toggle="modal"
+                                                                    data-bs-target="#block">차단
+                                                                </li>
+                                                                <li class="dropdown-item" onclick="reportBtn()">댓글 신고
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td th:text="${list.commentContent}">댓글 내용</td>
+                                                    <td th:text="${list.commentDate}">작성 날짜</td>
+                                                    <td>좋아요 버튼</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </th:block>
+                                        </div>
+                                    </table>
+                                </div>
+                                <div class="btnWrap">
+                                    <button class="btn btn-dark" type="button" th:value="삭제" onclick=""></button>
+                                    <button class="btn btn-dark" type="submit" th:value="수정"></button>
+                                    <a class="btn btn-dark" th:href="@{diary/index.html}" th:value="목록"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <!--        조회수/공감 등-->
+            <div class="whatthe">
+                <div class="writeOptions">
+                    <div class="">
+                        <label th:text="${readDiaryBean.diaryCnt}">조회수</label>
+                        <a class="btn btn-primary" role="button" th:href="@{/board/report/index}">신고</a>
+                        <button class="btn btn-primary" th:field="${readDiaryBean.diarySympathyCnt}">공감</button>
+                        <button class="btn btn-primary">친구추가</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
-      </div>
-      <!--  leftRead끝  -->
-
-<!--      &lt;!&ndash;  rightRead시작  &ndash;&gt;-->
-<!--      <div class="col rightRead">-->
-<!--        <div class="card row" style="width: 48rem;">-->
-<!--          <div class="card-body">-->
-<!--            <h5 class="card-title">감정 분석 결과</h5>-->
-<!--            <p class="card-text" th:text="${readDiaryBean.diaryAnalyze }"></p>-->
-<!--          </div>-->
-<!--          <div class="card-body">-->
-<!--            <table class="table">-->
-<!--              <thead>-->
-<!--              <tr>-->
-<!--                <div class="input-group mb-3">-->
-<!--                  <input type="text" class="form-control" value=""-->
-<!--                         placeholder="댓글을 작성해주세요." aria-label="Recipient's username"-->
-<!--                         aria-describedby="button-addon2">-->
-<!--                  <button class="btn btn-outline-secondary" type="button" id="button-addon2"-->
-<!--                          th:onclick="commentWrite()">작성-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </tr>-->
-<!--              </thead>-->
-<!--              <th:block th:if="${commentList != null}">-->
-<!--                <tbody class="table-group-divider" th:each="list: ${commentList}">-->
-<!--                <tr>-->
-<!--                  <th scope="row"></th>-->
-<!--                  <td th:text="${list.commentWriter}">작성자</td>-->
-<!--                  <td th:text="${list.commentContent}">댓글 내용</td>-->
-<!--                  <td th:text="${list.commentDate}">작성 날짜</td>-->
-<!--                  <td>좋아요 버튼</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--              </th:block>-->
-<!--            </table>-->
-<!--          </div>-->
-<!--          <div class="btnWrap">-->
-<!--            <button class="btn btn-dark" type="button" th:value="삭제" onclick=""></button>-->
-<!--            <button class="btn btn-dark" type="submit" th:value="수정"></button>-->
-<!--            <a class="btn btn-dark" th:href="@{diary/index.html}" th:value="목록"></a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-      <!--  rightRead끝  -->
     </div>
-  </div>
-  <!--readWrap끝-->
+    <!--  leftRead끝  -->
+
+    <!--      &lt;!&ndash;  rightRead시작  &ndash;&gt;-->
+    <!--      <div class="col rightRead">-->
+    <!--        <div class="card row" style="width: 48rem;">-->
+    <!--          <div class="card-body">-->
+    <!--            <h5 class="card-title">감정 분석 결과</h5>-->
+    <!--            <p class="card-text" th:text="${readDiaryBean.diaryAnalyze }"></p>-->
+    <!--          </div>-->
+    <!--          <div class="card-body">-->
+    <!--            <table class="table">-->
+    <!--              <thead>-->
+    <!--              <tr>-->
+    <!--                <div class="input-group mb-3">-->
+    <!--                  <input type="text" class="form-control" value=""-->
+    <!--                         placeholder="댓글을 작성해주세요." aria-label="Recipient's username"-->
+    <!--                         aria-describedby="button-addon2">-->
+    <!--                  <button class="btn btn-outline-secondary" type="button" id="button-addon2"-->
+    <!--                          th:onclick="commentWrite()">작성-->
+    <!--                  </button>-->
+    <!--                </div>-->
+    <!--              </tr>-->
+    <!--              </thead>-->
+    <!--              <th:block th:if="${commentList != null}">-->
+    <!--                <tbody class="table-group-divider" th:each="list: ${commentList}">-->
+    <!--                <tr>-->
+    <!--                  <th scope="row"></th>-->
+    <!--                  <td th:text="${list.commentWriter}">작성자</td>-->
+    <!--                  <td th:text="${list.commentContent}">댓글 내용</td>-->
+    <!--                  <td th:text="${list.commentDate}">작성 날짜</td>-->
+    <!--                  <td>좋아요 버튼</td>-->
+    <!--                </tr>-->
+    <!--                </tbody>-->
+    <!--              </th:block>-->
+    <!--            </table>-->
+    <!--          </div>-->
+    <!--          <div class="btnWrap">-->
+    <!--            <button class="btn btn-dark" type="button" th:value="삭제" onclick=""></button>-->
+    <!--            <button class="btn btn-dark" type="submit" th:value="수정"></button>-->
+    <!--            <a class="btn btn-dark" th:href="@{diary/index.html}" th:value="목록"></a>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--  rightRead끝  -->
+</div>
+</div>
+<!--readWrap끝-->
 </div>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 
 <!-- 모달부분 form-->
-<div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">차단 하기</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form th:action="@{/user/block_list/{memberidx}(memberIdx=${member.memberIdx})}" th:object="${blockmemberList}">
-          <!--<div class="mb-3">
-            <label for="date" class="col-form-label">날짜</label>
-            <input type="text" class="form-control" id="date" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" th:field="*{blockMemberDate}" readonly>
-          </div>
-          <div class="mb-3">
-            <label for="nickname" class="col-form-label">닉네임</label>
-            <input type="text" class="form-control" id="nickname" th:field="*{blockMemberNickname}">
-          </div>
-          <div class="mb-3">
-            <label for="blockContent" class="col-form-label">차단사유</label>
-            <textarea class="form-control" id="blockContent" th:field="*{blockMemberReason}"></textarea>
-          </div>-->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary">작성완료</button>
-          </div>
-        </form>
-      </div>
+<div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">차단 하기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/user/block_list/{memberidx}(memberIdx=${member.memberIdx})}"
+                      th:object="${blockmemberList}">
+                    <!--<div class="mb-3">
+                      <label for="date" class="col-form-label">날짜</label>
+                      <input type="text" class="form-control" id="date" th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" th:field="*{blockMemberDate}" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nickname" class="col-form-label">닉네임</label>
+                      <input type="text" class="form-control" id="nickname" th:field="*{blockMemberNickname}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="blockContent" class="col-form-label">차단사유</label>
+                      <textarea class="form-control" id="blockContent" th:field="*{blockMemberReason}"></textarea>
+                    </div>-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">작성완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<script>
-<!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
-  function reportBtn(){
-    location.href="/board/report/write";
-  }
+    <script th:inline="javascript">
+    <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
+    function reportBtn() {
+        location.href = "/board/report/write";
+    }
 
-  $(document).ready(function() {
-    $('#addFriend').click(function() {
-      $.ajax({
-        type: "POST",
-        url: "/user/friend_add/",
-        data :{
-          "memberIdx": $("#memberIdx").val()
-        },
-        success: function(response) {
-          swal('친구가 추가되었습니다.');
-        }
-      });
+    $(document).ready(function () {
+        $('#addFriend').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/user/friend_add/",
+                data: {
+                    "memberIdx": $("#memberIdx").val()
+                },
+                success: function (response) {
+                    swal('친구가 추가되었습니다.');
+                }
+            });
+        });
     });
-  });
 
+    function registerComment() {
+        $.ajax({
+            type: "POST",
+            url: "/diary/comment_write",
+            dataType: "JSON",
+            data: {
+                diaryIdx: $("#diaryIdx").val(),
+                commentInput: $("#commentInput").val()
+            },
+            success: function (result) {
+                /* <![CDATA[ */
+                let name = /* [[ ${commentList} ]] */;
+                /* ]] */
+                // window.location.reload();
+                // commentList 삭제
+                $("#commentList").remove();
+                // 새로운 commentList 생성
+                let newCommentList = $("#commentBlock");
+                // 각각의 댓글을 순회하면서 테이블 row 생성
+                $.each(result, function (index, comment) {
+                        console.log('test')
+                        let newbody = $(`<tbody class="table-group-divider" id="commentListWrapper">`)
+                        let newRow = $(`<tr>`);
+                        let newScope = $(`<th scope="row">`);
+                        let dropdown = $(`<td>`);
+                        let dropdownDiv = $(`<div class="dropdown">`);
+                        let dropdownBtn = $(`<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">`)
+                            .text(comment.commentWriter);
+                        let dropdownMenu = $(`<ul class="dropdown-menu">`);
+                        let dropdownHidden = $(`<input type="hidden" id="memberIdx" name="memberIdx" th:value="${comment.memberIdx}">`);
+                        let dropdownAddFr = $(`<li className="dropdown-item" id="addFriend">`).text('친구추가');
+                        let dropdownBlock = $(`<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#block">`).text('차단');
+                        let dropdownRep = $(`<li class="dropdown-item" onclick="reportBtn()">`).text('댓글 신고');
+
+                        let tdContent = $(`<td>`).text(comment.commentContent);
+                        let tdDate = $(`<td>`).text(comment.commentDate);
+                        let likeBtn = $(`<td>`).text('좋아요 버튼');
+
+                        newRow.append(newScope);
+                        newRow.append(dropdown);
+                        dropdown.append(dropdownDiv);
+                        dropdown.append(dropdownBtn);
+                        dropdown.append(dropdownMenu);
+                        dropdownMenu.append(dropdownHidden);
+                        dropdownMenu.append(dropdownAddFr);
+                        dropdownMenu.append(dropdownBlock);
+                        dropdownMenu.append(dropdownRep);
+                        newRow.append(tdContent);
+                        newRow.append(tdDate);
+                        newRow.append(likeBtn);
+                        // 테이블 row 내용 생성 생략
+                        newbody.append(newRow);
+                        newCommentList.append(newbody);
+                        console.log(newCommentList);
+                    }
+                )
+            }
+        });
+    }
 </script>
 </body>
 </html>

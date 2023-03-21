@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -130,15 +131,37 @@ public class DiaryController {
     // 다이어리 공감에 대한 ajax
     @GetMapping("sympathy/{diaryIdx}")
     @ResponseBody
-    public String sympathyAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-        return null;
+    public void sympathyAjax(@PathVariable("diaryIdx") Long diaryIdx) {
+
     }
 
     // 댓글 좋아요에 대한 ajax
     @GetMapping("comment_like/{diaryIdx}")
     @ResponseBody
-    public String likeAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-        return null;
+    public void likeAjax(@PathVariable("diaryIdx") Long diaryIdx) {
+
+    }
+
+    @PostMapping("comment_write")
+    @ResponseBody
+    public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
+                               @RequestParam("commentInput") String commentInput,
+                               Authentication authentication) {
+
+        Member member = (Member)authentication.getPrincipal();
+        Comment comment = new Comment(member.getMemberIdx(),
+                diaryIdx,
+                commentInput,
+                member.getMemberNickname(),
+                member.getUsername()
+                );
+        comment.setCommentLikeCnt(0);
+
+        commentService.resisterComment(comment);
+
+        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+
+        return commentList;
     }
 
     // 다이어리 수정 페이지

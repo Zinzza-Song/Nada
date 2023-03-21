@@ -23,6 +23,11 @@ public class CommentService {
         return commentRepository.findAllByOrderByCommentDateDesc();
     }
 
+    // 댓글 등록
+    public void resisterComment(Comment comment) {
+        commentRepository.save(comment);
+    }
+
     public void deleteByCommentIdx(Long commentIdx) {
         commentRepository.deleteByCommentIdx(commentIdx);
     }
