@@ -23,15 +23,15 @@
         <div class="leftDiary diary-wrap">
             <div class="card-body diary diaryMedia col-6">
                 <div class="form-group readTop">
-                    <img class="btn  btn-primary_read" th:src="@{/images/emotion.png}"
-                         style="width: 70px;height: 70px;  float: right">
-                    <label class=" btn-primary_read"
-                           style="float:right; font-size: 35px;display: inline-block;padding-top: 12px;"
-                           th:text="${readDiaryBean.diarySympathyCnt}" readonly></label>
+                    <img class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
+                         style="">
+                    <p class=" btn-primary_read"
+                           style=""
+                           th:text="${readDiaryBean.diarySympathyCnt}" readonly></p>
                 </div>
 
                 <div class="dropdown readDropdown" style="margin-bottom: 30px;display: inline-block">
-                    <label class="diaryWriterLabel" style="font-size: 30px;padding-top: 15px;">작성자 :</label>
+                    <p class="diaryWriterP" style="padding-top: 15px;">작성자 :</p>
                     <button class="btn card-title diaryWriter "  data-bs-toggle="dropdown" id="dropdownMenuReference"
                             data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false"
                             style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
@@ -55,13 +55,13 @@
 
                 <div class="form-group keywordSubject">
 
-                    <label class="keywordLabel" style="font-size: 30px;margin-bottom: 30px;margin-top: 20px">키워드</label>
+                    <p class="keywordP" >키워드</p>
                     <div class="keywords">
-                        <p>
+<!--                        <p>-->
                             <th:block th:each="keyword : ${readDiaryBean.diaryKeywords }">
-                                <label class="keywords_item" style="font-size: 30px;" th:text="${keyword}"/>
+                        <p class="keywords_item"  th:text="${keyword}" ></p>
                             </th:block>
-                        </p>
+<!--                        </p>-->
 
                     </div>
                     <!-- 다이어리 제목부터 키워드까지 -->
@@ -75,12 +75,12 @@
 
                 <div class="form-group" style="text-align: center;margin-bottom: 10px">
 
-                    <label class="analyzeTitle" style="font-size: 40px;">감정 분석</label>
+                    <p class="analyzeTitle" style="">감정 분석</p>
 
                 </div>
 
                 <div class="form-group diaryAnalyze" >
-                    <textarea class="diaryAnalyze"
+                    <textarea class="diaryAnalyzeContent"
                               th:readonly="readonly" id="diaryAnalyze"
                               th:text="${readDiaryBean.diaryAnalyze}"></textarea>
                 </div>
