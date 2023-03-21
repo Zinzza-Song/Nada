@@ -1,6 +1,5 @@
 package com.fmi.nada.diary;
 
-import com.fmi.nada.board.notice.Notice;
 import com.fmi.nada.user.BlockListDto;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -147,16 +145,16 @@ public class DiaryController {
     @PostMapping("comment_write")
     @ResponseBody
     public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
-                               @RequestParam("commentInput") String commentInput,
-                               Authentication authentication) {
+                                      @RequestParam("commentInput") String commentInput,
+                                      Authentication authentication) {
 
-        Member member = (Member)authentication.getPrincipal();
+        Member member = (Member) authentication.getPrincipal();
         Comment comment = new Comment(member.getMemberIdx(),
                 diaryIdx,
                 commentInput,
                 member.getMemberNickname(),
                 member.getUsername()
-                );
+        );
         comment.setCommentLikeCnt(0);
 
         commentService.resisterComment(comment);
@@ -224,6 +222,7 @@ public class DiaryController {
             }
         }
     }
+
     private void viewCountValidation(Diary diary, HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         Cookie cookie = null;

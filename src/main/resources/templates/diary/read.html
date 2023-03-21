@@ -53,7 +53,7 @@
                                aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="button"
                                 id="button-addon2"
-                                th:onclick="commentWrite()">작성
+                                onclick="registerComment()">작성
                         </button>
                       </div>
                     </tr>
@@ -268,9 +268,7 @@
         commentInput: $("#commentInput").val()
       },
       success: function (result) {
-        /* <![CDATA[ */
-        let name = /* [[ ${commentList} ]] */;
-        /* ]] */
+
         // window.location.reload();
         // commentList 삭제
         $("#commentList").remove();
