@@ -40,4 +40,16 @@ public class BlockList {
     @Column(name = "block_member_date")
     private LocalDateTime blockMemberDate;
 
+    public BlockList(
+            Long memberIdx,
+            Long blockMemberIdx,
+            String blockMemberNickname,
+            String blockMemberReason
+    ) {
+        this.memberIdx = memberIdx;
+        this.blockMemberIdx = blockMemberIdx;
+        this.blockMemberNickname = blockMemberNickname;
+        this.blockMemberReason = blockMemberReason;
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.fmi.nada.diary;
 
-import com.fmi.nada.board.notice.Notice;
+import com.fmi.nada.user.BlockListDto;
 import com.fmi.nada.user.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,7 +70,9 @@ public class DiaryController {
                             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                             HttpServletRequest request,
                             HttpServletResponse response,
-                            Authentication authentication, Model model) {
+                            Authentication authentication,
+                            Model model,
+                            @ModelAttribute("blockListDto") BlockListDto blockListDto) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -80,7 +82,6 @@ public class DiaryController {
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
-
 
         return "diary/read";
     }
@@ -130,15 +131,37 @@ public class DiaryController {
     // 다이어리 공감에 대한 ajax
     @GetMapping("sympathy/{diaryIdx}")
     @ResponseBody
-    public String sympathyAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-        return null;
+    public void sympathyAjax(@PathVariable("diaryIdx") Long diaryIdx) {
+
     }
 
     // 댓글 좋아요에 대한 ajax
     @GetMapping("comment_like/{diaryIdx}")
     @ResponseBody
-    public String likeAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-        return null;
+    public void likeAjax(@PathVariable("diaryIdx") Long diaryIdx) {
+
+    }
+
+    @PostMapping("comment_write")
+    @ResponseBody
+    public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
+                                      @RequestParam("commentInput") String commentInput,
+                                      Authentication authentication) {
+
+        Member member = (Member) authentication.getPrincipal();
+        Comment comment = new Comment(member.getMemberIdx(),
+                diaryIdx,
+                commentInput,
+                member.getMemberNickname(),
+                member.getUsername()
+        );
+        comment.setCommentLikeCnt(0);
+
+        commentService.resisterComment(comment);
+
+        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+
+        return commentList;
     }
 
     // 다이어리 수정 페이지
@@ -199,6 +222,7 @@ public class DiaryController {
             }
         }
     }
+
     private void viewCountValidation(Diary diary, HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         Cookie cookie = null;

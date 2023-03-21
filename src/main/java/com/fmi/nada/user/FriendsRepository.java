@@ -10,6 +10,7 @@ import java.util.List;
 public interface FriendsRepository extends JpaRepository<Friends,Long> {
 
     void deleteFriendsByMemberIdxAndFriendsMemberIdx(Long memberIdx, Long friendsMemberIdx);
+    List<Friends> findByMemberIdxAndFriendsMemberIdx(Long memberIdx, Long friendsMemberIdx);
 
     List<Friends> findFriendsByMemberIdx(Long memberIdx);
 

@@ -14,9 +14,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     Diary findByDiaryIdx(Long DiaryIdx);
 
-    List<Diary> findTop5ByOrderByDiaryDateDesc();
+    List<Diary> findTop8ByOrderByDiaryDateDesc();
 
-    List<Diary> findTop5ByOrderByDiarySympathyCntDesc();
+    List<Diary> findTop8ByOrderByDiarySympathyCntDesc();
 
     Diary findByDiarySubject(String diarySubject);
 

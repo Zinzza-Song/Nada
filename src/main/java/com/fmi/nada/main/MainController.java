@@ -33,11 +33,11 @@ public class MainController {
         List<Keyword> keywordList = keywordService.findTop5ByOrderByKeywordCntDesc();
         model.addAttribute("keywordList", keywordList);
 
-        List<Diary> recentTop5DiaryList = diaryService.findTop5ByOrderByDiaryDateDesc();
-        model.addAttribute("recentTop5DiaryList", recentTop5DiaryList);
+        List<Diary> recentTop5DiaryList = diaryService.findTop8ByOrderByDiaryDateDesc();
+        model.addAttribute("recentTop8DiaryList", recentTop5DiaryList);
 
-        List<Diary> mostSympathyTop5DiaryList = diaryService.findTop5ByOrderByDiarySympathyCntDesc();
-        model.addAttribute("mostSympathyTop5DiaryList", mostSympathyTop5DiaryList);
+        List<Diary> mostSympathyTop5DiaryList = diaryService.findTop8ByOrderByDiarySympathyCntDesc();
+        model.addAttribute("mostSympathyTop8DiaryList", mostSympathyTop5DiaryList);
 
         return "index";
     }

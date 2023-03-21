@@ -171,9 +171,19 @@
           let resLines = resMsg.split('\n');
 
           resLines.forEach(function (line) {
-            if (line.indexOf("키워드:") != -1)
-              keywords = line;
-            else if (line.indexOf("조언:") != -1)
+            if (line.indexOf("키워드:") != -1) {
+              let temp = line;
+              keywords =temp.replace("키워드: ", "");
+            } else if(line.indexOf("키워드들:") != -1) {
+              let temp = line;
+              keywords =temp.replace("키워드들: ", "");
+            } else if(line.indexOf("단어:") != -1) {
+              let temp = line;
+              keywords =temp.replace("단어: ", "");
+            } else if(line.indexOf("단어들:") != -1) {
+              let temp = line;
+              keywords =temp.replace("단어들: ", "");
+            } else if (line.indexOf("조언:") != -1)
               advice = line;
             else if (line.indexOf("긍정적 문장 개수:") != -1) {
               let temp1 = line.replace("긍정적 문장 개수: ", "");
@@ -219,8 +229,7 @@
           });
         })
         .then(() => {
-          let resKeywords = keywords.replace("키워드: ", "");
-          let arrKeywords = resKeywords.split(",");
+          let arrKeywords = keywords.split(",");
 
           let keywordInnerHTML = "";
           let i = 0;
@@ -258,24 +267,12 @@
         });
   }
 
-  function keywordClick() {
-    //키워드 클릭 함수
-  }
-
   function deleteDiv(e) {
     const div = e.parentNode;
 
     div.remove();
 
     keywordSetting();
-  }
-
-  function submitDiary() {
-
-    // const diaryFormEl = document.querySelector("#diaryForm");
-    // diaryFormEl.action = "write_pro";
-    // diaryFormEl.method = "POST";
-    // diaryFormEl.submit();
   }
 
   function keywordSetting() {

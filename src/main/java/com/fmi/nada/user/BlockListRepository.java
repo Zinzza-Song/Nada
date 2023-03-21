@@ -11,4 +11,6 @@ public interface BlockListRepository extends JpaRepository<BlockList,Long> {
 
     List<BlockList> findBlockListByMemberIdx(Long memberIdx);
 
+    BlockList findByBlockMemberIdxAndMemberIdx(Long blockMemberIdx, Long memberIDx);
+
 }

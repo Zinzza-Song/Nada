@@ -39,8 +39,12 @@ public class Friends {
     @Column(name = "friends_date")
     private LocalDateTime friendsDate;
 
-    public Friends(Long memberIdx, Long friendsMemberIdx){
-        this.memberIdx=memberIdx;
-        this.friendsMemberIdx=friendsMemberIdx;
+    public Friends(
+            Long memberIdx,
+            Long friendsMemberIdx,
+            String friendsNickname){
+        this.memberIdx = memberIdx;
+        this.friendsMemberIdx = friendsMemberIdx;
+        this.friendsNickname = friendsNickname;
     }
 }
