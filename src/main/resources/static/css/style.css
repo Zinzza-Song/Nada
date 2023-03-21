@@ -1311,4 +1311,40 @@ a{
     font-size: 20px;
 }
 
+.noticeTableBodySubject,.noticeTableBodyDate,
+.noticeTableHeadSubject,.noticeTableHeadDate{
+    text-align: center;
+}
+/* /board/notice/index.html  */
+.reportImg{
+    background-image: url(../images/alarm.png);
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.reportTableHead{
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+}
+.reportTableBody{
+    vertical-align: inherit;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 20px;
+}
+.reportSubject{
+    color: #5c5c5b;
+}
+.reportSubject:visited{
+    color: #7239b1;
+}
+.reportSubject:hover{
+    color: #5c5c5b;
+    text-decoration: underline;
+}
+.reportTableBodySubject,.reportTableBodyDate,
+.reportTableHeadSubject,.reportTableHeadDate{
+    text-align: center;
+}
 
