@@ -221,25 +221,29 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .diarymainbody {
     height: 300px;
 }
-.diarymain{
+
+.diarymain {
     height: 1400px;
 }
+
 .d-flex {
     display: flex !important;
     margin-left: 40%;
 }
 
 @media (min-width: 900px) {
-    .idiot{
+    .idiot {
         max-width: 1700px;
     }
 
     .containerRead {
         max-width: 1500px;
     }
-    .diary-write{
+
+    .diary-write {
         /*max-width: 1600px;*/
     }
+
     .qnaform {
         margin: 6% auto;
         background-color: rgba(255, 255, 255, 1);
@@ -250,27 +254,34 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
         font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     }
-    #qnaSubject{
+
+    #qnaSubject {
         font-size: 30px;
     }
-    #qnaWriter{
+
+    #qnaWriter {
         font-size: 30px;
     }
-    #qnaDate{
+
+    #qnaDate {
         font-size: 30px;
     }
+
     #qnaContent {
         font-size: 30px;
     }
+
     .qnaFile {
         font-size: 30px;
     }
-    .qnaBtn{
+
+    .qnaBtn {
         width: 150px;
         height: 50px;
         font-size: 25px;
     }
 }
+
 .qnaform {
     margin: 6% auto;
     background-color: rgba(255, 255, 255, 1);
@@ -282,7 +293,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
 }
-.containerRead{
+
+.containerRead {
     height: auto;
     display: flex;
     flex-flow: row wrap;
@@ -368,7 +380,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
     transition: 0.3s;
 }
-.diaryListCard:hover figcaption,.diaryListCard:focus figcaption{
+
+.diaryListCard:hover figcaption, .diaryListCard:focus figcaption {
     opacity: 1;
 }
 
@@ -762,11 +775,11 @@ input[type="button"] {
     text-align: center;
 }
 
-.diarySubject, .diaryContent,.diaryReadContent,.diaryAnalyze,.diaryWriteSubject,.diaryWriteAnalyze {
+.diarySubject, .diaryContent, .diaryReadContent, .diaryAnalyze, .diaryWriteSubject, .diaryWriteAnalyze {
     white-space: pre-line;
 }
 
-.diarySubject, .diaryContent, .diaryAnalyze, .diaryReadContent,.diaryAnalyzeContent,.diaryWriteSubject,.diaryWriteAnalyze {
+.diarySubject, .diaryContent, .diaryAnalyze, .diaryReadContent, .diaryAnalyzeContent, .diaryWriteSubject, .diaryWriteAnalyze {
     background-color: transparent;
 }
 
@@ -830,16 +843,17 @@ input[type="button"] {
     top: 0px;
     left: 0px;
 }
+
 .diarySubject, .diaryContent {
     white-space: pre-line;
 }
+
 .diarySubject, .diaryContent, .diaryAnalyze, .diaryWriter {
     background-color: transparent;
 }
 
 
-
-.diaryWriter{
+.diaryWriter {
     width: 300px;
     height: 50px;
     font-size: 30px;
@@ -855,8 +869,10 @@ input[type="button"] {
     padding: 5px 10px;
     font-size: 25px;
 }
-.diaryWriteBtn{
-    width: 700px; margin-bottom: 10px;
+
+.diaryWriteBtn {
+    width: 700px;
+    margin-bottom: 10px;
 }
 
 .diaryContent, .diaryAnalyze {
@@ -925,60 +941,78 @@ input[type="button"] {
     padding-left: 0;
     list-style: none;
 }
+
 /* diary write페이지 반응형*/
 @media (min-width: 1600px) {
-    .writeTitle{
+    .writeTitle {
         width: 600px;
         height: 50px;
         /*text-align: center;*/
         margin-bottom: 10px;
         font-size: 40px;
     }
-    .diarySubject{
+
+    .diarySubject {
         width: 650px;
         height: 70px;
         font-size: 30px;
         margin-bottom: 10px
     }
-    .diaryContent{
+
+    .diaryContent {
         width: 650px;
         height: 400px;
         font-size: 40px;
     }
-    .diaryContent-div{
-        width: 650px;height: 400px;margin-bottom: 10px;
+
+    .diaryContent-div {
+        width: 650px;
+        height: 400px;
+        margin-bottom: 10px;
     }
-    .diaryWriteSubject{
+
+    .diaryWriteSubject {
         width: 650px;
         height: 70px;
         font-size: 30px;
         margin-bottom: 10px
     }
-    .keywordSubject{
+
+    .keywordSubject {
         width: 650px;
         height: 70px;
         font-size: 30px;
         margin-bottom: 10px;
     }
-    .public-check-box{
-        width: 300px;height: 50px;
+
+    .public-check-box {
+        width: 300px;
+        height: 50px;
     }
-    .public-check-box-radio-div{
-        margin-left: 20px;margin-bottom: 10px;
+
+    .public-check-box-radio-div {
+        margin-left: 20px;
+        margin-bottom: 10px;
     }
-    .public-check-box-radio-div-p{
-        font-size: 30px;text-align: center;
-    }
-    .form-check-input{
+
+    .public-check-box-radio-div-p {
         font-size: 30px;
         text-align: center;
     }
-    .keywordSubject-P{
+
+    .form-check-input {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .keywordSubject-P {
         font-size: 30px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 30px;
     }
+
     .item {
         margin-right: 10px;
         margin-bottom: 10px;
@@ -995,93 +1029,127 @@ input[type="button"] {
         align-items: center;
         border-radius: 300px;
     }
-    .writeAnTitle{
-        width: 600px;height: 50px;text-align: center;margin-bottom: 10px;
+
+    .writeAnTitle {
+        width: 600px;
+        height: 50px;
+        text-align: center;
+        margin-bottom: 10px;
         font-size: 35px;
     }
-    .diaryAnalyze-div{
-        width: 650px;height: 600px;margin-bottom: 10px;
+
+    .diaryAnalyze-div {
+        width: 650px;
+        height: 600px;
+        margin-bottom: 10px;
     }
-    .diaryWriteAnalyze{
-        width: 650px;height: 600px;margin-bottom: 10px;font-size: 35px
+
+    .diaryWriteAnalyze {
+        width: 650px;
+        height: 600px;
+        margin-bottom: 10px;
+        font-size: 35px
     }
-    .writeSubmit{
-        width: 100px;height: 70px;text-align: center
+
+    .writeSubmit {
+        width: 100px;
+        height: 70px;
+        text-align: center
     }
-    .diaryWriter{
+
+    .diaryWriter {
         width: 300px;
         height: 50px;
         font-size: 35px;
         margin-bottom: 10px
     }
 }
+
 /* diary write페이지 반응형*/
 @media (max-width: 1600px) and (min-width: 768px) {
-    .leftDiary{
+    .leftDiary {
         width: 800px;
         height: 900px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 800px;
         height: 900px;
     }
-    .writeTitle{
+
+    .writeTitle {
         width: 500px;
         height: 50px;
         text-align: center;
         font-size: 35px;
     }
-    .public-check-box{
+
+    .public-check-box {
         width: 250px;
         height: 50px;
         font-size: 20px;
         text-align: center;
     }
-    .public-check-box-radio-div{
+
+    .public-check-box-radio-div {
         margin-left: 25px;
         margin-bottom: 10px;
     }
-    .public-check-box-radio-div-p{
+
+    .public-check-box-radio-div-p {
         font-size: 25px;
         text-align: center;
     }
-    .diaryContent{
+
+    .diaryContent {
         width: 550px;
         height: 300px;
         font-size: 30px;
     }
-    .diaryContent-div{
-        width: 55px;height: 300px;margin-bottom: 10px;
+
+    .diaryContent-div {
+        width: 55px;
+        height: 300px;
+        margin-bottom: 10px;
     }
-    .diaryWriteSubject{
+
+    .diaryWriteSubject {
         width: 550px;
         height: 70px;
         font-size: 30px;
         margin-bottom: 10px
     }
+
     .diaryWriteBtn > input {
         padding: 5px 10px;
         font-size: 20px;
     }
-    .diaryWriteBtn{
-        width: 550px; margin-bottom: 10px;
+
+    .diaryWriteBtn {
+        width: 550px;
+        margin-bottom: 10px;
     }
-    .keywordSubject{
+
+    .keywordSubject {
         width: 550px;
         height: 70px;
         font-size: 25px;
         margin-bottom: 10px;
     }
-    .form-check-input{
+
+    .form-check-input {
         font-size: 20px;
         text-align: center;
     }
-    .keywordSubject-P{
+
+    .keywordSubject-P {
         font-size: 25px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 15px;
     }
+
     .item {
         margin-right: 10px;
         margin-bottom: 10px;
@@ -1098,94 +1166,129 @@ input[type="button"] {
         align-items: center;
         border-radius: 300px;
     }
-    .writeAnTitle{
-        width: 550px;height: 50px;text-align: center;margin-bottom: 10px;
+
+    .writeAnTitle {
+        width: 550px;
+        height: 50px;
+        text-align: center;
+        margin-bottom: 10px;
         font-size: 25px;
     }
-    .diaryAnalyze-div{
-        width: 550px;height: 400px;margin-bottom: 10px;
+
+    .diaryAnalyze-div {
+        width: 550px;
+        height: 400px;
+        margin-bottom: 10px;
     }
-    .diaryWriteAnalyze{
-        width: 550px;height: 400px;margin-bottom: 10px;resize: none;font-size: 20px;
+
+    .diaryWriteAnalyze {
+        width: 550px;
+        height: 400px;
+        margin-bottom: 10px;
+        resize: none;
+        font-size: 20px;
     }
-    .writeSubmit{
-        width: 70px;height: 40px;text-align: center
+
+    .writeSubmit {
+        width: 70px;
+        height: 40px;
+        text-align: center
     }
-    .diaryWriter{
+
+    .diaryWriter {
         width: 300px;
         height: 50px;
         font-size: 30px;
         margin-bottom: 10px
     }
 }
+
 /* diary write페이지 반응형*/
-@media (max-width: 768px){
-    .leftDiary{
+@media (max-width: 768px) {
+    .leftDiary {
         width: 400px;
         height: 600px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 400px;
         height: 600px;
     }
-    .writeTitle{
+
+    .writeTitle {
         width: 200px;
         height: 30px;
         text-align: left;
         font-size: 25px;
 
     }
-    .public-check-box{
+
+    .public-check-box {
         width: 200px;
         height: 30px;
         font-size: 15px;
         text-align: center;
     }
-    .public-check-box-radio-div{
+
+    .public-check-box-radio-div {
         margin-left: 20px;
         margin-bottom: 10px;
     }
-    .public-check-box-radio-div-p{
+
+    .public-check-box-radio-div-p {
         font-size: 15px;
         text-align: center;
     }
-    .diaryContent{
+
+    .diaryContent {
         width: 200px;
         height: 100px;
         font-size: 15px;
     }
-    .diaryContent-div{
-        width: 200px;height: 100px;margin-bottom: 10px;
+
+    .diaryContent-div {
+        width: 200px;
+        height: 100px;
+        margin-bottom: 10px;
     }
-    .diaryWriteSubject{
+
+    .diaryWriteSubject {
         width: 200px;
         height: 40px;
         font-size: 20px;
         margin-bottom: 10px
     }
+
     .diaryWriteBtn > input {
         padding: 5px 10px;
         font-size: 10px;
     }
-    .diaryWriteBtn{
-        width: 200px; margin-bottom: 10px;
+
+    .diaryWriteBtn {
+        width: 200px;
+        margin-bottom: 10px;
     }
-    .keywordSubject{
+
+    .keywordSubject {
         width: 200px;
         height: 30px;
         font-size: 15px;
         margin-bottom: 10px;
     }
-    .form-check-input{
+
+    .form-check-input {
         font-size: 20px;
         text-align: center;
     }
-    .keywordSubject-P{
+
+    .keywordSubject-P {
         font-size: 15px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 10px;
     }
+
     .item {
         margin-right: 10px;
         margin-bottom: 10px;
@@ -1202,26 +1305,44 @@ input[type="button"] {
         align-items: center;
         border-radius: 300px;
     }
-    .writeAnTitle{
-        width: 200px;height: 50px;text-align: center;margin-bottom: 10px;
+
+    .writeAnTitle {
+        width: 200px;
+        height: 50px;
+        text-align: center;
+        margin-bottom: 10px;
         font-size: 15px;
     }
-    .diaryAnalyze-div{
-        width: 200px;height: 100px;margin-bottom: 10px;
+
+    .diaryAnalyze-div {
+        width: 200px;
+        height: 100px;
+        margin-bottom: 10px;
     }
-    .diaryWriteAnalyze{
-        width: 200px;height: 100px;margin-bottom: 10px;resize: none;font-size: 15px;
+
+    .diaryWriteAnalyze {
+        width: 200px;
+        height: 100px;
+        margin-bottom: 10px;
+        resize: none;
+        font-size: 15px;
     }
-    .writeSubmit{
-        width: 50px;height: 30px;text-align: center;font-size: 10px;
+
+    .writeSubmit {
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        font-size: 10px;
     }
-    .diaryWriter{
+
+    .diaryWriter {
         width: 200px;
         height: 30px;
         font-size: 15px;
         margin-bottom: 10px
     }
-    .keywords{
+
+    .keywords {
         width: 200px;
         height: 50px;
         overflow: hidden;
@@ -1229,6 +1350,7 @@ input[type="button"] {
         white-space: normal;
         font-size: 10px;
     }
+
     .qnaform {
         margin: 6% auto;
         background-color: rgba(255, 255, 255, 1);
@@ -1240,10 +1362,12 @@ input[type="button"] {
         font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     }
 }
+
 .item span {
     margin-left: 6px;
     margin-right: 10px;
 }
+
 .blind {
     overflow: hidden;
     position: absolute;
@@ -1252,17 +1376,19 @@ input[type="button"] {
     clip: rect(1px, 1px, 1px, 1px);
 }
 
-.analyzeTitle{
+.analyzeTitle {
     width: 600px;
     font-size: 40px;
 }
-.diaryAnalyzeContent{
+
+.diaryAnalyzeContent {
     width: 650px;
     height: 300px;
     border: none;
     resize: none;
 }
-.diaryReadContent{
+
+.diaryReadContent {
     font-size: 35px;
     text-align: left;
     width: 650px;
@@ -1281,7 +1407,8 @@ input[type="button"] {
     text-align: center;
     margin-bottom: 10px
 }
-.diaryAnalyze{
+
+.diaryAnalyze {
     width: 650px;
     height: 300px;
     margin-bottom: 10px;
@@ -1332,16 +1459,18 @@ input[type="button"] {
 }
 
 /* read페이지 반응형*/
-@media (max-width: 768px){
-    .leftDiary{
+@media (max-width: 768px) {
+    .leftDiary {
         width: 300px;
         height: 500px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 300px;
         height: 500px;
     }
-    .readDropdown{
+
+    .readDropdown {
         width: 200px;
         height: 20px;
         margin-bottom: 0;
@@ -1352,7 +1481,8 @@ input[type="button"] {
         width: 200px;
         height: 110px;
     }
-    .diarySubject{
+
+    .diarySubject {
         width: 200px;
         height: 50px;
         font-size: 20px;
@@ -1362,7 +1492,8 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .readContent{
+
+    .readContent {
         width: 200px;
         height: 100px;
         overflow: hidden;
@@ -1382,10 +1513,12 @@ input[type="button"] {
 
         /*margin-bottom: 20px;*/
     }
-    #dropdownMenuReference{
+
+    #dropdownMenuReference {
         font-size: 10px;
     }
-    .diaryWriterP{
+
+    .diaryWriterP {
         font-size: 10px;
     }
 
@@ -1395,7 +1528,7 @@ input[type="button"] {
         margin-bottom: 5px;
     }
 
-    .keywords{
+    .keywords {
         width: 200px;
         height: 100px;
         overflow: hidden;
@@ -1410,24 +1543,29 @@ input[type="button"] {
         overflow: scroll;
         overflow-x: hidden;
     }
-    .readTop{
+
+    .readTop {
         width: 150px;
         height: 30px;
         text-align: center;
         margin-bottom: 10px
     }
-    .btn-primary_readImg{
+
+    .btn-primary_readImg {
         width: 50px;
         height: 30px;
     }
-    .btn-primary_read{
+
+    .btn-primary_read {
         font-size: 10px;
     }
-    .analyzeTitle{
+
+    .analyzeTitle {
         width: 200px;
         font-size: 15px;
     }
-    .diaryAnalyze{
+
+    .diaryAnalyze {
         width: 180px;
         height: 100px;
         font-size: 15px;
@@ -1435,7 +1573,8 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .diaryAnalyzeContent{
+
+    .diaryAnalyzeContent {
         width: 180px;
         height: 100px;
         font-size: 20px;
@@ -1443,11 +1582,13 @@ input[type="button"] {
         resize: none;
         margin: 0 auto;
     }
-    .commentTitle{
+
+    .commentTitle {
         width: 200px;
         margin-bottom: 10px;
     }
-    .commentDiv{
+
+    .commentDiv {
         width: 200px;
         height: 100px;
         margin-bottom: 10px;
@@ -1456,45 +1597,54 @@ input[type="button"] {
         /*overflow-x:hidden;*/
         font-size: 10px;
     }
-    .commentList{
+
+    .commentList {
         width: 250px;
         height: 130px;
         margin-bottom: 10px;
         font-size: 10px;
         overflow: scroll;
     }
-    .commentWriter{
+
+    .commentWriter {
         font-size: 10px;
     }
-    .commentContent{
+
+    .commentContent {
         font-size: 10px;
     }
-    .commentDate{
+
+    .commentDate {
         font-size: 10px;
     }
-    .commentLike{
+
+    .commentLike {
         font-size: 10px;
     }
-    .writerBtn{
+
+    .writerBtn {
         width: 50px;
         height: 30px;
         font-size: 15px;
         padding-top: 2px;
     }
-    .listBtn{
+
+    .listBtn {
         width: 50px;
         height: 30px;
         font-size: 15px;
         padding-top: 2px;
     }
 }
+
 /* read페이지 반응형*/
 @media (max-width: 1600px) and (min-width: 768px) {
-    .leftDiary{
+    .leftDiary {
         width: 800px;
         height: 900px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 800px;
         height: 900px;
     }
@@ -1510,7 +1660,8 @@ input[type="button"] {
         width: 200px;
         height: 110px;
     }
-    .diarySubject{
+
+    .diarySubject {
         width: 600px;
         height: 70px;
         font-size: 30px;
@@ -1520,14 +1671,16 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .readContent{
+
+    .readContent {
         width: 570px;
         height: 300px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .diaryReadContent{
+
+    .diaryReadContent {
         font-size: 35px;
         text-align: left;
         width: 570px;
@@ -1538,16 +1691,20 @@ input[type="button"] {
 
         /*margin-bottom: 20px;*/
     }
-    #dropdownMenuReference{
+
+    #dropdownMenuReference {
         font-size: 30px;
     }
-    .diaryWriterP{
+
+    .diaryWriterP {
         font-size: 30px;
     }
-    .keywordP{
+
+    .keywordP {
         font-size: 30px;
     }
-    .keywords{
+
+    .keywords {
         width: 570px;
         height: 250px;
         overflow: hidden;
@@ -1555,23 +1712,27 @@ input[type="button"] {
         white-space: normal;
         font-size: 35px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 30px;
         height: 150px;
         overflow: scroll;
         overflow-x: hidden;
     }
-    .readTop{
+
+    .readTop {
         width: 500px;
         height: 50px;
         text-align: center;
         margin-bottom: 10px
     }
-    .analyzeTitle{
+
+    .analyzeTitle {
         width: 500px;
         font-size: 35px;
     }
-    .diaryAnalyze{
+
+    .diaryAnalyze {
         width: 500px;
         height: 300px;
         font-size: 35px;
@@ -1579,7 +1740,8 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .diaryAnalyzeContent{
+
+    .diaryAnalyzeContent {
         width: 500px;
         height: 300px;
         font-size: 35px;
@@ -1587,11 +1749,13 @@ input[type="button"] {
         resize: none;
         margin: 0 auto;
     }
-    .commentTitle{
+
+    .commentTitle {
         width: 500px;
         margin-bottom: 10px;
     }
-    .commentDiv{
+
+    .commentDiv {
         width: 600px;
         height: 300px;
         margin-bottom: 10px;
@@ -1600,33 +1764,40 @@ input[type="button"] {
         /*overflow-x:hidden;*/
         font-size: 15px;
     }
-    .commentList{
+
+    .commentList {
         width: 600px;
         height: 200px;
         margin-bottom: 10px;
         font-size: 15px;
         overflow: scroll;
     }
-    .commentWriter{
+
+    .commentWriter {
         font-size: 15px;
     }
-    .commentContent{
+
+    .commentContent {
         font-size: 15px;
     }
-    .commentDate{
+
+    .commentDate {
         font-size: 15px;
     }
-    .commentLike{
+
+    .commentLike {
         font-size: 15px;
     }
 }
-.btnWrap{
+
+.btnWrap {
     align-content: center;
     justify-content: center;
     margin-left: 100px;
     display: flex;
 }
-.commentTable{
+
+.commentTable {
     width: 650px;
     height: 300px;
     margin-bottom: 10px;
@@ -1638,18 +1809,140 @@ input[type="button"] {
     .diary-container {
         max-width: 1600px;
     }
-    .diary-write{
+
+    .diary-write {
         /*max-width: 1600px;*/
     }
 }
+
 /*여기까지 건상 */
 
 /*여기부터 한희 */
-.customBtn{
+.customBtn {
     border-radius: 5px;
     background-color: #6c583e;
     text-align: center;
     cursor: pointer;
+
+    color: #e3cab0;
+    transition: all .9s, color .3s;
+
+}
+
+.customBtn:hover {
+    color: #e3cab0;
+    box-shadow: 0 80px 0 0 rgba(0, 0, 0, .25) inset,
+    0 -80px 0 0 rgba(0, 0, 0, .25) inset;
+}
+
+/*footer 고정*/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+#footer {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    flex-shrink: 0;
+    background-color: #ccc;
+}
+
+/*topmenu custom css*/
+.top-menu {
+    height: 100%;
+}
+
+.menu a {
+    color: #77493b;
+}
+
+.menu a:hover {
+    transform: translateY(-5px);
+    color: #330f0e;
+}
+
+.menu > li:hover .submenu {
+    height: 150px;
+    transition-duration: .5s;
+}
+
+.dropShow {
+    --bs-dropdown-link-active-bg: #eed7be;
+}
+
+.logoutBtn {
+    margin-top: 2px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+    background-color: #a38969;
+    box-shadow: 2px 4px 0 #330f0e;
+    color: #330f0e;
+    transition: .3s;
+    border-radius: 5px;
+}
+
+.logoutBtn:active {
+    box-shadow: 0px 1px 0 #330f0e;
+    transform: translateY(3px);
+}
+
+/*여기까지 한희*/
+
+/*여기부터 요한*/
+
+.mypageSubject {
+    color: #bf8e65;
+    text-decoration: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100px;
+}
+
+.adviceText {
+    font-variant: all-small-caps;
+    font-size: 18px;
+}
+
+/*여기부터 요한*/
+
+/* user/read.html */
+.more-btn {
+    appearance: none;
+    border: 1px solid black;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    float: right;
+}
+
+.mypageSubject {
+    color: #bf8e65;
+    text-decoration: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100px;
+}
+
+.mypageSubject:visited {
+    color: #7239b1;
+}
+
+.adviceText {
+    font-variant: all-small-caps;
+    font-size: 18px;
+}
 
 /*--------------------------------*/
 
@@ -1657,10 +1950,11 @@ input[type="button"] {
 a {
     text-decoration: none;
 }
-.customBtn:hover{
-    color: #e3cab0;
-    box-shadow: 0 80px 0 0 rgba(0,0,0,.25) inset,
-    0 -80px 0 0 rgba(0,0,0,.25) inset;
+
+/* board/notice/index.html */
+
+.noticeSubject:visited {
+    color: #7239b1;
 }
 
 .noticeSubject {
@@ -1680,53 +1974,59 @@ a {
     background-size: cover;
     background-repeat: no-repeat;
 }
-/*topmenu custom css*/
-.top-menu {
-    height: 100%;
+
+.noticeTableHead {
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
-.menu a{
-    color: #77493b;
-}
-.menu a:hover{
-    transform: translateY(-5px);
-    color: #330f0e;
-}
-.menu>li:hover .submenu{
-    height: 150px;
-    transition-duration: .5s;
-}
-.dropShow{
-    --bs-dropdown-link-active-bg: #eed7be;
-}
-.logoutBtn{
-    margin-top: 2px;
-    text-align: center;
-    display: flex;
+
+.noticeTableBody {
+    vertical-align: inherit;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 20px;
-    background-color: #a38969;
-    box-shadow: 2px 4px 0 #330f0e;
-    color: #330f0e;
-    transition: .3s;
-    border-radius: 5px;
 }
-.logoutBtn:active{
-    box-shadow: 0px 1px 0 #330f0e;
-    transform: translateY(3px);
-}
-/*여기까지 한희*/
 
-/*여기부터 요한*/
-
-.mypageSubject{
-    color: #bf8e65;
-    text-decoration: none;
-    overflow: hidden;
-    display:-webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    width: 100px;
+.noticeTableBodySubject, .noticeTableBodyDate,
+.noticeTableHeadSubject, .noticeTableHeadDate {
+    text-align: center;
 }
-.adviceText{
-    font-variant: all-small-caps;
-    font-size: 18px;
+
+/* /board/notice/index.html  */
+.reportImg {
+    background-image: url(../images/alarm.png);
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.reportTableHead {
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+}
+
+.reportTableBody {
+    vertical-align: inherit;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 20px;
+}
+
+.reportSubject {
+    color: #5c5c5b;
+}
+
+.reportSubject:visited {
+    color: #7239b1;
+}
+
+.reportSubject:hover {
+    color: #5c5c5b;
+    text-decoration: underline;
+}
+
+.reportTableBodySubject, .reportTableBodyDate,
+.reportTableHeadSubject, .reportTableHeadDate {
+    text-align: center;
 }
