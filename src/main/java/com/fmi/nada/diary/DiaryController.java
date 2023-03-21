@@ -163,6 +163,8 @@
             List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
             model.addAttribute("commentList", commentList);
 
+            // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
+            // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
             return "/diary/read :: tbody";
         }
 

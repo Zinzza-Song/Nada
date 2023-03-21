@@ -57,6 +57,15 @@
                     <p class="card-text adviceText" id="advice">대충 긍정적인 분석</p>
                 </div>
             </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <input type="text" placeholder="무엇을 찾고 싶으세요?">
+                    <button th:text="검색" />
+                </div>
+                <div class="card-body">
+                    <div id="map"style="width:325px;height:400px;"></div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="card mb-3">
@@ -249,6 +258,16 @@
 </div>
 
 <script type="text/javascript">
+
+    let container = document.getElementById('map');
+    let mapOptions = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    let map = new kakao.maps.Map(container, mapOptions);
+
+
     $(function () {
         const diaryScore = document.getElementById("diaryScore");
         let msg = diaryScore.value;
@@ -377,6 +396,7 @@
         chart.render();
     }
 
+    // 감정 점수 그래프 (막대 그래프)
     function barChart(){
         let options = {
             series: [
@@ -501,6 +521,6 @@
     }
 
 </script>
-<footer th:replace="~{fragment/footer.html::footer}"></footer>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
 </html>
