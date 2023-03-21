@@ -85,7 +85,8 @@ public class MemberController {
     @ResponseBody
     public String mailCheckPw(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
+//        && member.getMemberName().equals(memberName)
+        if (member != null && member.getUsername().equals(username) ) {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             System.out.println("이메일 인증 유저 : " + memberName);

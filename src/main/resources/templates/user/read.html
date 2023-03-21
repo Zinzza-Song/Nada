@@ -35,8 +35,10 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">감정상태 분석</h5>
-                    <p class="card-text">통계로 보기</p>
-                    <p class="card-text">그래프로 보기</p>
+<!--                    <p class="card-text">통계로보기</p>-->
+<!--                    <p class="card-text">그래프로보기</p>-->
+                        <p class="card-text"><button type="button" onclick="lineChart()">선그래프</button></p>
+                        <p class="card-text"><button type="button" onclick="barChart()">막대그래프</button></p>
                 </div>
             </div>
             <div class="card mb-3">
@@ -52,7 +54,7 @@
                         <input type="hidden" id="diaryWriteDateArr" th:value="${diaryWriteDateArr}">
                         <input type="hidden" id="diaryScore" th:value="${analyzeScore}">
                     </th:block>
-                    <p class="card-text" id="advice">대충 긍정적인 분석</p>
+                    <p class="card-text adviceText" id="advice">대충 긍정적인 분석</p>
                 </div>
             </div>
         </div>
@@ -69,14 +71,17 @@
                             <th scope="col">제목</th>
                             <th scope="col">날짜</th>
                             <th scope="col">조회수</th>
+                            <th scope="col">공감수</th>
                         </tr>
                         </thead>
                         <tbody class="table-group-divider" th:each="myDiary : ${myDiaryList}">
                         <tr>
                             <th scope="row" th:text="${myDiary.diaryIdx}">일기 번호</th>
-                            <td th:text="${myDiary.diarySubject}">일기 제목</td>
-                            <td th:text="${myDiary.diaryDate}">일기 날짜</td>
+                            <td><a class="mypageSubject" th:href="@{/diary/read/{diaryIdx}(diaryIdx=${myDiary.diaryIdx})}"
+                                   th:text="${myDiary.diarySubject}">일기 제목</a></td>
+                            <td th:text="${#temporals.format(myDiary.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
                             <td th:text="${myDiary.diaryCnt}">일기 조회수</td>
+                            <td th:text="${myDiary.diarySympathyCnt}">일기 조회수</td>
                         </tr>
                         </tbody>
                     </table>
@@ -123,13 +128,15 @@
             <div class="card mb-3">
                 <div class="card-header">
                     친구 유저 리스트
+                    <button type="button" class="more-btn" data-bs-toggle="modal"
+                            data-bs-target="#friendModal">더보기</button>
                 </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">친구 이름</th>
-                            <th scope="col">친구 먹은날</th>
+                            <th scope="col">친구 만난 날</th>
                         </tr>
                         </thead>
                         <tbody class="table-group-divider" th:each="friend : ${friendsList}">
@@ -144,6 +151,8 @@
             <div class="card mb-3">
                 <div class="card-header">
                     차단 유저
+                    <button type="button" class="more-btn" data-bs-toggle="modal"
+                            data-bs-target="#blockModal">더보기</button>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -166,6 +175,74 @@
             </div>
             <div>
                 <input type="button" value="회원정보수정" onclick="loc()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--친구리스트 모달-->
+<div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="friendModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">친구 목록</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">친구 이름</th>
+                        <th scope="col">친해진 날</th>
+                        <th scope="col">삭제유무</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider" th:each="friend : ${friendsList}">
+                    <tr>
+                        <td th:text="${friend.friendsNickname}">Mark</td>
+                        <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
+                        <td><button onclick="deleteFriend()">삭제</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----- 블락리스트 모달-->
+
+<div class="modal fade" id="blockModal" tabindex="-1" aria-labelledby="blockModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabel">차단 목록</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">차단 이름</th>
+                        <th scope="col">차단 이유</th>
+                        <th scope="col">삭제유무</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider" th:each="block : ${blockLists}">
+                    <tr>
+                        <td th:text="${block.blockMemberNickname}">Mark</td>
+                        <td th:text="${block.blockMemberReason}">차단 이유</td>
+                        <td><button onclick="deleteBlock()">삭제</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
     </div>
@@ -225,7 +302,7 @@
         series: [
             {
                 name: "매일매일 달라지는 나의 하루",
-                data: analyzeScoreArr
+                data: analyzeScoreArr.reverse()
             },
         ],
         chart: {
@@ -265,7 +342,12 @@
             size: 1
         },
         xaxis: {
-            categories: diaryWriteDateArr,
+            categories: diaryWriteDateArr.map((date) => {
+                const year = date.slice(0, 4);
+                const month = date.slice(5, 7);
+                const day = date.slice(8, 10);
+                return `${year}-${month}-${day}`;
+            }).reverse(),
             title: {
                 text: '최근 6일 동안의 나의 하루 점수'
             }
@@ -287,10 +369,137 @@
     };
 
     let chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
+    // chart.render();
+
+    onload(chart.render());
+
+    function lineChart(){
+        chart.render();
+    }
+
+    function barChart(){
+        let options = {
+            series: [
+                {
+                    name: "매일매일 달라지는 나의 하루",
+                    data: analyzeScoreArr.reverse()
+                },
+            ],
+            chart: {
+                height: 350,
+                type: 'bar',
+                dropShadow: {
+                    enabled: true,
+                    color: '#000',
+                    top: 18,
+                    left: 7,
+                    blur: 10,
+                    opacity: 0.2
+                },
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: ['#77B6EA', '#545454'],
+            dataLabels: {
+                enabled: true,
+            },
+            title: {
+                text: 'Your Date Temperature',
+                align: 'left'
+            },
+            grid: {
+                borderColor: '#e7e7e7',
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                categories: diaryWriteDateArr.map((date) => {
+                    const year = date.slice(0, 4);
+                    const month = date.slice(5, 7);
+                    const day = date.slice(8, 10);
+                    return `${year}-${month}-${day}`;
+                }).reverse(),
+                title: {
+                    text: '최근 6일 동안의 나의 하루 점수'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: '하루 기분 점수'
+                },
+                min: 0,
+                max: 100
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                floating: true,
+                offsetY: -25,
+                offsetX: -5
+            }
+        };
+
+        let chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    }
+
     function loc() {
         window.location = "/user/modify";
     }
+
+//     친구리스트 모달에서 친구삭제
+    function deleteFriend(){
+        var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
+        var row = $(this).closest('tr'); // 삭제할 행 가져오기
+
+        // 서버에 Ajax 요청 보내기
+        $.ajax({
+            type: 'DELETE',
+            url: '/user/friend_del/',
+            data : {
+                "memberIdx" : $("#memberIdx").val(),
+                friendsMemberIdx
+            },
+            success: function(result) {
+                // 서버에서 친구 정보를 삭제한 후, 행을 삭제
+                row.remove();
+                swal('친구가 삭제되었습니다.');
+            },
+            error: function(xhr, status, error) {
+                // Ajax 요청이 실패한 경우 에러 메시지 출력
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    // 차단리스트 모달에서 삭제
+    function deleteBlock(){
+        var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
+        var row = $(this).closest('tr'); // 삭제할 행 가져오기
+
+        // 서버에 Ajax 요청 보내기
+        $.ajax({
+            type: 'DELETE',
+            url: '/user/unblock/',
+            data : {
+                "memberIdx" : $("#memberIdx").val(),
+                friendsMemberIdx
+            },
+            success: function(result) {
+                // 서버에서 친구 정보를 삭제한 후, 행을 삭제
+                row.remove();
+                swal('차단이 해제되었습니다.');
+            },
+            error: function(xhr, status, error) {
+                // Ajax 요청이 실패한 경우 에러 메시지 출력
+                console.log('Error:', error);
+            }
+        });
+    }
+
 </script>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 </body>

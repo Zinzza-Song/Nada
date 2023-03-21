@@ -79,6 +79,12 @@
 <!--                                    <span class="blind">닫기</span>-->
 <!--                                  </button>-->
 <!--                                </div>-->
+                <div class="item">
+                  <span class="keyword-item">키워드들어갈자리</span>
+                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">
+                    <span class="blind">닫기</span>
+                  </button>
+                </div>
               </div>
               <input type="hidden" th:field="*{diaryKeywords}" id="diaryKeywords" name="diaryKeywords"/>
               <p th:if="${#fields.hasErrors('diaryKeywords')}" th:errorclass="error" th:errors="*{diaryKeywords}"/>
