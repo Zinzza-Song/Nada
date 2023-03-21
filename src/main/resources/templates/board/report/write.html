@@ -12,36 +12,38 @@
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
-<form enctype="multipart/form-data" th:action="@{/board/report/write_pro}" th:method="post"
+<form enctype="multipart/form-data" th:action="@{/board/report/write_pro}"
+      th:method="post" class="qnaform"
       th:object="${writeReportBean}">
+  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
   <div class="mb-3">
-    <input type="text" class="form-control" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
+    <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
            placeholder="신고 제목">
   </div>
 
   <div class="mb-3">
-    <input type="text" class="form-control" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
+    <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
            placeholder="신고자" readonly>
   </div>
 
   <div class="mb-3">
-    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
            th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
   </div>
 
   <div class="mb-3">
 
-    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault1"
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault1"
            th:field="*{reportCategory}" th:value="욕설">
     <label class="form-check-label" for="flexRadioDefault1">
       욕설
     </label>
-    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault2"
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault2"
            th:field="*{reportCategory}" th:value="광고">
     <label class="form-check-label" for="flexRadioDefault2">
       광고
     </label>
-    <input class="form-check-input" type="radio" name="reportCategory" id="flexRadioDefault3"
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault3"
            th:field="*{reportCategory}" th:value="허위게시글">
     <label class="form-check-label" for="flexRadioDefault3">
       허위 게시글
@@ -49,28 +51,32 @@
   </div>
 
   <div class="mb-3">
-        <textarea class="form-control" name="reportContent" id="reportContent" rows="5" placeholder="구체적인 신고내용"
+        <textarea class="form-control qnaContent" name="reportContent"
+                  id="reportContent" rows="5" placeholder="구체적인 신고내용"
+                  style="resize: none;"
                   th:field="*{reportContent}">
         </textarea>
   </div>
 
   <div class="mb-3">
-    <input type="text" class="form-control" name="reportReportedmember " id="reportReportedmember"
+    <input type="text" class="form-control qnaWriter" name="reportReportedmember " id="reportReportedmember"
            th:field="*{reportReportedMember}" placeholder="신고 대상자" readonly>
   </div>
 
 
   <div class="mb-3">
     <label for="reportFile" class="form-label">첨부파일</label>
-    <input class="form-control form-control-sm" name="reportFile " id="reportFile" type="file">
+    <input class="form-control form-control-sm qnaFile" name="reportFile "
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+           id="reportFile" type="file">
   </div>
 
 
-  <button type="submit" class="btn btn-primary">신고</button>
-  <button type="reset" class="btn btn-primary">재작성</button>
-  <button type="button" class="btn btn-primary" onclick="history.go(-1)">취소</button>
+  <button type="submit" class="btn btn-primary qnaBtn">신고</button>
+  <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
+  <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
 </form>
-<footer th:replace="~{fragment/footer.html::footer}"></footer>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 
 
 </body>

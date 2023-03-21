@@ -169,12 +169,6 @@
     </th:block>
   </ul>
 </nav>
-
-<form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/qna/write/${memberIdx}}"
-      th:method="get">
-  <button class="btn btn-outline-primary" type="submit">작성</button>
-</form>
-
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 </body>
 </html>

@@ -14,39 +14,46 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <form enctype="multipart/form-data" th:action="@{/board/notice/modify_pro}" th:method="put"
+      class="qnaform"
       th:object="${modifyNoticeBean}">
+  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">NOTICE</span></div>
   <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
   <div class="mb-3">
-    <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
+    <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
            th:value="${readNoticeBean.noticeSubject}" placeholder="공지사항 제목">
   </div>
 
   <div class="mb-3">
-    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
            th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
   </div>
   <div class="mb-3">
-        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent}"
+        <textarea class="form-control qnaContent" name="noticeContent" id="noticeContent " rows="5" th:field="*{noticeContent}"
+                  style="resize: none;"
                   th:text="${readNoticeBean.noticeContent}" placeholder="공지내용">
         </textarea>
   </div>
 
   <div class="mb-3">
     <label for="file" class="form-label">변경 첨부파일</label>
-    <input class="form-control form-control-sm" name="file" id="file" type="file">
+    <input class="form-control form-control-sm qnaFile" name="file"
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+           id="file" type="file">
+
   </div>
   <div class="mb-3">
     <label for="file" class="form-label">기존 첨부파일</label>
     <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
-      <input class="form-control form-control-sm" name="file" id="readFile" th:field="${readNoticeBean.noticeFile}"
-             readonly>
+      <input class="form-control form-control-sm qnaFile" name="file" id="readFile"
+             style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+             th:field="${readNoticeBean.noticeFile}" readonly>
     </a>
   </div>
 
 
-  <button type="submit" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정완료</button>
-  <button type="reset" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')">재작성</button>
-  <button type="button" class="btn btn-primary" onclick="window.location='/board/notice/'">목록</button>
+  <button type="submit" class="btn btn-primary qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정완료</button>
+  <button type="reset" class="btn btn-primary qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">재작성</button>
+  <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice/'">목록</button>
 </form>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 
