@@ -1,6 +1,5 @@
 package com.fmi.nada.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fmi.nada.diary.Analyzed;
 import com.fmi.nada.diary.AnalyzedService;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +57,7 @@ public class MemberController {
     public String nicknameCheck(String memberNickname) {
         Member member = memberService.findByMemberNickname(memberNickname);
 
-        if(member != null)
+        if (member != null)
             return "no";
         else
             return "ok";
@@ -86,7 +83,7 @@ public class MemberController {
     public String mailCheckPw(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
 //        && member.getMemberName().equals(memberName)
-        if (member != null && member.getUsername().equals(username) ) {
+        if (member != null && member.getUsername().equals(username)) {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             System.out.println("이메일 인증 유저 : " + memberName);
@@ -257,13 +254,13 @@ public class MemberController {
         Member friendMember = memberService.findByMemberIdx(friendsDto.getFriendsIdx());
 
         List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, friendMember);
-        if(!friends.isEmpty())
+        if (!friends.isEmpty())
             return "already";
 
         BlockList blockList = memberService.findByBlockMemberIdxAndMemberIdx(
                 friendMember.getMemberIdx(),
                 member.getMemberIdx());
-        if(blockList == null) {
+        if (blockList == null) {
             memberService.addFriends(member, friendMember);
             return "ok";
         }
@@ -275,13 +272,13 @@ public class MemberController {
     public String delFriend(MemberDeleteDto memberDeleteDto,
                             Authentication authentication,
                             Model model) {
-        Member member=(Member)authentication.getPrincipal();
+        Member member = (Member) authentication.getPrincipal();
 
         memberService.delFriends(member.getMemberIdx(), memberDeleteDto.getFriendsIdx());
-        List<Friends> friendsList= memberService.friendsList(member.getMemberIdx());
-        model.addAttribute("friendsList",friendsList);
+        List<Friends> friendsList = memberService.friendsList(member.getMemberIdx());
+        model.addAttribute("friendsList", friendsList);
 
-        return "/user/read :: #friendsList";
+        return "/user/read :: #showFriendsList";
     }
 
     @PostMapping("/blockList_add")
