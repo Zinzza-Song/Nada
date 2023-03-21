@@ -125,30 +125,29 @@
       </div>
       <div class="card mb-3">
         <div class="card-header">
-          친구 유저 리스트
+          친구 명
           <button type="button" class="more-btn" data-bs-toggle="modal"
-                  data-bs-target="#friendModal">더보기
+                  data-bs-target="#friendModal">목록 보기
           </button>
         </div>
         <div class="card-body">
-          <div class="showFriendsList">
-            <table class="table">
-              <thead>
-              <tr>
-                <th scope="col">친구 이름</th>
-                <th scope="col">친구 만난 날</th>
-              </tr>
-              </thead>
-
-              <tbody class="table-group-divider" th:each="friend : ${friendsList}">
-              <tr>
-                <th scope="row" th:text="${friend.friendsNickname}">친구 닉네임</th>
-                <input type="hidden" th:value="${friend.friendsMemberIdx}" id="friendsIdx">
-                <td th:text="${#temporals.format(friend.friendsDate,'yyyy-MM-dd')}">친구 먹은날</td>
-              </tr>
-              </tbody>
-
-            </table>
+          <!--<table class="table">
+            <thead>
+            <tr>
+              <th scope="col">친구 이름</th>
+              <th scope="col">친구 만난 날</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="friend : ${friendsList}">
+            <tr>
+              <th scope="row" th:text="${friend.friendsNickname}">친구 닉네임</th>
+              <input type="hidden" th:value="${friend.friendsMemberIdx}" id="friendsIdx">
+              <td th:text="${#temporals.format(friend.friendsDate,'yyyy-MM-dd')}">친구 먹은날</td>
+            </tr>
+            </tbody>
+          </table>-->
+          <div>
+            <span> 친구 <span id="friendNum" th:text="${friendsList.size()}">0</span>명</span>
           </div>
         </div>
       </div>
@@ -205,6 +204,7 @@
             </thead>
             <tbody class="table-group-divider" th:each="friend : ${friendsList}">
             <tr>
+              <td th:text="${friend.getFriendsMemberIdx()}" hidden="hidden" id="friendsIdx">0</td>
               <td th:text="${friend.friendsNickname}">Mark</td>
               <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
               <td>
@@ -427,9 +427,9 @@
   //     }
 
   function deleteFriend() {
-    console.log($("#friendsIdx").val());
+    console.log($("#friendsIdx").text());
     const memberDeleteDto = {
-      "friendsIdx": $("#friendsIdx").val()
+      "friendsIdx": $("#friendsIdx").text()
     }
 
     // Ajax 요청을 보냅니다.
@@ -440,6 +440,8 @@
       success: function (response) {
         // 서버에서 삭제가 완료된 후에 친구 목록을 다시 불러옵니다.
         $("#showFriendsList").replaceWith(response);
+        const num = $("#friendNum").text();
+        $("#friendNum").text(parseInt(num) - 1);
       }
     });
   }
