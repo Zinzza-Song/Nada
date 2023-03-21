@@ -47,7 +47,7 @@
   <tr>
     <th scope="row" th:text="${index.index + 1}"></th>
     <td class="noticeTableBodySubject">
-      <a class="noticeSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항
+      <a class="noticeIndexSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항
         제목</a>
     </td>
     <td class="noticeTableBodyDate" th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd')}">날짜</td>
@@ -170,10 +170,6 @@
   </ul>
 </nav>
 
-<form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/qna/write/${memberIdx}}"
-      th:method="get">
-  <button class="btn btn-outline-primary" type="submit">작성</button>
-</form>
 
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 </body>
