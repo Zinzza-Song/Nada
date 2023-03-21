@@ -97,11 +97,11 @@
         </button>
       </div>
       <div class="card-body commentList"
-           style="width: 750px;height: 500px;margin-bottom: 10px;margin-left: 30px;overflow: scroll;overflow-x:hidden;">
-        <table class="table" style="width: 650px;height: 300px;margin-bottom: 10px;margin-left: 55px;">
+           style="">
+        <table class="table commentTable" style="">
           <div id="commentDiv">
             <th:block th:if="${commentList != null}">
-              <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
+              <tbody class="table-group-divider" th:each="list: ${commentList}" style="">
               <tr>
                 <th scope="row"></th>
                 <td>
@@ -137,7 +137,7 @@
           </div>
         </table>
       </div>
-      <div class="btnWrap" style="float: right">
+      <div class="btnWrap" style="">
         <button class="btn btn-dark writerBtn" type="button"
                 onclick="">삭제
         </button>

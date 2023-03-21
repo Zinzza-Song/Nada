@@ -2,7 +2,7 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
->
+        xmlns="http://www.w3.org/1999/html">
 <head th:insert="~{fragment/topMenu.html::header}">
   <link rel="stylesheet" href="/css/style.css"/>
 </head>
@@ -23,29 +23,29 @@
 
         <div class="leftDiary diary-wrap">
           <div class="card-body diary col-6">
-            <div class="form-group" style="width: 600px;height: 50px;text-align: center;margin-bottom: 10px">
-              <label class="writeTitle" style="font-size: 40px;">일기 작성</label>
+            <div class="form-group" style="text-align: center;margin-bottom: 10px">
+              <p class="writeTitle" style="">일기 작성</p>
             </div>
 
-            <div class="form-group public-check-box" style="width: 300px;height: 50px">
+            <div class="form-group public-check-box" style="">
               <!--                 member의 다이어리 작성 공개/비공개 여부 라디오 버튼-->
-              <div class="form-check form-check-inline" style="margin-left: 20px;margin-bottom: 10px">
+              <div class="form-check form-check-inline public-check-box-radio-div" style="">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio1"
                        th:value="true" th:field="*{diaryPublicable}">
-                <label class="form-check-label" style="font-size: 30px;text-align: center" for="publicRadio1">공개</label>
+                <p class="form-check-label public-check-box-radio-div-p" style="" for="publicRadio1">공개</p>
               </div>
 
-              <div class="form-check form-check-inline" style="margin-left: 20px">
+              <div class="form-check form-check-inline public-check-box-radio-div" style="">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio2"
                        th:value="false" th:field="*{diaryPublicable}">
-                <label class="form-check-label" for="publicRadio2" style="font-size: 30px;text-align: center">비공개</label>
+                <p class="form-check-label public-check-box-radio-div-p" for="publicRadio2" style="">비공개</p>
               </div>
 
             </div>
 
 
             <div class="form-group ">
-              <input type="text" class="card-title diarySubject" placeholder="제목을 입력해주세요."
+              <input type="text" class="card-title diaryWriteSubject" placeholder="제목을 입력해주세요."
                      th:field="*{diarySubject}"/>
               <p th:if="${#fields.hasErrors('diarySubject')}" th:errorclass="error" th:errors="*{diarySubject}"/>
             </div>
@@ -54,13 +54,13 @@
               />
             </div>
 
-            <div class="form-group" style="width: 650px;height: 400px;margin-bottom: 10px">
-                    <textarea style="width: 650px;height: 400px;margin-bottom: 10px" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
-                              th:field="*{diaryContent}"/>
+            <div class="form-group diaryContent-div" style="">
+                    <textarea style="" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
+                              th:field="*{diaryContent}"></textarea>
               <p th:if="${#fields.hasErrors('diaryContent')}" th:errorclass="error" th:errors="*{diaryContent}"/>
             </div>
 
-            <div class="form-group diaryWriteBtn" style="width: 700px; margin-bottom: 10px">
+            <div class="form-group diaryWriteBtn" style="">
               <input type="button" id="englishBtn" name="englishBtn"  onclick="translation()"
                      value="영번역" class="btn customBtn englishBtn"/>
               <input type="reset" id="diaryResetBtn" name="diaryResetBtn"
@@ -71,7 +71,7 @@
 
             <!--                키워드-->
             <div class="form-group keywordSubject" >
-              <label style="font-size: 30px;">키워드</label>
+              <p class="keywordSubjectP" style="">키워드</p>
               <div class="keywords">
 <!--                                <div class="item">-->
 <!--                                  <span class="keyword">test</span>-->
@@ -93,39 +93,39 @@
           <!-- 다이어리 제목부터 키워드까지 -->
         </div>
         <div class="rightDiary diary-wrap">
-          <div class="card-body Analyze diary col-6" id="Analyze" name="Analyze" style="width: 650px">
-            <div class="form-group" style="width: 600px;height: 50px;text-align: center;margin-bottom: 10px">
-              <label style="font-size: 40px;">감정 분석</label>
+          <div class="card-body Analyze diary col-6" id="Analyze" style="">
+            <div class="form-group" style="text-align: center;margin-bottom: 10px">
+              <p class="writeTitle" style="">감정 분석</p>
             </div>
 
-            <div class="form-group public-check-box" style="width: 300px;height: 50px">
+            <div class="form-group public-check-box" style="">
 
               <!--                    감정분석결과 공개/비공개 라디오버튼-->
-              <div class="form-check form-check-inline" style="margin-left: 20px;margin-bottom: 10px">
+              <div class="form-check form-check-inline public-check-box-radio-div" style="">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio1"
                        th:value="true" th:field="*{diaryAnalyzePublicable}">
-                <label class="form-check-label" for="diaryAnalyzeRadio1" style="font-size: 30px;text-align: center">공개</label>
+                <p class="form-check-label public-check-box-radio-div-p" for="diaryAnalyzeRadio1" style="">공개</p>
               </div>
-              <div class="form-check form-check-inline" style="margin-left: 20px;margin-bottom: 10px">
+              <div class="form-check form-check-inline public-check-box-radio-div" style="">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio12"
                        th:value="false" th:field="*{diaryAnalyzePublicable}">
-                <label class="form-check-label" for="diaryAnalyzeRadio1" style="font-size: 30px;text-align: center">비공개</label>
+                <p class="form-check-label public-check-box-radio-div-p" for="diaryAnalyzeRadio1" style="">비공개</p>
               </div>
             </div>
 
-            <div class="form-group" style="width: 600px;height: 50px;text-align: center;margin-bottom: 10px">
-              <label class="writeTitle" style="font-size: 35px;text-align: center">감정 분석 결과</label>
+            <div class="form-group" style="">
+              <p class="writeAnTitle" style="">감정 분석 결과</p>
             </div>
 
-            <div class="form-group" style="width: 650px;height: 600px;margin-bottom: 10px">
-                    <textarea class="diaryAnalyze" style="width: 650px;height: 600px;margin-bottom: 10px" th:readonly="readonly" id="diaryAnalyze"
+            <div class="form-group diaryAnalyze-div" style="">
+                    <textarea class="diaryWriteAnalyze" style="" th:readonly="readonly" id="diaryAnalyze"
                               th:field="*{diaryAnalyze}">건상님 감정상태가 점점 좋아지고 있어요~</textarea>
             </div>
 
             <input type="hidden" id="analyzeScore" th:field="*{analyzeScore}">
 
 
-            <button type="submit" class="btn btn-dark btn-diary-right" style="width: 100px;height: 70px;text-align: center">완료</button>
+            <button type="submit" class="btn btn-dark btn-diary-right writeSubmit" style="">완료</button>
           </div>
         </div>
       </div>
