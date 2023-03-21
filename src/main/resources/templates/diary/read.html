@@ -85,9 +85,10 @@
         </div>
       </div>
       <div class="input-group mb-3 commentTitle">
-        <input type="text" class="form-control commentTitle comtitle" value=""
+        <input type="text" class="form-control commentTitle comtitle" id="commentInput" value=""
                placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
                aria-describedby="button-addon2">
+        <input type="hidden" id="diaryIdx" th:value="${readDiaryBean.diaryIdx}">
         <button class="btn btn-outline-secondary" type="button" id="button-addon2"
                 th:onclick="registerComment()">작성
         </button>
