@@ -1266,8 +1266,49 @@ main{
     -webkit-box-orient: vertical;
     width: 100px;
 }
+.mypageSubject:visited{
+    color: #7239b1;
+}
 .adviceText{
     font-variant: all-small-caps;
     font-size: 18px;
 }
 /*--------------------------------*/
+
+/* 전체 a태그 밑줄없앴음*/
+a{
+    text-decoration: none;
+}
+
+/* board/notice/index.html */
+
+.noticeSubject:visited{
+    color: #7239b1;
+}
+.noticeSubject{
+    color: #5c5c5b;
+}
+.noticeSubject:hover{
+    color: #5c5c5b;
+    text-decoration: underline;
+
+}
+.noticeTable{
+    height: 100%;
+    width: 1770px;
+    background-image: url(../images/noticeBanner1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.noticeTableHead{
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+}
+.noticeTableBody{
+    vertical-align: inherit;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 20px;
+}
+
+

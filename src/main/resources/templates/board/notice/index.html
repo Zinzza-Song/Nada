@@ -34,20 +34,20 @@
   </div>
 </nav>
 
-<table class="table">
-  <thead>
+<table class="table noticeTable">
+  <thead class="noticeTableHead">
   <tr>
     <th scope="col">NO</th>
-    <th scope="col">공지사항</th>
-    <th scope="col">날짜</th>
+    <th class="noticeTableHeadSubject" scope="col">공지사항</th>
+    <th class="noticeTableHeadDate" scope="col">날짜</th>
     <th scope="col">조회수</th>
   </tr>
   </thead>
-  <tbody class="table-group-divider" th:each="notice, index: ${noticeList}">
+  <tbody class="table-group-divider noticeTableBody" th:each="notice, index: ${noticeList}">
   <tr>
     <th scope="row" th:text="${index.index + 1}"></th>
-    <td>
-      <a th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항
+    <td class="noticeTable">
+      <a class="noticeSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}" th:text="${notice.noticeSubject}">공지사항
         제목</a>
     </td>
     <td th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd')}">날짜</td>
