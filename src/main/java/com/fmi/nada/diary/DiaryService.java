@@ -1,5 +1,9 @@
 package com.fmi.nada.diary;
 
+import com.fmi.nada.user.Likes;
+import com.fmi.nada.user.LikesRepository;
+import com.fmi.nada.user.Sympathy;
+import com.fmi.nada.user.SympathyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +20,8 @@ import java.util.List;
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
+    private final LikesRepository likesRepository;
+    private final SympathyRepository sympathyRepository;
 
     public Page<Diary> getDiaryList(Pageable pageable) {
 
@@ -121,4 +127,53 @@ public class DiaryService {
 
         return diaryRepository.findAllByDiaryKeywordsContaining(diaryKeywords, pageable);
     }
+
+    // 공감 서비스 로직
+    public void addSympathy(DiarySympathyDto diarySympathyDto) {
+        sympathyRepository.save(new Sympathy(
+                diarySympathyDto.getMemberIdx(),
+                diarySympathyDto.getDiaryIdx()
+        ));
+    }
+
+    // 공감 취소 서비스 로직
+    public void delSympathy(DiarySympathyDto diarySympathyDto) {
+        sympathyRepository.deleteByDiaryIdxAndMemberIdx(
+                diarySympathyDto.getDiaryIdx(),
+                diarySympathyDto.getMemberIdx()
+        );
+    }
+
+    // 공감 여부 확인 서비스 로직
+    public Sympathy checkSympathy(DiarySympathyDto diarySympathyDto) {
+        return sympathyRepository.findByMemberIdxAndDiaryIdx(
+                diarySympathyDto.getMemberIdx(),
+                diarySympathyDto.getDiaryIdx()
+        );
+    }
+
+    // 댓글 좋아요 서비스 로직
+    public void addCommentLike(CommentLikeDto commentLikeDto) {
+        likesRepository.save(new Likes(
+                commentLikeDto.getMemberIdx(),
+                commentLikeDto.getCommentIdx()
+        ));
+    }
+
+    // 댓글 좋아요 취소 서비스 로직
+    public void delCommentLike(CommentLikeDto commentLikeDto) {
+        likesRepository.deleteByCommentIdxAndMemberIdx(
+                commentLikeDto.getCommentIdx(),
+                commentLikeDto.getCommentIdx()
+        );
+    }
+
+    // 댓글 좋아요 여부 확인 서비스 로직
+    public Likes checkCommentLike(CommentLikeDto commentLikeDto) {
+        return likesRepository.findByMemberIdxAndCommentIdx(
+                commentLikeDto.getMemberIdx(),
+                commentLikeDto.getCommentIdx()
+        );
+    }
+
 }

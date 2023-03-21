@@ -3,6 +3,7 @@ package com.fmi.nada.user;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Likes {
 
@@ -25,5 +27,10 @@ public class Likes {
 
     @Column(name = "comment_idx")
     private Long commentIdx;
+
+    public Likes(Long memberIdx, Long commentIdx) {
+        this.memberIdx = memberIdx;
+        this.commentIdx = commentIdx;
+    }
 
 }
