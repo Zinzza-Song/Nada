@@ -203,7 +203,7 @@
     </div>
 </div>
 
-    <script th:inline="javascript">
+    <script>
     <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
     function reportBtn() {
         location.href = "/board/report/write";
@@ -234,9 +234,6 @@
                 commentInput: $("#commentInput").val()
             },
             success: function (result) {
-                /* <![CDATA[ */
-                let name = /* [[ ${commentList} ]] */;
-                /* ]] */
                 // window.location.reload();
                 // commentList 삭제
                 $("#commentList").remove();
