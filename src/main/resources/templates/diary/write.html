@@ -38,7 +38,8 @@
               <div class="form-check form-check-inline" style="margin-left: 20px">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio2"
                        th:value="false" th:field="*{diaryPublicable}">
-                <label class="form-check-label" for="publicRadio2" style="font-size: 30px;text-align: center">비공개</label>
+                <label class="form-check-label" for="publicRadio2"
+                       style="font-size: 30px;text-align: center">비공개</label>
               </div>
 
             </div>
@@ -55,13 +56,14 @@
             </div>
 
             <div class="form-group" style="width: 650px;height: 400px;margin-bottom: 10px">
-                    <textarea style="width: 650px;height: 400px;margin-bottom: 10px" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
+                    <textarea style="width: 650px;height: 400px;margin-bottom: 10px" class="card-text diaryContent"
+                              id="diaryContent" placeholder="일기내용을 작성해주세요."
                               th:field="*{diaryContent}"/>
               <p th:if="${#fields.hasErrors('diaryContent')}" th:errorclass="error" th:errors="*{diaryContent}"/>
             </div>
 
             <div class="form-group diaryWriteBtn" style="width: 700px; margin-bottom: 10px">
-              <input type="button" id="englishBtn" name="englishBtn"  onclick="translation()"
+              <input type="button" id="englishBtn" name="englishBtn" onclick="translation()"
                      value="영번역" class="btn customBtn englishBtn"/>
               <input type="reset" id="diaryResetBtn" name="diaryResetBtn"
                      value="재작성" class="btn customBtn diaryResetBtn"/>
@@ -70,15 +72,15 @@
             </div>
 
             <!--                키워드-->
-            <div class="form-group keywordSubject" >
+            <div class="form-group keywordSubject">
               <label style="font-size: 30px;">키워드</label>
               <div class="keywords">
-<!--                                <div class="item">-->
-<!--                                  <span class="keyword">test</span>-->
-<!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
-<!--                                    <span class="blind">닫기</span>-->
-<!--                                  </button>-->
-<!--                                </div>-->
+                <!--                                <div class="item">-->
+                <!--                                  <span class="keyword">test</span>-->
+                <!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
+                <!--                                    <span class="blind">닫기</span>-->
+                <!--                                  </button>-->
+                <!--                                </div>-->
                 <div class="item">
                   <span class="keyword-item">키워드들어갈자리</span>
                   <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">
@@ -104,12 +106,14 @@
               <div class="form-check form-check-inline" style="margin-left: 20px;margin-bottom: 10px">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio1"
                        th:value="true" th:field="*{diaryAnalyzePublicable}">
-                <label class="form-check-label" for="diaryAnalyzeRadio1" style="font-size: 30px;text-align: center">공개</label>
+                <label class="form-check-label" for="diaryAnalyzeRadio1"
+                       style="font-size: 30px;text-align: center">공개</label>
               </div>
               <div class="form-check form-check-inline" style="margin-left: 20px;margin-bottom: 10px">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="diaryAnalyzeRadio12"
                        th:value="false" th:field="*{diaryAnalyzePublicable}">
-                <label class="form-check-label" for="diaryAnalyzeRadio1" style="font-size: 30px;text-align: center">비공개</label>
+                <label class="form-check-label" for="diaryAnalyzeRadio1"
+                       style="font-size: 30px;text-align: center">비공개</label>
               </div>
             </div>
 
@@ -118,21 +122,23 @@
             </div>
 
             <div class="form-group" style="width: 650px;height: 600px;margin-bottom: 10px">
-                    <textarea class="diaryAnalyze" style="width: 650px;height: 600px;margin-bottom: 10px" th:readonly="readonly" id="diaryAnalyze"
+                    <textarea class="diaryAnalyze" style="width: 650px;height: 600px;margin-bottom: 10px"
+                              th:readonly="readonly" id="diaryAnalyze"
                               th:field="*{diaryAnalyze}">건상님 감정상태가 점점 좋아지고 있어요~</textarea>
             </div>
 
             <input type="hidden" id="analyzeScore" th:field="*{analyzeScore}">
 
 
-            <button type="submit" class="btn btn-dark btn-diary-right" style="width: 100px;height: 70px;text-align: center">완료</button>
+            <button type="submit" class="btn btn-dark btn-diary-right"
+                    style="width: 100px;height: 70px;text-align: center">완료
+            </button>
           </div>
         </div>
       </div>
     </form>
   </div>
 </div>
-
 
 
 <script>
@@ -142,6 +148,25 @@
 
   function translation() {
     //영번역 함수
+    const diarycontent = document.getElementById('diaryContent');
+    let msg = diarycontent.value;
+    msg += "\n위 일기를 영어로 번역해줘요.";
+    console.log(msg);
+
+    const gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+          diarycontent.value = data.data.replace("\n\n", "");
+        });
   }
 
   function diarySave() {
@@ -179,16 +204,16 @@
           resLines.forEach(function (line) {
             if (line.indexOf("키워드:") != -1) {
               let temp = line;
-              keywords =temp.replace("키워드: ", "");
-            } else if(line.indexOf("키워드들:") != -1) {
+              keywords = temp.replace("키워드: ", "");
+            } else if (line.indexOf("키워드들:") != -1) {
               let temp = line;
-              keywords =temp.replace("키워드들: ", "");
-            } else if(line.indexOf("단어:") != -1) {
+              keywords = temp.replace("키워드들: ", "");
+            } else if (line.indexOf("단어:") != -1) {
               let temp = line;
-              keywords =temp.replace("단어: ", "");
-            } else if(line.indexOf("단어들:") != -1) {
+              keywords = temp.replace("단어: ", "");
+            } else if (line.indexOf("단어들:") != -1) {
               let temp = line;
-              keywords =temp.replace("단어들: ", "");
+              keywords = temp.replace("단어들: ", "");
             } else if (line.indexOf("조언:") != -1)
               advice = line;
             else if (line.indexOf("긍정적 문장 개수:") != -1) {
