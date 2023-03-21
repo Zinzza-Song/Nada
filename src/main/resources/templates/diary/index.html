@@ -14,7 +14,7 @@
   <div th:each="diary :${allDiaryList}" class="card diaryListCard">
     <div>
       <div >
-        <a class="diary_atag" th:href="@{diary/read2/{diaryIdx}(diaryIdx=${diary.diaryIdx})}" style="text-decoration-line: none;color: black">
+        <a class="diary_atag" th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}" style="text-decoration-line: none;color: black">
           <figcaption>자세히보기</figcaption>
         <div class="card-body diarymainbody">
 <!--          <h5 class="card-title cardListTitle" th:text="${diary.diarySubject}">-->
