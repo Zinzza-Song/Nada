@@ -26,20 +26,21 @@
   </div>
 </nav>
 
-<table class="table">
-  <thead>
+<div class="reportImg"></div>
+<table class="table reportTable">
+  <thead class="reportTableHead">
   <tr>
     <th scope="col">NO</th>
-    <th scope="col">신고 글</th>
-    <th scope="col">날짜</th>
+    <th class="reportTableHeadSubject" scope="col">신고 글</th>
+    <th class="reportTableHeadDate" scope="col">날짜</th>
     <th scope="col">조회수</th>
   </tr>
   </thead>
-  <tbody class="table-group-divider" th:each="report: ${allReportList}">
+  <tbody class="table-group-divider reportTableBody" th:each="report: ${allReportList}">
   <tr>
     <th scope="row" th:text="${report.reportIdx}"></th>
-    <td><a th:href="@{/board/report/read(reportIdx=${report.reportIdx})}" th:text="${report.reportSubject}"></a></td>
-    <td th:text="${#temporals.format(report.reportDate, 'YY-MM-dd')}"></td>
+    <td class="reportTableBodySubject"><a class="reportSubject" th:href="@{/board/report/read(reportIdx=${report.reportIdx})}" th:text="${report.reportSubject}"></a></td>
+    <td class="reportTableBodyDate" th:text="${#temporals.format(report.reportDate, 'YY-MM-dd')}"></td>
     <td th:text="${report.reportView}"></td>
   </tr>
   </tbody>

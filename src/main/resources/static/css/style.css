@@ -1186,30 +1186,37 @@ input[type="button"] {
     text-align: center;
     cursor: pointer;
 
-    color: #e3cab0;
-    transition: all .9s,color.3s;
+/* 전체 a태그 밑줄없앴음*/
+a{
+    text-decoration: none;
+}
 
+/* board/notice/index.html */
+
+.noticeSubject:visited{
+    color: #7239b1;
 }
 .customBtn:hover{
     color: #e3cab0;
     box-shadow: 0 80px 0 0 rgba(0,0,0,.25) inset,
     0 -80px 0 0 rgba(0,0,0,.25) inset;
 }
-/*footer 고정*/
-body{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.noticeSubject:hover{
+    color: #5c5c5b;
+    text-decoration: underline;
+
 }
-main{
-    flex-grow: 1;
+.noticeTable{
+    height: 100%;
+    width: 1770px;
+    background-image: url(../images/noticeBanner1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-#footer{
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    flex-shrink: 0;
-    background-color: #ccc;
+.noticeTableHead{
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
 /*topmenu custom css*/
 .top-menu {
