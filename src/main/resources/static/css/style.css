@@ -209,12 +209,39 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .top-nav {
     padding: 0;
 }
-
+/*topmenu custom css*/
 .top-menu {
     height: 100%;
 }
-
-
+.menu a{
+    color: #77493b;
+}
+.menu a:hover{
+    transform: translateY(-5px);
+    color: #330f0e;
+}
+.menu>li:hover .submenu{
+    height: 150px;
+    transition-duration: .5s;
+}
+.dropShow{
+    --bs-dropdown-link-active-bg: #eed7be;
+}
+.logoutBtn{
+    margin-top: 2px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+    background-color: #a38969;
+    box-shadow: 2px 4px 0 #330f0e;
+    color: #330f0e;
+    transition: .3s;
+    border-radius: 5px;
+}
+.logoutBtn:active{
+    box-shadow: 0px 1px 0 #330f0e;
+    transform: translateY(3px);
+}
 .userLoginBox {
     display: inline-block;
 }
@@ -1048,6 +1075,11 @@ input[type="button"] {
         border: none;
         resize: none;
         margin: 0 auto;
+.customBtn{
+    border-radius: 5px;
+    background-color: #6c583e;
+    text-align: center;
+    cursor: pointer;
 
         /*margin-bottom: 20px;*/
     }
@@ -1196,4 +1228,30 @@ input[type="button"] {
 .adviceText{
     font-variant: all-small-caps;
     font-size: 18px;
+}
+
+    color: #e3cab0;
+    transition: all .9s,color.3s;
+
+}
+.customBtn:hover{
+    color: #e3cab0;
+    box-shadow: 0 80px 0 0 rgba(0,0,0,.25) inset,
+                0 -80px 0 0 rgba(0,0,0,.25) inset;
+}
+/*footer 고정*/
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main{
+    flex-grow: 1;
+}
+#footer{
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    flex-shrink: 0;
+    background-color: #ccc;
 }
