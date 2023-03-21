@@ -22,8 +22,11 @@
     <div class="leftDiary diary-wrap">
       <div class="card-body diary diaryMedia col-6">
         <div class="form-group readTop">
-          <img class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
-               style="">
+          <img th:if="${sympathyBean==null}" class="btn  btn-primary_readImg" th:src="@{/images/sympathyOffImg.png}"
+               style="" onclick="sympathyOn()">
+          <img th:if="${sympathyBean!=null}" class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
+               style="" onclick="sympathyOff()">
+
           <p class=" btn-primary_read"
              style=""
              th:text="${readDiaryBean.diarySympathyCnt}" readonly></p>
@@ -120,7 +123,14 @@
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
-                <td>좋아요 버튼</td>
+                <td>
+                  <th:block th:if="${list.memberIdx!=member.memberIdx}">
+                    <img th:if="${likes == null}" class="btn  btn-primary_readImg"
+                         onclick="likeOn()" th:src="@{/images/likeOffImg.png}">
+                    <img th:if="${likes != null}" class="btn  btn-primary_readImg"
+                         onclick="likeOff()" th:src="@{/images/likeOnImg.png}">
+                  </th:block>
+                </td>
               </tr>
               </tbody>
             </th:block>
@@ -296,6 +306,20 @@
         )
       }
     });
+  }
+//   diary 공감버튼 function
+  function sympathyOn(){
+
+  }
+  function sympathyOff(){
+
+  }
+//   comment 좋아요버튼 function
+  function likeOn(){
+
+  }
+  function likeOff(){
+
   }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
