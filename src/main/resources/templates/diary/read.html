@@ -237,28 +237,18 @@
 </div>
 <script>
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
-  const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
-  const memberIdx = $('.idx').val(); //현재 로그인한 사용자 번호
-  const commentMemberIdx = $('#memberIdx').val();//댓글작성자 번호
-  // $('.blockMemberNickname').attr('value',commentWriter)
+  const writerIdx = $('.memberIdx').val(); // 게시글 작성자
+  const memberIdx = $('.idx').val(); //현재 로그인한 사용자
+
   function reportBtn() {
     location.href = "/board/report/write?reportedMemberIdx=" + writerIdx;
   }
 
-  function commentReportBtn() {
-    location.href = "/board/report/write?reportedMemberIdx=" + commentMemberIdx;
-  }
-
   $(document).ready(function () {
-    const writerIdx = $('.memberIdx').val(); // 게시글 작성자
-    const memberIdx = $('.idx').val(); //현재 로그인한 사용자
-    if (writerIdx === memberIdx) {
-      $('.writerBtn').show();
-    }
-    $('#addFriend').click(function () {
+    $('.addFriend').click(function () {
 
       const friendsDto = {
-        "friendsIdx": writerIdx
+        "friendsIdx": $("#memberIdx").val()
       };
 
       $.ajax({
@@ -267,76 +257,35 @@
         data: friendsDto
       }).done(function (msg) {
         console.log(msg);
-        if (msg === 'ok')
+        if (msg == 'ok')
           alert("친구가 정상적으로 추가되었습니다.");
-        else if (msg === 'already')
+        else if (msg == 'already')
           alert("이미 친구입니다.");
         else
           alert("차단 대상자 입니다.");
       });
     });
 
+    const writerIdx = $('.memberIdx').val(); // 게시글 작성자
+    const memberIdx = $('.idx').val(); //현재 로그인한 사용자
+    if (writerIdx === memberIdx) {
+      $('.writerBtn').show();
+    }
   });
 
-  function addFriend(e) {
-
-    const friendsDto = {
-      "friendsIdx": $(e).siblings('.memberIdx').val()
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/user/friend_add",
-      data: friendsDto
-    }).done(function (msg) {
-      console.log(msg);
-      if (msg == 'ok')
-        alert("친구가 정상적으로 추가되었습니다.");
-      else if (msg == 'already')
-        alert("이미 친구입니다.");
-      else
-        alert("차단 대상자 입니다.");
-    });
-  }
-
   function addBlock(e) {
-    const blockMemberIdx = $(e).siblings(writerIdx);
-    const blockMemberNickname = $(e).parents().siblings('.diaryWriter').text();
+    const blockMemberIdx = $(e).siblings('.memberIdx').val();
+    const blockMemberNickname = $(e).parents().siblings('.commentWriter').text();
 
     $('#blockMemberNickname').val(blockMemberNickname);
     $('#blockMemberIdx').val(blockMemberIdx);
-  }
-
-  //Comment block
-  function addCommentBlock(e) {
-    const blockMemberIdx = $(e).siblings(commentMemberIdx);
-    const blockMemberNickname = $(e).parents().siblings('.commentWriter').text();
   }
 
   function postBlock(e) {
     const blockListDto = {
       "blockMemberNickname": $('#blockMemberNickname').val(),
       "blockMemberReason": $('#blockMemberReason').val(),
-      "blockMemberIdx": writerIdx
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/user/blockList_add",
-      data: blockListDto
-    }).done(function (msg) {
-      if (msg == 'ok')
-        alert("차단리스트에 정상적으로 등록되었습니다.");
-      $('#writerBlock').modal('hide');
-    });
-  }
-
-  // 댓글작성자 차단
-  function postComBlock() {
-    const blockListDto = {
-      "blockMemberNickname": $('.blockMemberNickname').val(),
-      "blockMemberReason": $('.blockMemberReason').val(),
-      "blockMemberIdx": commentMemberIdx
+      "blockMemberIdx": $('#blockMemberIdx').val()
     };
 
     $.ajax({
