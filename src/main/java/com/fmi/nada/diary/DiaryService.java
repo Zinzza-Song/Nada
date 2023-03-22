@@ -90,8 +90,9 @@ public class DiaryService {
         return diaryRepository.findMyDiaryByMemberIdx(memberIdx);
     }
 
-    public List<Diary> getLikeDiary(Long diaryIdx) {
-        return diaryRepository.findLikeDiaryByDiaryIdx(diaryIdx);
+
+    public List<Diary> findSympathyDiaryList(Long memberIdx) {
+        return diaryRepository.findSympathyDiary(memberIdx);
     }
 
     // 다이어리 상세 보기
@@ -156,15 +157,17 @@ public class DiaryService {
     public void addCommentLike(CommentLikeDto commentLikeDto) {
         likesRepository.save(new Likes(
                 commentLikeDto.getMemberIdx(),
-                commentLikeDto.getCommentIdx()
+                commentLikeDto.getCommentIdx(),
+                commentLikeDto.getDiaryIdx()
         ));
     }
 
     // 댓글 좋아요 취소 서비스 로직
     public void delCommentLike(CommentLikeDto commentLikeDto) {
-        likesRepository.deleteByCommentIdxAndMemberIdx(
+        likesRepository.deleteByCommentIdxAndMemberIdxAndDiaryIdx(
                 commentLikeDto.getCommentIdx(),
-                commentLikeDto.getCommentIdx()
+                commentLikeDto.getMemberIdx(),
+                commentLikeDto.getDiaryIdx()
         );
     }
 
@@ -176,8 +179,17 @@ public class DiaryService {
         );
     }
 
+    public Likes checkCommentLikeWhenRead(Long memberIdx, Long CommentIdx) {
+        return likesRepository.findByMemberIdxAndCommentIdx(memberIdx, CommentIdx);
+    }
+
     public Sympathy checkSympathyDiary(Long memberIdx, Long diaryIdx) {
         return sympathyRepository.findByMemberIdxAndDiaryIdx(memberIdx, diaryIdx);
+    }
+
+    public Diary viewAdd(Diary diary) {
+        diary.setDiaryCnt(diary.getDiaryCnt() + 1L);
+        return diaryRepository.save(diary);
     }
 
 }

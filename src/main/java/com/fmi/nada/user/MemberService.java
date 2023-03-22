@@ -51,7 +51,7 @@ public class MemberService {
     }
 
     public List<Member> memberList() {
-        return memberRepository.findAllByOrderByMemberJoinDateDesc();
+        return memberRepository.findByAuthorityOrderByMemberJoinDateDesc("ROLE_USER");
     }
 
     public void delMember(Long memberIdx) {
