@@ -5,8 +5,8 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-  <!-- 반응형 웹 미디어쿼리 선언부   -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 반응형 웹 미디어쿼리 선언부   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -15,73 +15,75 @@
       class="qnaform"
       th:action="@{/admin/report_pro/{reportIdx}(reportIdx=${ReportBean?.reportIdx})}"
       th:method="put" th:object="${reportProBean}">
-  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
-  <div class="mb-3">
-    <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject"
-           th:value="${ReportBean?.reportSubject}" readonly>
-  </div>
+    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject"
+               th:value="${ReportBean?.reportSubject}" readonly>
+    </div>
 
-  <div class="mb-3">
-    <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter"
-           th:value="'신고자 : '+${ReportBean?.reportWriter}" readonly>
-  </div>
+    <div class="mb-3">
+        <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter"
+               th:value="'신고자 : '+${ReportBean?.reportWriter}" readonly>
+    </div>
 
-  <div class="mb-3">
-    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
-           th:value="'신고일 : '+${#temporals.format(ReportBean?.reportDate,'YY-MM-dd')}" readonly>
-  </div>
+    <div class="mb-3">
+        <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
+               th:value="'신고일 : '+${#temporals.format(ReportBean?.reportDate,'YY-MM-dd')}" readonly>
+    </div>
 
-  <div class="mb-3">
-    <input class="form-control qnaWriter" type="text" th:value="'신고사유 : '+${ReportBean?.reportCategory}" readonly>
-  </div>
+    <div class="mb-3">
+        <input class="form-control qnaWriter" type="text" th:value="'신고사유 : '+${ReportBean?.reportCategory}" readonly>
+    </div>
 
-  <div class="mb-3">
+    <div class="mb-3">
         <textarea class="form-control qnaContent" name="reportContent" id="reportContent " rows="5"
                   style="resize: none;"
                   th:text="'신고내용 : '+${ReportBean?.reportContent}" readonly>
         </textarea>
-  </div>
-  <!--신고 처리 내용-->
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
+    </div>
+    <!--신고 처리 내용-->
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
         <textarea th:field="*{reportAdminMent}" class="form-control qnaContent"
                   style="resize: none;"
                   id="reportAdminment" placeholder="현재 처리 진행 중 입니다."
                   rows="3" readonly></textarea>
-      </li>
-    </ul>
-    <p th:if="${#fields.hasErrors('reportAdminMent')}" th:errorclass="error" th:errors="*{reportAdminMent}"/>
-  </div>
+            </li>
+        </ul>
+        <p th:if="${#fields.hasErrors('reportAdminMent')}" th:errorclass="error" th:errors="*{reportAdminMent}"/>
+    </div>
 
-  <div class="mb-3">
-    <input type="text" class="form-control qnaWriter" name="reportReportedmember " id="reportReportedmember"
-           th:value="'신고대상자 : '+${ReportBean?.reportReportedMember}" readonly>
-  </div>
+    <div class="mb-3">
+        <input type="text" class="form-control qnaWriter" name="reportReportedmember " id="reportReportedmember"
+               th:value="'신고대상자 : '+${ReportBean?.reportReportedMember}" readonly>
+    </div>
 
-  <div class="mb-3">
-    <label for="reportFile" class="form-label">첨부파일</label>
-    <input class="form-control form-control-sm qnaFile" name="reportFile "
-           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;" th:value="${ReportBean.reportFile}"
-           id="reportFile">
-    <!--        파일 받아올 때 방법 생각 해 봐야함-->
-  </div>
+    <div class="mb-3">
+        <label for="reportFile" class="form-label">첨부파일</label>
+        <input class="form-control form-control-sm qnaFile" name="reportFile "
+               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;" th:value="${ReportBean.reportFile}"
+               id="reportFile">
+        <!--        파일 받아올 때 방법 생각 해 봐야함-->
+    </div>
 
 
-  <button type="button" class="btn btn-primary qnaBtn" onclick="takeReport()"
-          sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수</button>
-  <button type="submit" class="btn btn-danger qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
-  <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/report'">목록</button>
+    <button type="button" class="btn btn-primary qnaBtn" onclick="takeReport()"
+            sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수
+    </button>
+    <button type="submit" class="btn btn-danger qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
+    <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/report'">목록</button>
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 
 <!--  관리자 답변 ajax  -->
 <script th:inline="javascript">
-  function takeReport() {
-    const reportAdminmentEl = document.querySelector('#reportAdminment');
-    reportAdminmentEl.readOnly = false;
-    reportAdminmentEl.focus();
-  }
+    function takeReport() {
+        const reportAdminmentEl = document.querySelector('#reportAdminment');
+        reportAdminmentEl.readOnly = false;
+        reportAdminmentEl.focus();
+    }
 
 </script>
 

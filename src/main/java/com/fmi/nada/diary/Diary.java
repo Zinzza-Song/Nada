@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Diary Entity
- * */
+ */
 @Entity
 @Getter
 @Setter
@@ -71,6 +71,7 @@ public class Diary {
 
     @OneToMany(mappedBy = "diary")
     private List<Analyzed> analyzedList = new ArrayList<>();
+
     public Diary(Long memberIdx,
                  String diarySubject,
                  String diaryWriter,
@@ -79,7 +80,7 @@ public class Diary {
                  String diaryAnalyze,
                  Boolean diaryPublicable,
                  Boolean diaryAnalyzePublicable
-                 ) {
+    ) {
         this.memberIdx = memberIdx;
         this.diarySubject = diarySubject;
         this.diaryWriter = diaryWriter;
@@ -88,10 +89,6 @@ public class Diary {
         this.diaryAnalyze = diaryAnalyze;
         this.diaryPublicable = diaryPublicable;
         this.diaryAnalyzePublicable = diaryAnalyzePublicable;
-    }
-
-    public void addViewCount() {
-        this.diaryCnt++;
     }
 
 }

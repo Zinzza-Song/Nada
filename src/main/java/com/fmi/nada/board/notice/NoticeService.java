@@ -16,7 +16,7 @@ import java.util.UUID;
 
 /**
  * 공지사항 서비스
- * */
+ */
 @Service
 @RequiredArgsConstructor
 public class NoticeService {
@@ -35,16 +35,17 @@ public class NoticeService {
         pageable = PageRequest.of(page, 10);
         return noticeRepository.findAllByNoticeSubjectContaining(noticeSubject, pageable);
     }
+
     // 공지사항 등록
     public void writeNoticeFile(Notice notice, MultipartFile file) throws Exception {
         String projectPath = System.getProperty("user.dir");
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(getFullPath,fileName);
-        if(file.getOriginalFilename()==null && file.getOriginalFilename()==""){
+        File saveFile = new File(getFullPath, fileName);
+        if (file.getOriginalFilename() == null && file.getOriginalFilename() == "") {
             noticeRepository.save(notice);
-        }else {
+        } else {
             if (!saveFile.exists()) {
                 saveFile.mkdirs();
                 file.transferTo(saveFile);
@@ -58,8 +59,11 @@ public class NoticeService {
                 noticeRepository.save(notice);
             }
         }
-    };
-    public void writeNotice(Notice notice){
+    }
+
+    ;
+
+    public void writeNotice(Notice notice) {
         noticeRepository.save(notice);
     }
 
@@ -72,7 +76,7 @@ public class NoticeService {
     //공지사항 삭제
     public void deleteNotice(Long noticeIdx) {
         noticeRepository.deleteById(noticeIdx);
-        
+
     }
 
     //공지사항 수정
@@ -81,10 +85,10 @@ public class NoticeService {
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(getFullPath,fileName);
-        if(file.getOriginalFilename()==null && file.getOriginalFilename()==""){
+        File saveFile = new File(getFullPath, fileName);
+        if (file.getOriginalFilename() == null && file.getOriginalFilename() == "") {
             noticeRepository.save(notice);
-        }else {
+        } else {
             if (!saveFile.exists()) {
                 saveFile.mkdirs();
                 file.transferTo(saveFile);
@@ -98,8 +102,11 @@ public class NoticeService {
                 noticeRepository.save(notice);
             }
         }
-    };
-    public void updateNotice(Notice notice){
+    }
+
+    ;
+
+    public void updateNotice(Notice notice) {
         noticeRepository.save(notice);
     }
 }

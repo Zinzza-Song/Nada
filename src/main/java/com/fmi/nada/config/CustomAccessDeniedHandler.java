@@ -19,8 +19,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             HttpServletRequest request,
             HttpServletResponse response,
             AccessDeniedException accessDeniedException)
-            throws IOException, ServletException {
-        System.out.println("접근거부");
+            throws IOException{
         response.sendRedirect(errorPage);
     }
+
 }

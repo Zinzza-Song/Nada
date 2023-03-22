@@ -12,278 +12,281 @@
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <div id="container">
-  <!-- login Box -->
+    <!-- login Box -->
 
 
-  <form th:action="@{/user/join/join_pro}" method="post" th:object="${memberJoinBean}">
-    <div class="login-box" style="width: 500px;">
-      <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" name="memberName" id="memberName" th:field="*{memberName}" required
-               class="form-control">
-        <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}"/>
-      </div>
+    <form th:action="@{/user/join/join_pro}" method="post" th:object="${memberJoinBean}">
+        <div class="login-box" style="width: 500px;">
+            <div class="loginBoxTitle"><span class="logo-text">J O I N</span></div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="memberName" id="memberName" th:field="*{memberName}" required
+                       class="form-control">
+                <p th:if="${#fields.hasErrors('memberName')}" th:errorclass="error" th:errors="*{memberName}"/>
+            </div>
 
-      <div class="form-group">
-        <label>NickName</label>
-        <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
-               class="form-control">
-        <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
-        <span id="nick-check-warn"></span>
-      </div>
+            <div class="form-group">
+                <label>NickName</label>
+                <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
+                       class="form-control">
+                <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error" th:errors="*{memberNickname}"/>
+                <span id="nick-check-warn"></span>
+            </div>
 
-      <div class="form-group">
-        <label>Birth</label>
-        <input type="text" name="memberBirth" id="memberBirth" th:field="*{memberBirth}"
-               class="form-control">
-        <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}"/>
-      </div>
+            <div class="form-group">
+                <label>Birth</label>
+                <input type="text" name="memberBirth" id="memberBirth" th:field="*{memberBirth}"
+                       class="form-control">
+                <p th:if="${#fields.hasErrors('memberBirth')}" th:errorclass="error" th:errors="*{memberBirth}"/>
+            </div>
 
-      <div class="form-group">
-        <label>Address</label>
-        <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
-               class="form-control">
-        <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/><br>
-        <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-          <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-               style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
-               alt="접기 버튼">
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
+                       class="form-control">
+                <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
+                <br>
+                <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+                <div id="wrap"
+                     style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                         style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1"
+                         onclick="foldDaumPostcode()"
+                         alt="접기 버튼">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" name="username" id="username" th:field="*{username}"
+                       class="form-control">
+                <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
+                <div>
+                    <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
+                </div>
+            </div>
+
+            <div class="form-group email_code_box" style="display:none;">
+                <label>E-mail Code</label>
+                <div>
+                    <input type="text" name="member_email_code" id="member_email_code" class="form-control">
+                </div>
+                <span id="mail-check-warn"></span>
+                <div>
+                    <input type="button" id="btnCertification" value="인증" class="btn btn-light">
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label id="pw_label">PW</label>
+                <input type="password" name="password" id="password" th:field="*{password}"
+                       class="form-control" autocomplete="off">
+                <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
+            </div>
+
+            <div class="form-group">
+                <label>PW Check</label>
+                <input type="password" name="member_password_check" id="member_password_check" class="form-control"
+                       autocomplete="off">
+                <label id="passwordCheckLabel"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
+                       value="" autocomplete="off">
+                <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
+            </div>
+
+            <div id="login-btn-box">
+                <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
+            </div>
+
+
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>E-mail</label>
-        <input type="text" name="username" id="username" th:field="*{username}"
-               class="form-control">
-        <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
-        <div>
-          <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
-        </div>
-      </div>
-
-      <div class="form-group email_code_box" style="display:none;">
-        <label>E-mail Code</label>
-        <div>
-          <input type="text" name="member_email_code" id="member_email_code" class="form-control">
-        </div>
-        <span id="mail-check-warn"></span>
-        <div>
-          <input type="button" id="btnCertification" value="인증" class="btn btn-light">
-
-        </div>
-
-      </div>
-
-      <div class="form-group">
-        <label id="pw_label">PW</label>
-        <input type="password" name="password" id="password" th:field="*{password}"
-               class="form-control" autocomplete="off">
-        <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
-      </div>
-
-      <div class="form-group">
-        <label>PW Check</label>
-        <input type="password" name="member_password_check" id="member_password_check" class="form-control"
-               autocomplete="off">
-        <label id="passwordCheckLabel"></label>
-      </div>
-
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
-               value="" autocomplete="off">
-        <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
-      </div>
-
-      <div id="login-btn-box">
-        <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
-      </div>
-
-
-    </div>
-
-    <!-- login Box //-->
-  </form>
+        <!-- login Box //-->
+    </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
 
-  $('#memberNickname').keyup(function () {
-    console.log('눌림');
-    $.ajax({
-      type: 'GET',
-      url: '/user/join/nickname_exist_check?memberNickname=' + $('#memberNickname').val(),
-      success: function (data) {
-        const nickCheckMsg = $('#nick-check-warn');
-        if(data == "ok" && $('#memberNickname').val().length >= 3 && $('#memberNickname').val().length <= 8) {
-          console.log(data)
-          nickCheckMsg.html("사용 가능한 닉네임 입니다.");
-          nickCheckMsg.css('color', 'green');
-        } else {
-          nickCheckMsg.html("사용 불가능한 닉네임 입니다.");
-          nickCheckMsg.css('color', 'red');
-        }
-      }
-    });
-  });
-
-  $(function () {
-    $("#send_Mail_Btn").on('click', function () {
-      let codebox = $('.email_code_box');
-      const email = $('#username').val() // 이메일 주소값 얻어오기!
-      const name = $('#memberName').val();
-      console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
-      $.ajax({
-        type: 'GET',
-        url: '/user/join/email_exist_check?username=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-        success: function (data) {
-          if (data != "false") {
-            if (codebox.css('display') === 'none') {
-              //코드 입력 박스를 보이도록 표시
-              codebox.css('display', 'inline-block');
+    $('#memberNickname').keyup(function () {
+        console.log('눌림');
+        $.ajax({
+            type: 'GET',
+            url: '/user/join/nickname_exist_check?memberNickname=' + $('#memberNickname').val(),
+            success: function (data) {
+                const nickCheckMsg = $('#nick-check-warn');
+                if (data == "ok" && $('#memberNickname').val().length >= 3 && $('#memberNickname').val().length <= 8) {
+                    console.log(data)
+                    nickCheckMsg.html("사용 가능한 닉네임 입니다.");
+                    nickCheckMsg.css('color', 'green');
+                } else {
+                    nickCheckMsg.html("사용 불가능한 닉네임 입니다.");
+                    nickCheckMsg.css('color', 'red');
+                }
             }
-            console.log("data : " + data);
-            code = data;
-            swal('인증번호가 전송되었습니다.');
-          } else {
-            swal('사용할 수 없는 이메일 입니다.');
-          }
-        },
-        error: function () {
-          swal('사용할 수 없는 이메일 입니다.');
-        }
-      }); // end ajax
-    });// end send eamil
-    $('#btnCertification').on('click', function () {
-      const inputCode = $('#member_email_code').val();
-      const $resultMsg = $('#mail-check-warn');
-      if (inputCode === code) {
-        $resultMsg.html('인증번호가 일치합니다.');
-        $resultMsg.css('color', 'green');
-        $('#send_Mail_Btn').attr('disabled', true);
-        $('#btnCertification').attr('disabled', true);
-        $('#username').attr('readonly', true);
-        $('#username').attr('onChange', 'this.selectedIndex = this.initialSelect');
-      } else {
-        $resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
-        $resultMsg.css('color', 'red');
-      }
+        });
     });
-  });
+
+    $(function () {
+        $("#send_Mail_Btn").on('click', function () {
+            let codebox = $('.email_code_box');
+            const email = $('#username').val() // 이메일 주소값 얻어오기!
+            const name = $('#memberName').val();
+            console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
+            $.ajax({
+                type: 'GET',
+                url: '/user/join/email_exist_check?username=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+                success: function (data) {
+                    if (data != "false") {
+                        if (codebox.css('display') === 'none') {
+                            //코드 입력 박스를 보이도록 표시
+                            codebox.css('display', 'inline-block');
+                        }
+                        console.log("data : " + data);
+                        code = data;
+                        swal('인증번호가 전송되었습니다.');
+                    } else {
+                        swal('사용할 수 없는 이메일 입니다.');
+                    }
+                },
+                error: function () {
+                    swal('사용할 수 없는 이메일 입니다.');
+                }
+            }); // end ajax
+        });// end send eamil
+        $('#btnCertification').on('click', function () {
+            const inputCode = $('#member_email_code').val();
+            const $resultMsg = $('#mail-check-warn');
+            if (inputCode === code) {
+                $resultMsg.html('인증번호가 일치합니다.');
+                $resultMsg.css('color', 'green');
+                $('#send_Mail_Btn').attr('disabled', true);
+                $('#btnCertification').attr('disabled', true);
+                $('#username').attr('readonly', true);
+                $('#username').attr('onChange', 'this.selectedIndex = this.initialSelect');
+            } else {
+                $resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+                $resultMsg.css('color', 'red');
+            }
+        });
+    });
 
 
-  $('#member_password_check').blur(function () {
-    const member_password = $("#password").val();
-    //비밀번호의 값
-    const member_password_check = $("#member_password_check").val();
-    //비밀번호 확인의 값
-    console.log(member_password);
-    console.log(member_password_check);
-    if (member_password === member_password_check
-        && member_password !== "" && member_password_check !== ""
-        && member_password != null && member_password_check != null) {
+    $('#member_password_check').blur(function () {
+        const member_password = $("#password").val();
+        //비밀번호의 값
+        const member_password_check = $("#member_password_check").val();
+        //비밀번호 확인의 값
+        console.log(member_password);
+        console.log(member_password_check);
+        if (member_password === member_password_check
+            && member_password !== "" && member_password_check !== ""
+            && member_password != null && member_password_check != null) {
 
-      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-      $("#passwordCheckLabel").css("color", "green");
-
-    } else {
-
-      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-      $("#passwordCheckLabel").css("color", "red");
-    }
-  });
-  $('#password').blur(function () {
-    const member_password = $("#password").val();
-    //비밀번호의 값
-    const member_password_check = $("#member_password_check").val();
-    //비밀번호 확인의 값
-    console.log(member_password);
-    console.log(member_password_check);
-    if (member_password === member_password_check
-        && member_password !== "" && member_password_check !== ""
-        && member_password != null && member_password_check != null) {
-
-      $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-      $("#passwordCheckLabel").css("color", "green");
-
-    } else {
-
-      $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-      $("#passwordCheckLabel").css("color", "red");
-    }
-  });
-  // 우편번호 찾기 찾기 화면을 넣을 element
-  var element_wrap = document.getElementById('wrap');
-
-  function foldDaumPostcode() {
-    // iframe을 넣은 element를 안보이게 한다.
-    element_wrap.style.display = 'none';
-  }
-
-  function execDaumPostcode() {
-    // 현재 scroll 위치를 저장해놓는다.
-    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-    new daum.Postcode({
-      oncomplete: function (data) {
-        // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        var addr = ''; // 주소 변수
-        var extraAddr = ''; // 참고항목 변수
-
-        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-          addr = data.roadAddress;
-          $('#memberAddress').val(addr); //주소삽입
-          $("#memberAddress").focus();
-        } else { // 사용자가 지번 주소를 선택했을 경우(J) 주소삽입
-          addr = data.jibunAddress;
-          $('#memberAddress').val(addr);
-          $("#memberAddress").focus();
-        }
-
-        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-        if (data.userSelectedType === 'R') {
-          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-            extraAddr += data.bname;
-          }
-          // 건물명이 있고, 공동주택일 경우 추가한다.
-          if (data.buildingName !== '' && data.apartment === 'Y') {
-            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-          }
-          // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-          if (extraAddr !== '') {
-            extraAddr = ' (' + extraAddr + ')';
-          }
-          // 조합된 참고항목을 참고사항 필드에 넣는다.
-          // document.getElementById("extraAddress").value = extraAddr;
+            $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+            $("#passwordCheckLabel").css("color", "green");
 
         } else {
-          // document.getElementById("extraAddress").value = '';
+
+            $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+            $("#passwordCheckLabel").css("color", "red");
         }
+    });
+    $('#password').blur(function () {
+        const member_password = $("#password").val();
+        //비밀번호의 값
+        const member_password_check = $("#member_password_check").val();
+        //비밀번호 확인의 값
+        console.log(member_password);
+        console.log(member_password_check);
+        if (member_password === member_password_check
+            && member_password !== "" && member_password_check !== ""
+            && member_password != null && member_password_check != null) {
 
+            $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
+            $("#passwordCheckLabel").css("color", "green");
+
+        } else {
+
+            $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
+            $("#passwordCheckLabel").css("color", "red");
+        }
+    });
+    // 우편번호 찾기 찾기 화면을 넣을 element
+    var element_wrap = document.getElementById('wrap');
+
+    function foldDaumPostcode() {
         // iframe을 넣은 element를 안보이게 한다.
-        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
         element_wrap.style.display = 'none';
-        // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-        document.body.scrollTop = currentScroll;
-      },
-      // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-      onresize: function (size) {
-        element_wrap.style.height = size.height + 'px';
-      },
-      width: '100%',
-      height: '100%'
-    }).embed(element_wrap);
+    }
 
-    // iframe을 넣은 element를 보이게 한다.
-    element_wrap.style.display = 'block';
-  }
+    function execDaumPostcode() {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                    $('#memberAddress').val(addr); //주소삽입
+                    $("#memberAddress").focus();
+                } else { // 사용자가 지번 주소를 선택했을 경우(J) 주소삽입
+                    addr = data.jibunAddress;
+                    $('#memberAddress').val(addr);
+                    $("#memberAddress").focus();
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if (data.userSelectedType === 'R') {
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 참고사항 필드에 넣는다.
+                    // document.getElementById("extraAddress").value = extraAddr;
+
+                } else {
+                    // document.getElementById("extraAddress").value = '';
+                }
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            },
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            onresize: function (size) {
+                element_wrap.style.height = size.height + 'px';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+    }
 
 </script>
 <!-- Bootstrap Bundle with Popper -->

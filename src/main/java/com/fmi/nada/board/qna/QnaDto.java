@@ -18,4 +18,5 @@ public class QnaDto {
     @NotBlank
     private String qnaSubject;
     private String qnaFile;
+
 }

@@ -6,12 +6,12 @@
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var win = $(window);
             var doc = $(document);
 
             // Each time the user scrolls
-            win.scroll(function() {
+            win.scroll(function () {
                 // Vertical end reached?
                 if (doc.height() - win.height() == win.scrollTop()) {
                     // New row
@@ -29,7 +29,7 @@
                     $('.logMoreData tr:first-child').append($('<th />'));
 
                     // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function() {
+                    $('.logMoreData tr:not(:first-child)').each(function () {
                         $(this).append($('<td />'));
                     });
                 }
@@ -46,7 +46,7 @@
 <nav class="navbar searchbar topfix">
     <div class="container-fluid">
         <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
                 <option selected value="commentDate" id="commentDate">날짜</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
@@ -70,7 +70,9 @@
         <th scope="row" th:text="${comment.commentContent   }">댓글</th>
         <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
         <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
-        <th scope="row"><button type="button" class="btn btn-primary">삭제</button></th>
+        <th scope="row">
+            <button type="button" class="btn btn-primary">삭제</button>
+        </th>
     </tr>
 
     </tbody>
@@ -79,7 +81,6 @@
 <!-- End Example Code -->
 
 </body>
-
 
 
 </html>

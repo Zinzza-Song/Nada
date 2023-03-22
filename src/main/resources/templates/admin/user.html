@@ -6,12 +6,12 @@
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var win = $(window);
             var doc = $(document);
 
             // Each time the user scrolls
-            win.scroll(function() {
+            win.scroll(function () {
                 // Vertical end reached?
                 if (doc.height() - win.height() == win.scrollTop()) {
                     // New row
@@ -29,7 +29,7 @@
                     $('.logMoreData tr:first-child').append($('<th />'));
 
                     // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function() {
+                    $('.logMoreData tr:not(:first-child)').each(function () {
                         $(this).append($('<td />'));
                     });
                 }
@@ -45,7 +45,7 @@
 <nav class="navbar searchbar topfix">
     <div class="container-fluid">
         <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
                 <option selected value="username" id="username">회원ID</option>
                 <option value="name" id="name">회원이름</option>
                 <option value="birth" id="birth">생년월일</option>
@@ -77,7 +77,9 @@
         <th scope="row" th:text="${member.memberBirth}">생년월일</th>
         <th scope="row" th:text="${member.memberAddress}">주소</th>
         <th scope="row" th:text="${member.memberPhone }">연락처</th>
-        <th scope="row"><button type="button" class="btn btn-primary">탈퇴</button></th>
+        <th scope="row">
+            <button type="button" class="btn btn-primary">탈퇴</button>
+        </th>
     </tr>
 
     </tbody>
@@ -86,7 +88,6 @@
 <!-- End Example Code -->
 
 </body>
-
 
 
 </html>

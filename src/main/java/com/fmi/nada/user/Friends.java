@@ -42,9 +42,10 @@ public class Friends {
     public Friends(
             Long memberIdx,
             Long friendsMemberIdx,
-            String friendsNickname){
+            String friendsNickname) {
         this.memberIdx = memberIdx;
         this.friendsMemberIdx = friendsMemberIdx;
         this.friendsNickname = friendsNickname;
     }
+
 }

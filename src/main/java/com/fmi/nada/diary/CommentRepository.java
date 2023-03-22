@@ -17,4 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // 댓글 삭제
     void deleteByCommentIdx(Long commentIdx);
+
 }

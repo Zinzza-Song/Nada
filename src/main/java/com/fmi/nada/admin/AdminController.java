@@ -93,14 +93,6 @@ public class AdminController {
         return "admin/report";
     }
 
-//    @GetMapping("/report_pro/{reportIdx}")
-//    public String reportPro(@PathVariable("reportIdx") Long reportIdx,
-//                            @ModelAttribute ReportProDto reportProDto) {
-//
-//
-//        return "admin/repotPro";
-//    }
-
     /**
      * 신고 처리
      *

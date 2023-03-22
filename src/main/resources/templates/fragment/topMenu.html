@@ -18,9 +18,9 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/login.css">
     <!-- 카카오 맵 API 사용을 위한 스크립트 - API 키 존재 -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec"></script>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec"></script>
     <title>NADA 나의 다이어리</title>
 </head>
 <body>
@@ -29,14 +29,14 @@
     <nav class="navbar navbar-expand-lg top-nav">
         <div class="container-fluid top-menu">
             <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
-                                                                  style="width:100px; height:100px;"></a>
+                                                        style="width:100px; height:100px;"></a>
             <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse menu" id="navbarSupportedContent" >
+            <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-5 mb-lg-0">
                     <li class="nav-item dropdown col-md-7">
                         <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
@@ -65,13 +65,13 @@
                     </li>
                     <li class="nav-item col-md-7">
                         <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/user/read}">MyPage</a>
-                        <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/admin}">adminPage</a>
+                        <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">adminPage</a>
                     </li>
                     <li class="nav-item col-md-10">
                         <div class="join_login" sec:authorize="!isAuthenticated()">
                             <a class="nav-link userLoginBox"
-                                th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
-                                th:href="@{/user/login}">로그인</a>
+                               th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
+                                                                   th:href="@{/user/login}">로그인</a>
                         </div>
 
                         <span id="nickname" sec:authorize="isAuthenticated()"

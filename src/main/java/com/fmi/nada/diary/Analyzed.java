@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
 /**
  * Analyzed Entity
- * */
+ */
 @Entity
 @Getter
 @Table
@@ -32,9 +33,10 @@ public class Analyzed {
     @Column(name = "analyze_score")
     private Integer analyzeScore;
 
-    public Analyzed(Diary diary, String analyzeResult, Integer analyzeScore){
+    public Analyzed(Diary diary, String analyzeResult, Integer analyzeScore) {
         this.diary = diary;
         this.analyzeResult = analyzeResult;
         this.analyzeScore = analyzeScore;
     }
+
 }

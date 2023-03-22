@@ -28,6 +28,7 @@ public class ReportService {
         pageable = PageRequest.of(page, 10);
         return reportRepository.findAllByOrderByReportDateDesc(pageable);
     }
+
     public Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);

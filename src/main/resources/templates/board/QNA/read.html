@@ -14,74 +14,74 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="qnaform">
-  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px">
-    <span class="logo-text">Q & A</span></div>
-<div class="mb-3">
-  <input type="text" class="form-control qnaSubject" name="qnaSubject"
-         id="qnaSubject" th:value="${qnaBean.qnaSubject}">
-</div>
+    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px">
+        <span class="logo-text">Q & A</span></div>
+    <div class="mb-3">
+        <input type="text" class="form-control qnaSubject" name="qnaSubject"
+               id="qnaSubject" th:value="${qnaBean.qnaSubject}">
+    </div>
 
-<div class="mb-3">
-    <input class="form-control qnaWriter" id="qnaWriter" name="qnaWriter" readonly
-           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-           th:value="'문의자 : '+${qnaBean.qnaWriter }" type="text">
-</div>
+    <div class="mb-3">
+        <input class="form-control qnaWriter" id="qnaWriter" name="qnaWriter" readonly
+               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+               th:value="'문의자 : '+${qnaBean.qnaWriter }" type="text">
+    </div>
 
-<div class="mb-3">
-    <input class="form-control qnaDate" id="qnaDate" name="qnaDate" readonly
-           th:value="'문의일 : '+${#temporals.format(qnaBean.qnaDate,'yyyy-MM-dd')}">
-</div>
-<div class="mb-3">
+    <div class="mb-3">
+        <input class="form-control qnaDate" id="qnaDate" name="qnaDate" readonly
+               th:value="'문의일 : '+${#temporals.format(qnaBean.qnaDate,'yyyy-MM-dd')}">
+    </div>
+    <div class="mb-3">
         <textarea class="form-control qnaContent" id="qnaContent" name="qnaContent" readonly
                   style="resize: none;"
                   rows="5" th:text="'문의 내용 : '+${qnaBean.qnaContent }">
         </textarea>
-</div>
+    </div>
 
-<!--    파일 어떻게 읽어오는지 생각 해 봐야함-->
-<div class="mb-3">
-    <label class="form-label" for="qnaFile">첨부파일</label>
-    <a th:href="@{/board/qna/download(qnaIdx=${qnaBean.qnaIdx})}">
-        <input class="form-control form-control-sm qnaFile" id="qnaFile"
-               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-               name="qnaFile" readonly th:value="${qnaBean.qnaFile}">
-    </a>
-</div>
+    <!--    파일 어떻게 읽어오는지 생각 해 봐야함-->
+    <div class="mb-3">
+        <label class="form-label" for="qnaFile">첨부파일</label>
+        <a th:href="@{/board/qna/download(qnaIdx=${qnaBean.qnaIdx})}">
+            <input class="form-control form-control-sm qnaFile" id="qnaFile"
+                   style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+                   name="qnaFile" readonly th:value="${qnaBean.qnaFile}">
+        </a>
+    </div>
 
-<!-- 운영자 답변 -->
-<div class="card-header bg-light">
-    운영자 답변
-</div>
-<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <button id="answer" name="answer" class="btn btn-dark mt-3 qnaBtn">답변하기</button>
-</div>
-<div sec:authorize="hasAnyRole('ROLE_USER')">
+    <!-- 운영자 답변 -->
+    <div class="card-header bg-light">
+        운영자 답변
+    </div>
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <button id="answer" name="answer" class="btn btn-dark mt-3 qnaBtn">답변하기</button>
+    </div>
+    <div sec:authorize="hasAnyRole('ROLE_USER')">
   <textarea class="form-control qnaContent" name="qnaAnswered"
             style="resize: none;"
             id="qnaAnswered" th:text="${qnaBean.qnaAnswer}" rows="3"
             readonly></textarea>
-</div>
+    </div>
 
-<div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item" id="check" style="display: none">
+    <div class="card-body" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="check" style="display: none">
 
             <textarea class="form-control qnaContent" name="qnaAnswer"
                       style="resize: none;"
                       id="qnaAnswer" th:text="${qnaBean.qnaAnswer}"
                       rows="3"></textarea>
 
-            <input type="hidden" id="idx" th:value="${qnaBean.qnaIdx}">
-            <button type="button" class="btn btn-dark mt-3 qnaBtn" id="complete">처리완료</button>
-        </li>
-    </ul>
-</div>
+                <input type="hidden" id="idx" th:value="${qnaBean.qnaIdx}">
+                <button type="button" class="btn btn-dark mt-3 qnaBtn" id="complete">처리완료</button>
+            </li>
+        </ul>
+    </div>
 
-<form id="delete" th:action="@{/board/qna/delete}" th:method="delete" style="margin-top: 20px">
-    <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-    <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn">삭제</button>
-  <button class="btn btn-primary qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
-</form>
+    <form id="delete" th:action="@{/board/qna/delete}" th:method="delete" style="margin-top: 20px">
+        <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
+        <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn">삭제</button>
+        <button class="btn btn-primary qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
+    </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>

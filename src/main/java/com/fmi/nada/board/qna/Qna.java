@@ -54,5 +54,4 @@ public class Qna {
     @Column(name = "qna_isanswered")
     private Boolean qnaIsanswered = false;
 
-
 }

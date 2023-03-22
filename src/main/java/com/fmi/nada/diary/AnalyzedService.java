@@ -31,4 +31,5 @@ public class AnalyzedService {
         }
         return top6Analyzed;
     }
+
 }

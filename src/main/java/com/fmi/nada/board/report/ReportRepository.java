@@ -31,4 +31,5 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
 
     Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
+
 }

@@ -176,4 +176,8 @@ public class DiaryService {
         );
     }
 
+    public Sympathy checkSympathyDiary(Long memberIdx, Long diaryIdx) {
+        return sympathyRepository.findByMemberIdxAndDiaryIdx(memberIdx, diaryIdx);
+    }
+
 }

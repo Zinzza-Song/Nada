@@ -21,4 +21,5 @@ public class SigningKeyResolver extends SigningKeyResolverAdapter {
             return null;
         return JwtKey.getKey(kid);
     }
+
 }

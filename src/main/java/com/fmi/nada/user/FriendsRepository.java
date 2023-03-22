@@ -8,10 +8,11 @@ import java.util.List;
 /**
  * 친구 레포지토리
  */
-public interface FriendsRepository extends JpaRepository<Friends,Long> {
+public interface FriendsRepository extends JpaRepository<Friends, Long> {
 
     @Transactional
     void deleteFriendsByMemberIdxAndFriendsMemberIdx(Long memberIdx, Long friendsMemberIdx);
+
     List<Friends> findByMemberIdxAndFriendsMemberIdx(Long memberIdx, Long friendsMemberIdx);
 
     List<Friends> findFriendsByMemberIdx(Long memberIdx);

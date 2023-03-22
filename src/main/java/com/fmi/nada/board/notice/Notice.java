@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * 공지사항 엔티티
- * */
+ */
 @Entity
 @Table
 @Getter

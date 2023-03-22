@@ -6,12 +6,12 @@
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var win = $(window);
             var doc = $(document);
 
             // Each time the user scrolls
-            win.scroll(function() {
+            win.scroll(function () {
                 // Vertical end reached?
                 if (doc.height() - win.height() == win.scrollTop()) {
                     // New row
@@ -29,7 +29,7 @@
                     $('.logMoreData tr:first-child').append($('<th />'));
 
                     // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function() {
+                    $('.logMoreData tr:not(:first-child)').each(function () {
                         $(this).append($('<td />'));
                     });
                 }
@@ -46,7 +46,7 @@
 <nav class="navbar searchbar topfix">
     <div class="container-fluid">
         <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm"  id="searchType" aria-label=".form-select-sm example">
+            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
                 <option selected value="reportDate" id="reportDate">날짜</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
@@ -66,7 +66,8 @@
     <tbody class="table-group-divider logMoreData">
     <tr th:each="report:${allReportList }">
         <th scope="row" th:text="${report.reportCategory}">신고사유</th>
-        <th scope="row"><a th:text="${report.reportSubject}" th:href="@{/board/report/read/{reportIdx}(reportIdx=${report.reportIdx})}">신고 제목</a></th>
+        <th scope="row"><a th:text="${report.reportSubject}"
+                           th:href="@{/board/report/read/{reportIdx}(reportIdx=${report.reportIdx})}">신고 제목</a></th>
         <th scope="row" th:text="${report.reportReportedMember}">신고 대상자</th>
         <th scope="row" th:text="${#temporals.format(report.reportDate  , 'yyyy-MM-dd')}">날짜</th>
     </tr>
@@ -77,7 +78,6 @@
 <!-- End Example Code -->
 
 </body>
-
 
 
 </html>

@@ -114,5 +114,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.sendRedirect("/user/login?error=true&errorMsg=" + errorMessage);
     }
+
 }
 

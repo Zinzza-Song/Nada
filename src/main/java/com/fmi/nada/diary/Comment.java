@@ -9,9 +9,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 /**
  * Comment Entity
- * */
+ */
 @Entity
 @Getter
 @Setter
@@ -51,11 +52,12 @@ public class Comment {
                    Long diaryIdx,
                    String commentContent,
                    String commentWriter,
-                   String commentWriteremail){
+                   String commentWriteremail) {
         this.memberIdx = memberIdx;
         this.diaryIdx = diaryIdx;
         this.commentContent = commentContent;
         this.commentWriter = commentWriter;
         this.commentWriteremail = commentWriteremail;
     }
+
 }

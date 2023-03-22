@@ -221,7 +221,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .diarymainbody {
     height: 300px;
 }
-.diarymain{
+
+.diarymain {
     height: 1500px;
 }
 
@@ -260,15 +261,19 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
         font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     }
-    .qnaSubject{
+
+    .qnaSubject {
         font-size: 30px;
     }
-    .qnaWriter{
+
+    .qnaWriter {
         font-size: 30px;
     }
-    .qnaDate{
+
+    .qnaDate {
         font-size: 30px;
     }
+
     .qnaContent {
         font-size: 30px;
     }
@@ -902,7 +907,7 @@ input[type="button"] {
     --bs-btn-active-border-color: #d0baaa;
 }
 
-.diarySearchBar{
+.diarySearchBar {
     width: 100%;
 }
 
@@ -1933,21 +1938,21 @@ main {
 }
 
 
-
 .adviceText {
     font-variant: all-small-caps;
     font-size: 18px;
 }
 
 
-
 /* 전체 a태그 밑줄없앴음*/
 a {
     text-decoration: none;
 }
-.mypageSubject:hover{
+
+.mypageSubject:hover {
     text-decoration: underline;
 }
+
 /*--------------------------------*/
 
 /* board/notice/index.html */
@@ -2024,26 +2029,31 @@ a {
 }
 
 /* /board/QNA/index.html  */
-.qnaIndexSubject:visited{
+.qnaIndexSubject:visited {
     color: #5c5c5b;
 }
-.qnaIndexSubject{
+
+.qnaIndexSubject {
     color: #5c5c5b;
 }
-.qnaIndexSubject:hover{
+
+.qnaIndexSubject:hover {
     color: #5c5c5b;
     text-decoration: underline;
 }
-.qnaTableHead{
+
+.qnaTableHead {
     vertical-align: bottom;
     font-size: 25px;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
-.qnaTableBody{
+
+.qnaTableBody {
     vertical-align: inherit;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 20px;
 }
+
 .qnaTableBodySubject, .qnaTableBodyDate,
 .qnaTableHeadSubject, .qnaTableHeadDate {
     text-align: center;

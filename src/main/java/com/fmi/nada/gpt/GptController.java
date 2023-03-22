@@ -27,7 +27,7 @@ public class GptController {
 
         String message = element.getAsJsonObject().get("msg").getAsString();
 
-        if(!StringUtils.hasText(message))
+        if (!StringUtils.hasText(message))
             return ResponseModel.fail("일기를 작성해 주세요");
 
         try {

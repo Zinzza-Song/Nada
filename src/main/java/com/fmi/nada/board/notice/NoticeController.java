@@ -27,9 +27,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+
 /**
  * 공지사항 컨트롤러
- * */
+ */
 @Controller
 @RequestMapping("/board/notice")
 @RequiredArgsConstructor
@@ -41,19 +42,18 @@ public class NoticeController {
     //공지사항 메인 페이지
     @GetMapping
     public String main(@PageableDefault Pageable pageable,
-            @RequestParam(value = "type", required = false) String type,
-            @RequestParam(value = "keyword", required = false) String keyword,
-            Model model) {
+                       @RequestParam(value = "type", required = false) String type,
+                       @RequestParam(value = "keyword", required = false) String keyword,
+                       Model model) {
 
         Page<Notice> noticeList = null;
 
-        if(keyword == null) {
+        if (keyword == null) {
             noticeList = noticeService.findAllByOrderByNoticeDateDesc(pageable);
-        }
-        else if(type.equals("content") && keyword != null){
+        } else if (type.equals("content") && keyword != null) {
             noticeList = noticeService.findAllByNoticeSubjectContaining(keyword, pageable);
         }
-        model.addAttribute("noticeList",noticeList);
+        model.addAttribute("noticeList", noticeList);
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);
         return "board/notice/index";
@@ -69,7 +69,7 @@ public class NoticeController {
         Notice notice = noticeService.getNoticeDetail(noticeIdx);
         viewCountValidation(notice, request, response);
         model.addAttribute("readNoticeBean", notice);
-        return "board/notice/read" ;
+        return "board/notice/read";
     }
 
     // 공지사항 작성 페이지
@@ -84,19 +84,19 @@ public class NoticeController {
                                   BindingResult bindingResult,
                                   Model model,
                                   MultipartFile file) throws Exception {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "board/notice/write";
         }
         Notice notice = new Notice();
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
         notice.setNoticeViews(0L);
-        if (file.isEmpty()){
+        if (file.isEmpty()) {
             noticeService.writeNotice(notice);
-        }else {
-            noticeService.writeNoticeFile(notice,file);
+        } else {
+            noticeService.writeNoticeFile(notice, file);
         }
-        return "redirect:read?noticeIdx="+notice.getNoticeIdx();
+        return "redirect:read?noticeIdx=" + notice.getNoticeIdx();
     }
 
     // 공지사항 수정 폼 페이지
@@ -104,7 +104,7 @@ public class NoticeController {
     public String modifyNotice(@RequestParam("noticeIdx") Long notice_idx, Model model) {
         Notice notice = noticeService.getNoticeDetail(notice_idx);
         model.addAttribute("modifyNoticeBean", notice);
-        model.addAttribute("readNoticeBean",notice);
+        model.addAttribute("readNoticeBean", notice);
         return "board/notice/modify";
     }
 
@@ -114,29 +114,31 @@ public class NoticeController {
                                    BindingResult bindingResult,
                                    @RequestParam("noticeIdx") Long noticeIdx,
                                    MultipartFile file) throws Exception {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "board/notice/modify";
         }
         Notice notice = noticeService.getNoticeDetail(noticeIdx);
         notice.setNoticeSubject(noticeDTO.getNoticeSubject());
         notice.setNoticeContent(noticeDTO.getNoticeContent());
-        if (file.isEmpty()){
+        if (file.isEmpty()) {
             noticeService.updateNotice(notice);
-        }else {
-            noticeService.updateNoticeFile(notice,file);
+        } else {
+            noticeService.updateNoticeFile(notice, file);
         }
         return "redirect:read?noticeIdx=" + noticeIdx;
     }
+
     @GetMapping("/download")
-    public ResponseEntity<Resource> download(@RequestParam("noticeIdx") Long noticeIdx)throws Exception{
+    public ResponseEntity<Resource> download(@RequestParam("noticeIdx") Long noticeIdx) throws Exception {
         Notice notice = noticeService.getNoticeDetail(noticeIdx);
         String projectPath = System.getProperty("user.dir");
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
-        UrlResource resource = new UrlResource("file:"+getFullPath+"\\"+notice.getNoticeFile());
+        UrlResource resource = new UrlResource("file:" + getFullPath + "\\" + notice.getNoticeFile());
         String encodedFileName = UriUtils.encode(notice.getNoticeFile(), StandardCharsets.UTF_8);
         String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition).body(resource);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(resource);
     }
+
     // 공지사항 삭제 서비스 로직
     @DeleteMapping("/delete")
     public String deleteNotice(@RequestParam("noticeIdx") Long noticeIdx) {

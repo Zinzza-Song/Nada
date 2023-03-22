@@ -70,8 +70,6 @@ public class DiaryController {
     @GetMapping("/read/{diaryIdx}")
     public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
                             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
-                            HttpServletRequest request,
-                            HttpServletResponse response,
                             Authentication authentication,
                             Model model,
                             @ModelAttribute("blockListDto") BlockListDto blockListDto) {
@@ -83,7 +81,6 @@ public class DiaryController {
             model.addAttribute("sympathyBean", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
-        viewCountValidation(diary, request, response);
         model.addAttribute("readDiaryBean", diary);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
@@ -270,39 +267,5 @@ public class DiaryController {
                 }
             }
         }
-    }
-
-    private void viewCountValidation(Diary diary, HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = null;
-        boolean isCookie = false;
-        // request에 쿠키들이 있을 때
-        for (int i = 0; cookies != null && i < cookies.length; i++) {
-            // postView 쿠키가 있을 때
-            if (cookies[i].getName().equals("noticeView")) {
-                // cookie 변수에 저장
-                cookie = cookies[i];
-                // 만약 cookie 값에 현재 게시글 번호가 없을 때
-                if (!cookie.getValue().contains("[" + diary.getDiaryIdx() + "]")) {
-                    // 해당 게시글 조회수를 증가시키고, 쿠키 값에 해당 게시글 번호를 추가
-                    diary.addViewCount();
-                    cookie.setValue(cookie.getValue() + "[" + diary.getDiaryIdx() + "]");
-                }
-                isCookie = true;
-                break;
-            }
-        }
-        // 만약 noticeView라는 쿠키가 없으면 처음 접속한 것이므로 새로 생성
-        if (!isCookie) {
-            diary.addViewCount();
-            cookie = new Cookie("noticeView", "[" + diary.getDiaryIdx() + "]"); // oldCookie에 새 쿠키 생성
-        }
-
-        // 쿠키 유지시간을 오늘 하루 자정까지로 설정
-        long todayEndSecond = LocalDate.now().atTime(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC);
-        long currentSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        cookie.setPath("/"); // 모든 경로에서 접근 가능
-        cookie.setMaxAge((int) (todayEndSecond - currentSecond));
-        response.addCookie(cookie);
     }
 }

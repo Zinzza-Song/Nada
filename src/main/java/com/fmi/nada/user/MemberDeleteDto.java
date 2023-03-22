@@ -9,6 +9,4 @@ public class MemberDeleteDto {
 
     private Long friendsIdx;
 
-
-
 }

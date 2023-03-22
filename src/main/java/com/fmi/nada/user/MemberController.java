@@ -30,12 +30,6 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
     private final AnalyzedService analyzedService;
-
-//    @GetMapping("/loginfail")
-//    public String loginFail() {
-//        return "user/loginfail";
-//    }
-
     @GetMapping("/login")
     public String login(
             @RequestParam(value = "error", required = false) String error,

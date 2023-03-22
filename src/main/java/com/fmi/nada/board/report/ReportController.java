@@ -38,10 +38,9 @@ public class ReportController {
                          Model model) {
 
         Page<Report> allReportList = null;
-        if(keyword == null) {
+        if (keyword == null) {
             allReportList = reportService.findAllByOrderByReportDateDesc(pageable);
-        }
-        else if(keyword != null) {
+        } else if (keyword != null) {
             allReportList = reportService.findAllByReportSubjectContaining(keyword, pageable);
         }
         model.addAttribute("allReportList", allReportList);
@@ -52,13 +51,10 @@ public class ReportController {
 
     @GetMapping("/read")
     public String read(@RequestParam("reportIdx") Long reportIdx,
-                       HttpServletRequest request,
-                       HttpServletResponse response,
                        Model model,
                        @ModelAttribute("reportProBean") ReportProDto reportProDto) {
         Report ReportBean = reportService.findByReportIdx(reportIdx);
         reportProDto.setReportAdminMent(ReportBean.getReportAdminMent());
-        viewCountValidation(ReportBean, request, response);
         model.addAttribute("ReportBean", ReportBean);
 
         return "board/report/read";
@@ -98,37 +94,4 @@ public class ReportController {
         return "redirect:/board/report/read/" + report.getReportIdx() + "?page=1";
     }
 
-    private void viewCountValidation(Report report, HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = null;
-        boolean isCookie = false;
-        // request에 쿠키들이 있을 때
-        for (int i = 0; cookies != null && i < cookies.length; i++) {
-            // postView 쿠키가 있을 때
-            if (cookies[i].getName().equals("noticeView")) {
-                // cookie 변수에 저장
-                cookie = cookies[i];
-                // 만약 cookie 값에 현재 게시글 번호가 없을 때
-                if (!cookie.getValue().contains("[" + report.getReportIdx() + "]")) {
-                    // 해당 게시글 조회수를 증가시키고, 쿠키 값에 해당 게시글 번호를 추가
-                    report.addViewCount();
-                    cookie.setValue(cookie.getValue() + "[" + report.getReportDate() + "]");
-                }
-                isCookie = true;
-                break;
-            }
-        }
-        // 만약 noticeView라는 쿠키가 없으면 처음 접속한 것이므로 새로 생성
-        if (!isCookie) {
-            report.addViewCount();
-            cookie = new Cookie("noticeView", "[" + report.getReportIdx() + "]"); // oldCookie에 새 쿠키 생성
-        }
-
-        // 쿠키 유지시간을 오늘 하루 자정까지로 설정
-        long todayEndSecond = LocalDate.now().atTime(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC);
-        long currentSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        cookie.setPath("/"); // 모든 경로에서 접근 가능
-        cookie.setMaxAge((int) (todayEndSecond - currentSecond));
-        response.addCookie(cookie);
-    }
 }

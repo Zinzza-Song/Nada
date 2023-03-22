@@ -27,10 +27,10 @@ public class QnaService {
         String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(getFullPath,fileName);
-        if(file.getOriginalFilename()==null && file.getOriginalFilename()==""){
+        File saveFile = new File(getFullPath, fileName);
+        if (file.getOriginalFilename() == null && file.getOriginalFilename() == "") {
             qnaRepository.save(qna);
-        }else {
+        } else {
             if (!saveFile.exists()) {
                 saveFile.mkdirs();
                 file.transferTo(saveFile);
@@ -45,9 +45,11 @@ public class QnaService {
             }
         }
     }
-    public void writeQna(Qna qna){
+
+    public void writeQna(Qna qna) {
         qnaRepository.save(qna);
     }
+
     public List<Qna> getList() {
         return qnaRepository.findAll();
     }
@@ -70,7 +72,6 @@ public class QnaService {
         pageable = PageRequest.of(page, 10);
         return qnaRepository.findAllByQnaSubjectContaining(keyword, pageable);
     }
-
 
     public Qna get(Long qnaIdx) {
         Optional<Qna> qna = qnaRepository.findById(qnaIdx);

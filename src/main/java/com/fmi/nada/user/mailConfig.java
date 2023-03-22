@@ -11,7 +11,7 @@ import java.util.Properties;
 public class mailConfig {
 
     @Bean
-    public JavaMailSender javaMailSender(){
+    public JavaMailSender javaMailSender() {
 
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
@@ -39,9 +39,9 @@ public class mailConfig {
         // smtp strattles 사용
         properties.setProperty("mail.debug", "true");
         // 디버그 사용
-        properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");
+        properties.setProperty("mail.smtp.ssl.trust", "smtp.naver.com");
         // ssl 인증 서버는 smtp.naver.com
-        properties.setProperty("mail.smtp.ssl.enable","true");
+        properties.setProperty("mail.smtp.ssl.enable", "true");
         // ssl 사용
         return properties;
     }

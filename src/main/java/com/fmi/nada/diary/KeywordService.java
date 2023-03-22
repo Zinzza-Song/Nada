@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * Keyword Service
- * */
+ */
 @Service
 @RequiredArgsConstructor
 public class KeywordService {
@@ -23,7 +23,7 @@ public class KeywordService {
         return keywordRepository.findTop5ByOrderByKeywordCntDesc();
     }
 
-    public void register(Keyword keyword){
+    public void register(Keyword keyword) {
         keywordRepository.save(keyword);
     }
 
