@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- 카카오 맵 API 사용을 위한 스크립트 - API 키 존재 -->
     <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec"></script>
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec&libraries=services"></script>
     <title>NADA 나의 다이어리</title>
 </head>
 <body>
@@ -28,8 +28,10 @@
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg top-nav">
         <div class="container-fluid top-menu">
-            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
-                                                        style="width:100px; height:100px;"></a>
+            <div class="nav-logo">
+                <a class="navbar-brand" th:href="@{/}">
+                    <img class="btn" th:src="@{/images/nada_logo.png}" style="width:130px; height:120px;"></a>
+            </div>
             <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false"

@@ -1,6 +1,7 @@
 package com.fmi.nada.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,5 +13,8 @@ public interface BlockListRepository extends JpaRepository<BlockList, Long> {
     List<BlockList> findBlockListByMemberIdx(Long memberIdx);
 
     BlockList findByBlockMemberIdxAndMemberIdx(Long blockMemberIdx, Long memberIDx);
+
+    @Transactional
+    void deleteByMemberIdxAndBlockMemberIdx(Long memberIdx, Long blockMemberIdx);
 
 }

@@ -30,6 +30,7 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
     private final AnalyzedService analyzedService;
+
     @GetMapping("/login")
     public String login(
             @RequestParam(value = "error", required = false) String error,
@@ -168,35 +169,18 @@ public class MemberController {
         String diaryWriteDateJson = objectMapper.writeValueAsString(diaryWriteDateArr);
         model.addAttribute("diaryWriteDateArr", diaryWriteDateJson);
 
-        // 공감이 있는 글인지 아닌지 여부에 따라 분리
-        Sympathy sympathy = memberService.getLikeIdx(memberIdx);
-        if (sympathy == null) {
-            List<Diary> myDiaryList = diaryService.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);
-            model.addAttribute("myDiaryList", myDiaryList);
+        List<Diary> myDiaryList = diaryService.findTop6ByMemberIdxOrderByDiaryDateDesc(memberIdx);
+        model.addAttribute("myDiaryList", myDiaryList);
 
-            List<Friends> friendsList = memberService.friendsList(memberIdx);
-            model.addAttribute("friendsList", friendsList);
+        List<Friends> friendsList = memberService.friendsList(memberIdx);
+        model.addAttribute("friendsList", friendsList);
 
-            List<BlockList> blockLists = memberService.blockLists(memberIdx);
-            model.addAttribute("blockLists", blockLists);
+        List<BlockList> blockLists = memberService.blockLists(memberIdx);
+        model.addAttribute("blockLists", blockLists);
 
-        } else {
-            Long likeDiaryIdx = sympathy.getDiaryIdx();
-            System.out.println(likeDiaryIdx);
+        List<Diary> likeDiaryList = diaryService.findSympathyDiaryList(memberIdx);
+        model.addAttribute("likeDiaryList", likeDiaryList);
 
-            List<Diary> myDiaryList = diaryService.findMyDiaryByMemberIdx(memberIdx);
-            model.addAttribute("myDiaryList", myDiaryList);
-
-            List<Friends> friendsList = memberService.friendsList(memberIdx);
-            model.addAttribute("friendsList", friendsList);
-
-            List<BlockList> blockLists = memberService.blockLists(memberIdx);
-            model.addAttribute("blockLists", blockLists);
-
-            List<Diary> likeDiaryList = diaryService.getLikeDiary(likeDiaryIdx);
-            model.addAttribute("likeDiaryList", likeDiaryList);
-
-        }
         return "user/read";
     }
 
@@ -273,6 +257,19 @@ public class MemberController {
         model.addAttribute("friendsList", friendsList);
 
         return "/user/read :: #showFriendsList";
+    }
+
+    @DeleteMapping("/unblock")
+    public String unblock(BlockListDto blockListDto,
+                          Authentication authentication,
+                          Model model) {
+        Member member = (Member) authentication.getPrincipal();
+
+        memberService.delBlocks(member.getMemberIdx(), blockListDto.getBlockMemberIdx());
+        List<BlockList> blockList = memberService.blockLists(member.getMemberIdx());
+        model.addAttribute("blockLists", blockList);
+
+        return "/user/read :: #showBlocksList";
     }
 
     @PostMapping("/blockList_add")

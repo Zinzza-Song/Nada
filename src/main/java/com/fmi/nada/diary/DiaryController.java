@@ -14,14 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,14 +71,13 @@ public class DiaryController {
         model.addAttribute("member", member);
 
         Sympathy sympathy = diaryService.checkSympathyDiary(member.getMemberIdx(), diaryIdx);
-        if (sympathy != null)
-            model.addAttribute("sympathyBean", sympathy);
+        model.addAttribute("sympathyBeen", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
-        model.addAttribute("readDiaryBean", diary);
+        Diary readDiaryBean = diaryService.viewAdd(diary);
+        model.addAttribute("readDiaryBean", readDiaryBean);
 
-        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
-        model.addAttribute("commentList", commentList);
+        getCommentList(diaryIdx, model, member);
 
         return "diary/read";
     }
@@ -147,8 +140,7 @@ public class DiaryController {
 
         commentService.resisterComment(comment);
 
-        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
-        model.addAttribute("commentList", commentList);
+        getCommentList(diaryIdx, model, member);
 
         // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
         // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
@@ -201,53 +193,74 @@ public class DiaryController {
 
     // 다이어리 공감
     @PostMapping("/sympathy")
-    @ResponseBody
-    public String addSympathy(DiarySympathyDto diarySympathyDto) {
-        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
-        if (sympathy != null)
-            return "fail";
+    public String addSympathy(
+            DiarySympathyDto diarySympathyDto,
+            Authentication authentication,
+            Model model
+    ) {
+        Member member = (Member) authentication.getPrincipal();
+        diarySympathyDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.addSympathy(diarySympathyDto);
 
-        return "ok";
+        Sympathy sympathyBeen = diaryService.checkSympathy(diarySympathyDto);
+        model.addAttribute("sympathyBeen", sympathyBeen);
+
+        Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
+        model.addAttribute("readDiaryBean", readDiaryBean);
+
+        return "/diary/read :: #sympathyBtn";
     }
 
     // 다이어리 공감 취소
     @DeleteMapping("/sympathy")
-    @ResponseBody
-    public String delSympathy(DiarySympathyDto diarySympathyDto) {
-        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
-        if (sympathy == null)
-            return "fail";
+    public String delSympathy(
+            DiarySympathyDto diarySympathyDto,
+            Authentication authentication,
+            Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        diarySympathyDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.delSympathy(diarySympathyDto);
 
-        return "ok";
+        Sympathy sympathyBeen = diaryService.checkSympathy(diarySympathyDto);
+        model.addAttribute("sympathyBeen", sympathyBeen);
+
+        Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
+        model.addAttribute("readDiaryBean", readDiaryBean);
+
+        return "/diary/read :: #sympathyBtn";
     }
 
     // 댓글 좋아요
     @PostMapping("/commentLike")
-    @ResponseBody
-    public String addCommentLike(CommentLikeDto commentLikeDto) {
-        Likes likes = diaryService.checkCommentLike(commentLikeDto);
-        if (likes != null)
-            return "fail";
+    public String addCommentLike(
+            CommentLikeDto commentLikeDto,
+            Authentication authentication,
+            Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        commentLikeDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.addCommentLike(commentLikeDto);
 
-        return "ok";
+        getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        return "/diary/read :: tbody";
     }
 
     @DeleteMapping("/commentLike")
-    @ResponseBody
-    public String delCommentLike(CommentLikeDto commentLikeDto) {
-        Likes likes = diaryService.checkCommentLike(commentLikeDto);
-        if (likes == null)
-            return "fail";
+    public String delCommentLike(CommentLikeDto commentLikeDto,
+                                 Authentication authentication,
+                                 Model model) {
+        System.out.println("게시글 좋아요 취소 돌입");
+        Member member = (Member) authentication.getPrincipal();
+        commentLikeDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.delCommentLike(commentLikeDto);
 
-        return "ok";
+        getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        return "/diary/read :: tbody";
     }
 
     private void insertKeywords(DiaryDTO diaryDTO) {
@@ -268,4 +281,20 @@ public class DiaryController {
             }
         }
     }
+
+    private void getCommentList(Long diaryIdx, Model model, Member member) {
+        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+        model.addAttribute("commentList", commentList);
+
+        List<Boolean> commentIsLikes = new ArrayList<>();
+        for (Comment c : commentList) {
+            Likes likes = diaryService.checkCommentLikeWhenRead(member.getMemberIdx(), c.getCommentIdx());
+            if (likes != null)
+                commentIsLikes.add(true);
+            else
+                commentIsLikes.add(false);
+        }
+        model.addAttribute("commentIsLikes", commentIsLikes);
+    }
+
 }

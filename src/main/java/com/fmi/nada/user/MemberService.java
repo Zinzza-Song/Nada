@@ -51,7 +51,7 @@ public class MemberService {
     }
 
     public List<Member> memberList() {
-        return memberRepository.findAllByOrderByMemberJoinDateDesc();
+        return memberRepository.findByAuthorityOrderByMemberJoinDateDesc("ROLE_USER");
     }
 
     public void delMember(Long memberIdx) {
@@ -118,6 +118,13 @@ public class MemberService {
                 blockListDto.getBlockMemberNickname(),
                 blockListDto.getBlockMemberReason()
         ));
+    }
+
+    public void delBlocks(Long memberIdx,
+                          Long blockMemberIdx) {
+        blockListRepository.deleteByMemberIdxAndBlockMemberIdx(
+                memberIdx,
+                blockMemberIdx);
     }
 
 }

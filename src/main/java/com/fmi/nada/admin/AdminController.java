@@ -137,11 +137,14 @@ public class AdminController {
      * @param memberIdx 탈퇴 시킬 회원의 PK
      * @return 전체 회원 조회 페이지로 리다이렉트
      */
-    @DeleteMapping("/user_delete/{memberIdx}")
-    public String delMember(@PathVariable("memberIdx") Long memberIdx) {
+    @DeleteMapping("/user_delete")
+    public String delMember(@RequestParam("memberIdx") Long memberIdx, Model model) {
         memberService.delMember(memberIdx);
 
-        return "redirect:/user";
+        List<Member> adminMemberList = memberService.memberList();
+        model.addAttribute("adminMemberList", adminMemberList);
+
+        return "/admin/user :: #memberList";
     }
 
     /**

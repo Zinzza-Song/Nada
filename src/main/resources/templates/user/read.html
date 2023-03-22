@@ -5,11 +5,12 @@
 >
 <head th:insert="~{fragment/topMenu.html::header}">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <div class="card-header BoxTitle">
-    My Page
+  My Page
 </div>
 
 <div class="container-fluid">
@@ -128,7 +129,7 @@
             </div>
             <div class="card mb-3">
                 <div class="card-header">
-                    친구 명
+                    친구
                     <button class="more-btn" data-bs-target="#friendModal" data-bs-toggle="modal"
                             type="button">목록 보기
                     </button>
@@ -143,26 +144,13 @@
                 <div class="card-header">
                     차단 유저
                     <button class="more-btn" data-bs-target="#blockModal" data-bs-toggle="modal"
-                            type="button">더보기
+                            type="button">목록 보기
                     </button>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">차단 유저</th>
-                            <th scope="col">차단 사유</th>
-                            <th scope="col">차단 날짜</th>
-                        </tr>
-                        </thead>
-                        <tbody class="table-group-divider" th:each="block : ${blockLists}">
-                        <tr>
-                            <th scope="row" th:text="${block.blockMemberNickname}">차단 유저 네임</th>
-                            <td th:text="${block.blockMemberReason}">차단 사유</td>
-                            <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날짜</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        <span> 차단 <span id="blockNum" th:text="${blockLists.size()}">0</span>명</span>
+                    </div>
                 </div>
             </div>
             <div>
@@ -196,7 +184,7 @@
                             <td th:text="${friend.friendsNickname}">Mark</td>
                             <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
                             <td>
-                                <button onclick="deleteFriend()">삭제</button>
+                                <button onclick="deleteFriend(this)">삭제</button>
                             </td>
                         </tr>
                         </tbody>
@@ -207,7 +195,12 @@
                 <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
             </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
@@ -221,228 +214,297 @@
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">차단 이름</th>
-                        <th scope="col">차단 이유</th>
-                        <th scope="col">차단 날짜</th>
-                        <th scope="col">삭제유무</th>
-                    </tr>
-                    </thead>
-                    <tbody class="table-group-divider" th:each="block : ${blockLists}">
-                    <tr>
-                        <td th:text="${block.blockMemberNickname}">Mark</td>
-                        <td th:text="${block.blockMemberReason}">차단 이유</td>
-                        <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날</td>
-                        <td>
-                            <button onclick="deleteBlock()">삭제</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div id="showBlocksList">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">차단 번호</th>
+                            <th scope="col">차단 이름</th>
+                            <th scope="col">차단 이유</th>
+                            <th scope="col">차단 날짜</th>
+                            <th scope="col">삭제유무</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider" th:each="block : ${blockLists}">
+                        <tr>
+                            <td class="blockIdx" th:text="${block.blockMemberIdx}">0</td>
+                            <td th:text="${block.blockMemberNickname}">Mark</td>
+                            <td th:text="${block.blockMemberReason}">차단 이유</td>
+                            <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날</td>
+                            <td>
+                                <button onclick="deleteBlock(this)">삭제</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
             </div>
         </div>
     </div>
+  </div>
 </div>
 
 <script type="text/javascript">
 
-    let container = document.getElementById('map');
-    let mapOptions = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3
-    };
+  let container = document.getElementById('map');
+  let mapOptions = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 3
+  };
+  var userAddr = $('.address').text();
 
+  // 마이페이지 진입 시 감정 일기 점수 불러와 그래프 그리기
+  // 지도 초기 중앙 좌표 유저 집 주소로 지정
+  $(function () {
     let map = new kakao.maps.Map(container, mapOptions);
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(userAddr, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+        map.setCenter(coords);
+      }
+    })
 
 
-    $(function () {
-        const diaryScore = document.getElementById("diaryScore");
-        let msg = diaryScore.value;
-        msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
-        console.log(msg);
+    const diaryScore = document.getElementById("diaryScore");
+    let msg = diaryScore.value;
+    msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+    console.log(msg);
 
-        let advice = document.getElementById('advice');
+    let advice = document.getElementById('advice');
 
-        let gptData = {
-            method: 'POST',
-            body: JSON.stringify({msg}),
-            headers: {
-                'Content-Type': 'application/json'
+    let gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    let mainAdvice = '';
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+
+          const resMsg = data.data;
+          let resLines = resMsg.split('\n');
+
+          resLines.forEach(function (line) {
+            if (line.indexOf("조언:") != -1) {
+              mainAdvice = line;
+              console.log(mainAdvice);
             }
-        }
+          });
+        })
+        .then(() => {
+          let resAdvice = mainAdvice.replace("조언 : ", "");
+          advice.innerText = resAdvice;
 
-        let mainAdvice = '';
-        fetch('http://localhost:8080/send', gptData)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data.data);
+          console.log($('#analyzeScoreArr').val());
+          console.log($('#analyzeScoreArr').innerText);
+        });
+  });
 
-                const resMsg = data.data;
-                let resLines = resMsg.split('\n');
+  // 그래프에 삽입되는 일기 분석 점수
+  let analyzeScoreArrInput = document.getElementById("analyzeScoreArr");
+  let analyzeScoreArr = JSON.parse(analyzeScoreArrInput.value);
 
-                resLines.forEach(function (line) {
-                    if (line.indexOf("조언:") != -1) {
-                        mainAdvice = line;
-                        console.log(mainAdvice);
-                    }
-                });
-            })
-            .then(() => {
-                let resAdvice = mainAdvice.replace("조언 : ", "");
-                advice.innerText = resAdvice;
-            });
+  // 그래프에 삽입되는 일기 작성 날짜
+  let diaryWriteDateArrInput = document.getElementById("diaryWriteDateArr");
+  let diaryWriteDateArr = JSON.parse(diaryWriteDateArrInput.value.replace(/&quot;/g, '"'));
 
-        console.log($('#analyzeScoreArr').val());
-        console.log($('#analyzeScoreArr').innerText);
+  let chartType = 'line'; // 초기값은 선그래프
+
+  function changeChartType(type) {
+    chartType = type;
+    chart.updateOptions({
+      chart: {
+        type: chartType
+      }
     });
+  }
 
-    // 그래프에 삽입되는 일기 분석 점수
-    let analyzeScoreArrInput = document.getElementById("analyzeScoreArr");
-    let analyzeScoreArr = JSON.parse(analyzeScoreArrInput.value);
 
-    // 그래프에 삽입되는 일기 작성 날짜
-    let diaryWriteDateArrInput = document.getElementById("diaryWriteDateArr");
-    let diaryWriteDateArr = JSON.parse(diaryWriteDateArrInput.value.replace(/&quot;/g, '"'));
+  let options = {
+    series: [
+      {
+        name: "매일매일 달라지는 나의 하루",
+        data: analyzeScoreArr.reverse()
+      },
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#77B6EA', '#545454'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Your Date Temperature',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: diaryWriteDateArr.map((date) => {
+        const year = date.slice(0, 4);
+        const month = date.slice(5, 7);
+        const day = date.slice(8, 10);
+        return `${year}-${month}-${day}`;
+      }).reverse(),
+      title: {
+        text: '최근 6일 동안의 나의 하루 점수'
+      }
+    },
+    yaxis: {
+      title: {
+        text: '하루 기분 점수'
+      },
+      min: 0,
+      max: 100
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  };
 
-    let chartType = 'line'; // 초기값은 선그래프
+  let chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
 
-    function changeChartType(type) {
-        chartType = type;
-        chart.updateOptions({
-            chart: {
-                type: chartType
-            }
+
+  function loc() {
+    window.location = "/user/modify";
+  }
+
+  function deleteFriend() {
+    console.log($("#friendsIdx").text());
+    const memberDeleteDto = {
+      "friendsIdx": $("#friendsIdx").text()
+    }
+
+    // Ajax 요청을 보냅니다.
+    $.ajax({
+      type: "DELETE",
+      url: "/user/friend_del/",
+      data: memberDeleteDto,
+      success: function (response) {
+        // 서버에서 삭제가 완료된 후에 친구 목록을 다시 불러옵니다.
+        $("#showFriendsList").replaceWith(response);
+        const num = $("#friendNum").text();
+        $("#friendNum").text(parseInt(num) - 1);
+      }
+    });
+  }
+
+  // 차단리스트 모달에서 삭제
+  function deleteBlock() {
+    var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
+    var row = $(this).closest('tr'); // 삭제할 행 가져오기
+
+    // 서버에 Ajax 요청 보내기
+    $.ajax({
+      type: 'DELETE',
+      url: '/user/unblock/',
+      data: {
+        "memberIdx": $("#memberIdx").val(),
+        friendsMemberIdx
+      },
+      success: function (result) {
+        // 서버에서 친구 정보를 삭제한 후, 행을 삭제
+        row.remove();
+        swal('차단이 해제되었습니다.');
+      },
+      error: function (xhr, status, error) {
+        // Ajax 요청이 실패한 경우 에러 메시지 출력
+        console.log('Error:', error);
+      }
+    });
+  }
+
+  function searchAddrGpt() {
+    let searchInput = $(`#search-input-addr`).val();
+    let msg = "종각역 근처에서 ";
+    msg += searchInput;
+    msg += " 장소를 5개만 추천 해주세요.";
+
+    console.log(msg);
+
+    let loadSearch = $(`#addressResult`).val("잠시만 기다려주세요!");
+
+    let gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+          const resMsg = data.data;
+        })
+  }
+
+  // ********* 주소 클릭 스크립트 함수 *********
+  // 주소-좌표 변환 객체를 생성합니다
+  function searchAddr() {
+    let map = new kakao.maps.Map(container, mapOptions);
+    let geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch('경기 성남시 분당구 판교역로 235 에이치스퀘어', function (result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
         });
-    }
 
-
-    let options = {
-        series: [
-            {
-                name: "매일매일 달라지는 나의 하루",
-                data: analyzeScoreArr.reverse()
-            },
-        ],
-        chart: {
-            height: 350,
-            type: 'line',
-            dropShadow: {
-                enabled: true,
-                color: '#000',
-                top: 18,
-                left: 7,
-                blur: 10,
-                opacity: 0.2
-            },
-            toolbar: {
-                show: false
-            }
-        },
-        colors: ['#77B6EA', '#545454'],
-        dataLabels: {
-            enabled: true,
-        },
-        stroke: {
-            curve: 'smooth'
-        },
-        title: {
-            text: 'Your Date Temperature',
-            align: 'left'
-        },
-        grid: {
-            borderColor: '#e7e7e7',
-            row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
-            },
-        },
-        markers: {
-            size: 1
-        },
-        xaxis: {
-            categories: diaryWriteDateArr.map((date) => {
-                const year = date.slice(0, 4);
-                const month = date.slice(5, 7);
-                const day = date.slice(8, 10);
-                return `${year}-${month}-${day}`;
-            }).reverse(),
-            title: {
-                text: '최근 6일 동안의 나의 하루 점수'
-            }
-        },
-        yaxis: {
-            title: {
-                text: '하루 기분 점수'
-            },
-            min: 0,
-            max: 100
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'right',
-            floating: true,
-            offsetY: -25,
-            offsetX: -5
-        }
-    };
-
-    let chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-
-
-    function loc() {
-        window.location = "/user/modify";
-    }
-
-    function deleteFriend() {
-        console.log($("#friendsIdx").text());
-        const memberDeleteDto = {
-            "friendsIdx": $("#friendsIdx").text()
-        }
-
-        // Ajax 요청을 보냅니다.
-        $.ajax({
-            type: "DELETE",
-            url: "/user/friend_del/",
-            data: memberDeleteDto,
-            success: function (response) {
-                // 서버에서 삭제가 완료된 후에 친구 목록을 다시 불러옵니다.
-                $("#showFriendsList").replaceWith(response);
-                const num = $("#friendNum").text();
-                $("#friendNum").text(parseInt(num) - 1);
-            }
-        });
-    }
-
-    // 차단리스트 모달에서 삭제
-    function deleteBlock() {
-        var friendsMemberIdx = $(this).closest('tr').find('th').text(); // 친구 ID 가져오기
-        var row = $(this).closest('tr'); // 삭제할 행 가져오기
-
-        // 서버에 Ajax 요청 보내기
-        $.ajax({
-            type: 'DELETE',
-            url: '/user/unblock/',
-            data: {
-                "memberIdx": $("#memberIdx").val(),
-                friendsMemberIdx
-            },
-            success: function (result) {
-                // 서버에서 친구 정보를 삭제한 후, 행을 삭제
-                row.remove();
-                swal('차단이 해제되었습니다.');
-            },
-            error: function (xhr, status, error) {
-                // Ajax 요청이 실패한 경우 에러 메시지 출력
-                console.log('Error:', error);
-            }
-        });
-    }
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+    });
+  }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
