@@ -70,11 +70,11 @@
     </div>
 
 
-    <button type="button" class="btn btn-primary qnaBtn" onclick="takeReport()"
+    <button type="button" class="btn customBtn qnaBtn" onclick="takeReport()"
             sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수
     </button>
-    <button type="submit" class="btn btn-danger qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
-    <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/report'">목록</button>
+    <button type="submit" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
+    <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/report'">목록</button>
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 

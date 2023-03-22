@@ -51,7 +51,7 @@
                 <option value="birth" id="birth">생년월일</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+            <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
         </form>
     </div>
 </nav>
@@ -78,7 +78,7 @@
         <th scope="row" th:text="${member.memberAddress}">주소</th>
         <th scope="row" th:text="${member.memberPhone }">연락처</th>
         <th scope="row">
-            <button type="button" class="btn btn-primary">탈퇴</button>
+            <button type="button" class="btn customBtn">탈퇴</button>
         </th>
     </tr>
 

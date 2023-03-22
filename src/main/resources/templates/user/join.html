@@ -46,7 +46,7 @@
                        class="form-control">
                 <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
                 <br>
-                <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+                <input type="button" class="customBtn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
                 <div id="wrap"
                      style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
@@ -62,7 +62,7 @@
                        class="form-control">
                 <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
                 <div>
-                    <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
+                    <input type="button" id="send_Mail_Btn" value="전송" class="btn customBtn">
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                 </div>
                 <span id="mail-check-warn"></span>
                 <div>
-                    <input type="button" id="btnCertification" value="인증" class="btn btn-light">
+                    <input type="button" id="btnCertification" value="인증" class="btn customBtn">
 
                 </div>
 

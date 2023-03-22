@@ -29,7 +29,7 @@
         </form>
         <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/notice/write}"
               th:method="get">
-            <button class="btn btn-outline-primary" style="width: 100px" type="submit">작성</button>
+            <button class="btn btn-outline-primary customBtn" style="width: 100px" type="submit">작성</button>
 
         </form>
     </div>
@@ -74,7 +74,7 @@
                 lastPage=@{/notice(page=${noticeList.totalPages},type=${type},keyword=${keyword})}">
                 <!-- 페이지가 없는 경우 -->
                 <th:block th:if="${noticeList.totalPages < 1}">
-                    <button name="return-main">전체 페이지로 돌아가기</button>
+                    <button name="return-main ">전체 페이지로 돌아가기</button>
                 </th:block>
                 <!-- 페이지가 있는 경우 -->
                 <th:block th:if="${noticeList.totalPages > 0}">

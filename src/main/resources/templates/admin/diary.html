@@ -52,7 +52,7 @@
                 <option value="subject" id="subject">제목</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+            <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
         </form>
     </div>
 </nav>
@@ -77,7 +77,7 @@
         <th scope="row" th:text="${diary.diaryLikeCnt}">공감수</th>
         <th scope="row" th:text="${diary.diaryCnt}">조회수</th>
         <th scope="row">
-            <button type="button" class="btn btn-primary">삭제</button>
+            <button type="button" class="btn customBtn">삭제</button>
         </th>
     </tr>
 

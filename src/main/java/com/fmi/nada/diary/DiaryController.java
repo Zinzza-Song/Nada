@@ -193,10 +193,10 @@ public class DiaryController {
     }
 
     // 다이어리 삭제 로직
-    @DeleteMapping("/delete/{diaryIdx}")
-    public String deleteDiary(@PathVariable("diaryIdx") Long diaryIdx) {
+    @DeleteMapping("/delete")
+    public String deleteDiary(@RequestParam("deleteDiaryIdx") Long diaryIdx) {
         diaryService.deleteDiary(diaryIdx);
-        return "redirect:index?pageNum=" + 1;
+        return "redirect:index?page=" + 1;
     }
 
     // 다이어리 공감

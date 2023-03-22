@@ -647,7 +647,7 @@ body {
 
 input[type="button"] {
     font-size: 0.75rem;
-    padding: 5px 10px;
+    paddicusng: 5px 10px;
 }
 
 .login-box {
@@ -1453,7 +1453,10 @@ input[type="button"] {
     text-align: center;
     display: none;
 }
-
+#deleteBtn{
+    text-decoration: none;
+    color: white;
+}
 .listBtn {
     width: 80px;
     height: 50px;

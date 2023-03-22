@@ -50,7 +50,7 @@
                 <option selected value="commentDate" id="commentDate">날짜</option>
             </select>
             <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+            <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
         </form>
     </div>
 </nav>
@@ -71,7 +71,7 @@
         <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
         <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
         <th scope="row">
-            <button type="button" class="btn btn-primary">삭제</button>
+            <button type="button" class="btn customBtn">삭제</button>
         </th>
     </tr>
 

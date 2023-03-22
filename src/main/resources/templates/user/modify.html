@@ -56,7 +56,7 @@
                            class="form-control">
                     <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error"
                        th:errors="*{memberAddress}"/><br>
-                    <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+                    <input type="button" class="customBtn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
                     <div id="wrap"
                          style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
@@ -76,7 +76,7 @@
                     <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
                     <form id="delete" th:action="@{/user/delete}" th:method="delete">
                         <input type="hidden" id="memberIdx" name="memberIdx" th:value="${memberLoginBean.memberIdx}">
-                        <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn btn-danger">회원탈퇴
+                        <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn customBtn">회원탈퇴
                         </button>
                     </form>
                 </div>
