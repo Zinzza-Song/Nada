@@ -30,6 +30,7 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
     private final AnalyzedService analyzedService;
+
     @GetMapping("/login")
     public String login(
             @RequestParam(value = "error", required = false) String error,
@@ -273,6 +274,19 @@ public class MemberController {
         model.addAttribute("friendsList", friendsList);
 
         return "/user/read :: #showFriendsList";
+    }
+
+    @DeleteMapping("/unblock")
+    public String unblock(BlockListDto blockListDto,
+                          Authentication authentication,
+                          Model model) {
+        Member member = (Member) authentication.getPrincipal();
+
+        memberService.delBlocks(member.getMemberIdx(), blockListDto.getBlockMemberIdx());
+        List<BlockList> blockList = memberService.blockLists(member.getMemberIdx());
+        model.addAttribute("blockLists", blockList);
+
+        return "/user/read :: #showBlocksList";
     }
 
     @PostMapping("/blockList_add")

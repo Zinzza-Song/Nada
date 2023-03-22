@@ -28,8 +28,10 @@
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg top-nav">
         <div class="container-fluid top-menu">
-            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/nada_logo.png}"
-                                                        style="width:100px; height:100px;"></a>
+            <div class="nav-logo">
+                <a class="navbar-brand" th:href="@{/}">
+                    <img class="btn" th:src="@{/images/nada_logo.png}" style="width:130px; height:120px;"></a>
+            </div>
             <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false"
