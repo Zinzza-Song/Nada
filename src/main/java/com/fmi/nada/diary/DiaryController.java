@@ -77,8 +77,7 @@ public class DiaryController {
         model.addAttribute("member", member);
 
         Sympathy sympathy = diaryService.checkSympathyDiary(member.getMemberIdx(), diaryIdx);
-        if (sympathy != null)
-            model.addAttribute("sympathyBean", sympathy);
+        model.addAttribute("sympathyBeen", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
         model.addAttribute("readDiaryBean", diary);
@@ -201,28 +200,43 @@ public class DiaryController {
 
     // 다이어리 공감
     @PostMapping("/sympathy")
-    @ResponseBody
-    public String addSympathy(DiarySympathyDto diarySympathyDto) {
-        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
-        if (sympathy != null)
-            return "fail";
+    public String addSympathy(
+            DiarySympathyDto diarySympathyDto,
+            Authentication authentication,
+            Model model
+    ) {
+        Member member = (Member) authentication.getPrincipal();
+        diarySympathyDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.addSympathy(diarySympathyDto);
 
-        return "ok";
+        Sympathy sympathyBeen = diaryService.checkSympathy(diarySympathyDto);
+        model.addAttribute("sympathyBeen", sympathyBeen);
+
+        Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
+        model.addAttribute("readDiaryBean", readDiaryBean);
+
+        return "/diary/read :: #sympathyBtn";
     }
 
     // 다이어리 공감 취소
     @DeleteMapping("/sympathy")
-    @ResponseBody
-    public String delSympathy(DiarySympathyDto diarySympathyDto) {
-        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
-        if (sympathy == null)
-            return "fail";
+    public String delSympathy(
+            DiarySympathyDto diarySympathyDto,
+            Authentication authentication,
+            Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        diarySympathyDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.delSympathy(diarySympathyDto);
 
-        return "ok";
+        Sympathy sympathyBeen = diaryService.checkSympathy(diarySympathyDto);
+        model.addAttribute("sympathyBeen", sympathyBeen);
+
+        Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
+        model.addAttribute("readDiaryBean", readDiaryBean);
+
+        return "/diary/read :: #sympathyBtn";
     }
 
     // 댓글 좋아요
