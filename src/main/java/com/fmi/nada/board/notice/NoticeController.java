@@ -35,8 +35,7 @@ import java.time.ZoneOffset;
 @RequiredArgsConstructor
 public class NoticeController {
 
-    @Autowired
-    NoticeService noticeService;
+    private final NoticeService noticeService;
 
     //공지사항 메인 페이지
     @GetMapping

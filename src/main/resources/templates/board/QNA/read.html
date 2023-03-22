@@ -14,7 +14,7 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="qnaform">
-  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px">
+  <div class="BoxTitle" style="text-align: center;margin-bottom: 20px">
     <span class="logo-text">Q & A</span></div>
 <div class="mb-3">
   <input type="text" class="form-control qnaSubject" name="qnaSubject"
@@ -41,7 +41,7 @@
 <!--    파일 어떻게 읽어오는지 생각 해 봐야함-->
 <div class="mb-3">
     <label class="form-label" for="qnaFile">첨부파일</label>
-    <a th:href="@{/board/qna/download(qnaIdx=${qnaBean.qnaIdx})}">
+    <a th:href="@{/board/QNA/download(qnaIdx=${qnaBean.qnaIdx})}">
         <input class="form-control form-control-sm qnaFile" id="qnaFile"
                style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
                name="qnaFile" readonly th:value="${qnaBean.qnaFile}">
@@ -115,6 +115,12 @@
                 }
             });
         });
+        var file=$('#qnaFile').val();
+        if (file == null || file === ""){
+            $('#qnaFile').on('click',function (e){
+                e.preventDefault();
+            })
+        }
     });
 </script>
 
