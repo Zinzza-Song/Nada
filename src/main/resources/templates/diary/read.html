@@ -127,10 +127,11 @@
                                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
                                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
                                 <td>
-                                        <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
-                                             onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
-                                        <img th:unless="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
-                                             onclick="likeOn(this)" th:src="@{/images/likeOffImg.png}">
+                                    <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
+                                         onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
+                                    <img th:unless="${commentIsLikes.get(listStat.index)}"
+                                         class="btn  btn-primary_readImg"
+                                         onclick="likeOn(this)" th:src="@{/images/likeOffImg.png}">
                                 </td>
                                 <td th:text="${list.commentLikeCnt}"></td>
                             </tr>
@@ -150,6 +151,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" class="idx" th:value="${member.memberIdx}">
 </div>
 <!-- 모달부분 form-->
 <div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"

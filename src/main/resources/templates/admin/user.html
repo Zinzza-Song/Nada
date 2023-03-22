@@ -35,6 +35,19 @@
                 }
             });
         });
+
+        function kickMember(e) {
+            const idx = $(e).parent().siblings('.idx').text();
+
+            $.ajax({
+                url: "/admin/user_delete",
+                type: "DELETE",
+                data: {memberIdx: $(e).parent().siblings('.idx').text()},
+                success: function (fragment) {
+                    $('#memberList').replaceWith(fragment);
+                }
+            })
+        }
     </script>
 
 </head>
@@ -68,9 +81,9 @@
         <th scope="col">비고</th>
     </tr>
     </thead>
-    <tbody class="table-group-divider logMoreData">
+    <tbody class="table-group-divider logMoreData" id="memberList">
     <tr th:each="member:${adminMemberList}">
-        <th scope="row" th:text="${member.memberIdx}">번호</th>
+        <th scope="row" th:text="${member.memberIdx}" class="idx">번호</th>
         <th scope="row" th:text="${member.username  }">회원ID</th>
         <th scope="row" th:text="${member.memberNickname  }">닉네임</th>
         <th scope="row" th:text="${member.memberName  }">회원이름</th>
@@ -78,7 +91,7 @@
         <th scope="row" th:text="${member.memberAddress}">주소</th>
         <th scope="row" th:text="${member.memberPhone }">연락처</th>
         <th scope="row">
-            <button type="button" class="btn btn-primary">탈퇴</button>
+            <button type="button" class="btn btn-primary" onclick="kickMember(this)">탈퇴</button>
         </th>
     </tr>
 
