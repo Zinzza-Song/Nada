@@ -151,7 +151,6 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 }
 
 
-
 .Page-bar li {
     display: inline-block;
     font-size: 20px;
@@ -209,39 +208,12 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .top-nav {
     padding: 0;
 }
-/*topmenu custom css*/
+
 .top-menu {
     height: 100%;
 }
-.menu a{
-    color: #77493b;
-}
-.menu a:hover{
-    transform: translateY(-5px);
-    color: #330f0e;
-}
-.menu>li:hover .submenu{
-    height: 150px;
-    transition-duration: .5s;
-}
-.dropShow{
-    --bs-dropdown-link-active-bg: #eed7be;
-}
-.logoutBtn{
-    margin-top: 2px;
-    text-align: center;
-    display: flex;
-    font-size: 20px;
-    background-color: #a38969;
-    box-shadow: 2px 4px 0 #330f0e;
-    color: #330f0e;
-    transition: .3s;
-    border-radius: 5px;
-}
-.logoutBtn:active{
-    box-shadow: 0px 1px 0 #330f0e;
-    transform: translateY(3px);
-}
+
+
 .userLoginBox {
     display: inline-block;
 }
@@ -250,22 +222,30 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     height: 300px;
 }
 
+.diarymain {
+    height: 1400px;
+}
+
 .d-flex {
     display: flex !important;
     margin-left: 40%;
 }
+
 @media (min-width: 900px) {
-    .idiot{
-      max-width: 1700px;
+    .idiot {
+        max-width: 1700px;
     }
-    .containerRead{
+
+    .containerRead {
         max-width: 1500px;
     }
-    .diary-write{
+
+    .diary-write {
         max-width: 1600px;
     }
 }
-.containerRead{
+
+.containerRead {
     height: auto;
     display: flex;
     flex-flow: row wrap;
@@ -275,23 +255,26 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 30px;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
-.diary_read_btn{
+
+.diary_read_btn {
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
 }
 
-.leftRead{
+.leftRead {
     justify-content: center;
     width: 1400px;
     margin: 0 auto;
 }
-.diaryReadTitle{
+
+.diaryReadTitle {
     text-align: left;
     width: 900px;
     margin: 0 auto;
     margin-top: 10px;
     font-size: 30px
 }
-.diaryReadWriter{
+
+.diaryReadWriter {
     width: 500px;
     margin: 0 auto;
     margin-top: 10px;
@@ -300,8 +283,17 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     text-align: center;
 }
 
-.idiot{
+.idiot {
 
+    height: 1100px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.readWrap {
     height: auto;
     display: flex;
     flex-flow: row wrap;
@@ -309,17 +301,10 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin: 0 auto;
     overflow: hidden;
 }
-.readWrap{
-    height: auto;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    margin: 0 auto;
-    overflow: hidden;
-}
+
 .diaryListCard {
     background-image: url(../images/diarynote4.png);
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     background-repeat: round;
     background-size: cover;
     width: 400px;
@@ -328,29 +313,35 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.diaryListCard figcaption{
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.7);
+
+.diaryListCard figcaption {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 
     position: absolute; /* 겹치게 처리 */
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
 
-    color: #fff; text-align: center;
+    color: #fff;
+    text-align: center;
     line-height: 320px;
 
     opacity: 0; /* 처음엔 안보이고 */
 
     transition: 0.3s;
 }
-.diaryListCard:hover figcaption,.diaryListCard:focus figcaption{
- opacity: 1;
+
+.diaryListCard:hover figcaption, .diaryListCard:focus figcaption {
+    opacity: 1;
 }
+
 /*.diaryListCard:after{*/
 /*    display: block;*/
 /*    content:'';*/
 /*    clear:both;*/
 /*}*/
-.cardListTitle{
+.cardListTitle {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -359,7 +350,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     margin-top: 20px;
     font-size: 24px;
 }
-.diaryDate{
+
+.diaryDate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -367,7 +359,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     width: 400px;
     margin-top: 20px;
 }
-.diaryKeywords{
+
+.diaryKeywords {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -375,25 +368,30 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     width: 300px;
     margin-top: 10px;
 }
-.cardListContent{
+
+.cardListContent {
     overflow: hidden;
     white-space: normal;
-    display:-webkit-box;
+    display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     width: 300px;
     margin-top: 10px;
 }
+
 @media (min-width: 1400px) {
     .container {
         max-width: 1920px;
     }
-    .diary-container{
+
+    .diary-container {
         max-width: 1600px;
     }
-    .diary-write{
+
+    .diary-write {
         max-width: 1600px;
     }
+
     .videoContainer {
         margin-bottom: 50px;
     }
@@ -460,6 +458,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     .newestDiv {
         width: 600px;
     }
+
     /*.readContent{*/
     /*    width: 600px;*/
     /*}*/
@@ -689,30 +688,34 @@ input[type="button"] {
     float: right;
     margin-right: 45px;
 }
-.btn-diary-right{
+
+.btn-diary-right {
     /*display: flex;*/
     align-items: center;
     /*text-align: center;*/
     float: right;
     font-size: 25px;
 }
-.btn-primary_read{
+
+.btn-primary_read {
     font-size: 35px;
     width: 60px;
     height: 60px;
-    float:right;
+    float: right;
     padding-top: 12px;
     align-items: center;
     display: inline-flex;
     justify-content: center;
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     border: none;
 }
-.btn-primary_readImg{
+
+.btn-primary_readImg {
     width: 70px;
     height: 70px;
     float: right
 }
+
 .diaryContent, .diaryAnalyze {
     width: 80%;
     height: 18rem;
@@ -723,7 +726,7 @@ input[type="button"] {
     text-align: center;
 }
 
-.diarySubject, .diaryContent,.diaryReadContent,diaryAnalyze {
+.diarySubject, .diaryContent, .diaryReadContent, diaryAnalyze {
     white-space: pre-line;
 }
 
@@ -777,9 +780,11 @@ input[type="button"] {
     width: 600px;
     font-size: 30px;
 }
-.keywords_item{
+
+.keywords_item {
     font-size: 30px;
 }
+
 .btn_close::before {
     position: absolute;
     display: block;
@@ -828,26 +833,30 @@ input[type="button"] {
     background-color: transparent;
 }
 
-.keywordSubject{
+.keywordSubject {
     width: 650px;
     height: 70px;
     font-size: 30px;
     margin-bottom: 10px;
 }
-.diaryWriter{
+
+.diaryWriter {
     width: 300px;
     height: 50px;
     font-size: 30px;
     margin-bottom: 10px
 }
-.diaryWriterP{
+
+.diaryWriterP {
     font-size: 30px;
     display: inline-flex;
 }
-.form-check-input{
+
+.form-check-input {
     font-size: 30px;
     text-align: center;
 }
+
 .diaryWriteBtn > input {
     padding: 5px 10px;
     font-size: 25px;
@@ -859,23 +868,25 @@ input[type="button"] {
     height: 18rem;
     resize: none;
 }
-.diaryAnalyze{
+
+.diaryAnalyze {
     font-size: 40px;
 }
+
 /*------------------------------------------------------*/
-#searchBtn{
+#searchBtn {
     --bs-btn-color: #9b6034;
     --bs-btn-border-color: #9e8566;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #cebcab;
     --bs-btn-hover-border-color: #cebcab;
-    --bs-btn-focus-shadow-rgb: 25,135,84;
+    --bs-btn-focus-shadow-rgb: 25, 135, 84;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: #d1bbab;
     --bs-btn-active-border-color: #d0baaa;
 }
 
-.diarySearchBar{
+.diarySearchBar {
     width: 85%;
 }
 
@@ -886,12 +897,13 @@ input[type="button"] {
 
 
 /*하단 페이지네이션 관련 스타일*/
-.active>.page-link, .page-link.active {
+.active > .page-link, .page-link.active {
     z-index: 3;
     color: white;
     background-color: #6e502a;
     border-color: #6c583e;
 }
+
 .pagination {
     --bs-pagination-padding-x: 0.75rem;
     --bs-pagination-padding-y: 0.375rem;
@@ -917,18 +929,21 @@ input[type="button"] {
     padding-left: 0;
     list-style: none;
 }
-.diarySubject{
+
+.diarySubject {
     width: 650px;
     height: 70px;
     font-size: 30px;
     margin-bottom: 10px
 }
-.diaryContent{
+
+.diaryContent {
     width: auto;
     height: auto;
     font-size: 40px;
 }
-.diaryReadContent{
+
+.diaryReadContent {
     font-size: 35px;
     text-align: left;
     width: 650px;
@@ -940,20 +955,24 @@ input[type="button"] {
     margin-top: 10px;
     margin-bottom: 20px;
 }
-.readTop{
+
+.readTop {
     width: 600px;
     height: 50px;
     text-align: center;
     margin-bottom: 10px
 }
-.writeTitle{
+
+.writeTitle {
     font-size: 40px;
 }
-.Analyze{
+
+.Analyze {
     width: 650px;
     font-size: 40px
 }
-.diaryAnalyze{
+
+.diaryAnalyze {
     width: 650px;
     height: 300px;
     margin-bottom: 10px;
@@ -962,56 +981,67 @@ input[type="button"] {
     resize: none;
     font-size: 35px
 }
-.commentTitle{
+
+.commentTitle {
     width: 650px;
     margin-bottom: 10px;
     margin-left: 55px;
 }
-.commentList{
+
+.commentList {
     width: 750px;
     height: 500px;
     margin-bottom: 10px;
     margin-left: 30px;
     overflow: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
-.commentContent{
+
+.commentContent {
     width: 250px;
     word-break: break-all
 }
-.writerBtn{
+
+.writerBtn {
     width: 80px;
     height: 50px;
     text-align: center;
     display: none;
 }
-.listBtn{
+
+.listBtn {
     width: 80px;
     height: 50px;
     text-align: center;
     padding-top: 12px
 }
-.keywordP{
+
+.keywordP {
     font-size: 30px;
     margin-bottom: 30px;
     margin-top: 20px
 }
-.keywords_item{
+
+.keywords_item {
     font-size: 30px;
 }
-.analyzeTitle{
+
+.analyzeTitle {
     font-size: 40px;
 }
+
 @media (max-width: 992px) {
-    .leftDiary{
+    .leftDiary {
         width: 400px;
         height: 1200px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 400px;
         height: 1200px;
     }
-    .diaryAnalyze{
+
+    .diaryAnalyze {
         width: 300px;
         height: 100px;
         margin-bottom: 10px;
@@ -1023,23 +1053,27 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: normal;
     }
-    .diaryAnalyzeContent{
+
+    .diaryAnalyzeContent {
         border: none;
         resize: none;
         width: 300px;
         height: 100px;
     }
-    .readDropdown{
+
+    .readDropdown {
         width: 200px;
         height: 15px;
         margin-bottom: 0;
         font-size: 10px;
     }
-    .dropdown-menu{
+
+    .dropdown-menu {
         width: 200px;
         height: 15px;
     }
-    .diarySubject{
+
+    .diarySubject {
         width: 150px;
         height: 30px;
         font-size: 20px;
@@ -1049,6 +1083,7 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     /*.btn-primary_read{*/
     /*    width: 40px;*/
     /*    height: 40px;*/
@@ -1060,14 +1095,15 @@ input[type="button"] {
     /*    height: 40px;*/
     /*    float: right;*/
     /*}*/
-    .readContent{
+    .readContent {
         width: 200px;
         height: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .diaryReadContent{
+
+    .diaryReadContent {
         font-size: 20px;
         text-align: left;
         width: 300px;
@@ -1075,28 +1111,27 @@ input[type="button"] {
         border: none;
         resize: none;
         margin: 0 auto;
-.customBtn{
-    border-radius: 5px;
-    background-color: #6c583e;
-    text-align: center;
-    cursor: pointer;
 
         /*margin-bottom: 20px;*/
     }
-    #dropdownMenuReference{
-        font-size: 15px;
-    }
-    .diaryWriterP{
-        font-size: 15px;
-    }
-    .keywordP{
+
+    #dropdownMenuReference {
         font-size: 15px;
     }
 
-    .keywordLabel{
+    .diaryWriterP {
+        font-size: 15px;
+    }
+
+    .keywordP {
+        font-size: 15px;
+    }
+
+    .keywordLabel {
         display: none;
     }
-    .keywords{
+
+    .keywords {
         width: 200px;
         height: 150px;
         overflow: hidden;
@@ -1104,12 +1139,14 @@ input[type="button"] {
         white-space: normal;
         font-size: 20px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 15px;
         overflow: scroll;
-        overflow-x:hidden;
+        overflow-x: hidden;
     }
-    .readTop{
+
+    .readTop {
         width: 250px;
         height: 50px;
         text-align: center;
@@ -1117,26 +1154,31 @@ input[type="button"] {
     }
 
 }
+
 @media (max-width: 1200px) {
-    .leftDiary{
+    .leftDiary {
         width: 500px;
         height: 1200px;
     }
-    .rightDiary{
+
+    .rightDiary {
         width: 500px;
         height: 1200px;
     }
-    .readDropdown{
+
+    .readDropdown {
         width: 200px;
         height: 15px;
         margin-bottom: 0;
         font-size: 10px;
     }
-    .dropdown-menu{
+
+    .dropdown-menu {
         width: 200px;
         height: 15px;
     }
-    .diarySubject{
+
+    .diarySubject {
         width: 300px;
         height: 50px;
         font-size: 25px;
@@ -1146,14 +1188,16 @@ input[type="button"] {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .readContent{
+
+    .readContent {
         width: 300px;
         height: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .diaryReadContent{
+
+    .diaryReadContent {
         font-size: 25px;
         text-align: left;
         width: 300px;
@@ -1165,17 +1209,20 @@ input[type="button"] {
 
         /*margin-bottom: 20px;*/
     }
-    #dropdownMenuReference{
-        font-size: 20px;
-    }
-    .diaryWriterP{
-        font-size: 20px;
-    }
-    .keywordP{
+
+    #dropdownMenuReference {
         font-size: 20px;
     }
 
-    .keywords{
+    .diaryWriterP {
+        font-size: 20px;
+    }
+
+    .keywordP {
+        font-size: 20px;
+    }
+
+    .keywords {
         width: 300px;
         height: 150px;
         overflow: hidden;
@@ -1183,75 +1230,130 @@ input[type="button"] {
         white-space: normal;
         font-size: 25px;
     }
-    .keywords_item{
+
+    .keywords_item {
         font-size: 20px;
         height: 50px;
         overflow: scroll;
-        overflow-x:hidden;
+        overflow-x: hidden;
     }
-    .readTop{
+
+    .readTop {
         width: 300px;
         height: 50px;
         text-align: center;
         margin-bottom: 10px
     }
 }
+
 @media (max-width: 768px) {
 
 }
+
 @media (min-width: 1400px) {
-    .diary-container{
+    .diary-container {
         max-width: 1600px;
     }
-    .diary-write{
+
+    .diary-write {
         max-width: 1600px;
     }
 }
-/* user/read페이지*/
-.more-btn {
-    appearance: none;
-    border: 1px solid black;
-    padding: 0.5em;
-    border-radius: 0.25em;
+
+/*여기까지 건상 */
+
+/*여기부터 한희 */
+.customBtn {
+    border-radius: 5px;
+    background-color: #6c583e;
+    text-align: center;
     cursor: pointer;
-    float: right;
-}
-.mypageSubject{
-    color: #bf8e65;
-    text-decoration: none;
-    overflow: hidden;
-    display:-webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    width: 100px;
-}
-.adviceText{
-    font-variant: all-small-caps;
-    font-size: 18px;
-}
 
     color: #e3cab0;
-    transition: all .9s,color.3s;
+    transition: all .9s, color .3s;
 
 }
-.customBtn:hover{
+
+.customBtn:hover {
     color: #e3cab0;
-    box-shadow: 0 80px 0 0 rgba(0,0,0,.25) inset,
-                0 -80px 0 0 rgba(0,0,0,.25) inset;
+    box-shadow: 0 80px 0 0 rgba(0, 0, 0, .25) inset,
+    0 -80px 0 0 rgba(0, 0, 0, .25) inset;
 }
+
 /*footer 고정*/
-body{
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-main{
+
+main {
     flex-grow: 1;
 }
-#footer{
+
+#footer {
     width: 100%;
     bottom: 0;
     left: 0;
     flex-shrink: 0;
     background-color: #ccc;
+}
+
+/*topmenu custom css*/
+.top-menu {
+    height: 100%;
+}
+
+.menu a {
+    color: #77493b;
+}
+
+.menu a:hover {
+    transform: translateY(-5px);
+    color: #330f0e;
+}
+
+.menu > li:hover .submenu {
+    height: 150px;
+    transition-duration: .5s;
+}
+
+.dropShow {
+    --bs-dropdown-link-active-bg: #eed7be;
+}
+
+.logoutBtn {
+    margin-top: 2px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+    background-color: #a38969;
+    box-shadow: 2px 4px 0 #330f0e;
+    color: #330f0e;
+    transition: .3s;
+    border-radius: 5px;
+}
+
+.logoutBtn:active {
+    box-shadow: 0px 1px 0 #330f0e;
+    transform: translateY(3px);
+}
+
+/*여기까지 한희*/
+
+/*여기부터 요한*/
+
+.mypageSubject {
+    color: #bf8e65;
+    text-decoration: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 100px;
+}
+
+.adviceText {
+    font-variant: all-small-caps;
+    font-size: 18px;
 }
