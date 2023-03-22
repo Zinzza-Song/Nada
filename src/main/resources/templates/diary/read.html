@@ -323,19 +323,69 @@
   //   diary 공감버튼 function
   function sympathyOn() {
     console.log('on');
+
+    const diarySympathyDto = {
+      "diaryIdx": $("#diaryIdx").val()
+    }
+
+    $.ajax({
+      url: "/diary/sympathy",
+      type: "POST",
+      data: diarySympathyDto
+    }).done(function (fragment) {
+      $("#sympathyBtn").replaceWith(fragment);
+    });
   }
 
   function sympathyOff() {
     console.log('off');
+
+    const diayrSympathyDto = {
+      "diaryIdx": $("#diaryIdx").val()
+    }
+
+    $.ajax({
+      url: "/diary/sympathy",
+      type: "DELETE",
+      data: diayrSympathyDto
+    }).done(function (fragment) {
+      $("#sympathyBtn").replaceWith(fragment);
+    });
   }
 
   //   comment 좋아요버튼 function
-  function likeOn() {
+  function likeOn(e) {
+    console.log("좋아요");
+    const commentLikeDto = {
+      "commentIdx": $(e).parent().siblings('.commentIdx').text(),
+      "diaryIdx": $("#diaryIdx").val()
+    }
 
+    $.ajax(({
+      url: "/diary/commentLike",
+      type: "POST",
+      data: commentLikeDto
+    })).done(function (fragment) {
+      $(`.table`).html(fragment);
+    });
   }
 
-  function likeOff() {
+  function likeOff(e) {
+    console.log("좋아요 취소");
+    console.log($(e).parent().siblings('.commentIdx').text());
+    console.log($("#diaryIdx").val());
+    const commentLikeDto = {
+      "commentIdx": $(e).parent().siblings('.commentIdx').text(),
+      "diaryIdx": $("#diaryIdx").val()
+    }
 
+    $.ajax(({
+      url: "/diary/commentLike",
+      type: "DELETE",
+      data: commentLikeDto
+    })).done(function (fragment) {
+      $(`.table`).html(fragment);
+    });
   }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
