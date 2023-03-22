@@ -801,7 +801,7 @@ input[type="button"] {
 }
 
 .nav-item {
-    width: 200px;
+    width: 20%;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 30px;
     font-weight: bold;
@@ -2057,4 +2057,9 @@ a {
 .qnaTableBodySubject, .qnaTableBodyDate,
 .qnaTableHeadSubject, .qnaTableHeadDate {
     text-align: center;
+}
+
+/*로고버튼 div태그*/
+.nav-logo{
+    width: 450px;
 }
