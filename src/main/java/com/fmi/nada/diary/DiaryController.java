@@ -116,7 +116,10 @@ public class DiaryController {
                 diaryDTO.getDiaryPublicable(),
                 diaryDTO.getDiaryAnalyzePublicable());
 
-        analyzedService.resisterAnalyze(diary, diary.getDiaryAnalyze(), Integer.parseInt(diaryDTO.getAnalyzeScore()));
+        analyzedService.resisterAnalyze(
+                diary.getDiaryIdx(),
+                diary.getDiaryAnalyze(),
+                Integer.parseInt(diaryDTO.getAnalyzeScore()));
 
         insertKeywords(diaryDTO);
 
@@ -188,7 +191,7 @@ public class DiaryController {
     @DeleteMapping("/delete")
     public String deleteDiary(@RequestParam("deleteDiaryIdx") Long diaryIdx) {
         diaryService.deleteDiary(diaryIdx);
-        return "redirect:index?pageNum=" + 1;
+        return "redirect:/diary?page=" + 1;
     }
 
     // 다이어리 공감
