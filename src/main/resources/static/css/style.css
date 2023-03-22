@@ -367,6 +367,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-repeat: round;
     background-size: cover;
     width: 400px;
+    height: 350px;
     margin: 10px 10px 10px;
     font-size: 20px;
     overflow: hidden;
@@ -2057,4 +2058,7 @@ a {
 .qnaTableBodySubject, .qnaTableBodyDate,
 .qnaTableHeadSubject, .qnaTableHeadDate {
     text-align: center;
+}
+.diaryWriteAnalyze{
+    resize: none;
 }

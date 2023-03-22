@@ -16,7 +16,7 @@
 <form enctype="multipart/form-data" th:action="@{/board/notice/modify_pro}" th:method="put"
       class="qnaform"
       th:object="${modifyNoticeBean}">
-    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">NOTICE</span>
+    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">NOTICE</span>
     </div>
     <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
     <div class="mb-3">

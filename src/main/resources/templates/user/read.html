@@ -4,13 +4,14 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <div class="card-header BoxTitle">
     My Page
 </div>
+
 <div class="container-fluid">
     <div class="row mt-5">
         <div class="col-md-3">
@@ -25,6 +26,13 @@
             </div>
             <div class="card mb-3">
                 <div class="card-body">
+                    <h5 class="card-title">감정상태 분석</h5>
+                    <button onclick="changeChartType('line')" type="button">선그래프</button>
+                    <button onclick="changeChartType('bar')" type="button">막대그래프</button>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
                     <h5 class="card-title">감정상태 분석글</h5>
                     <!-- 감정 점수가 아직 없는 경우-->
                     <th:block th:if="${analyzeScore} == null">
@@ -32,152 +40,145 @@
                     </th:block>
                     <!-- 감정 점수가 존재하는 경우-->
                     <th:block th:if="${analyzeScore} != null">
-                        <input type="hidden" id="analyzeScoreArr" th:value="${analyzeScoreArr}">
-                        <input type="hidden" id="diaryWriteDateArr" th:value="${diaryWriteDateArr}">
-                        <input type="hidden" id="diaryScore" th:value="${analyzeScore}">
+                        <input id="analyzeScoreArr" th:value="${analyzeScoreArr}" type="hidden">
+                        <input id="diaryWriteDateArr" th:value="${diaryWriteDateArr}" type="hidden">
+                        <input id="diaryScore" th:value="${analyzeScore}" type="hidden">
                     </th:block>
                     <p class="card-text adviceText" id="advice">대충 긍정적인 분석</p>
                 </div>
             </div>
             <div class="card mb-3">
                 <div class="card-header">
-                    <input type="text" placeholder="무엇을 찾고 싶으세요?">
+                    <input placeholder="무엇을 찾고 싶으세요?" type="text">
                     <button th:text="검색"/>
                 </div>
                 <div class="card-body">
                     <div id="map" style="width:325px;height:400px;"></div>
                 </div>
             </div>
+
         </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">감정상태 분석</h5>
-            <button type="button" onclick="changeChartType('line')">선그래프</button>
-            <button type="button" onclick="changeChartType('bar')">막대그래프</button>
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="card mb-3">
-        <div class="card-header">
-            내가 작성한 게시글
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">게시글</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">날짜</th>
-                    <th scope="col">조회수</th>
-                    <th scope="col">공감수</th>
-                </tr>
-                </thead>
-                <tbody class="table-group-divider" th:each="myDiary : ${myDiaryList}">
-                <tr>
-                    <th scope="row" th:text="${myDiary.diaryIdx}">일기 번호</th>
-                    <td><a class="mypageSubject" th:href="@{/diary/read/{diaryIdx}(diaryIdx=${myDiary.diaryIdx})}"
-                           th:text="${myDiary.diarySubject}">일기 제목</a></td>
-                    <td th:text="${#temporals.format(myDiary.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
-                    <td th:text="${myDiary.diaryCnt}">일기 조회수</td>
-                    <td th:text="${myDiary.diarySympathyCnt}">일기 조회수</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-header">
-        </div>
-        <div class="card-body">
-            <div id="chart">
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    내가 작성한 게시글
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">게시글</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">날짜</th>
+                            <th scope="col">조회수</th>
+                            <th scope="col">공감수</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider" th:each="myDiary : ${myDiaryList}">
+                        <tr>
+                            <th scope="row" th:text="${myDiary.diaryIdx}">일기 번호</th>
+                            <td><a class="mypageSubject"
+                                   th:href="@{/diary/read/{diaryIdx}(diaryIdx=${myDiary.diaryIdx})}"
+                                   th:text="${myDiary.diarySubject}">일기 제목</a></td>
+                            <td th:text="${#temporals.format(myDiary.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+                            <td th:text="${myDiary.diaryCnt}">일기 조회수</td>
+                            <td th:text="${myDiary.diarySympathyCnt}">일기 조회수</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div id="chart">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="col-md-3">
-    <div class="card mb-3">
-        <div class="card-header">
-            공감 누른 게시글
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">게시글</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">날짜</th>
-                    <th scope="col">조회수</th>
-                </tr>
-                </thead>
-                <!--th:text="${#temporals.format(likeDiaryList.diaryDate,'yyyy-MM-dd')}"-->
-                <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
-                <tr>
-                    <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
-                    <td th:text="${like.diarySubject}">일기 제목</td>
-                    <td th:text="${like.diaryWriter}">일기 작성자</td>
-                    <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
-                    <td th:text="${like.diaryCnt}">일기 조회수</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-header">
-            친구 명
-            <button type="button" class="more-btn" data-bs-toggle="modal"
-                    data-bs-target="#friendModal">목록 보기
-            </button>
-        </div>
-        <div class="card-body">
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    공감 누른 게시글
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">게시글</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">날짜</th>
+                            <th scope="col">조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
+                        <tr>
+                            <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
+                            <td th:text="${like.diarySubject}">일기 제목</td>
+                            <td th:text="${like.diaryWriter}">일기 작성자</td>
+                            <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+                            <td th:text="${like.diaryCnt}">일기 조회수</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    친구 명
+                    <button class="more-btn" data-bs-target="#friendModal" data-bs-toggle="modal"
+                            type="button">목록 보기
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <span> 친구 <span id="friendNum" th:text="${friendsList.size()}">0</span>명</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    차단 유저
+                    <button class="more-btn" data-bs-target="#blockModal" data-bs-toggle="modal"
+                            type="button">더보기
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">차단 유저</th>
+                            <th scope="col">차단 사유</th>
+                            <th scope="col">차단 날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider" th:each="block : ${blockLists}">
+                        <tr>
+                            <th scope="row" th:text="${block.blockMemberNickname}">차단 유저 네임</th>
+                            <td th:text="${block.blockMemberReason}">차단 사유</td>
+                            <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날짜</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div>
-                <span> 친구 <span id="friendNum" th:text="${friendsList.size()}">0</span>명</span>
+                <input onclick="loc()" type="button" value="회원정보수정">
             </div>
         </div>
     </div>
-    <div class="card mb-3">
-        <div class="card-header">
-            차단 유저
-            <button type="button" class="more-btn" data-bs-toggle="modal"
-                    data-bs-target="#blockModal">더보기
-            </button>
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">차단 유저</th>
-                    <th scope="col">차단 사유</th>
-                    <th scope="col">차단 날짜</th>
-                </tr>
-                </thead>
-                <tbody class="table-group-divider" th:each="block : ${blockLists}">
-                <tr>
-                    <th scope="row" th:text="${block.blockMemberNickname}">차단 유저 네임</th>
-                    <td th:text="${block.blockMemberReason}">차단 사유</td>
-                    <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날짜</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div>
-        <input type="button" value="회원정보수정" onclick="loc()">
-    </div>
-</div>
-</div>
 </div>
 
 <!--친구리스트 모달-->
-<div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="friendModal" aria-hidden="true">
+<div aria-hidden="true" aria-labelledby="friendModal" class="modal fade" id="friendModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">친구 목록</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body">
                 <div id="showFriendsList">
@@ -191,7 +192,7 @@
                         </thead>
                         <tbody class="table-group-divider" th:each="friend : ${friendsList}">
                         <tr>
-                            <td th:text="${friend.getFriendsMemberIdx()}" hidden="hidden" id="friendsIdx">0</td>
+                            <td hidden="hidden" id="friendsIdx" th:text="${friend.getFriendsMemberIdx()}">0</td>
                             <td th:text="${friend.friendsNickname}">Mark</td>
                             <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
                             <td>
@@ -203,7 +204,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
             </div>
         </div>
     </div>
@@ -212,12 +213,12 @@
 
 <!----- 블락리스트 모달-->
 
-<div class="modal fade" id="blockModal" tabindex="-1" aria-labelledby="blockModal" aria-hidden="true">
+<div aria-hidden="true" aria-labelledby="blockModal" class="modal fade" id="blockModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="ModalLabel">차단 목록</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body">
                 <table class="table">
@@ -242,7 +243,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
             </div>
         </div>
     </div>
