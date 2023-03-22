@@ -145,11 +145,15 @@
         </table>
       </div>
       <div class="btnWrap" style="float: right">
-        <button class="btn btn-dark writerBtn" type="button" style="text-decoration: none;color: white">
-          <a style="color: white" th:href="@{/diary/delete}">삭제 </a>
-        </button>
-        <button class="btn btn-dark writerBtn">
-          <a style="color: white" th:href="@{diary/modify/(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
+        <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="margin-top: 20px">
+          <input type="hidden" id="deleteDiaryIdx" name="deleteDiaryIdx" th:value="${readDiaryBean.diaryIdx}">
+          <button class="btn customBtn writerBtn" id="deleteBtn" type="submit">
+            삭제
+          </button>
+        </form>
+        <button class="btn customBtn writerBtn">
+          <a style="color: white"
+             th:href="@{/diary/modify/(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
         </button>
         <a class="btn btn-dark listBtn" th:href="@{/diary(page=1)}">목록</a>
       </div>
