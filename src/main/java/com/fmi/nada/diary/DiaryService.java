@@ -187,4 +187,9 @@ public class DiaryService {
         return sympathyRepository.findByMemberIdxAndDiaryIdx(memberIdx, diaryIdx);
     }
 
+    public Diary viewAdd(Diary diary) {
+        diary.setDiaryCnt(diary.getDiaryCnt() + 1L);
+        return diaryRepository.save(diary);
+    }
+
 }

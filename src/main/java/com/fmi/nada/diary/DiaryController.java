@@ -81,7 +81,8 @@ public class DiaryController {
         model.addAttribute("sympathyBeen", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
-        model.addAttribute("readDiaryBean", diary);
+        Diary readDiaryBean = diaryService.viewAdd(diary);
+        model.addAttribute("readDiaryBean", readDiaryBean);
 
         getCommentList(diaryIdx, model, member);
 
