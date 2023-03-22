@@ -221,9 +221,8 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 .diarymainbody {
     height: 300px;
 }
-
-.diarymain {
-    height: 1400px;
+.diarymain{
+    height: 1500px;
 }
 
 .d-flex {
@@ -234,6 +233,9 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 @media (min-width: 900px) {
     .idiot {
         max-width: 1700px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .containerRead {
@@ -254,20 +256,16 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .5));
         font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     }
-
-    #qnaSubject {
+    .qnaSubject{
         font-size: 30px;
     }
-
-    #qnaWriter {
+    .qnaWriter{
         font-size: 30px;
     }
-
-    #qnaDate {
+    .qnaDate{
         font-size: 30px;
     }
-
-    #qnaContent {
+    .qnaContent {
         font-size: 30px;
     }
 
@@ -280,6 +278,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
         height: 50px;
         font-size: 25px;
     }
+
 }
 
 .qnaform {
@@ -334,12 +333,14 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
 
 .idiot {
 
-    height: 1100px;
+    height: 1500px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .readWrap {
@@ -727,7 +728,6 @@ input[type="button"] {
     top: 100%;
     left: 0;
     float: left;
-
 }
 
 .btn-right {
@@ -898,8 +898,8 @@ input[type="button"] {
     --bs-btn-active-border-color: #d0baaa;
 }
 
-.diarySearchBar {
-    width: 85%;
+.diarySearchBar{
+    width: 100%;
 }
 
 

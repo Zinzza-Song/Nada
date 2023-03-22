@@ -13,19 +13,22 @@
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <form enctype="multipart/form-data" th:action="@{/board/notice/write_pro}" th:method="post"
+      class="qnaform"
       th:object="${addNoticeBean}">
+  <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">NOTICE</span></div>
   <div class="mb-3">
-    <input type="text" class="form-control" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
+    <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject" th:field="*{noticeSubject}"
            placeholder="공지사항 제목">
     <p th:if="${#fields.hasErrors('noticeSubject')}" th:errorclass="error" th:errors="*{noticeSubject}"/>
   </div>
 
   <div class="mb-3">
-    <input type="text" name="noticeDate" id="noticeDate" class="form-control"
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
            th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
   </div>
   <div class="mb-3">
-        <textarea class="form-control" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
+        <textarea class="form-control qnaContent" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
+                  style="resize: none;"
                   th:field="*{noticeContent}">
         </textarea>
     <p th:if="${#fields.hasErrors('noticeContent')}" th:errorclass="error" th:errors="*{noticeContent}"/>
@@ -33,13 +36,15 @@
 
   <div class="mb-3">
     <label for="file" class="form-label">첨부파일</label>
-    <input class="form-control form-control-sm" name="file" id="file" type="file">
+    <input class="form-control form-control-sm qnaFile" name="file"
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+           id="file" type="file">
   </div>
 
 
-  <button type="reset" class="btn btn-primary">재작성</button>
-  <button type="submit" class="btn btn-primary">작성완료</button>
-  <button type="button" class="btn btn-primary" onclick="window.location='/board/notice'">취소</button>
+  <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
+  <button type="submit" class="btn btn-primary qnaBtn">작성완료</button>
+  <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice'">취소</button>
 </form>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 

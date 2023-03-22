@@ -50,8 +50,8 @@ public class ReportController {
         return "board/report/index";
     }
 
-    @GetMapping("/read/{reportIdx}")
-    public String read(@PathVariable("reportIdx") Long reportIdx,
+    @GetMapping("/read")
+    public String read(@RequestParam("reportIdx") Long reportIdx,
                        HttpServletRequest request,
                        HttpServletResponse response,
                        Model model,
