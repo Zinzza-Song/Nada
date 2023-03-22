@@ -98,7 +98,7 @@
                aria-describedby="button-addon2">
         <input type="hidden" id="diaryIdx" th:value="${readDiaryBean.diaryIdx}">
         <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                th:onclick="registerComment()">작성
+                onclick="registerComment()">작성
         </button>
       </div>
       <div class="card-body commentList"
@@ -245,33 +245,33 @@
   }
 
   $(document).ready(function () {
-    $('.addFriend').click(function () {
-
-      const friendsDto = {
-        "friendsIdx": $("#memberIdx").val()
-      };
-
-      $.ajax({
-        type: "POST",
-        url: "/user/friend_add",
-        data: friendsDto
-      }).done(function (msg) {
-        console.log(msg);
-        if (msg == 'ok')
-          alert("친구가 정상적으로 추가되었습니다.");
-        else if (msg == 'already')
-          alert("이미 친구입니다.");
-        else
-          alert("차단 대상자 입니다.");
-      });
-    });
-
     const writerIdx = $('.memberIdx').val(); // 게시글 작성자
     const memberIdx = $('.idx').val(); //현재 로그인한 사용자
     if (writerIdx === memberIdx) {
       $('.writerBtn').show();
     }
   });
+
+  function addFriend(e) {
+
+    const friendsDto = {
+      "friendsIdx": $(e).siblings('.memberIdx').val()
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/user/friend_add",
+      data: friendsDto
+    }).done(function (msg) {
+      console.log(msg);
+      if (msg == 'ok')
+        alert("친구가 정상적으로 추가되었습니다.");
+      else if (msg == 'already')
+        alert("이미 친구입니다.");
+      else
+        alert("차단 대상자 입니다.");
+    });
+  }
 
   function addBlock(e) {
     const blockMemberIdx = $(e).siblings('.memberIdx').val();
@@ -281,7 +281,7 @@
     $('#blockMemberIdx').val(blockMemberIdx);
   }
 
-  function postBlock(e) {
+  function postBlock() {
     const blockListDto = {
       "blockMemberNickname": $('#blockMemberNickname').val(),
       "blockMemberReason": $('#blockMemberReason').val(),
@@ -323,69 +323,19 @@
   //   diary 공감버튼 function
   function sympathyOn() {
     console.log('on');
-
-    const diarySympathyDto = {
-      "diaryIdx": $("#diaryIdx").val()
-    }
-
-    $.ajax({
-      url: "/diary/sympathy",
-      type: "POST",
-      data: diarySympathyDto
-    }).done(function (fragment) {
-      $("#sympathyBtn").replaceWith(fragment);
-    });
   }
 
   function sympathyOff() {
     console.log('off');
-
-    const diayrSympathyDto = {
-      "diaryIdx": $("#diaryIdx").val()
-    }
-
-    $.ajax({
-      url: "/diary/sympathy",
-      type: "DELETE",
-      data: diayrSympathyDto
-    }).done(function (fragment) {
-      $("#sympathyBtn").replaceWith(fragment);
-    });
   }
 
   //   comment 좋아요버튼 function
-  function likeOn(e) {
-    console.log("좋아요");
-    const commentLikeDto = {
-      "commentIdx": $(e).parent().siblings('.commentIdx').text(),
-      "diaryIdx": $("#diaryIdx").val()
-    }
+  function likeOn() {
 
-    $.ajax(({
-      url: "/diary/commentLike",
-      type: "POST",
-      data: commentLikeDto
-    })).done(function (fragment) {
-      $(`.table`).html(fragment);
-    });
   }
 
-  function likeOff(e) {
-    console.log("좋아요 취소");
-    console.log($(e).parent().siblings('.commentIdx').text());
-    console.log($("#diaryIdx").val());
-    const commentLikeDto = {
-      "commentIdx": $(e).parent().siblings('.commentIdx').text(),
-      "diaryIdx": $("#diaryIdx").val()
-    }
+  function likeOff() {
 
-    $.ajax(({
-      url: "/diary/commentLike",
-      type: "DELETE",
-      data: commentLikeDto
-    })).done(function (fragment) {
-      $(`.table`).html(fragment);
-    });
   }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
