@@ -1,7 +1,9 @@
 package com.fmi.nada.diary;
 
 import com.fmi.nada.user.BlockListDto;
+import com.fmi.nada.user.Likes;
 import com.fmi.nada.user.Member;
+import com.fmi.nada.user.Sympathy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +67,7 @@ public class DiaryController {
     }
 
     // 다이어리 상세 페이지
-    @GetMapping("read/{diaryIdx}")
+    @GetMapping("/read/{diaryIdx}")
     public String readDiary(@PathVariable("diaryIdx") Long diaryIdx,
                             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                             HttpServletRequest request,
@@ -97,7 +99,7 @@ public class DiaryController {
         return "diary/write";
     }
 
-    @PostMapping("write_pro")
+    @PostMapping("/write_pro")
     public String DiaryWrite_pro(
             @Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
             BindingResult bindingResult,
@@ -127,26 +129,11 @@ public class DiaryController {
         return "redirect:/diary/read/" + diary.getDiaryIdx();
     }
 
-
-    // 다이어리 공감에 대한 ajax
-    @GetMapping("sympathy/{diaryIdx}")
-    @ResponseBody
-    public void sympathyAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-
-    }
-
-    // 댓글 좋아요에 대한 ajax
-    @GetMapping("comment_like/{diaryIdx}")
-    @ResponseBody
-    public void likeAjax(@PathVariable("diaryIdx") Long diaryIdx) {
-
-    }
-
-    @PostMapping("comment_write")
-    @ResponseBody
-    public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
-                                      @RequestParam("commentInput") String commentInput,
-                                      Authentication authentication) {
+    @RequestMapping(value = "/comment_write", method = RequestMethod.POST)
+    public String commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
+                               @RequestParam("commentInput") String commentInput,
+                               Authentication authentication,
+                               Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         Comment comment = new Comment(member.getMemberIdx(),
@@ -160,14 +147,21 @@ public class DiaryController {
         commentService.resisterComment(comment);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+        model.addAttribute("commentList", commentList);
 
-        return commentList;
+        // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
+        // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
+        return "/diary/read :: tbody";
     }
 
     // 다이어리 수정 페이지
-    @GetMapping("modify/{diaryIdx}")
-    public String modifyDiary(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, Authentication authentication, Model model) {
-
+    @GetMapping("/modify/{diaryIdx}")
+    public String modifyDiary(
+            @PathVariable("diaryIdx") Long diaryIdx,
+            @RequestParam("pageCnt") int pageCnt,
+            @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
+            Authentication authentication,
+            Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -176,7 +170,7 @@ public class DiaryController {
 
 
     // 다이어리 수정 로직
-    @PutMapping("modify_pro/{diaryIdx}")
+    @PutMapping("/modify_pro/{diaryIdx}")
     public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
         if (bindingResult.hasErrors()) return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
 
@@ -198,10 +192,61 @@ public class DiaryController {
     }
 
     // 다이어리 삭제 로직
-    @DeleteMapping("delete/{diaryIdx}")
+    @DeleteMapping("/delete/{diaryIdx}")
     public String deleteDiary(@PathVariable("diaryIdx") Long diaryIdx) {
         diaryService.deleteDiary(diaryIdx);
         return "redirect:index?pageNum=" + 1;
+    }
+
+    // 다이어리 공감
+    @PostMapping("/sympathy")
+    @ResponseBody
+    public String addSympathy(DiarySympathyDto diarySympathyDto) {
+        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
+        if (sympathy != null)
+            return "fail";
+
+        diaryService.addSympathy(diarySympathyDto);
+
+        return "ok";
+    }
+
+    // 다이어리 공감 취소
+    @DeleteMapping("/sympathy")
+    @ResponseBody
+    public String delSympathy(DiarySympathyDto diarySympathyDto) {
+        Sympathy sympathy = diaryService.checkSympathy(diarySympathyDto);
+        if (sympathy == null)
+            return "fail";
+
+        diaryService.delSympathy(diarySympathyDto);
+
+        return "ok";
+    }
+
+    // 댓글 좋아요
+    @PostMapping("/commentLike")
+    @ResponseBody
+    public String addCommentLike(CommentLikeDto commentLikeDto) {
+        Likes likes = diaryService.checkCommentLike(commentLikeDto);
+        if (likes != null)
+            return "fail";
+
+        diaryService.addCommentLike(commentLikeDto);
+
+        return "ok";
+    }
+
+    @DeleteMapping("/commentLike")
+    @ResponseBody
+    public String delCommentLike(CommentLikeDto commentLikeDto) {
+        Likes likes = diaryService.checkCommentLike(commentLikeDto);
+        if (likes == null)
+            return "fail";
+
+        diaryService.delCommentLike(commentLikeDto);
+
+        return "ok";
     }
 
     private void insertKeywords(DiaryDTO diaryDTO) {
