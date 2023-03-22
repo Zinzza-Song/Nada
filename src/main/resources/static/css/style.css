@@ -1,3 +1,6 @@
+style
+
+
 html {
     height: 100%;
 }
@@ -367,6 +370,7 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     background-repeat: round;
     background-size: cover;
     width: 400px;
+    height: 350px;
     margin: 10px 10px 10px;
     font-size: 20px;
     overflow: hidden;
@@ -2056,5 +2060,13 @@ a {
 
 .qnaTableBodySubject, .qnaTableBodyDate,
 .qnaTableHeadSubject, .qnaTableHeadDate {
+    text-align: center;
+}
+
+/* 유저 마이페이지 지도 주소 css - 김건용 */
+.user-read-location {
+    list-style: none;
+    border: 1px solid black;
+    width: 30%;
     text-align: center;
 }
