@@ -28,9 +28,13 @@ public class Likes {
     @Column(name = "comment_idx")
     private Long commentIdx;
 
-    public Likes(Long memberIdx, Long commentIdx) {
+    @Column(name = "diary_idx")
+    private Long diaryIdx;
+
+    public Likes(Long memberIdx, Long commentIdx, Long diaryIdx) {
         this.memberIdx = memberIdx;
         this.commentIdx = commentIdx;
+        this.diaryIdx = diaryIdx;
     }
 
 }

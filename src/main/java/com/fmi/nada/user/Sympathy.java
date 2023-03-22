@@ -20,7 +20,7 @@ public class Sympathy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "sympathy_idx")
-    private Long likeIdx;
+    private Long sympathyIdx;
 
     @Column(name = "member_idx")
     private Long memberIdx;

@@ -8,6 +8,7 @@ import lombok.Setter;
 public class CommentLikeDto {
 
     private Long commentIdx;
+    private Long diaryIdx;
     private Long memberIdx;
 
 }

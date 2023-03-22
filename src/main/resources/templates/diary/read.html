@@ -14,23 +14,23 @@
 <div class="container diary-container ">
 
     <div class="card-header BoxTitle text-center">
-        다 이 어 리
+        다 이 어 리 <span th:text="${readDiaryBean.diaryCnt}">0</span>
     </div>
 
     <div class="diary-write row align-items-start col">
 
         <div class="leftDiary diary-wrap">
-            <div class="card-body diary diaryMedia col-6">
+            <div class="card-body diary diaryMedia col-6" id="sympathyBtn">
                 <div class="form-group readTop">
-                    <img th:if="${sympathyBean==null}" class="btn  btn-primary_readImg"
+                    <img th:if="${sympathyBeen==null}" class="btn  btn-primary_readImg"
                          th:src="@{/images/sympathyOffImg.png}"
-                         style="" onclick="sympathyOn()">
-                    <img th:if="${sympathyBean!=null}" class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
-                         style="" onclick="sympathyOff()">
-
+                         style="" onclick="sympathyOn(this)">
+                    <img th:unless="${sympathyBeen==null}" class="btn  btn-primary_readImg"
+                         th:src="@{/images/emotion.png}"
+                         style="" onclick="sympathyOff(this)">
                     <p class=" btn-primary_read"
                        style=""
-                       th:text="${readDiaryBean.diarySympathyCnt}" readonly></p>
+                       th:text="${readDiaryBean?.diarySympathyCnt}" readonly></p>
                 </div>
 
                 <div class="dropdown readDropdown" style="margin-bottom: 30px;display: inline-block">
@@ -105,6 +105,7 @@
                             <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
                             <tr>
                                 <th scope="row"></th>
+                                <td hidden="hidden" th:text="${list.commentIdx}" class="commentIdx">0</td>
                                 <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
@@ -112,8 +113,8 @@
                                         </button>
                                         <ul class="dropdown-menu" style="">
                                             <li class="dropdown-item addFriend">친구추가</li>
-                                            <input type="hidden" id="memberIdx" name="memberIdx"
-                                                   th:value="${list.memberIdx}">
+                                            <li hidden="hidden" class="memberIdx" name="memberIdx"
+                                                th:value="${list.memberIdx}">
                                             <li class="dropdown-item addBlock" onclick="addBlock(this)"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#block">
@@ -125,7 +126,14 @@
                                 </td>
                                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
                                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
-                                <td>좋아요 버튼</td>
+                                <td>
+                                    <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
+                                         onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
+                                    <img th:unless="${commentIsLikes.get(listStat.index)}"
+                                         class="btn  btn-primary_readImg"
+                                         onclick="likeOn(this)" th:src="@{/images/likeOffImg.png}">
+                                </td>
+                                <td th:text="${list.commentLikeCnt}"></td>
                             </tr>
                             </tbody>
                         </th:block>
@@ -143,6 +151,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" class="idx" th:value="${member.memberIdx}">
 </div>
 <!-- 모달부분 form-->
 <div class="modal fade" id="block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -172,11 +181,11 @@
                         <textarea class="form-control" id="blockMemberReason" name="blockMemberReason"
                                   th:field="*{blockMemberReason}"></textarea>
                     </div>
-                    <input type="hidden" id="blockMemberIdx" name="blockMemberIdx" th:field="*{blockMemberIdx}"
+                    <input type="input" id="blockMemberIdx" name="blockMemberIdx" th:field="*{blockMemberIdx}"
                            value="">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="button" onclick="postBlock()" class="btn btn-primary">작성완료</button>
+                        <button type="button" onclick="postBlock(this)" class="btn btn-primary">작성완료</button>
                     </div>
                 </div>
             </div>
@@ -229,7 +238,7 @@
         $('#blockMemberIdx').val(blockMemberIdx);
     }
 
-    function postBlock() {
+    function postBlock(e) {
         const blockListDto = {
             "blockMemberNickname": $('#blockMemberNickname').val(),
             "blockMemberReason": $('#blockMemberReason').val(),
@@ -271,19 +280,69 @@
     //   diary 공감버튼 function
     function sympathyOn() {
         console.log('on');
+
+        const diarySympathyDto = {
+            "diaryIdx": $("#diaryIdx").val()
+        }
+
+        $.ajax({
+            url: "/diary/sympathy",
+            type: "POST",
+            data: diarySympathyDto
+        }).done(function (fragment) {
+            $("#sympathyBtn").replaceWith(fragment);
+        });
     }
 
     function sympathyOff() {
         console.log('off');
+
+        const diayrSympathyDto = {
+            "diaryIdx": $("#diaryIdx").val()
+        }
+
+        $.ajax({
+            url: "/diary/sympathy",
+            type: "DELETE",
+            data: diayrSympathyDto
+        }).done(function (fragment) {
+            $("#sympathyBtn").replaceWith(fragment);
+        });
     }
 
     //   comment 좋아요버튼 function
-    function likeOn() {
+    function likeOn(e) {
+        console.log("좋아요");
+        const commentLikeDto = {
+            "commentIdx": $(e).parent().siblings('.commentIdx').text(),
+            "diaryIdx": $("#diaryIdx").val()
+        }
 
+        $.ajax(({
+            url: "/diary/commentLike",
+            type: "POST",
+            data: commentLikeDto
+        })).done(function (fragment) {
+            $(`.table`).html(fragment);
+        });
     }
 
-    function likeOff() {
+    function likeOff(e) {
+        console.log("좋아요 취소");
+        console.log($(e).parent().siblings('.commentIdx').text());
+        console.log($("#diaryIdx").val());
+        const commentLikeDto = {
+            "commentIdx": $(e).parent().siblings('.commentIdx').text(),
+            "diaryIdx": $("#diaryIdx").val()
+        }
 
+        $.ajax(({
+            url: "/diary/commentLike",
+            type: "DELETE",
+            data: commentLikeDto
+        })).done(function (fragment) {
+            $(`.table`).html(fragment);
+        });
     }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>

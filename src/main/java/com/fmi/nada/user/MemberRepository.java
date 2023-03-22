@@ -14,6 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByMemberNickname(String memberNickname);
 
-    List<Member> findAllByOrderByMemberJoinDateDesc();
+    List<Member> findByAuthorityOrderByMemberJoinDateDesc(String authority);
 
 }
