@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns="http://www.w3.org/1999/html">
+<head th:insert="~{fragment/topMenu.html::header}">
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body class="diary-write-body">
+
+<header th:insert="~{fragment/topMenu.html::nav}"/>
+
+<div class="container diary-container">
+    <div>
+        <div class="card-header BoxTitle text-center">
+            다 이 어 리 수 정
+        </div>
+
+        <form class="diary-form" th:action="@{/diary/modify_pro()}" method="post" th:object="${diaryModifyBean}"
+              id="diaryForm">//readDiaryBean 읽기
+
+            <div class="diary-write row align-items-start col">
+
+                <div class="leftDiary diary-wrap">
+                    <div class="card-body diary col-6">
+                        <div class="form-group" style="text-align: center;margin-bottom: 10px">
+                            <p class="writeTitle" style="">일기 작성</p>
+                        </div>
+
+                        <div class="form-group public-check-box" style="">
+                            <!--                 member의 다이어리 작성 공개/비공개 여부 라디오 버튼-->
+                            <div class="form-check form-check-inline public-check-box-radio-div" style="">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio1"
+                                       th:value="true" th:field="*{diaryModifyBean.diaryPublicable}">
+                                <p class="form-check-label public-check-box-radio-div-p" style="" for="publicRadio1">
+                                    공개</p>
+                            </div>
+
+                            <div class="form-check form-check-inline public-check-box-radio-div">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="publicRadio2"
+                                       th:value="false" th:field="*{diaryModifyBean.diaryPublicable}">
+                                <p class="form-check-label public-check-box-radio-div-p" for="publicRadio2">
+                                    비공개</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group ">
+                            <input type="text" class="card-title diaryWriteSubject"
+                                   placeholder="th:text='${readDiaryBean.diarySubject}'"
+                                   th:field="*{diaryModifyBean.diarySubject}"/>
+                            <p th:if="${#fields.hasErrors('diarySubject')}" th:errorclass="error"
+                               th:errors="*{diaryModifyBean.diarySubject}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="card-title diaryWriter" th:field="*{diaryModifyBean.diaryWriter}"
+                                   readonly
+                            />
+                        </div>
+
+                        <div class="form-group diaryContent-div" style="">
+                    <textarea style="" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
+                              th:field="*{diaryModifyBean.diaryContent}"></textarea>
+                            <p th:if="${#fields.hasErrors('diaryContent')}" th:errorclass="error"
+                               th:errors="*{diaryModifyBean.diaryContent}"/>
+                        </div>
+
+                        <div class="form-group diaryWriteBtn" style="">
+                            <input type="button" id="englishBtn" name="englishBtn" onclick="translation()"
+                                   value="영번역" class="btn customBtn englishBtn"/>
+                            <input type="reset" id="diaryResetBtn" name="diaryResetBtn"
+                                   value="재작성" class="btn customBtn diaryResetBtn"/>
+                            <input type="button" id="diarySaveBtn" name="diarySaveBtn" onclick="diarySave()"
+                                   value="분석" class="btn customBtn diarySaveBtn btn-right"/>
+                        </div>
+
+                        <!--                키워드-->
+                        <div class="form-group keywordSubject">
+                            <p class="keywordSubjectP" style="">키워드</p>
+                            <div class="keywords">
+                                <!--                                <div class="item">-->
+                                <!--                                  <span class="keyword">test</span>-->
+                                <!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
+                                <!--                                    <span class="blind">닫기</span>-->
+                                <!--                                  </button>-->
+                                <!--                                </div>-->
+                                <div class="item">
+                                    <span class="keyword-item">키워드들어갈자리</span>
+                                    <button type="button" class="btn-close btn_close" aria-label="Close"
+                                            onClick="deleteDiv(this)">
+                                        <span class="blind">닫기</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" th:field="*{diaryModifyBean.diaryKeywords}" id="diaryKeywords"
+                                   name="diaryKeywords"/>
+                            <p th:if="${#fields.hasErrors('diaryKeywords')}" th:errorclass="error"
+                               th:errors="*{diaryModifyBean.diaryKeywords}"/>
+                        </div>
+                    </div>
+                    <!-- 다이어리 제목부터 키워드까지 -->
+                </div>
+                <div class="rightDiary diary-wrap">
+                    <div class="card-body Analyze diary col-6" id="Analyze" style="">
+                        <div class="form-group" style="text-align: center;margin-bottom: 10px">
+                            <p class="writeTitle" style="">감정 분석</p>
+                        </div>
+
+                        <div class="form-group public-check-box" style="">
+
+                            <!--                    감정분석결과 공개/비공개 라디오버튼-->
+                            <div class="form-check form-check-inline public-check-box-radio-div" style="">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="diaryAnalyzeRadio1"
+                                       th:value="true" th:field="*{diaryModifyBean.diaryAnalyzePublicable}">
+                                <p class="form-check-label public-check-box-radio-div-p" for="diaryAnalyzeRadio1"
+                                   style="">공개</p>
+                            </div>
+                            <div class="form-check form-check-inline public-check-box-radio-div" style="">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="diaryAnalyzeRadio12"
+                                       th:value="false" th:field="*{diaryModifyBean.diaryAnalyzePublicable}">
+                                <p class="form-check-label public-check-box-radio-div-p" for="diaryAnalyzeRadio1"
+                                   style="">비공개</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <p class="writeAnTitle">감정 분석 결과</p>
+                        </div>
+
+                        <div class="form-group diaryAnalyze-div">
+                    <textarea class="diaryWriteAnalyze" th:readonly="readonly" id="diaryAnalyze"
+                              th:field="*{diaryModifyBean.diaryAnalyze}"></textarea>
+                        </div>
+
+                        <input type="hidden" id="analyzeScore" th:field="*{diaryModifyBean.analyzeScore}">
+
+
+                        <button type="submit" class="btn btn-dark btn-diary-right writeSubmit">수정 완료</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+
+
+    // const diaryContent = document.getElementById('diaryContent');
+
+    function translation() {
+        //영번역 함수
+        const diarycontent = document.getElementById('diaryContent');
+        let msg = diarycontent.value;
+        msg += "\n위 일기를 영어로 번역해줘요.";
+        console.log(msg);
+
+        const gptData = {
+            method: 'POST',
+            body: JSON.stringify({msg}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        fetch('http://localhost:8080/send', gptData)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+                diarycontent.value = data.data.replace("\n\n", "");
+            });
+    }
+
+    function diarySave() {
+        //다이어리 저장 함수
+        const diarycontent = document.getElementById('diaryContent');
+        let msg = diarycontent.value;
+        msg += "\n위 일기에서 키워드를 한글로 번역해서 단어로 나열해주고 위 일기를 바탕으로 조언을 해주고 위 일기에서 긍정적인 문장과 부정적인 문장의 개수를" +
+            "정수로 알려줘요.";
+        console.log(msg);
+
+        let diaryAnalyze = document.getElementById('diaryAnalyze');
+        diaryAnalyze.value = "일기를 분석 중입니다.";
+
+        let gptData = {
+            method: 'POST',
+            body: JSON.stringify({msg}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        let keywords = '';
+        let advice = '';
+        let pos = '';
+        let neg = '';
+
+        fetch('http://localhost:8080/send', gptData)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+
+                const resMsg = data.data;
+                let resLines = resMsg.split('\n');
+
+                resLines.forEach(function (line) {
+                    if (line.indexOf("키워드:") != -1) {
+                        let temp = line;
+                        keywords = temp.replace("키워드: ", "");
+                    } else if (line.indexOf("키워드들:") != -1) {
+                        let temp = line;
+                        keywords = temp.replace("키워드들: ", "");
+                    } else if (line.indexOf("단어:") != -1) {
+                        let temp = line;
+                        keywords = temp.replace("단어: ", "");
+                    } else if (line.indexOf("단어들:") != -1) {
+                        let temp = line;
+                        keywords = temp.replace("단어들: ", "");
+                    } else if (line.indexOf("조언:") != -1)
+                        advice = line;
+                    else if (line.indexOf("긍정적 문장 개수:") != -1) {
+                        let temp1 = line.replace("긍정적 문장 개수: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        pos = temp2;
+                        console.log(pos);
+                    } else if (line.indexOf("긍정적인 문장 개수:") != -1) {
+                        let temp1 = line.replace("긍정적인 문장 개수: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        pos = temp2;
+                        console.log(pos);
+                    } else if (line.indexOf("긍정적 문장:") != -1) {
+                        let temp1 = line.replace("긍정적 문장: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        pos = temp2;
+                        console.log(pos);
+                    } else if (line.indexOf("긍정적인 문장:") != -1) {
+                        let temp1 = line.replace("긍정적인 문장: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        pos = temp2;
+                        console.log(pos);
+                    } else if (line.indexOf("부정적 문장 개수:") != -1) {
+                        let temp1 = line.replace("부정적 문장 개수: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        neg = temp2;
+                        console.log(neg);
+                    } else if (line.indexOf("부정적인 문장 개수:") != -1) {
+                        let temp1 = line.replace("부정적인 문장 개수: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        neg = temp2;
+                        console.log(neg);
+                    } else if (line.indexOf("부정적 문장:") != -1) {
+                        let temp1 = line.replace("부정적 문장: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        neg = temp2;
+                        console.log(neg);
+                    } else if (line.indexOf("부정적인 문장:") != -1) {
+                        let temp1 = line.replace("부정적인 문장: ", "");
+                        let temp2 = temp1.replace("개", "");
+                        neg = temp2;
+                        console.log(neg);
+                    }
+                });
+            })
+            .then(() => {
+                let arrKeywords = keywords.split(",");
+
+                let keywordInnerHTML = "";
+                let i = 0;
+                for (i; i < arrKeywords.length; ++i) {
+                    keywordInnerHTML += `<div class="item">
+    <span class="keyword-item">${arrKeywords[i]}</span>
+    <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">
+      <span class="blind">닫기</span>
+    </button>
+  </div>`;
+                }
+
+                const diaryKeywordsEl = document.querySelector('.keywords');
+                diaryKeywordsEl.innerHTML = keywordInnerHTML;
+                keywordSetting();
+            })
+            .then(() => {
+                let resAdvice = advice.replace("조언: ", "");
+                diaryAnalyze.value = resAdvice;
+            })
+            .then(() => {
+                const analyzeScoreEl = document.querySelector('#analyzeScore');
+                console.log(pos);
+                console.log(neg);
+
+                if (isNaN(pos))
+                    pos = 0;
+
+                if (isNaN(neg))
+                    neg = 0;
+
+                const score = parseInt(pos) * 10 - parseInt(neg) * 5;
+                console.log(score);
+                analyzeScoreEl.value = Number(score);
+            });
+    }
+
+    function deleteDiv(e) {
+        const div = e.parentNode;
+
+        div.remove();
+
+        keywordSetting();
+    }
+
+    function keywordSetting() {
+        const itemEls = document.querySelectorAll(".keyword-item");
+        const diaryKeywordsEl = document.querySelector("#diaryKeywords");
+        let str = "";
+        itemEls.forEach(function (itemEl) {
+            str += itemEl.innerText + ",";
+        });
+        let resStr = str.slice(0, -1);
+        diaryKeywordsEl.value = resStr;
+        console.log(resStr);
+    }
+</script>
+</body>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
+</html>
