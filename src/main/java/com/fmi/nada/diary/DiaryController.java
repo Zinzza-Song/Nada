@@ -78,6 +78,10 @@ public class DiaryController {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
+        Diary diary = diaryService.getDiaryDetail(diaryIdx);
+        viewCountValidation(diary, request, response);
+        model.addAttribute("readDiaryBean", diary);
+
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
         model.addAttribute("commentList", commentList);
 
@@ -95,7 +99,7 @@ public class DiaryController {
         return "diary/write";
     }
 
-    @PostMapping("write_pro")
+    @PostMapping("/write_pro")
     public String DiaryWrite_pro(
             @Valid @ModelAttribute("writeDiaryBean") DiaryDTO diaryDTO,
             BindingResult bindingResult,
@@ -125,12 +129,11 @@ public class DiaryController {
         return "redirect:/diary/read/" + diary.getDiaryIdx();
     }
 
-
-    @RequestMapping(value = "/comment_write", method = RequestMethod.POST)
-    public String commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
-                               @RequestParam("commentInput") String commentInput,
-                               Authentication authentication,
-                               Model model) {
+    @PostMapping("/comment_write")
+    @ResponseBody
+    public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
+                                      @RequestParam("commentInput") String commentInput,
+                                      Authentication authentication) {
 
         Member member = (Member) authentication.getPrincipal();
         Comment comment = new Comment(member.getMemberIdx(),
@@ -144,11 +147,8 @@ public class DiaryController {
         commentService.resisterComment(comment);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
-        model.addAttribute("commentList", commentList);
 
-        // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
-        // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
-        return "/diary/read :: tbody";
+        return commentList;
     }
 
     // 다이어리 수정 페이지
@@ -159,7 +159,6 @@ public class DiaryController {
             @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
             Authentication authentication,
             Model model) {
-
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
@@ -168,14 +167,8 @@ public class DiaryController {
 
 
     // 다이어리 수정 로직
-    @PutMapping("modify_pro/{diaryIdx}")
-    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx,
-                                  @RequestParam("pageCnt") int pageCnt,
-                                  @Valid @ModelAttribute("diaryModifyBean")
-                                      DiaryDTO diaryDTO,
-                                  BindingResult bindingResult,
-                                  Authentication authentication,
-                                  Model model) {
+    @PutMapping("/modify_pro/{diaryIdx}")
+    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
         if (bindingResult.hasErrors()) return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
 
         Member member = (Member) authentication.getPrincipal();
