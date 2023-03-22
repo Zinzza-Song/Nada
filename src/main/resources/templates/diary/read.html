@@ -154,7 +154,7 @@
           </form>
           <button class="btn customBtn">
             <a style="color: white"
-               th:href="@{/diary/modify/(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
+               th:href="@{/diary/modify(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
           </button>
         </th:block>
         <a class="btn btn-dark listBtn" th:href="@{/diary(page=1)}">목록</a>

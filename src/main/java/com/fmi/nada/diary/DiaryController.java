@@ -151,17 +151,17 @@ public class DiaryController {
     }
 
     // 다이어리 수정 페이지
-    @GetMapping("/modify/{diaryIdx}")
+    @GetMapping("/modify")
     public String modifyDiary(
-            @PathVariable("diaryIdx") Long diaryIdx,
-            @RequestParam("pageCnt") int pageCnt,
+            @RequestParam("diaryIdx") Long diaryIdx,
+            @RequestParam("page") int pageCnt,
             @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
             Authentication authentication,
             Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
-        return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
+        return "/diary/modify";
     }
 
 
