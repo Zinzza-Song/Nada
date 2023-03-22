@@ -1900,7 +1900,6 @@ main {
 
 .mypageSubject {
     color: #bf8e65;
-    text-decoration: none;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -1913,7 +1912,6 @@ main {
     font-size: 18px;
 }
 
-/*여기부터 요한*/
 
 /* user/read.html */
 .more-btn {
@@ -1925,55 +1923,45 @@ main {
     float: right;
 }
 
-.mypageSubject {
-    color: #bf8e65;
-    text-decoration: none;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    width: 100px;
-}
 
 .mypageSubject:visited {
-    color: #7239b1;
+    color: #bf8e65;
 }
+
+
 
 .adviceText {
     font-variant: all-small-caps;
     font-size: 18px;
 }
 
-/*--------------------------------*/
+
 
 /* 전체 a태그 밑줄없앴음*/
 a {
     text-decoration: none;
 }
+.mypageSubject:hover{
+    text-decoration: underline;
+}
+/*--------------------------------*/
 
 /* board/notice/index.html */
 
-.noticeSubject:visited {
-    color: #7239b1;
-}
-
-.noticeSubject {
+.noticeIndexSubject:visited {
     color: #5c5c5b;
 }
 
-.noticeSubject:hover {
+.noticeIndexSubject {
+    color: #5c5c5b;
+}
+
+.noticeIndexSubject:hover {
     color: #5c5c5b;
     text-decoration: underline;
 
 }
 
-.noticeTable {
-    height: 100%;
-    width: 1770px;
-    background-image: url(../images/noticeBanner1.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 
 .noticeTableHead {
     vertical-align: bottom;
@@ -1992,7 +1980,7 @@ a {
     text-align: center;
 }
 
-/* /board/notice/index.html  */
+/* /board/report/index.html  */
 .reportImg {
     background-image: url(../images/alarm.png);
     height: 40px;
@@ -2018,7 +2006,7 @@ a {
 }
 
 .reportSubject:visited {
-    color: #7239b1;
+    color: #5c5c5b;
 }
 
 .reportSubject:hover {
@@ -2028,5 +2016,31 @@ a {
 
 .reportTableBodySubject, .reportTableBodyDate,
 .reportTableHeadSubject, .reportTableHeadDate {
+    text-align: center;
+}
+
+/* /board/QNA/index.html  */
+.qnaIndexSubject:visited{
+    color: #5c5c5b;
+}
+.qnaIndexSubject{
+    color: #5c5c5b;
+}
+.qnaIndexSubject:hover{
+    color: #5c5c5b;
+    text-decoration: underline;
+}
+.qnaTableHead{
+    vertical-align: bottom;
+    font-size: 25px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+}
+.qnaTableBody{
+    vertical-align: inherit;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 20px;
+}
+.qnaTableBodySubject, .qnaTableBodyDate,
+.qnaTableHeadSubject, .qnaTableHeadDate {
     text-align: center;
 }
