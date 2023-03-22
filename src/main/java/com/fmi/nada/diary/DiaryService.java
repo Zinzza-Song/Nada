@@ -90,8 +90,9 @@ public class DiaryService {
         return diaryRepository.findMyDiaryByMemberIdx(memberIdx);
     }
 
-    public List<Diary> getLikeDiary(Long diaryIdx) {
-        return diaryRepository.findLikeDiaryByDiaryIdx(diaryIdx);
+
+    public List<Diary> findSympathyDiaryList(Long memberIdx) {
+        return diaryRepository.findSympathyDiary(memberIdx);
     }
 
     // 다이어리 상세 보기
