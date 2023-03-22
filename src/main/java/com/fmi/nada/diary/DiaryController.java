@@ -129,11 +129,11 @@ public class DiaryController {
         return "redirect:/diary/read/" + diary.getDiaryIdx();
     }
 
-    @PostMapping("/comment_write")
-    @ResponseBody
-    public List<Comment> commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
-                                      @RequestParam("commentInput") String commentInput,
-                                      Authentication authentication) {
+    @RequestMapping(value = "/comment_write", method = RequestMethod.POST)
+    public String commentWrite(@RequestParam("diaryIdx") Long diaryIdx,
+                               @RequestParam("commentInput") String commentInput,
+                               Authentication authentication,
+                               Model model) {
 
         Member member = (Member) authentication.getPrincipal();
         Comment comment = new Comment(member.getMemberIdx(),
@@ -147,8 +147,11 @@ public class DiaryController {
         commentService.resisterComment(comment);
 
         List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+        model.addAttribute("commentList", commentList);
 
-        return commentList;
+        // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
+        // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
+        return "/diary/read :: tbody";
     }
 
     // 다이어리 수정 페이지
