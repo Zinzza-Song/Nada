@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,8 +83,7 @@ public class DiaryController {
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
         model.addAttribute("readDiaryBean", diary);
 
-        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
-        model.addAttribute("commentList", commentList);
+        getCommentList(diaryIdx, model, member);
 
         return "diary/read";
     }
@@ -146,8 +146,7 @@ public class DiaryController {
 
         commentService.resisterComment(comment);
 
-        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
-        model.addAttribute("commentList", commentList);
+        getCommentList(diaryIdx, model, member);
 
         // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
         // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
@@ -241,27 +240,33 @@ public class DiaryController {
 
     // 댓글 좋아요
     @PostMapping("/commentLike")
-    @ResponseBody
-    public String addCommentLike(CommentLikeDto commentLikeDto) {
-        Likes likes = diaryService.checkCommentLike(commentLikeDto);
-        if (likes != null)
-            return "fail";
+    public String addCommentLike(
+            CommentLikeDto commentLikeDto,
+            Authentication authentication,
+            Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        commentLikeDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.addCommentLike(commentLikeDto);
 
-        return "ok";
+        getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        return "/diary/read :: tbody";
     }
 
     @DeleteMapping("/commentLike")
-    @ResponseBody
-    public String delCommentLike(CommentLikeDto commentLikeDto) {
-        Likes likes = diaryService.checkCommentLike(commentLikeDto);
-        if (likes == null)
-            return "fail";
+    public String delCommentLike(CommentLikeDto commentLikeDto,
+                                 Authentication authentication,
+                                 Model model) {
+        System.out.println("게시글 좋아요 취소 돌입");
+        Member member = (Member) authentication.getPrincipal();
+        commentLikeDto.setMemberIdx(member.getMemberIdx());
 
         diaryService.delCommentLike(commentLikeDto);
 
-        return "ok";
+        getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        return "/diary/read :: tbody";
     }
 
     private void insertKeywords(DiaryDTO diaryDTO) {
@@ -282,4 +287,20 @@ public class DiaryController {
             }
         }
     }
+
+    private void getCommentList(Long diaryIdx, Model model, Member member) {
+        List<Comment> commentList = commentService.findAllByDiaryIdxOrderByCommentDateDesc(diaryIdx);
+        model.addAttribute("commentList", commentList);
+
+        List<Boolean> commentIsLikes = new ArrayList<>();
+        for (Comment c : commentList) {
+            Likes likes = diaryService.checkCommentLikeWhenRead(member.getMemberIdx(), c.getCommentIdx());
+            if (likes != null)
+                commentIsLikes.add(true);
+            else
+                commentIsLikes.add(false);
+        }
+        model.addAttribute("commentIsLikes", commentIsLikes);
+    }
+
 }

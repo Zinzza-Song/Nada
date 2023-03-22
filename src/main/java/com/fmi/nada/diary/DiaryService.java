@@ -157,15 +157,17 @@ public class DiaryService {
     public void addCommentLike(CommentLikeDto commentLikeDto) {
         likesRepository.save(new Likes(
                 commentLikeDto.getMemberIdx(),
-                commentLikeDto.getCommentIdx()
+                commentLikeDto.getCommentIdx(),
+                commentLikeDto.getDiaryIdx()
         ));
     }
 
     // 댓글 좋아요 취소 서비스 로직
     public void delCommentLike(CommentLikeDto commentLikeDto) {
-        likesRepository.deleteByCommentIdxAndMemberIdx(
+        likesRepository.deleteByCommentIdxAndMemberIdxAndDiaryIdx(
                 commentLikeDto.getCommentIdx(),
-                commentLikeDto.getCommentIdx()
+                commentLikeDto.getMemberIdx(),
+                commentLikeDto.getDiaryIdx()
         );
     }
 
@@ -175,6 +177,10 @@ public class DiaryService {
                 commentLikeDto.getMemberIdx(),
                 commentLikeDto.getCommentIdx()
         );
+    }
+
+    public Likes checkCommentLikeWhenRead(Long memberIdx, Long CommentIdx) {
+        return likesRepository.findByMemberIdxAndCommentIdx(memberIdx, CommentIdx);
     }
 
     public Sympathy checkSympathyDiary(Long memberIdx, Long diaryIdx) {
