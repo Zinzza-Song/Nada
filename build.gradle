@@ -48,6 +48,8 @@ dependencies {
     implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    implementation 'com.google.code.gson:gson'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -60,6 +62,11 @@ dependencies {
 
     // mysql
     runtimeOnly 'mysql:mysql-connector-java'
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

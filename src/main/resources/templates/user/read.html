@@ -1,0 +1,502 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+</head>
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+<div class="card-header BoxTitle">
+  My Page
+</div>
+
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">프로필? 아이콘이었던가</h5>
+          <p class="card-text" id="email" th:text="${memberLoginBean.username}">이메일</p>
+          <p class="card-text" th:text="${memberLoginBean.memberBirth}">생일</p>
+          <p class="card-text" th:text="${memberLoginBean.memberNickname}">닉네임</p>
+          <p class="card-text" th:text="${memberLoginBean.memberAddress}">주소</p>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">감정상태 분석</h5>
+          <button onclick="changeChartType('line')" type="button">선그래프</button>
+          <button onclick="changeChartType('bar')" type="button">막대그래프</button>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">감정상태 분석글</h5>
+          <!-- 감정 점수가 아직 없는 경우-->
+          <th:block th:if="${analyzeScore} == null">
+            <p class="card-text">어서 빨리 일기를 작성해 주세요!!</p>
+          </th:block>
+          <!-- 감정 점수가 존재하는 경우-->
+          <th:block th:if="${analyzeScore} != null">
+            <input id="analyzeScoreArr" th:value="${analyzeScoreArr}" type="hidden">
+            <input id="diaryWriteDateArr" th:value="${diaryWriteDateArr}" type="hidden">
+            <input id="diaryScore" th:value="${analyzeScore}" type="hidden">
+          </th:block>
+          <p class="card-text adviceText" id="advice">대충 긍정적인 분석</p>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          <input placeholder="무엇을 찾고 싶으세요?" type="text">
+          <button th:text="검색" onclick="searchAddr()"/>
+        </div>
+        <div class="card-body">
+          <div id="map" style="width:325px;height:400px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          내가 작성한 게시글
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">게시글</th>
+              <th scope="col">제목</th>
+              <th scope="col">날짜</th>
+              <th scope="col">조회수</th>
+              <th scope="col">공감수</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="myDiary : ${myDiaryList}">
+            <tr>
+              <th scope="row" th:text="${myDiary.diaryIdx}">일기 번호</th>
+              <td><a class="mypageSubject"
+                     th:href="@{/diary/read/{diaryIdx}(diaryIdx=${myDiary.diaryIdx})}"
+                     th:text="${myDiary.diarySubject}">일기 제목</a></td>
+              <td th:text="${#temporals.format(myDiary.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+              <td th:text="${myDiary.diaryCnt}">일기 조회수</td>
+              <td th:text="${myDiary.diarySympathyCnt}">일기 조회수</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+          <div id="chart">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-header">
+          공감 누른 게시글
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">게시글</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">날짜</th>
+              <th scope="col">조회수</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
+            <tr>
+              <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
+              <td th:text="${like.diarySubject}">일기 제목</td>
+              <td th:text="${like.diaryWriter}">일기 작성자</td>
+              <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+              <td th:text="${like.diaryCnt}">일기 조회수</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          친구
+          <button class="more-btn" data-bs-target="#friendModal" data-bs-toggle="modal"
+                  type="button">목록 보기
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <span> 친구 <span id="friendNum" th:text="${friendsList.size()}">0</span>명</span>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          차단 유저
+          <button class="more-btn" data-bs-target="#blockModal" data-bs-toggle="modal"
+                  type="button">목록 보기
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <span> 차단 <span id="blockNum" th:text="${blockLists.size()}">0</span>명</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <input onclick="loc()" type="button" value="회원정보수정">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--친구리스트 모달-->
+<div aria-hidden="true" aria-labelledby="friendModal" class="modal fade" id="friendModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">친구 목록</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <div id="showFriendsList">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">친구 이름</th>
+              <th scope="col">친해진 날</th>
+              <th scope="col">삭제유무</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="friend : ${friendsList}">
+            <tr>
+              <td hidden="hidden" class="friendsIdx" th:text="${friend.getFriendsMemberIdx()}">0</td>
+              <td th:text="${friend.friendsNickname}">Mark</td>
+              <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
+              <td>
+                <button onclick="deleteFriend(this)">삭제</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+<!----- 블락리스트 모달-->
+
+<div aria-hidden="true" aria-labelledby="blockModal" class="modal fade" id="blockModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalLabel">차단 목록</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <div id="showBlocksList">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">차단 번호</th>
+              <th scope="col">차단 이름</th>
+              <th scope="col">차단 이유</th>
+              <th scope="col">차단 날짜</th>
+              <th scope="col">삭제유무</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="block : ${blockLists}">
+            <tr>
+              <td class="blockIdx" th:text="${block.blockMemberIdx}">0</td>
+              <td th:text="${block.blockMemberNickname}">Mark</td>
+              <td th:text="${block.blockMemberReason}">차단 이유</td>
+              <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날</td>
+              <td>
+                <button onclick="deleteBlock(this)">삭제</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+  let container = document.getElementById('map');
+  let mapOptions = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 3
+  };
+  var userAddr = $('.address').text();
+
+  // 마이페이지 진입 시 감정 일기 점수 불러와 그래프 그리기
+  // 지도 초기 중앙 좌표 유저 집 주소로 지정
+  $(function () {
+    let map = new kakao.maps.Map(container, mapOptions);
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(userAddr, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+        map.setCenter(coords);
+      }
+    })
+
+
+    const diaryScore = document.getElementById("diaryScore");
+    let msg = diaryScore.value;
+    msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+    console.log(msg);
+
+    let advice = document.getElementById('advice');
+
+    let gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    let mainAdvice = '';
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+
+          const resMsg = data.data;
+          let resLines = resMsg.split('\n');
+
+          resLines.forEach(function (line) {
+            if (line.indexOf("조언:") != -1) {
+              mainAdvice = line;
+              console.log(mainAdvice);
+            }
+          });
+        })
+        .then(() => {
+          let resAdvice = mainAdvice.replace("조언 : ", "");
+          advice.innerText = resAdvice;
+
+          console.log($('#analyzeScoreArr').val());
+          console.log($('#analyzeScoreArr').innerText);
+        });
+  });
+
+  // 그래프에 삽입되는 일기 분석 점수
+  let analyzeScoreArrInput = document.getElementById("analyzeScoreArr");
+  let analyzeScoreArr = JSON.parse(analyzeScoreArrInput.value);
+
+  // 그래프에 삽입되는 일기 작성 날짜
+  let diaryWriteDateArrInput = document.getElementById("diaryWriteDateArr");
+  let diaryWriteDateArr = JSON.parse(diaryWriteDateArrInput.value.replace(/&quot;/g, '"'));
+
+  let chartType = 'line'; // 초기값은 선그래프
+
+  function changeChartType(type) {
+    chartType = type;
+    chart.updateOptions({
+      chart: {
+        type: chartType
+      }
+    });
+  }
+
+
+  let options = {
+    series: [
+      {
+        name: "매일매일 달라지는 나의 하루",
+        data: analyzeScoreArr.reverse()
+      },
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#77B6EA', '#545454'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Your Date Temperature',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: diaryWriteDateArr.map((date) => {
+        const year = date.slice(0, 4);
+        const month = date.slice(5, 7);
+        const day = date.slice(8, 10);
+        return `${year}-${month}-${day}`;
+      }).reverse(),
+      title: {
+        text: '최근 6일 동안의 나의 하루 점수'
+      }
+    },
+    yaxis: {
+      title: {
+        text: '하루 기분 점수'
+      },
+      min: 0,
+      max: 100
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  };
+
+  let chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+
+
+  function loc() {
+    window.location = "/user/modify";
+  }
+
+  function deleteFriend(e) {
+    const memberDeleteDto = {
+      "friendsIdx": $(e).parent().siblings('.friendsIdx').text()
+    }
+
+    // Ajax 요청을 보냅니다.
+    $.ajax({
+      type: "DELETE",
+      url: "/user/friend_del/",
+      data: memberDeleteDto,
+      success: function (response) {
+        // 서버에서 삭제가 완료된 후에 친구 목록을 다시 불러옵니다.
+        $("#showFriendsList").replaceWith(response);
+        const num = $("#friendNum").text();
+        $("#friendNum").text(parseInt(num) - 1);
+      }
+    });
+  }
+
+  // 차단리스트 모달에서 삭제
+  function deleteBlock(e) {
+    console.log('차단해제');
+    console.log($(e).parent().siblings('.blockIdx').text());
+    const blockListDto = {
+      "blockMemberIdx": $(e).parent().siblings('.blockIdx').text()
+    }
+    $.ajax({
+      type: "DELETE",
+      url: "/user/unblock/",
+      data: blockListDto,
+      success: function (response) {
+        $("#showBlocksList").replaceWith(response);
+        const num = $("#blockNum").text();
+        $("#blockNum").text(parseInt(num) - 1);
+      }
+    });
+
+  }
+
+  function searchAddrGpt() {
+    let searchInput = $(`#search-input-addr`).val();
+    let msg = "종각역 근처에서 ";
+    msg += searchInput;
+    msg += " 장소를 5개만 추천 해주세요.";
+
+    console.log(msg);
+
+    let loadSearch = $(`#addressResult`).val("잠시만 기다려주세요!");
+
+    let gptData = {
+      method: 'POST',
+      body: JSON.stringify({msg}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    fetch('http://localhost:8080/send', gptData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+          const resMsg = data.data;
+        })
+  }
+
+  // ********* 주소 클릭 스크립트 함수 *********
+  // 주소-좌표 변환 객체를 생성합니다
+  function searchAddr() {
+    let map = new kakao.maps.Map(container, mapOptions);
+    let geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch('경기 성남시 분당구 판교역로 235 에이치스퀘어', function (result, status) {
+
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+        });
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+    });
+  }
+</script>
+<footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
+</body>
+</html>

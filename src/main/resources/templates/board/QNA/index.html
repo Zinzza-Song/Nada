@@ -1,0 +1,173 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+    <!-- 반응형 웹 미디어쿼리 선언부   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+
+</head>
+<body class="p-3 m-0 border-0 bd-example qnaMain">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+
+<nav class="navbar searchbar">
+    <div class="container-fluid">
+        <form class="d-flex" role="search" th:action="@{/board/QNA}" th:method="get">
+            <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+                <option selected value="qnaSubject" id="qnaSubject">제목</option>
+                <option value="qnaWriter" id="qnaWriter">작성자</option>
+            </select>
+            <input class="form-control me-2" type="search" placeholder="검색 내용을 입력해 주세요" name="keyword" id="inputSearch"
+                   aria-label="Search">
+            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
+        </form>
+        <form class="noticeWriteBtn" th:action="@{/board/QNA/write}" th:method="get">
+            <button type="submit" class="btn btn-outline-primary" style="width: 100px">작성</button>
+
+        </form>
+    </div>
+</nav>
+
+<table class="table">
+    <thead class="qnaTableHead">
+    <tr>
+        <th scope="col">NO</th>
+        <th class="qnaTableHeadSubject" scope="col">Q&A</th>
+        <th class="qnaTableHeadDate" scope="col">날짜</th>
+        <th scope="col">작성자</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider qnaTableBody" th:each="qna: ${allQnaList}">
+    <tr>
+        <th scope="row" th:text="${qna.qnaIdx}">게시글번호</th>
+        <td class="qnaTableBodySubject"><a class="qnaIndexSubject" th:href="@{/board/QNA/read(qnaIdx=${qna.qnaIdx})}"
+                                           th:text="${qna.qnaSubject}">Q&A 제목</a></td>
+        <td class="qnaTableBodyDate" th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
+        <td th:text="${qna.qnaWriter}">닉네임</td>
+    </tr>
+
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation" class="page">
+    <!-- 변수값 초기화 -->
+    <ul class="pagination page-bar justify-content-center"
+        th:with="start=${T(Math).floor(allQnaList.number / 10) * 10 + 1},
+             last=${start + 9 < allQnaList.totalPages ? start + 9 : allQnaList.totalPages},
+             type=${param.type},
+             keyword=${param.keyword}">
+        <th:block th:if="${keyword != null}">
+            <th:block th:with="
+                firstPage=@{/QNA(page=1,type=${type},keyword=${keyword})},
+                prevPage=@{/QNA(page=${allQnaList.number},type=${type},keyword=${keyword})},
+                nextPage=@{/QNA(page=${allQnaList.number + 2},type=${type},keyword=${keyword})},
+                lastPage=@{/QNA(page=${allQnaList.totalPages},type=${type},keyword=${keyword})}">
+                <!-- 페이지가 없는 경우 -->
+                <th:block th:if="${allQnaList.totalPages < 1}">
+                    <button name="return-main">전체 페이지로 돌아가기</button>
+                </th:block>
+                <!-- 페이지가 있는 경우 -->
+                <th:block th:if="${allQnaList.totalPages > 0}">
+
+                    <!-- 첫 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                            <span aria-hidden="true">첫 페이지로</span>
+                        </a>
+                    </li>
+                    <!-- 이전 페이지로 이동 -->
+                    <li class="page-item" th:class="${allQnaList.first} ? 'disabled'">
+                        <a class="page-link" th:href="${allQnaList.first} ? '#' :${prevPage}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${page == allQnaList.number + 1} ? 'active'">
+                        <a class="page-link" th:text="${page}"
+                           th:href="@{/QNA(page=${page},type=${type},keyword=${keyword})}"></a>
+                    </li>
+
+                    <!-- 다음 페이지로 이동 -->
+                    <li class="page-item" th:class="${allQnaList.last} ? 'disabled'">
+                        <a class="page-link" th:href="${allQnaList.last} ? '#' :${nextPage}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${lastPage}">
+                            <span aria-hidden="true">마지막 페이지로</span>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${keyword == null}">
+            <th:block th:with="
+                firstPage=@{/board/QNA(page=1)},
+                prevPage=@{/board/QNA(page=${allQnaList.number})},
+                nextPage=@{/board/QNA(page=${allQnaList.number + 2})},
+                lastPage=@{/board/QNA(page=${allQnaList.totalPages})}">
+                <!-- 페이지가 없는 경우 -->
+                <th:block th:if="${allQnaList.totalPages < 1}">
+                    <button name="return-main">전체 페이지로 돌아가기</button>
+                </th:block>
+                <!-- 페이지가 있는 경우 -->
+                <th:block th:if="${allQnaList.totalPages > 0}">
+
+                    <!-- 첫 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+                            <span aria-hidden="true">첫 페이지로</span>
+                        </a>
+                    </li>
+                    <!-- 이전 페이지로 이동 -->
+                    <li class="page-item" th:class="${allQnaList.first} ? 'disabled'">
+                        <a class="page-link" th:href="${allQnaList.first} ? '#' :${prevPage}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${page == allQnaList.number + 1} ? 'active'">
+                        <a class="page-link" th:text="${page}"
+                           th:href="@{QNA(page=${page})}"></a>
+                    </li>
+
+                    <!-- 다음 페이지로 이동 -->
+                    <li class="page-item" th:class="${allQnaList.last} ? 'disabled'">
+                        <a class="page-link" th:href="${allQnaList.last} ? '#' :${nextPage}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${lastPage}">
+                            <span aria-hidden="true">마지막 페이지로</span>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+        </th:block>
+    </ul>
+</nav>
+
+<!--<form class="noticeWriteBtn" th:action="@{/board/QNA/write/${member.memberIdx}}" th:method="get">-->
+<!--  <button type="submit" class="btn btn-outline-primary">작성</button>-->
+<!--</form>-->
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
+</body>
+</html>

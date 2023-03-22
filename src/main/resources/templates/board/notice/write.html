@@ -1,0 +1,55 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+    <!-- 반응형 웹 미디어쿼리 선언부   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+
+</head>
+<body class="p-3 m-0 border-0 bd-example noticeWriteForm">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+
+<form enctype="multipart/form-data" th:action="@{/board/notice/write_pro}" th:method="post"
+      class="qnaform"
+      th:object="${addNoticeBean}">
+    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">NOTICE</span>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject"
+               th:field="*{noticeSubject}"
+               placeholder="공지사항 제목">
+        <p th:if="${#fields.hasErrors('noticeSubject')}" th:errorclass="error" th:errors="*{noticeSubject}"/>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
+               th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control qnaContent" name="noticeContent" id="noticeContent " rows="5" placeholder="공지내용"
+                  style="resize: none;"
+                  th:field="*{noticeContent}">
+        </textarea>
+        <p th:if="${#fields.hasErrors('noticeContent')}" th:errorclass="error" th:errors="*{noticeContent}"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="file" class="form-label">첨부파일</label>
+        <input class="form-control form-control-sm qnaFile" name="file"
+               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+               id="file" type="file">
+    </div>
+
+
+    <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
+    <button type="submit" class="btn btn-primary qnaBtn">작성완료</button>
+    <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice'">취소</button>
+</form>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
+
+
+</body>
+</html>

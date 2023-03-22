@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+</head>
+<body class="">
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+<div id="container" class="">
+    <!-- login Box -->
+    <div class="login-box">
+        <div class="BoxTitle">
+            <span class="logo-text">N A D A</span>
+        </div>
+        <form method="post" th:action="@{/login}">
+            <div class="form-group" th:if="${error}" style="align-items: center; margin-bottom: 20px;">
+                <span th:text="${errorMsg}" class="alert alert-danger">에러메세지</span>
+            </div>
+            <div class="form-group">
+                <label>ID</label>
+                <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="form-control"
+                        value=""
+                        placeholder="example@test.com"
+                        style="ime-mode: disabled"
+                />
+            </div>
+            <div class="form-group">
+                <label>PW</label>
+                <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        class="form-control"
+                        value=""
+                        autocomplete="off"
+                />
+            </div>
+            <div id="login-btn-box">
+                <input
+                        type="submit"
+                        id="btnLogin"
+                        value="로그인"
+                        class="btn btn-light"
+                        onclick="loginCheck()"
+                />
+            </div>
+        </form>
+        <div class="row loginBox">
+            <div class="col-md-6 loginAct">
+                <a th:href="@{/user/find_password}">비밀번호를 잊으셨나요?</a>
+            </div>
+            <div class="col-md-6 loginAct">
+                <a th:href="@{/user/join}">아직 회원이 아니신가요?</a>
+            </div>
+            <!--            <div class="col-md-6 loginAct">-->
+            <!--                <div class="lost-password">-->
+            <!--                    <a th:href="@{/user/join}">아직 회원이 아니신가?</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <input
+                            type="button"
+                            id="btnLoginKakao"
+                            value="카카오"
+                            class="btn btn-social"
+                    />
+                </div>
+                <div class="col-md-4">
+                    <input
+                            type="button"
+                            id="btnLoginGoogle"
+                            value="구글"
+                            class="btn btn-social"
+                    />
+                </div>
+                <div class="col-md-4">
+                    <input
+                            type="button"
+                            id="btnLoginNaver"
+                            value="네이버"
+                            class="btn btn-social"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login Box //-->
+</div>
+<footer th:replace="~{fragment/footer.html::footer}"></footer>
+</body>
+</html>

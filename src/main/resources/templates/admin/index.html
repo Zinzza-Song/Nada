@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="~{fragment/topMenu.html::header}">
+
+</head>
+<body>
+<header th:insert="~{fragment/topMenu.html::nav}"></header>
+<div class="logBtnBox">
+    <button type="button" class="logbtn" onclick="serviceLog()">서비스 로그</button>
+    <button type="button" class="logbtn" onclick="commentLog()">댓글로그</button>
+    <button type="button" class="logbtn" onclick="diaryLog()">일기 관리</button>
+    <button type="button" class="logbtn" onclick="userLog()">회원 관리</button>
+    <button type="button" class="logbtn" onclick="reportLog()">신고 관리</button>
+</div>
+
+<footer th:insert="~{fragment/footer.html::footer}"></footer>
+<script>
+    function serviceLog() {
+        location.href = "/admin/log"
+    }
+
+    function commentLog() {
+        location.href = "/admin/comment"
+    }
+
+    function diaryLog() {
+        location.href = "/admin/diary"
+    }
+
+    function userLog() {
+        location.href = "/admin/user"
+    }
+
+    function reportLog() {
+        location.href = "/admin/report"
+    }
+
+
+</script>
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+    if (!wcs_add) var wcs_add = {};
+    wcs_add["wa"] = "1a1c5616993c0f0";
+    if (window.wcs) {
+        wcs_do();
+    }
+</script>
+</body>
+</html>
