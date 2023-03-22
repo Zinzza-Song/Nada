@@ -15,17 +15,14 @@
 <form enctype="multipart/form-data" th:action="@{/board/report/write_pro}"
       th:method="post" class="qnaform"
       th:object="${writeReportBean}">
-    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span>
-    </div>
+    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
     <div class="mb-3">
-        <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject"
-               th:field="*{reportSubject}"
+        <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
                placeholder="신고 제목">
     </div>
 
     <div class="mb-3">
-        <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter"
-               th:field="*{reportWriter}"
+        <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
                placeholder="신고자" readonly>
     </div>
 
@@ -68,19 +65,15 @@
 
 
     <div class="mb-3">
-        <label for="reportFile" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm qnaFile" name="reportFile "
+        <label for="file" class="form-label">첨부파일</label>
+        <input class="form-control form-control-sm qnaFile" name="file "
                style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-               id="reportFile" type="file">
+               id="file" type="file">
     </div>
-
-
     <button type="submit" class="btn btn-primary qnaBtn">신고</button>
     <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
     <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
-
-
 </body>
 </html>

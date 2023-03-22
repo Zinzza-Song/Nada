@@ -6,8 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 신고글 Service
@@ -72,6 +76,37 @@ public class ReportService {
                 reportDto.getReportContent(),
                 reportDto.getReportReportedMember()
         ));
+    }
+
+    public Report writeReportFile(ReportDto reportDto, Member reporter, MultipartFile file) throws IOException {
+        String projectPath = System.getProperty("user.dir");
+        String getFullPath = projectPath + "\\src\\main\\resources\\static\\files";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(getFullPath, fileName);
+        Report report = new Report();
+        report.setMemberIdx(reporter.getMemberIdx());
+        report.setReportSubject(reportDto.getReportSubject());
+        report.setReportWriter(reportDto.getReportWriter());
+        report.setReportContent(reportDto.getReportContent());
+        report.setReportCategory(reportDto.getReportCategory());
+        report.setReportReportedMember(reportDto.getReportReportedMember());
+        if (file.getOriginalFilename() == null && file.getOriginalFilename() == "") {
+            return reportRepository.save(report);
+        } else {
+            if (!saveFile.exists()) {
+                saveFile.mkdirs();
+                file.transferTo(saveFile);
+                report.setReportFile(fileName);
+
+                return reportRepository.save(report);
+            } else {
+                file.transferTo(saveFile);
+                report.setReportFile(fileName);
+
+                return reportRepository.save(report);
+            }
+        }
     }
 
     /**

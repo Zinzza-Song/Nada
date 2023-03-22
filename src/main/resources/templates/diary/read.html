@@ -185,8 +185,11 @@
 </div>
 <script>
     <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
+    const writerIdx = $('.memberIdx').val(); // 게시글 작성자
+    const memberIdx = $('.idx').val(); //현재 로그인한 사용자
+
     function reportBtn() {
-        location.href = "/board/report/write";
+        location.href = "/board/report/write?reportedMemberIdx=" + writerIdx;
     }
 
     $(document).ready(function () {

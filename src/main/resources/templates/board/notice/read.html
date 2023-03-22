@@ -16,7 +16,7 @@
 <!--<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="get" th:object="${readNoticeBean}">-->
 <input type="hidden" id="idx" name="idx" th:value="${readNoticeBean.noticeIdx}">
 <div class="qnaform">
-    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px">
+    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px">
         <span class="logo-text">NOTICE</span></div>
     <div class="mb-3">
         <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject"
@@ -73,7 +73,15 @@
         var noticeIdx = $("#idx").val();
         window.location = "/board/notice/modify?noticeIdx=" + noticeIdx;
     }
-</script>
 
+    $(function () {
+        var file = $('#File').val();
+        if (file == null || file === "") {
+            $('#File').on('click', function (e) {
+                e.preventDefault();
+            })
+        }
+    });
+</script>
 </body>
 </html>
