@@ -78,6 +78,10 @@ public class DiaryController {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
+        Sympathy sympathy = diaryService.checkSympathyDiary(member.getMemberIdx(), diaryIdx);
+        if (sympathy != null)
+            model.addAttribute("sympathyBean", sympathy);
+
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
         viewCountValidation(diary, request, response);
         model.addAttribute("readDiaryBean", diary);

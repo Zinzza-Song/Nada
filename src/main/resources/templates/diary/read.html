@@ -19,15 +19,18 @@
 
     <div class="diary-write row align-items-start col">
 
-        <div class="leftDiary diary-wrap">
-            <div class="card-body diary diaryMedia col-6">
-                <div class="form-group readTop">
-                    <img class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
-                         style="">
-                    <p class=" btn-primary_read"
-                       style=""
-                       th:text="${readDiaryBean.diarySympathyCnt}" readonly></p>
-                </div>
+    <div class="leftDiary diary-wrap">
+      <div class="card-body diary diaryMedia col-6">
+        <div class="form-group readTop">
+          <img th:if="${sympathyBean==null}" class="btn  btn-primary_readImg" th:src="@{/images/sympathyOffImg.png}"
+               style="" onclick="sympathyOn()">
+          <img th:if="${sympathyBean!=null}" class="btn  btn-primary_readImg" th:src="@{/images/emotion.png}"
+               style="" onclick="sympathyOff()">
+
+          <p class=" btn-primary_read"
+             style=""
+             th:text="${readDiaryBean.diarySympathyCnt}" readonly></p>
+        </div>
 
                 <div class="dropdown readDropdown" style="margin-bottom: 30px;display: inline-block">
                     <p class="diaryWriterP" style="padding-top: 15px;">작성자 :</p>
@@ -138,6 +141,66 @@
                 <a class="btn btn-dark listBtn" th:href="@{diary/index.html}">목록</a>
             </div>
         </div>
+      </div>
+      <div class="input-group mb-3 commentTitle">
+        <input type="text" class="form-control commentTitle comtitle" id="commentInput" value=""
+               placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
+               aria-describedby="button-addon2">
+        <input type="hidden" id="diaryIdx" th:value="${readDiaryBean.diaryIdx}">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                th:onclick="registerComment()">작성
+        </button>
+      </div>
+      <div class="card-body commentList"
+           style="">
+        <table class="table commentTable" style="">
+          <div id="commentDiv">
+            <th:block th:if="${commentList != null}">
+              <tbody class="table-group-divider" th:each="list: ${commentList}" style="">
+              <tr>
+                <th scope="row"></th>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
+                            aria-expanded="false" th:text="${list.commentWriter}">작성자
+                    </button>
+                    <ul class="dropdown-menu" style="">
+                      <li class="dropdown-item addFriend">친구추가</li>
+                      <input type="hidden" id="memberIdx" name="memberIdx"
+                             th:value="${list.memberIdx}">
+                      <li class="dropdown-item addBlock" onclick="addBlock(this)" data-bs-toggle="modal"
+                          data-bs-target="#block">
+                        차단
+                      </li>
+                      <li class="dropdown-item" onclick="reportBtn()">댓글 신고</li>
+                    </ul>
+                  </div>
+                </td>
+                <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
+                <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
+                <td>
+                  <th:block th:if="${list.memberIdx!=member.memberIdx}">
+                    <img th:if="${likes == null}" class="btn  btn-primary_readImg"
+                         onclick="likeOn()" th:src="@{/images/likeOffImg.png}">
+                    <img th:if="${likes != null}" class="btn  btn-primary_readImg"
+                         onclick="likeOff()" th:src="@{/images/likeOnImg.png}">
+                  </th:block>
+                </td>
+              </tr>
+              </tbody>
+            </th:block>
+          </div>
+        </table>
+      </div>
+      <div class="btnWrap" style="">
+        <button class="btn btn-dark writerBtn" type="button"
+                onclick="">삭제
+        </button>
+        <button class="btn btn-dark writerBtn" type="submit"
+                onclick="">수정
+        </button>
+        <a class="btn btn-dark listBtn" th:href="@{diary/index.html}">목록</a>
+      </div>
     </div>
 </div>
 <input type="hidden" class="idx" th:value="${member.memberIdx}">
@@ -262,6 +325,23 @@
                 $(`.table`).html(fragment);
             });
     }
+  //   diary 공감버튼 function
+  function sympathyOn() {
+    console.log('on');
+  }
+
+  function sympathyOff() {
+    console.log('off');
+  }
+
+  //   comment 좋아요버튼 function
+  function likeOn() {
+
+  }
+
+  function likeOff() {
+
+  }
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>

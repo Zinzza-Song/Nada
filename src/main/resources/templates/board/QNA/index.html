@@ -32,19 +32,19 @@
 </nav>
 
 <table class="table">
-  <thead>
+  <thead class="qnaTableHead">
   <tr>
     <th scope="col">NO</th>
-    <th scope="col">Q&A</th>
-    <th scope="col">날짜</th>
+    <th class="qnaTableHeadSubject" scope="col">Q&A</th>
+    <th class="qnaTableHeadDate" scope="col">날짜</th>
     <th scope="col">작성자</th>
   </tr>
   </thead>
-  <tbody class="table-group-divider" th:each="qna: ${allQnaList}">
+  <tbody class="table-group-divider qnaTableBody" th:each="qna: ${allQnaList}">
   <tr>
     <th scope="row" th:text="${qna.qnaIdx}">게시글번호</th>
-    <td><a th:href="@{/board/QNA/read(qnaIdx=${qna.qnaIdx})}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
-    <td th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
+    <td class="qnaTableBodySubject"><a class="qnaIndexSubject" th:href="@{/board/QNA/read(qnaIdx=${qna.qnaIdx})}" th:text="${qna.qnaSubject}">Q&A 제목</a></td>
+    <td class="qnaTableBodyDate" th:text="${#temporals.format(qna.qnaDate, 'YY-MM-dd')}">날짜</td>
     <td th:text="${qna.qnaWriter}">닉네임</td>
   </tr>
 
