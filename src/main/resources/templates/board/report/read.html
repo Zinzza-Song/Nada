@@ -62,8 +62,8 @@
   <div class="mb-3">
     <label for="reportFile" class="form-label">첨부파일</label>
     <input class="form-control form-control-sm qnaFile" name="reportFile "
-           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-           id="reportFile" type="file">
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;" th:value="${ReportBean.reportFile}"
+           id="reportFile">
     <!--        파일 받아올 때 방법 생각 해 봐야함-->
   </div>
 
