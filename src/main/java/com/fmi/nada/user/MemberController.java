@@ -259,6 +259,19 @@ public class MemberController {
         return "/user/read :: #showFriendsList";
     }
 
+    @DeleteMapping("/unblock")
+    public String unblock(BlockListDto blockListDto,
+                          Authentication authentication,
+                          Model model) {
+        Member member = (Member) authentication.getPrincipal();
+
+        memberService.delBlocks(member.getMemberIdx(), blockListDto.getBlockMemberIdx());
+        List<BlockList> blockList = memberService.blockLists(member.getMemberIdx());
+        model.addAttribute("blockLists", blockList);
+
+        return "/user/read :: #showBlocksList";
+    }
+
     @PostMapping("/blockList_add")
     @ResponseBody
     public String addBlockList(

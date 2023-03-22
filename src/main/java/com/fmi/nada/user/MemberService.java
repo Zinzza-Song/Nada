@@ -120,4 +120,11 @@ public class MemberService {
         ));
     }
 
+    public void delBlocks(Long memberIdx,
+                          Long blockMemberIdx) {
+        blockListRepository.deleteByMemberIdxAndBlockMemberIdx(
+                memberIdx,
+                blockMemberIdx);
+    }
+
 }

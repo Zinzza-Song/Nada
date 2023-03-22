@@ -15,7 +15,7 @@
 <form enctype="multipart/form-data" th:action="@{/board/report/write_pro}"
       th:method="post" class="qnaform"
       th:object="${writeReportBean}">
-    <div class="loginBoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
+    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
     <div class="mb-3">
         <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
                placeholder="신고 제목">
