@@ -112,7 +112,7 @@
                                         </button>
                                         <ul class="dropdown-menu" style="">
                                             <li class="dropdown-item addFriend">친구추가</li>
-                                            <input type="hidden" id="memberIdx" name="memberIdx"
+                                            <li hidden="hidden" class="memberIdx" name="memberIdx"
                                                    th:value="${list.memberIdx}">
                                             <li class="dropdown-item addBlock" onclick="addBlock(this)"
                                                 data-bs-toggle="modal"
@@ -126,12 +126,13 @@
                                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
                                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
                                 <td>
-                                    <th:block th:if="${list.memberIdx!=member.memberIdx}">
+                                    <!--<th:block th:if="${list.memberIdx!=member.memberIdx}">
                                         <img th:if="${likes == null}" class="btn  btn-primary_readImg"
                                              onclick="likeOn()" th:src="@{/images/likeOffImg.png}">
                                         <img th:if="${likes != null}" class="btn  btn-primary_readImg"
                                              onclick="likeOff()" th:src="@{/images/likeOnImg.png}">
-                                    </th:block>
+                                    </th:block>-->
+                                    좋아요 버튼
                                 </td>
                             </tr>
                             </tbody>
@@ -179,11 +180,11 @@
                         <textarea class="form-control" id="blockMemberReason" name="blockMemberReason"
                                   th:field="*{blockMemberReason}"></textarea>
                     </div>
-                    <input type="hidden" id="blockMemberIdx" name="blockMemberIdx" th:field="*{blockMemberIdx}"
+                    <input type="input" id="blockMemberIdx" name="blockMemberIdx" th:field="*{blockMemberIdx}"
                            value="">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="button" onclick="postBlock()" class="btn btn-primary">작성완료</button>
+                        <button type="button" onclick="postBlock(this)" class="btn btn-primary">작성완료</button>
                     </div>
                 </div>
             </div>
@@ -236,7 +237,7 @@
         $('#blockMemberIdx').val(blockMemberIdx);
     }
 
-    function postBlock() {
+    function postBlock(e) {
         const blockListDto = {
             "blockMemberNickname": $('#blockMemberNickname').val(),
             "blockMemberReason": $('#blockMemberReason').val(),
