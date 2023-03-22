@@ -155,7 +155,7 @@ public class DiaryController {
     public String modifyDiary(
             @RequestParam("diaryIdx") Long diaryIdx,
             @RequestParam("page") int pageCnt,
-            @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
+            @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
             Authentication authentication,
             Model model) {
         Member member = (Member) authentication.getPrincipal();
@@ -168,7 +168,7 @@ public class DiaryController {
     // 다이어리 수정 로직
     @PutMapping("/modify_pro/{diaryIdx}")
     public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
-        if (bindingResult.hasErrors()) return "diary/modify/" + diaryIdx + "?pageCnt=" + pageCnt;
+        if (bindingResult.hasErrors()) return "diary/modify";
 
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
@@ -184,7 +184,7 @@ public class DiaryController {
         insertKeywords(diaryDTO);
         diaryService.modifyDiary(diary);
 
-        return "redirect:/read/" + diary.getDiaryIdx() + "?pageCnt=" + pageCnt;
+        return "redirect:/read/" + diary.getDiaryIdx() + "?page=" + pageCnt;
     }
 
     // 다이어리 삭제 로직
