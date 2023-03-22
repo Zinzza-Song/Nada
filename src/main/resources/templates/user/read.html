@@ -179,7 +179,7 @@
                         </thead>
                         <tbody class="table-group-divider" th:each="friend : ${friendsList}">
                         <tr>
-                            <td hidden="hidden" class="friendsIdx" th:text="${friend.getFriendsMemberIdx()}">0</td>
+                            <td hidden="hidden" id="friendsIdx" th:text="${friend.getFriendsMemberIdx()}">0</td>
                             <td th:text="${friend.friendsNickname}">Mark</td>
                             <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
                             <td>
