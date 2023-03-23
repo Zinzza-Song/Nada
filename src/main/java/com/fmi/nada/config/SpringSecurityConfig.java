@@ -56,16 +56,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         );
 
         http.authorizeRequests()
-//                .antMatchers("/", "/home", "/user/join/**", "/user/reset_password/**",
-//                        "/diary", "/diary/read", "/board/notice", "/board/notice/read", "/board/QNA",
-//                        "/user/login", "/denied").permitAll()
-//                .antMatchers("/user/modify/**", "/user/delete", "/user/read",
-//                        "/user/friend_list", "/user/friend_add", "/user/friend_del", "/user/block_list",
-//                        "/user/unblock", "/reporting/**", "/diary/**", "/board/QNA/write/**",
-//                        "/board/QNA/read", "/board/QNA/delete", "board/report/**").hasRole("USER")
-//                .antMatchers("/**").hasRole("ADMIN")
-//                .anyRequest().authenticated();
-                .anyRequest().permitAll();
+                .antMatchers("/", "/home", "/user/join/**", "/user/reset_password/**",
+                        "/diary", "/diary/read", "/board/notice", "/board/notice/read", "/board/QNA",
+                        "/user/login", "/denied").permitAll()
+                .antMatchers("/user/modify/**", "/user/delete", "/user/read",
+                        "/user/friend_list", "/user/friend_add", "/user/friend_del", "/user/block_list",
+                        "/user/unblock", "/reporting/**", "/diary/**", "/board/QNA/write/**",
+                        "/board/QNA/read", "/board/QNA/delete", "board/report/**").hasRole("USER")
+                .antMatchers("/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
+//                .anyRequest().permitAll();
 
         http.formLogin()
                 .loginPage("/login")
