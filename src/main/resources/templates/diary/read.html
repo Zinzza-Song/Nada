@@ -145,19 +145,20 @@
         </table>
       </div>
       <div class="btnWrap" style="float: right">
-        <th:block th:if="${member.memberIdx == readDiaryBean.memberIdx}">
-          <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="margin-top: 20px">
+<!--        <th:block th:if="${member.memberIdx == readDiaryBean.memberIdx}">-->
+          <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="">
             <input type="hidden" id="deleteDiaryIdx" name="deleteDiaryIdx" th:value="${readDiaryBean.diaryIdx}">
-            <button class="btn customBtn" id="deleteBtn" type="submit">
+            <button class="btn customBtn writerBtn" id="deleteBtn" type="submit">
               삭제
             </button>
           </form>
-          <button class="btn customBtn">
+          <button class="btn customBtn writerBtn">
             <a style="color: white"
                th:href="@{/diary/modify(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
           </button>
-        </th:block>
+<!--        </th:block>-->
         <a class="btn btn-dark listBtn" th:href="@{/diary(page=1)}">목록</a>
+
       </div>
     </div>
   </div>
@@ -236,6 +237,11 @@
 <script>
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
+  const memberIdx = $('.idx').val();
+
+  if(writerIdx == memberIdx){
+    $('.writerBtn').css('display','inline-block');
+  }
 
   // $('.blockMemberNickname').attr('value',commentWriter)
   function reportBtn() {
