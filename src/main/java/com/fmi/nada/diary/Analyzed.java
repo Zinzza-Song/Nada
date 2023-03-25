@@ -3,6 +3,7 @@ package com.fmi.nada.diary;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Getter
+@Setter
 @Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)

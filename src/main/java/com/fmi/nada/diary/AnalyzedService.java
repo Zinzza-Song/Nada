@@ -36,4 +36,8 @@ public class AnalyzedService {
         return analyzedRepository.findByDiaryIdx(diaryIdx);
     }
 
+    public void analyzedModify(Analyzed analyzed) {
+        analyzedRepository.save(analyzed);
+    }
+
 }

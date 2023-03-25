@@ -174,13 +174,22 @@ public class DiaryController {
         diaryDTO.setDiaryAnalyzePublicable(diary.getDiaryAnalyzePublicable());
         model.addAttribute("diaryModifyBean", diaryDTO);
 
+        model.addAttribute("diaryIdx", diaryIdx);
+        model.addAttribute("page", page);
+
         return "/diary/modify";
     }
 
 
     // 다이어리 수정 로직
-    @PutMapping("/modify_pro/{diaryIdx}")
-    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
+    @PutMapping("/modify_pro")
+    public String modifyDiary_pro(
+            @RequestParam("diaryIdx") Long diaryIdx,
+            @RequestParam("page") int page,
+            @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
+            BindingResult bindingResult,
+            Authentication authentication,
+            Model model) {
         if (bindingResult.hasErrors()) return "diary/modify";
 
         Member member = (Member) authentication.getPrincipal();
@@ -194,10 +203,15 @@ public class DiaryController {
         diary.setDiaryPublicable(diaryDTO.getDiaryPublicable());
         diary.setDiaryAnalyzePublicable(diaryDTO.getDiaryAnalyzePublicable());
 
-        insertKeywords(diaryDTO);
-        diaryService.modifyDiary(diary);
+        Analyzed analyzed = analyzedService.findByDiaryIdx(diaryIdx);
+        analyzed.setAnalyzeScore(diaryDTO.getAnalyzeScore());
 
-        return "redirect:/read/" + diary.getDiaryIdx() + "?page=" + pageCnt;
+        insertKeywords(diaryDTO);
+
+        diaryService.modifyDiary(diary);
+        analyzedService.analyzedModify(analyzed);
+
+        return "redirect:/diary/read/" + diary.getDiaryIdx() + "?page=" + page;
     }
 
     // 다이어리 삭제 로직

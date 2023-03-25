@@ -122,7 +122,8 @@
             </div>
 
             <input type="hidden" id="analyzeScore" th:field="*{analyzeScore}">
-
+            <input type="hidden" name="diaryIdx" th:value="${diaryIdx}">
+            <input type="hidden" name="page" th:value="${page}">
 
             <button type="submit" class="btn customBtn btn-diary-right writeSubmit">수정 완료</button>
           </div>
