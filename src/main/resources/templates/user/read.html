@@ -95,6 +95,9 @@
         </div>
         <div class="card-body">
           <div id="chart">
+            <th:block th:if="${analyzeScore} == null">
+              <p class="card-text" style="font-size: 50px">일기를 작성해주시면 그래프를 보실 수 있습니다.</p>
+            </th:block>
           </div>
         </div>
       </div>
@@ -103,28 +106,14 @@
       <div class="card mb-3">
         <div class="card-header">
           공감 누른 게시글
+          <button class="more-btn" data-bs-target="#diaryModal" data-bs-toggle="modal"
+                  type="button">목록 보기
+          </button>
         </div>
         <div class="card-body">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="col">게시글</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">날짜</th>
-              <th scope="col">조회수</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
-            <tr>
-              <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
-              <td th:text="${like.diarySubject}">일기 제목</td>
-              <td th:text="${like.diaryWriter}">일기 작성자</td>
-              <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
-              <td th:text="${like.diaryCnt}">일기 조회수</td>
-            </tr>
-            </tbody>
-          </table>
+          <div>
+            <span> 게시글 <span th:text="${likeDiaryList.size()}">0</span>개</span>
+          </div>
         </div>
       </div>
       <div class="card mb-3">
@@ -155,6 +144,46 @@
       </div>
       <div>
         <input onclick="loc()" type="button" value="회원정보수정">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--게시글리스트 모달-->
+<div aria-hidden="true" aria-labelledby="diaryModal" class="modal fade" id="diaryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalLabel2">친구 목록</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <div id="showDiaryList">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">글 번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">날짜</th>
+              <th scope="col">공감수</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
+            <tr>
+              <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
+              <td><a th:href="@{/diary/read/{diaryIdx}(diaryIdx=${like.diaryIdx})}" th:text="${like.diarySubject}">일기
+                제목</a></td>
+              <td th:text="${like.diaryWriter}">일기 작성자</td>
+              <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+              <td th:text="${like.diarySympathyCnt}">일기 공감수</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
       </div>
     </div>
   </div>
@@ -196,8 +225,6 @@
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 
