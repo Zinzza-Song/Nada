@@ -80,6 +80,23 @@ public class AdminController {
     }
 
     /**
+     * 댓글 삭제 처리
+     *
+     * @param commentIdx 삭제시킬 일기의 PK
+     * @param model      삭제 후 갱신된 일기 리스트를 담을 모델 객체
+     * @return 전체 일기 조회 뷰 페이지의 일부분 리로드
+     */
+    @DeleteMapping("/comment_delete")
+    public String delComment(@RequestParam("commentIdx") Long commentIdx, Model model) {
+        commentService.deleteByCommentIdx(commentIdx);
+
+        List<Comment> adminAllCommentLogList = commentService.findAllByOrderByCommentDateDesc();
+        model.addAttribute("adminAllCommentLogList", adminAllCommentLogList);
+
+        return "/admin/comment :: #commentList";
+    }
+
+    /**
      * 전체 신고글 조회
      *
      * @param model 전체 신고글 리트스를 담을 모델
@@ -147,6 +164,13 @@ public class AdminController {
         return "/admin/user :: #memberList";
     }
 
+    /**
+     * 일기 삭제 처리
+     *
+     * @param diaryIdx 삭제시킬 일기의 PK
+     * @param model    삭제 후 갱신된 일기 리스트를 담을 모델 객체
+     * @return 전체 일기 조회 뷰 페이지의 일부분 리로드
+     */
     @DeleteMapping("/diary_delete")
     public String delDiary(@RequestParam("diaryIdx") Long diaryIdx, Model model) {
         diaryService.deleteDiary(diaryIdx);
@@ -170,18 +194,5 @@ public class AdminController {
 
         return "admin/diary";
     }
-
-    /**
-     * 일기 삭제 처리
-     *
-     * @param diaryIdx 삭제시킬 일기의 PK
-     * @return 전체 일기 조회 뷰 페이지로 리다이렉트
-     */
-//    @DeleteMapping("/diary_delete/{diaryIdx}")
-//    public String delDiary(@PathVariable("diaryIdx") Long diaryIdx) {
-//        diaryService.deleteDiary(diaryIdx);
-//
-//        return "/admin/diary :: #diaryList";
-//    }
 
 }
