@@ -63,14 +63,9 @@
         <div class="form-group keywordSubject">
 
           <p class="keywordP">키워드</p>
-          <div class="keywords">
-            <!--                        <p>-->
-            <th:block th:each="keyword : ${readDiaryBean.diaryKeywords }">
-              <p class="keywords_item" th:text="${keyword}"></p>
-            </th:block>
-            <!--                        </p>-->
-
-          </div>
+          <div class="keywords"></div>
+          <input type="hidden" th:value="${readDiaryBean.diaryKeywords}" id="diaryKeywords"
+                 name="diaryKeywords"/>
           <!-- 다이어리 제목부터 키워드까지 -->
         </div>
       </div>
@@ -273,6 +268,20 @@
           alert("차단 대상자 입니다.");
       });
     });
+
+    const keywords = $('#diaryKeywords').val();
+    let arrKeywords = keywords.split(",");
+
+    let keywordInnerHTML = "";
+    let i = 0;
+    for (i; i < arrKeywords.length; ++i) {
+      keywordInnerHTML += `<div class="item">
+    <span class="keyword-item">${arrKeywords[i]}</span>
+  </div>`;
+    }
+
+    const diaryKeywordsEl = document.querySelector('.keywords');
+    diaryKeywordsEl.innerHTML = keywordInnerHTML;
   });
 
   function addFriend(e) {

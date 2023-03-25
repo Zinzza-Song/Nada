@@ -78,21 +78,7 @@
             <!--                키워드-->
             <div class="form-group keywordSubject">
               <p class="keywordSubjectP" style="">키워드</p>
-              <div class="keywords">
-                <!--                                <div class="item">-->
-                <!--                                  <span class="keyword">test</span>-->
-                <!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
-                <!--                                    <span class="blind">닫기</span>-->
-                <!--                                  </button>-->
-                <!--                                </div>-->
-                <div class="item">
-                  <span class="keyword-item">키워드들어갈자리</span>
-                  <button type="button" class="btn-close btn_close" aria-label="Close"
-                          onClick="deleteDiv(this)">
-                    <span class="blind">닫기</span>
-                  </button>
-                </div>
-              </div>
+              <div class="keywords"></div>
               <input type="hidden" th:field="*{diaryKeywords}" id="diaryKeywords"
                      name="diaryKeywords"/>
               <p th:if="${#fields.hasErrors('diaryKeywords')}" th:errorclass="error"
@@ -136,7 +122,8 @@
             </div>
 
             <input type="hidden" id="analyzeScore" th:field="*{analyzeScore}">
-
+            <input type="hidden" name="diaryIdx" th:value="${diaryIdx}">
+            <input type="hidden" name="page" th:value="${page}">
 
             <button type="submit" class="btn customBtn btn-diary-right writeSubmit">수정 완료</button>
           </div>
@@ -148,9 +135,24 @@
 
 
 <script>
+  $(document).ready(function () {
+    const keywords = $('#diaryKeywords').val();
+    let arrKeywords = keywords.split(",");
 
+    let keywordInnerHTML = "";
+    let i = 0;
+    for (i; i < arrKeywords.length; ++i) {
+      keywordInnerHTML += `<div class="item">
+    <span class="keyword-item">${arrKeywords[i]}</span>
+    <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">
+      <span class="blind">닫기</span>
+    </button>
+  </div>`;
+    }
 
-  // const diaryContent = document.getElementById('diaryContent');
+    const diaryKeywordsEl = document.querySelector('.keywords');
+    diaryKeywordsEl.innerHTML = keywordInnerHTML;
+  });
 
   function translation() {
     //영번역 함수
