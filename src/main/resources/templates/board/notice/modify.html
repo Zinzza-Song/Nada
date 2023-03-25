@@ -45,12 +45,14 @@
 
   </div>
   <div class="mb-3">
-    <label for="file" class="form-label">기존 첨부파일</label>
-    <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
-      <input class="form-control form-control-sm qnaFile" name="file" id="readFile"
-             style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-             th:field="${readNoticeBean.noticeFile}" readonly>
-    </a>
+    <th:block th:if="${readNoticeBean.noticeFile != null}">
+      <label for="file" class="form-label">기존 첨부파일</label>
+      <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+        <input class="form-control form-control-sm qnaFile" name="file" id="readFile"
+               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+               th:field="${readNoticeBean.noticeFile}" readonly>
+      </a>
+    </th:block>
   </div>
 
 
