@@ -5,37 +5,7 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-  <script>
-    $(document).ready(function () {
-      var win = $(window);
-      var doc = $(document);
 
-      // Each time the user scrolls
-      win.scroll(function () {
-        // Vertical end reached?
-        if (doc.height() - win.height() == win.scrollTop()) {
-          // New row
-          var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
-
-          // Current number of columns to create
-          var n_cols = $('.logMoreData tr:first-child th').length;
-          for (var i = 0; i < n_cols; ++i)
-            tr.append($('<td />'));
-        }
-
-        // Horizontal end reached?
-        if (doc.width() - win.width() == win.scrollLeft()) {
-          // New column in the heading row
-          $('.logMoreData tr:first-child').append($('<th />'));
-
-          // New column in each row
-          $('.logMoreData tr:not(:first-child)').each(function () {
-            $(this).append($('<td />'));
-          });
-        }
-      });
-    });
-  </script>
 
 
 </head>
@@ -56,6 +26,12 @@
     </form>
   </div>
 </nav>
+<div>
+  <button onclick="location.href='/admin/log'">서비스 로그</button>
+  <button onclick="location.href='/admin/comment'">댓글 로그</button>
+  <button onclick="location.href='/admin/user'">회원 관리</button>
+  <button onclick="location.href='/admin/report'">신고 관리</button>
+</div>
 <table class="table">
   <thead>
   <tr>
@@ -68,16 +44,16 @@
     <th scope="col">비고</th>
   </tr>
   </thead>
-  <tbody class="table-group-divider logMoreData" th:each="diary:${adminAllDiaryList}">
-  <tr>
-    <th scope="row" th:text="${diary.diaryIdx}">글 번호</th>
+  <tbody class="table-group-divider logMoreData" id="diaryList">
+  <tr th:each="diary:${adminAllDiaryList}">
+    <th scope="row" th:text="${diary.diaryIdx}" class="diaryIdx">글 번호</th>
     <th scope="row" th:text="${diary.diarySubject}">일기 제목</th>
-    <th scope="row" th:text="${diary.memberName}">이름</th>
+    <th scope="row" th:text="${diary.diaryWriter}">이름</th>
     <th scope="row" th:text="${#temporals.format(diary.diaryDate,'yyyy-MM-dd')}">날짜</th>
-    <th scope="row" th:text="${diary.diaryLikeCnt}">공감수</th>
+    <th scope="row" th:text="${diary.diarySympathyCnt}">공감수</th>
     <th scope="row" th:text="${diary.diaryCnt}">조회수</th>
     <th scope="row">
-      <button type="button" class="btn btn-primary">삭제</button>
+      <button type="button" class="btn btn-primary" onclick="delDiary(this)">삭제</button>
     </th>
   </tr>
 
@@ -85,6 +61,50 @@
 </table>
 
 <!-- End Example Code -->
+<script>
+  $(document).ready(function () {
+    var win = $(window);
+    var doc = $(document);
+
+    // Each time the user scrolls
+    win.scroll(function () {
+      // Vertical end reached?
+      if (doc.height() - win.height() == win.scrollTop()) {
+        // New row
+        var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+
+        // Current number of columns to create
+        var n_cols = $('.logMoreData tr:first-child th').length;
+        for (var i = 0; i < n_cols; ++i)
+          tr.append($('<td />'));
+      }
+
+      // Horizontal end reached?
+      if (doc.width() - win.width() == win.scrollLeft()) {
+        // New column in the heading row
+        $('.logMoreData tr:first-child').append($('<th />'));
+
+        // New column in each row
+        $('.logMoreData tr:not(:first-child)').each(function () {
+          $(this).append($('<td />'));
+        });
+      }
+    });
+  });
+
+  function delDiary(e){
+    const diaryIdx = $(e).parent().siblings('.diaryIdx').text();
+
+    $.ajax({
+      url : "/admin/diary_delete/",
+      type : "DELETE",
+      data : {diaryIdx :$(e).parent().siblings('.diaryIdx').text()},
+      success: function (fragment){
+        $('#diaryList').replaceWith(fragment);
+      }
+    })
+  }
+</script>
 
 </body>
 

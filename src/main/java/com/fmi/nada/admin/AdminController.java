@@ -147,6 +147,16 @@ public class AdminController {
         return "/admin/user :: #memberList";
     }
 
+    @DeleteMapping("/diary_delete")
+    public String delDiary(@RequestParam("diaryIdx") Long diaryIdx, Model model) {
+        diaryService.deleteDiary(diaryIdx);
+
+        List<Diary> adminAllDiaryList = diaryService.getDiaryList();
+        model.addAttribute("adminAllDiaryList", adminAllDiaryList);
+
+        return "/admin/diary :: #diaryList";
+    }
+
     /**
      * 전체 일기 조회
      *
@@ -156,7 +166,7 @@ public class AdminController {
     @GetMapping("/diary")
     public String diary(Model model) {
         List<Diary> adminAllDiaryList = diaryService.getDiaryList();
-        model.addAttribute("adminAllDiaryList ", adminAllDiaryList);
+        model.addAttribute("adminAllDiaryList", adminAllDiaryList);
 
         return "admin/diary";
     }
@@ -167,11 +177,11 @@ public class AdminController {
      * @param diaryIdx 삭제시킬 일기의 PK
      * @return 전체 일기 조회 뷰 페이지로 리다이렉트
      */
-    @DeleteMapping("/diary_delete/{diaryIdx}")
-    public String delDiary(@PathVariable("diaryIdx") Long diaryIdx) {
-        diaryService.deleteDiary(diaryIdx);
-
-        return "redirect:/diary";
-    }
+//    @DeleteMapping("/diary_delete/{diaryIdx}")
+//    public String delDiary(@PathVariable("diaryIdx") Long diaryIdx) {
+//        diaryService.deleteDiary(diaryIdx);
+//
+//        return "/admin/diary :: #diaryList";
+//    }
 
 }
