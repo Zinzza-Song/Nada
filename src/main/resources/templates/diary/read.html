@@ -269,6 +269,10 @@
       });
     });
 
+    createKeywords();
+  });
+
+  function createKeywords() {
     const keywords = $('#diaryKeywords').val();
     let arrKeywords = keywords.split(",");
 
@@ -282,7 +286,7 @@
 
     const diaryKeywordsEl = document.querySelector('.keywords');
     diaryKeywordsEl.innerHTML = keywordInnerHTML;
-  });
+  }
 
   function addFriend(e) {
     console.log("친구 추가 댓글")
@@ -397,22 +401,24 @@
       data: diarySympathyDto
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
+      createKeywords();
     });
   }
 
   function sympathyOff() {
     console.log('off');
 
-    const diayrSympathyDto = {
+    const diarySympathyDto = {
       "diaryIdx": $("#diaryIdx").val()
     }
 
     $.ajax({
       url: "/diary/sympathy",
       type: "DELETE",
-      data: diayrSympathyDto
+      data: diarySympathyDto
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
+      createKeywords();
     });
   }
 
@@ -431,6 +437,8 @@
     })).done(function (fragment) {
       $(`.table`).html(fragment);
     });
+
+    createKeywords();
   }
 
   function likeOff(e) {
@@ -449,6 +457,8 @@
     })).done(function (fragment) {
       $(`.table`).html(fragment);
     });
+
+    createKeywords();
   }
 
   //삭제버튼
