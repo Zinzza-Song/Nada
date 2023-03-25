@@ -2,10 +2,8 @@
 <html
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-
 
 
 </head>
@@ -62,44 +60,14 @@
 
 <!-- End Example Code -->
 <script>
-  $(document).ready(function () {
-    var win = $(window);
-    var doc = $(document);
-
-    // Each time the user scrolls
-    win.scroll(function () {
-      // Vertical end reached?
-      if (doc.height() - win.height() == win.scrollTop()) {
-        // New row
-        var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
-
-        // Current number of columns to create
-        var n_cols = $('.logMoreData tr:first-child th').length;
-        for (var i = 0; i < n_cols; ++i)
-          tr.append($('<td />'));
-      }
-
-      // Horizontal end reached?
-      if (doc.width() - win.width() == win.scrollLeft()) {
-        // New column in the heading row
-        $('.logMoreData tr:first-child').append($('<th />'));
-
-        // New column in each row
-        $('.logMoreData tr:not(:first-child)').each(function () {
-          $(this).append($('<td />'));
-        });
-      }
-    });
-  });
-
-  function delDiary(e){
+  function delDiary(e) {
     const diaryIdx = $(e).parent().siblings('.diaryIdx').text();
 
     $.ajax({
-      url : "/admin/diary_delete/",
-      type : "DELETE",
-      data : {diaryIdx :$(e).parent().siblings('.diaryIdx').text()},
-      success: function (fragment){
+      url: "/admin/diary_delete/",
+      type: "DELETE",
+      data: {diaryIdx: $(e).parent().siblings('.diaryIdx').text()},
+      success: function (fragment) {
         $('#diaryList').replaceWith(fragment);
       }
     })
