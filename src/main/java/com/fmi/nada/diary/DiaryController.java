@@ -119,7 +119,7 @@ public class DiaryController {
         analyzedService.resisterAnalyze(
                 diary.getDiaryIdx(),
                 diary.getDiaryAnalyze(),
-                Integer.parseInt(diaryDTO.getAnalyzeScore()));
+                diaryDTO.getAnalyzeScore());
 
         insertKeywords(diaryDTO);
 
@@ -154,12 +154,25 @@ public class DiaryController {
     @GetMapping("/modify")
     public String modifyDiary(
             @RequestParam("diaryIdx") Long diaryIdx,
-            @RequestParam("page") int pageCnt,
+            @RequestParam("page") int page,
             @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
             Authentication authentication,
             Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
+
+        Diary diary = diaryService.findByDiaryIdx(diaryIdx);
+        Integer score = analyzedService.findByDiaryIdx(diaryIdx).getAnalyzeScore();
+
+        diaryDTO.setDiarySubject(diary.getDiarySubject());
+        diaryDTO.setDiaryWriter(diary.getDiaryWriter());
+        diaryDTO.setDiaryContent(diary.getDiaryContent());
+        diaryDTO.setDiaryKeywords(diary.getDiaryKeywords());
+        diaryDTO.setDiaryAnalyze(diary.getDiaryAnalyze());
+        diaryDTO.setAnalyzeScore(score);
+        diaryDTO.setDiaryPublicable(diary.getDiaryPublicable());
+        diaryDTO.setDiaryAnalyzePublicable(diary.getDiaryAnalyzePublicable());
+        model.addAttribute("diaryModifyBean", diaryDTO);
 
         return "/diary/modify";
     }
