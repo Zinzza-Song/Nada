@@ -147,8 +147,10 @@ public class MemberController {
         for (int index = 0; index < diaryScore.size(); index++) {
             analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
         }
-        analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
-        model.addAttribute("analyzeScore", analyzeScore);
+        if(analyzeScore.length()!=0){
+            analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
+            model.addAttribute("analyzeScore", analyzeScore);
+        }
 
         // 작성한 다이어리 분석 점수 그래프에 띄우기
         List<Integer> analyzeScoreArr = new ArrayList<>();
