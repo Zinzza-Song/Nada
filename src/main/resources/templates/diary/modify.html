@@ -78,14 +78,7 @@
             <!--                키워드-->
             <div class="form-group keywordSubject">
               <p class="keywordSubjectP" style="">키워드</p>
-              <div class="keywords">
-                <!--                                <div class="item">-->
-                <!--                                  <span class="keyword">test</span>-->
-                <!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
-                <!--                                    <span class="blind">닫기</span>-->
-                <!--                                  </button>-->
-                <!--                                </div>-->
-              </div>
+              <div class="keywords"></div>
               <input type="hidden" th:field="*{diaryKeywords}" id="diaryKeywords"
                      name="diaryKeywords"/>
               <p th:if="${#fields.hasErrors('diaryKeywords')}" th:errorclass="error"
