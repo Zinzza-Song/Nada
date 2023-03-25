@@ -12,7 +12,7 @@
 <body class="p-3 m-0 border-0 bd-example qnaWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <!--enctype="multipart/form-data"-->
-<form enctype="multipart/form-data" class="qnaform" th:action="@{/board/qna/write_pro}" method="post"
+<form enctype="multipart/form-data" class="qnaform" th:action="@{/board/QNA/write_pro}" method="post"
       th:object="${addQnaBean}">
 
   <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">Q & A</span></div>

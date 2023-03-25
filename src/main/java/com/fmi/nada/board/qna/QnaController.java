@@ -142,7 +142,7 @@ public class QnaController {
     public String delete(@RequestParam("qnaIdx") Long qnaIdx
     ) {
         qnaService.deleteQna(qnaIdx);
-        return "redirect:/board/qna";
+        return "redirect:/board/QNA";
     }
 
 }

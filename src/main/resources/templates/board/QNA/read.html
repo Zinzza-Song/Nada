@@ -77,7 +77,7 @@
     </ul>
   </div>
 
-  <form id="delete" th:action="@{/board/qna/delete}" th:method="delete" style="margin-top: 20px">
+  <form id="delete" th:action="@{/board/QNA/delete}" th:method="delete" style="margin-top: 20px">
     <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
     <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn">삭제</button>
     <button class="btn btn-primary qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
