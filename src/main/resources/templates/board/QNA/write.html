@@ -4,9 +4,9 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
 <body class="p-3 m-0 border-0 bd-example qnaWriteForm">
@@ -15,42 +15,42 @@
 <form enctype="multipart/form-data" class="qnaform" th:action="@{/board/qna/write_pro}" method="post"
       th:object="${addQnaBean}">
 
-    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">Q & A</span></div>
-    <div class="mb-3">
-        <input type="text" class="form-control qnaSubject" name="qnaSubject" id="qnaSubject" th:field="*{qnaSubject}"
-               placeholder="게시글 제목">
-        <p th:if="${#fields.hasErrors('qnaSubject')}" th:errorclass="error" th:errors="*{qnaSubject}"/>
-    </div>
+  <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">Q & A</span></div>
+  <div class="mb-3">
+    <input type="text" class="form-control qnaSubject" name="qnaSubject" id="qnaSubject" th:field="*{qnaSubject}"
+           placeholder="게시글 제목">
+    <p th:if="${#fields.hasErrors('qnaSubject')}" th:errorclass="error" th:errors="*{qnaSubject}"/>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" class="form-control qnaWriter" name="qnaWriter" style="overflow: hidden;
+  <div class="mb-3">
+    <input type="text" class="form-control qnaWriter" name="qnaWriter" style="overflow: hidden;
         text-overflow: ellipsis;white-space: normal;" id="qnaWriter" th:value="${memberLoginBean.memberNickname}"
-               readonly>
-    </div>
+           readonly>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" name="qnaDate" id="qnaDate" class="form-control qnaDate"
-               th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
-    </div>
-    <div class="mb-3">
+  <div class="mb-3">
+    <input type="text" name="qnaDate" id="qnaDate" class="form-control qnaDate"
+           th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
+  </div>
+  <div class="mb-3">
         <textarea class="form-control qnaContent" name="qnaContent" id="qnaContent" rows="8" placeholder="게시글 내용"
                   style="resize: none;"
                   th:field="*{qnaContent}">
         </textarea>
-        <p th:if="${#fields.hasErrors('qnaContent')}" th:errorclass="error" th:errors="*{qnaContent}"/>
-    </div>
+    <p th:if="${#fields.hasErrors('qnaContent')}" th:errorclass="error" th:errors="*{qnaContent}"/>
+  </div>
 
-    <div class="mb-3">
-        <label for="file" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm qnaFile" name="file"
-               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-               id="file" type="file">
-    </div>
+  <div class="mb-3">
+    <label for="file" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm qnaFile" name="file"
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+           id="file" type="file">
+  </div>
 
 
-    <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
-    <button type="submit" class="btn btn-primary qnaBtn">작성완료</button>
-    <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
+  <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
+  <button type="submit" class="btn btn-primary qnaBtn">작성완료</button>
+  <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
 
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>

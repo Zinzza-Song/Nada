@@ -4,9 +4,9 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
 
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
@@ -15,64 +15,65 @@
 <form enctype="multipart/form-data" th:action="@{/board/report/write_pro}"
       th:method="post" class="qnaform"
       th:object="${writeReportBean}">
-    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
-    <div class="mb-3">
-        <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject" th:field="*{reportSubject}"
-               placeholder="신고 제목">
-    </div>
+  <div class="BoxTitle" style="text-align: center;margin-bottom: 20px"><span class="logo-text">REPORT</span></div>
+  <div class="mb-3">
+    <input type="text" class="form-control qnaSubject" name="reportSubject " id="reportSubject"
+           th:field="*{reportSubject}"
+           placeholder="신고 제목">
+  </div>
 
-    <div class="mb-3">
-        <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
-               placeholder="신고자" readonly>
-    </div>
+  <div class="mb-3">
+    <input type="text" class="form-control qnaWriter" name="reportWriter " id="reportWriter" th:field="*{reportWriter}"
+           placeholder="신고자" readonly>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
-               th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
-    </div>
+  <div class="mb-3">
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
+           th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}" readonly>
+  </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
 
-        <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault1"
-               th:field="*{reportCategory}" th:value="욕설">
-        <label class="form-check-label" for="flexRadioDefault1">
-            욕설
-        </label>
-        <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault2"
-               th:field="*{reportCategory}" th:value="광고">
-        <label class="form-check-label" for="flexRadioDefault2">
-            광고
-        </label>
-        <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault3"
-               th:field="*{reportCategory}" th:value="허위게시글">
-        <label class="form-check-label" for="flexRadioDefault3">
-            허위 게시글
-        </label>
-    </div>
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault1"
+           th:field="*{reportCategory}" th:value="욕설">
+    <label class="form-check-label" for="flexRadioDefault1">
+      욕설
+    </label>
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault2"
+           th:field="*{reportCategory}" th:value="광고">
+    <label class="form-check-label" for="flexRadioDefault2">
+      광고
+    </label>
+    <input class="form-check-input qnaWriter" type="radio" name="reportCategory" id="flexRadioDefault3"
+           th:field="*{reportCategory}" th:value="허위게시글">
+    <label class="form-check-label" for="flexRadioDefault3">
+      허위 게시글
+    </label>
+  </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
         <textarea class="form-control qnaContent" name="reportContent"
                   id="reportContent" rows="5" placeholder="구체적인 신고내용"
                   style="resize: none;"
                   th:field="*{reportContent}">
         </textarea>
-    </div>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" class="form-control qnaWriter" name="reportReportedmember " id="reportReportedmember"
-               th:field="*{reportReportedMember}" placeholder="신고 대상자" readonly>
-    </div>
+  <div class="mb-3">
+    <input type="text" class="form-control qnaWriter" name="reportReportedmember " id="reportReportedmember"
+           th:field="*{reportReportedMember}" placeholder="신고 대상자" readonly>
+  </div>
 
 
-    <div class="mb-3">
-        <label for="file" class="form-label">첨부파일</label>
-        <input class="form-control form-control-sm qnaFile" name="file "
-               style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-               id="file" type="file">
-    </div>
-    <button type="submit" class="btn btn-primary qnaBtn">신고</button>
-    <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
-    <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
+  <div class="mb-3">
+    <label for="file" class="form-label">첨부파일</label>
+    <input class="form-control form-control-sm qnaFile" name="file "
+           style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+           id="file" type="file">
+  </div>
+  <button type="submit" class="btn btn-primary qnaBtn">신고</button>
+  <button type="reset" class="btn btn-primary qnaBtn">재작성</button>
+  <button type="button" class="btn btn-primary qnaBtn" onclick="history.go(-1)">취소</button>
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>

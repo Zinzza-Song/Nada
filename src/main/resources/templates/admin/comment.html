@@ -5,37 +5,37 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-    <script>
-        $(document).ready(function () {
-            var win = $(window);
-            var doc = $(document);
+  <script>
+    $(document).ready(function () {
+      var win = $(window);
+      var doc = $(document);
 
-            // Each time the user scrolls
-            win.scroll(function () {
-                // Vertical end reached?
-                if (doc.height() - win.height() == win.scrollTop()) {
-                    // New row
-                    var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+      // Each time the user scrolls
+      win.scroll(function () {
+        // Vertical end reached?
+        if (doc.height() - win.height() == win.scrollTop()) {
+          // New row
+          var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
 
-                    // Current number of columns to create
-                    var n_cols = $('.logMoreData tr:first-child th').length;
-                    for (var i = 0; i < n_cols; ++i)
-                        tr.append($('<td />'));
-                }
+          // Current number of columns to create
+          var n_cols = $('.logMoreData tr:first-child th').length;
+          for (var i = 0; i < n_cols; ++i)
+            tr.append($('<td />'));
+        }
 
-                // Horizontal end reached?
-                if (doc.width() - win.width() == win.scrollLeft()) {
-                    // New column in the heading row
-                    $('.logMoreData tr:first-child').append($('<th />'));
+        // Horizontal end reached?
+        if (doc.width() - win.width() == win.scrollLeft()) {
+          // New column in the heading row
+          $('.logMoreData tr:first-child').append($('<th />'));
 
-                    // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function () {
-                        $(this).append($('<td />'));
-                    });
-                }
-            });
-        });
-    </script>
+          // New column in each row
+          $('.logMoreData tr:not(:first-child)').each(function () {
+            $(this).append($('<td />'));
+          });
+        }
+      });
+    });
+  </script>
 
 
 </head>
@@ -44,38 +44,38 @@
 
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-                <option selected value="commentDate" id="commentDate">날짜</option>
-            </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" th:action="@{/admin}" method="post">
+      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="commentDate" id="commentDate">날짜</option>
+      </select>
+      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+      <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+    </form>
+  </div>
 </nav>
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">날짜</th>
-        <th scope="col">댓글</th>
-        <th scope="col">유저</th>
-        <th scope="col">작성된 일기번호</th>
-        <th scope="col">비고</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider logMoreData">
-    <tr th:each="comment:${adminAllCommentLogList }">
-        <th scope="row" th:text="${#temporals.format(comment.commentDate  , 'yyyy-MM-dd')}">날짜</th>
-        <th scope="row" th:text="${comment.commentContent   }">댓글</th>
-        <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
-        <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
-        <th scope="row">
-            <button type="button" class="btn btn-primary">삭제</button>
-        </th>
-    </tr>
+  <thead>
+  <tr>
+    <th scope="col">날짜</th>
+    <th scope="col">댓글</th>
+    <th scope="col">유저</th>
+    <th scope="col">작성된 일기번호</th>
+    <th scope="col">비고</th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider logMoreData">
+  <tr th:each="comment:${adminAllCommentLogList }">
+    <th scope="row" th:text="${#temporals.format(comment.commentDate  , 'yyyy-MM-dd')}">날짜</th>
+    <th scope="row" th:text="${comment.commentContent   }">댓글</th>
+    <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
+    <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
+    <th scope="row">
+      <button type="button" class="btn btn-primary">삭제</button>
+    </th>
+  </tr>
 
-    </tbody>
+  </tbody>
 </table>
 
 <!-- End Example Code -->

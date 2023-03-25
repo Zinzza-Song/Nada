@@ -1,6 +1,5 @@
 package com.fmi.nada.board.report;
 
-import com.fmi.nada.board.qna.Qna;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

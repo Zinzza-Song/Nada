@@ -1,6 +1,4 @@
 style
-
-
 html {
     height: 100%;
 }
@@ -2073,6 +2071,6 @@ a {
 
 
 /*로고버튼 div태그*/
-.nav-logo{
+.nav-logo {
     width: 450px;
 }
