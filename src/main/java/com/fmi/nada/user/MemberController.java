@@ -187,7 +187,7 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public String modify(@ModelAttribute("memberInfoBean") MemberJoinDto memberJoinDto,
+    public String modify(@ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
                          Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("memberLoginBean", member);
@@ -196,13 +196,13 @@ public class MemberController {
 
     @PutMapping("/modify_pro")
     public String modify_pro(@Valid @ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
-                             @ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
-                             Authentication authentication, BindingResult bindingResult, Model model
-    ) {
+                             BindingResult bindingResult,
+                             Authentication authentication,
+                             Model model) {
         if (bindingResult.hasErrors()) {
             Member member = (Member) authentication.getPrincipal();
             model.addAttribute("memberLoginBean", member);
-            return "user/read";
+            return "user/modify";
         } else {
             Member member = (Member) authentication.getPrincipal();
             member.setMemberNickname(memberUpdateDto.getMemberNickname());
@@ -212,7 +212,7 @@ public class MemberController {
             memberService.updateMember(member);
             model.addAttribute("memberLoginBean", member);
         }
-        return "user/read";
+        return "redirect:read";
     }
 
     @DeleteMapping("/delete")
