@@ -67,6 +67,12 @@ public class QnaService {
         return qnaRepository.findAllByQnaWriterContaining(keyword, pageable);
     }
 
+    public Page<Qna> findAllByQnaContentContaining(String keyword, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return qnaRepository.findAllByQnaContentContaining(keyword, pageable);
+    }
+
     public Page<Qna> findAllByQnaSubjectContaining(String keyword, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);

@@ -41,8 +41,10 @@ public class NoticeController {
 
         if (keyword == null) {
             noticeList = noticeService.findAllByOrderByNoticeDateDesc(pageable);
-        } else if (type.equals("content") && keyword != null) {
+        } else if (type.equals("subject") && keyword != null) {
             noticeList = noticeService.findAllByNoticeSubjectContaining(keyword, pageable);
+        } else if (type.equals("content") && keyword != null) {
+            noticeList = noticeService.findAllByNoticeContentContaining(keyword, pageable);
         }
         model.addAttribute("noticeList", noticeList);
         model.addAttribute("type", type);
