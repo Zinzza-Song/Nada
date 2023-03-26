@@ -46,6 +46,8 @@ public class QnaController {
             li = qnaService.findAllByQnaSubjectContaining(keyword, pageable);
         } else if (type.equals("qnaWriter")) {
             li = qnaService.findAllByQnaWriterContaining(keyword, pageable);
+        } else if (type.equals("qnaContent")) {
+            li = qnaService.findAllByQnaContentContaining(keyword, pageable);
         }
         model.addAttribute("allQnaList", li);
         model.addAttribute("type", type);

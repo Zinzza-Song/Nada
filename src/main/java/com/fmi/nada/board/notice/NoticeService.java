@@ -33,6 +33,12 @@ public class NoticeService {
         return noticeRepository.findAllByNoticeSubjectContaining(noticeSubject, pageable);
     }
 
+    public Page<Notice> findAllByNoticeContentContaining(String noticeSubject, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return noticeRepository.findAllByNoticeContentContaining(noticeSubject, pageable);
+    }
+
     // 공지사항 등록
     public void writeNoticeFile(Notice notice, MultipartFile file) throws Exception {
         String projectPath = System.getProperty("user.dir");
