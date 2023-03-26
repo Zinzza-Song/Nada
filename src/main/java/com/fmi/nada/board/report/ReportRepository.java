@@ -32,4 +32,9 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
 
+    Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable);
+
+    Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable);
+
+
 }
