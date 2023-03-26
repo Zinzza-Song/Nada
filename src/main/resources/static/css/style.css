@@ -1852,11 +1852,38 @@ input[type="button"] {
     transition: all .9s, color .3s;
 
 }
-
 .customBtn:hover {
     color: #e3cab0;
     box-shadow: 0 80px 0 0 rgba(0, 0, 0, .25) inset,
     0 -80px 0 0 rgba(0, 0, 0, .25) inset;
+}
+.customModifyBtn{
+    border-radius: 5px;
+    background-color: #2938bb;
+    text-align: center;
+    cursor: pointer;
+
+    color: #b0cce3;
+    transition: all .9s, color .3s;
+}
+.customModifyBtn:hover{
+    color: #b0cce3;
+    box-shadow: 0 80px 0 0 rgba(0, 12, 80, 0.3) inset,
+    0 -80px 0 0 rgba(0, 12, 80, 0.3) inset;
+}
+.customDeleteBtn{
+    border-radius: 5px;
+    background-color: #9b0f0f;
+    text-align: center;
+    cursor: pointer;
+
+    color: #e3b0bf;
+    transition: all .9s, color .5s;
+}
+.customDeleteBtn:hover{
+    color: #e3b0bf;
+    box-shadow: 0 80px 0 0 rgba(96, 1, 1, 0.25) inset,
+    0 -80px 0 0 rgba(96, 1, 1, 0.25) inset;
 }
 
 /*footer 고정*/
