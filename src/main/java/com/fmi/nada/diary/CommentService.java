@@ -1,5 +1,6 @@
 package com.fmi.nada.diary;
 
+import com.fmi.nada.user.LikesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final LikesRepository likesRepository;
 
     public List<Comment> findAllByDiaryIdxOrderByCommentDateDesc(Long diaryIndex) {
         List<Comment> commentList = commentRepository.findAllByDiaryIdxOrderByCommentDateDesc(diaryIndex);
@@ -30,6 +32,7 @@ public class CommentService {
 
     public void deleteByCommentIdx(Long commentIdx) {
         commentRepository.deleteByCommentIdx(commentIdx);
+        likesRepository.deleteByCommentIdx(commentIdx);
     }
 
 }
