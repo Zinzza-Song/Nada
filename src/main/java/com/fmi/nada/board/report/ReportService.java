@@ -124,4 +124,8 @@ public class ReportService {
         reportRepository.save(report);
     }
 
+    public void addReportView(Report report) {
+        reportRepository.save(report);
+    }
+
 }
