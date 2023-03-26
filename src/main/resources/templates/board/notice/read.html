@@ -48,12 +48,12 @@
 
   <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
     <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
-    <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">삭제
+    <button type="submit" id="deleteBtn" class="btn customDeleteBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">삭제
     </button>
-    <button type="button" class="btn btn-primary qnaBtn" onclick="modify() "
+    <button type="button" class="btn customModifyBtn qnaBtn" onclick="modify() "
             sec:authorize="hasAnyRole('ROLE_ADMIN')">수정
     </button>
-    <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice'">목록</button>
+    <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/notice'">목록</button>
   </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>

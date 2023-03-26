@@ -56,9 +56,9 @@
   </div>
 
 
-  <button type="submit" class="btn btn-primary qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정완료</button>
-  <button type="reset" class="btn btn-primary qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">재작성</button>
-  <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice/'">목록</button>
+  <button type="submit" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">수정완료</button>
+  <button type="reset" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">재작성</button>
+  <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/notice/'">목록</button>
 </form>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
 
