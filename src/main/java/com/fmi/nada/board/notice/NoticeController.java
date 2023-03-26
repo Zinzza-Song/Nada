@@ -18,6 +18,7 @@ import org.springframework.web.util.UriUtils;
 
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * 공지사항 컨트롤러
@@ -46,6 +47,7 @@ public class NoticeController {
         } else if (type.equals("content") && keyword != null) {
             noticeList = noticeService.findAllByNoticeContentContaining(keyword, pageable);
         }
+
         model.addAttribute("noticeList", noticeList);
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);

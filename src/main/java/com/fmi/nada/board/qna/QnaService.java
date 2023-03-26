@@ -64,19 +64,19 @@ public class QnaService {
     public Page<Qna> findAllByQnaWriterContaining(String keyword, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return qnaRepository.findAllByQnaWriterContaining(keyword, pageable);
+        return qnaRepository.findAllByQnaWriterContainingOrderByQnaDateDesc(keyword, pageable);
     }
 
     public Page<Qna> findAllByQnaContentContaining(String keyword, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return qnaRepository.findAllByQnaContentContaining(keyword, pageable);
+        return qnaRepository.findAllByQnaContentContainingOrderByQnaDateDesc(keyword, pageable);
     }
 
     public Page<Qna> findAllByQnaSubjectContaining(String keyword, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return qnaRepository.findAllByQnaSubjectContaining(keyword, pageable);
+        return qnaRepository.findAllByQnaSubjectContainingOrderByQnaDateDesc(keyword, pageable);
     }
 
     public Qna get(Long qnaIdx) {

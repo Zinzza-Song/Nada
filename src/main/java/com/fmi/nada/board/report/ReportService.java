@@ -36,19 +36,19 @@ public class ReportService {
     public Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return reportRepository.findAllByReportSubjectContaining(reportSubject, pageable);
+        return reportRepository.findAllByReportSubjectContainingOrderByReportDateDesc(reportSubject, pageable);
     }
 
     public Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return reportRepository.findAllByReportWriterContaining(reportWriter, pageable);
+        return reportRepository.findAllByReportWriterContainingOrderByReportDateDesc(reportWriter, pageable);
     }
 
     public Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return reportRepository.findAllByReportSubjectContaining(reportContent, pageable);
+        return reportRepository.findAllByReportContentContainingOrderByReportDateDesc(reportContent, pageable);
     }
 
     /**

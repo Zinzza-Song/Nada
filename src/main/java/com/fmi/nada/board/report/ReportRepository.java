@@ -30,11 +30,11 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
 
-    Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
+    Page<Report> findAllByReportSubjectContainingOrderByReportDateDesc(String reportSubject, Pageable pageable);
 
-    Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable);
+    Page<Report> findAllByReportWriterContainingOrderByReportDateDesc(String reportWriter, Pageable pageable);
 
-    Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable);
+    Page<Report> findAllByReportContentContainingOrderByReportDateDesc(String reportContent, Pageable pageable);
 
 
 }
