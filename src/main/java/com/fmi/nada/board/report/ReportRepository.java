@@ -4,12 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * 신고글 Repository
  */
+@Transactional
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
     /**
@@ -31,5 +33,10 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
 
     Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
+
+    Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable);
+
+    Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable);
+
 
 }

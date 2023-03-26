@@ -39,6 +39,18 @@ public class ReportService {
         return reportRepository.findAllByReportSubjectContaining(reportSubject, pageable);
     }
 
+    public Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByReportWriterContaining(reportWriter, pageable);
+    }
+
+    public Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return reportRepository.findAllByReportSubjectContaining(reportContent, pageable);
+    }
+
     /**
      * 전체 신고글 조회 서비스
      *

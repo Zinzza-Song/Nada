@@ -38,12 +38,18 @@ public class ReportController {
         Page<Report> allReportList = null;
         if (keyword == null) {
             allReportList = reportService.findAllByOrderByReportDateDesc(pageable);
-        } else if (keyword != null) {
+        } else if (type.equals("reportWriter")) {
+            allReportList = reportService.findAllByReportWriterContaining(keyword, pageable);
+        } else if (type.equals("reportContent")) {
+            allReportList = reportService.findAllByReportContentContaining(keyword, pageable);
+        } else if (type.equals("reportSubject")) {
             allReportList = reportService.findAllByReportSubjectContaining(keyword, pageable);
         }
+
         model.addAttribute("allReportList", allReportList);
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);
+
         return "board/report/index";
     }
 

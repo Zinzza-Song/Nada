@@ -72,11 +72,11 @@
           <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
         </div>
         <div class="form-group">
-          <input type="submit" id="btnModify" value="수정" class="btn btn-light">
-          <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
+          <input type="submit" id="btnModify" value="수정" class="btn customModifyBtn">
+          <input type="reset" id="btnModifyReset" value="취소" class="btn customBtn">
           <form id="delete" th:action="@{/user/delete}" th:method="delete">
             <input type="hidden" id="memberIdx" name="memberIdx" th:value="${memberLoginBean.memberIdx}">
-            <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn btn-danger">회원탈퇴
+            <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn customDeleteBtn">회원탈퇴
             </button>
           </form>
         </div>
