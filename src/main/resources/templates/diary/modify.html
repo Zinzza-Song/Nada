@@ -59,6 +59,7 @@
               />
             </div>
 
+            <input type="hidden" id="tempDiaryContent">
             <div class="form-group diaryContent-div" style="">
                     <textarea style="" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
                               th:field="*{diaryContent}"></textarea>
@@ -69,8 +70,8 @@
             <div class="form-group diaryWriteBtn" style="">
               <input type="button" id="englishBtn" name="englishBtn" onclick="translation()"
                      value="영번역" class="btn customBtn englishBtn"/>
-              <input type="button" id="koreanBtn" name="koreanBtn" onclick="translationKo()"
-                     value="한번역" class="btn customBtn englishBtn"/>
+              <input type="button" id="koreanBtn" name="koreanBtn" onclick="returnToOrigin()"
+                     value="원문" class="btn customBtn englishBtn"/>
               <input type="reset" id="diaryResetBtn" name="diaryResetBtn"
                      value="재작성" class="btn customBtn diaryResetBtn"/>
               <input type="button" id="diarySaveBtn" name="diarySaveBtn" onclick="diarySave()"
@@ -160,6 +161,7 @@
     //영번역 함수
     const diarycontent = document.getElementById('diaryContent');
     let msg = diarycontent.value;
+    document.getElementById('tempDiaryContent').value = msg;
     msg += "\n위 일기를 영어로 번역해줘요.";
     console.log(msg);
 
@@ -179,28 +181,10 @@
         });
   }
 
-  //영번역
-  function translationKo() {
-    //영번역 함수
+  // 원문으로
+  function returnToOrigin() {
     const diarycontent = document.getElementById('diaryContent');
-    let msg = diarycontent.value;
-    msg += "\n위 일기를 한글로 번역해주세요.";
-    console.log(msg);
-
-    const gptData = {
-      method: 'POST',
-      body: JSON.stringify({msg}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
-    fetch('http://localhost:8080/send', gptData)
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data.data);
-              diarycontent.value = data.data.replace("\n\n", "");
-            });
+    diarycontent.value = document.getElementById('tempDiaryContent').value;
   }
 
   function diarySave() {
