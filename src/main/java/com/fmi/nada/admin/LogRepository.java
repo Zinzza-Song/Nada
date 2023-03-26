@@ -10,4 +10,7 @@ public interface LogRepository extends JpaRepository<Log, Long> {
 
     List<Log> findAllByOrderByLogDateDesc();
 
+    List<Log> findAllByLogMemberEmailContainingOrderByLogDateDesc(String keyword);
+
+    List<Log> findAllByLogUsedServiceContainingOrderByLogDateDesc(String keyword);
 }

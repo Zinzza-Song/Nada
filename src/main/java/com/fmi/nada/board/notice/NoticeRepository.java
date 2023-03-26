@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * 공지사항 레포지토리
  */
@@ -12,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
     Page<Notice> findAllByOrderByNoticeDateDesc(Pageable pageable);
 
-    Page<Notice> findAllByNoticeSubjectContaining(String noticeSubject, Pageable pageable);
+    Page<Notice> findAllByNoticeSubjectContainingOrderByNoticeDateDesc(String noticeSubject, Pageable pageable);
 
-    Page<Notice> findAllByNoticeContentContaining(String noticeContent, Pageable pageable);
+    Page<Notice> findAllByNoticeContentContainingOrderByNoticeDateDesc(String noticeContent, Pageable pageable);
+
 }

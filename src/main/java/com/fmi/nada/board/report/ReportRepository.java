@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -32,11 +33,18 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
 
-    Page<Report> findAllByReportSubjectContaining(String reportSubject, Pageable pageable);
+    Page<Report> findAllByReportSubjectContainingOrderByReportDateDesc(String reportSubject, Pageable pageable);
 
-    Page<Report> findAllByReportWriterContaining(String reportWriter, Pageable pageable);
+    Page<Report> findAllByReportWriterContainingOrderByReportDateDesc(String reportWriter, Pageable pageable);
 
-    Page<Report> findAllByReportContentContaining(String reportContent, Pageable pageable);
+    Page<Report> findAllByReportContentContainingOrderByReportDateDesc(String reportContent, Pageable pageable);
 
+    @Query("SELECT r FROM Report r WHERE r.reportCategory LIKE %:reportCategory% ORDER BY r.reportDate DESC")
+    List<Report> findCategoryReportList(@Param("reportCategory") String reportCategory);
 
+    @Query("select r from Report r where r.reportSubject LIKE %:reportSubject% order by r.reportDate DESC ")
+    List<Report> findSubjectReportList(@Param("reportSubject") String reportSubject);
+
+    @Query("select r from Report r where r.reportReportedMember LIKE %:reportReportedMember% order by r.reportDate DESC ")
+    List<Report> findReportedMemberReportList(@Param("reportReportedMember") String reportReportedMember);
 }
