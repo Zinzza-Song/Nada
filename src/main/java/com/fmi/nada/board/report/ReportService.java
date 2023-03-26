@@ -60,6 +60,17 @@ public class ReportService {
         return reportRepository.findAllReport();
     }
 
+    public List<Report> findCategoryReportList(String category){
+        return reportRepository.findCategoryReportList(category);
+    }
+
+    public List<Report> findSubjectReportList(String subject){
+        return reportRepository.findSubjectReportList(subject);
+    }
+
+    public List<Report> findReportedMemberReportList(String reportedMember) {
+        return reportRepository.findReportedMemberReportList(reportedMember);
+    }
     /**
      * 특정 신고글 조회 서비스
      *

@@ -193,4 +193,12 @@ public class DiaryService {
         return diaryRepository.save(diary);
     }
 
+    public List<Diary> findDiarySubjectList(String keyword) {
+        return diaryRepository.findDiarySubjectList(keyword);
+    }
+
+    public List<Diary> findDiaryWriterList(String keyword) {
+        return diaryRepository.findDiaryWriterList(keyword);
+    }
+
 }

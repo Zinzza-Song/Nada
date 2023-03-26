@@ -25,6 +25,13 @@ public class CommentService {
         return commentRepository.findAllByOrderByCommentDateDesc();
     }
 
+    public List<Comment> findAllByCommentContentOrderByCommentDateDesc(String keyword) {
+        return commentRepository.findAllByCommentContentContainingOrderByCommentDateDesc(keyword);
+    }
+
+    public List<Comment> findAllByCommentWriterOrderByCommentDateDesc(String keyword) {
+        return commentRepository.findAllByCommentWriterContainingOrderByCommentDateDesc(keyword);
+    }
     // 댓글 등록
     public void resisterComment(Comment comment) {
         commentRepository.save(comment);

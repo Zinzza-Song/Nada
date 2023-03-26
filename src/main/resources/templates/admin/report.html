@@ -34,6 +34,15 @@
           });
         }
       });
+      $('#searchType').change(function () {
+        $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+      });
+
+      $('#search-form').on('submit', function (event) {
+        if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+          event.preventDefault(); // 이벤트 취소
+        }
+      });
     });
   </script>
 
@@ -45,11 +54,13 @@
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
   <div class="container-fluid">
-    <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-        <option selected value="reportDate" id="reportDate">날짜</option>
+    <form class="d-flex" role="search" th:action="@{/admin/report}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="reportCategory" id="reportCategory">사유</option>
+        <option selected value="reportSubject" id="reportSubject">제목</option>
+        <option selected value="reportReportedMember" id="reportReportedMember">대상자</option>
       </select>
-      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
       <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>

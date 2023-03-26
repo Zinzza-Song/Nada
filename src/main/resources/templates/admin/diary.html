@@ -13,13 +13,12 @@
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
   <div class="container-fluid">
-    <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-        <option selected value="diaryIdx" id="diaryIdx">글 번호</option>
+    <form class="d-flex" role="search" th:action="@{/admin/diary}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
         <option value="writer" id="writer">작성자</option>
         <option value="subject" id="subject">제목</option>
       </select>
-      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
       <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>
@@ -72,6 +71,17 @@
       }
     })
   }
+  $(document).ready(function () {
+    $('#searchType').change(function () {
+      $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+    });
+
+    $('#search-form').on('submit', function (event) {
+      if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+        event.preventDefault(); // 이벤트 취소
+      }
+    });
+  })
 </script>
 
 </body>

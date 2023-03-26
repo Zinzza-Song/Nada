@@ -45,10 +45,20 @@ public class AdminController {
      * @return 로그 조회 뷰 페이지
      */
     @GetMapping("/log")
-    public String log(Model model) {
-        List<Log> adminAllLogList = logService.findAllByOrderByLogDateDesc();
-        model.addAttribute("adminAllLogList", adminAllLogList);
+    public String log(@RequestParam(value = "type", required = false) String type,
+                      @RequestParam(value = "keyword", required = false) String keyword,
+                      Model model) {
+        List<Log> adminAllLogList = null;
+        if(keyword == null)
+            adminAllLogList = logService.findAllByOrderByLogDateDesc();
+        else if(type.equals("UserID"))
+            adminAllLogList = logService.findAllByLogMemberEmailContainingOrderByLogDateDesc(keyword);
+        else if(type.equals("UserService"))
+            adminAllLogList = logService.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
 
+        model.addAttribute("adminAllLogList", adminAllLogList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "admin/log";
     }
 
@@ -59,10 +69,20 @@ public class AdminController {
      * @return 댓글 조회 뷰 페이지
      */
     @GetMapping("/comment")
-    public String comment(Model model) {
-        List<Comment> adminAllCommentLogList = commentService.findAllByOrderByCommentDateDesc();
-        model.addAttribute("adminAllCommentLogList", adminAllCommentLogList);
+    public String comment(@RequestParam(value = "type", required = false) String type,
+                          @RequestParam(value = "keyword", required = false) String keyword,
+                          Model model) {
+        List<Comment> adminAllCommentLogList = null;
+        if (keyword == null)
+            adminAllCommentLogList = commentService.findAllByOrderByCommentDateDesc();
+        else if (type.equals("commentContent"))
+            adminAllCommentLogList = commentService.findAllByCommentContentOrderByCommentDateDesc(keyword);
+        else if (type.equals("commentWriter"))
+            adminAllCommentLogList = commentService.findAllByCommentWriterOrderByCommentDateDesc(keyword);
 
+        model.addAttribute("adminAllCommentLogList", adminAllCommentLogList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "admin/comment";
     }
 
@@ -103,10 +123,22 @@ public class AdminController {
      * @return 신고글 조회 뷰 페이지
      */
     @GetMapping("/report")
-    public String report(Model model) {
-        List<Report> allReportList = reportService.findAllReport();
-        model.addAttribute("allReportList", allReportList);
+    public String report(@RequestParam(value = "type", required = false) String type,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         Model model) {
+        List<Report> allReportList = null;
+        if (keyword == null)
+            allReportList = reportService.findAllReport();
+        else if (type.equals("reportCategory"))
+            allReportList = reportService.findCategoryReportList(keyword);
+        else if (type.equals("reportSubject"))
+            allReportList = reportService.findSubjectReportList(keyword);
+        else if (type.equals("reportReportedMember"))
+            allReportList = reportService.findReportedMemberReportList(keyword);
 
+        model.addAttribute("allReportList", allReportList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "admin/report";
     }
 
@@ -141,10 +173,22 @@ public class AdminController {
      * @return 회원 조회 뷰 페이지
      */
     @GetMapping("/user")
-    public String member(Model model) {
-        List<Member> adminMemberList = memberService.memberList();
-        model.addAttribute("adminMemberList", adminMemberList);
+    public String member(@RequestParam(value = "type", required = false) String type,
+                         @RequestParam(value = "keyword", required = false) String keyword,
+                         Model model) {
+        List<Member> adminMemberList = null;
+        if (keyword == null)
+            memberService.memberList();
+        else if (type.equals("nickname"))
+            memberService.memberSearchNicknameList(keyword);
+        else if (type.equals("name"))
+            memberService.memberSearchNameList(keyword);
+        else if (type.equals("birth"))
+            memberService.memberSearchBirthList(keyword);
 
+        model.addAttribute("adminMemberList", adminMemberList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return "admin/user";
     }
 
@@ -188,9 +232,20 @@ public class AdminController {
      * @return 전체 일기 조회 뷰 페이지
      */
     @GetMapping("/diary")
-    public String diary(Model model) {
-        List<Diary> adminAllDiaryList = diaryService.getDiaryList();
+    public String diary(@RequestParam(value = "type", required = false) String type,
+                        @RequestParam(value = "keyword", required = false) String keyword,
+                        Model model) {
+        List<Diary> adminAllDiaryList = null;
+        if (keyword == null)
+            adminAllDiaryList = diaryService.getDiaryList();
+        else if (type.equals("writer"))
+            adminAllDiaryList = diaryService.findDiaryWriterList(keyword);
+        else if (type.equals("subject"))
+            adminAllDiaryList = diaryService.findDiarySubjectList(keyword);
+
         model.addAttribute("adminAllDiaryList", adminAllDiaryList);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
 
         return "admin/diary";
     }
