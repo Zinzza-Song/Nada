@@ -102,6 +102,7 @@ public class DiaryService {
 
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
+        sympathyRepository.deleteByDiaryIdx(diaryIdx);
     }
 
     // 다이어리 검색 페이징

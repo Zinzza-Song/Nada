@@ -15,4 +15,6 @@ public interface SympathyRepository extends JpaRepository<Sympathy, Long> {
 
     Sympathy findByMemberIdxAndDiaryIdx(Long memberIdx, Long diaryIdx);
 
+    void deleteByDiaryIdx(Long diaryIdx);
+
 }
