@@ -26,12 +26,12 @@
             <input aria-label="Search" class="form-control me-2" id="search-input" name="keyword"
                    placeholder="검색어를 입력해 주세요"
                    style="width: 300px;" type="search">
-            <input class="btn btn-outline-success" id="searchBtn" style="width: 100px"
+            <input class="btn customBtn" id="searchBtn" style="width: 100px"
                    th:value="검색" type="submit">
         </form>
         <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/notice/write}"
               th:method="get">
-            <button class="btn btn-outline-primary" style="width: 100px" type="submit">작성</button>
+            <button class="btn customBtn" style="width: 100px" type="submit">작성</button>
 
         </form>
     </div>
