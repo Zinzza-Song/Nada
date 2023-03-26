@@ -62,7 +62,7 @@
                class="form-control">
         <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
         <div>
-          <input type="button" id="send_Mail_Btn" value="전송" class="btn btn-light">
+          <input type="button" id="send_Mail_Btn" value="전송" class="btn customBtn">
         </div>
       </div>
 
@@ -73,7 +73,7 @@
         </div>
         <span id="mail-check-warn"></span>
         <div>
-          <input type="button" id="btnCertification" value="인증" class="btn btn-light">
+          <input type="button" id="btnCertification" value="인증" class="btn customBtn">
 
         </div>
 
@@ -101,7 +101,7 @@
       </div>
 
       <div id="login-btn-box">
-        <input type="submit" id="btnjoin" value="회원가입" class="btn btn-light">
+        <input type="submit" id="btnjoin" value="회원가입" class="btn customBtn">
       </div>
 
 
