@@ -58,8 +58,6 @@ public class NoticeService {
         }
     }
 
-    ;
-
     public void writeNotice(Notice notice) {
         noticeRepository.save(notice);
     }
@@ -101,9 +99,8 @@ public class NoticeService {
         }
     }
 
-    ;
-
     public void updateNotice(Notice notice) {
         noticeRepository.save(notice);
     }
+
 }
