@@ -1407,7 +1407,7 @@ input[type="button"] {
 
 .diaryAnalyzeContent {
     width: 650px;
-    height: 300px;
+    height: 270px;
     border: none;
     resize: none;
 }
@@ -1966,6 +1966,9 @@ a {
 
 .mypageSubject:hover {
     text-decoration: underline;
+}
+#button-addon2{
+    height: 38px;
 }
 
 /*--------------------------------*/
