@@ -60,12 +60,14 @@
         <option selected value="reportSubject" id="reportSubject">제목</option>
         <option selected value="reportReportedMember" id="reportReportedMember">대상자</option>
       </select>
-      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
       <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>
 </nav>
 <div>
+  <button class="customBtn" onclick="location.href='/admin/log'">서비스 로그</button>
   <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
   <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
   <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>

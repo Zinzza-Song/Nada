@@ -49,11 +49,11 @@ public class AdminController {
                       @RequestParam(value = "keyword", required = false) String keyword,
                       Model model) {
         List<Log> adminAllLogList = null;
-        if(keyword == null)
+        if (keyword == null)
             adminAllLogList = logService.findAllByOrderByLogDateDesc();
-        else if(type.equals("UserID"))
+        else if (type.equals("UserID"))
             adminAllLogList = logService.findAllByLogMemberEmailContainingOrderByLogDateDesc(keyword);
-        else if(type.equals("UserService"))
+        else if (type.equals("UserService"))
             adminAllLogList = logService.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
 
         model.addAttribute("adminAllLogList", adminAllLogList);
@@ -178,13 +178,13 @@ public class AdminController {
                          Model model) {
         List<Member> adminMemberList = null;
         if (keyword == null)
-            memberService.memberList();
+            adminMemberList = memberService.memberList();
         else if (type.equals("nickname"))
-            memberService.memberSearchNicknameList(keyword);
+            adminMemberList = memberService.memberSearchNicknameList(keyword);
         else if (type.equals("name"))
-            memberService.memberSearchNameList(keyword);
+            adminMemberList = memberService.memberSearchNameList(keyword);
         else if (type.equals("birth"))
-            memberService.memberSearchBirthList(keyword);
+            adminMemberList = memberService.memberSearchBirthList(keyword);
 
         model.addAttribute("adminMemberList", adminMemberList);
         model.addAttribute("type", type);

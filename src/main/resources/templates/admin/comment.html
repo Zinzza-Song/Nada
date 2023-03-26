@@ -85,7 +85,7 @@
     <th scope="row" th:text="${comment.commentIdx}" class="commentIdx" hidden="hidden">글 번호</th>
     <th scope="row" th:text="${#temporals.format(comment.commentDate  , 'yyyy-MM-dd')}">날짜</th>
     <th scope="row" th:text="${comment.commentContent   }">댓글</th>
-    <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
+    <th scope="row" th:text="${comment.commentWriter   }">유저</th>
     <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
     <th scope="row">
       <button type="button" class="btn customDeleteBtn" onclick="delComment(this)">삭제</button>
