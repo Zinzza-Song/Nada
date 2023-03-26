@@ -15,13 +15,17 @@
 
 <nav class="navbar searchbar">
   <div class="container-fluid">
-    <form class="d-flex" role="search" th:action="@{/board/report}">
-      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-        <option selected value="reportContent" id="reportContent">제목</option>
+    <form class="d-flex" role="search" th:action="@{/board/report}" name="search-form" id="search-form">
+      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type"
+              style="width: 100px; margin-right: 10px;">
+        <option selected value="reportSubject" id="reportSubject">제목</option>
         <option value="reportWriter" id="reportWriter">작성자</option>
+        <option value="reportContent" id="reportContent">내용</option>
       </select>
-      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-      <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 100px">검색</button>
+      <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해주세요" id="inputSearch"
+             aria-label="Search" style="width: 300px;">
+      <button type="submit" class="btn btn-outline-success" id="searchBtn"
+               style="width: 100px" th:text="검색"></button>
     </form>
   </div>
 </nav>
@@ -160,9 +164,22 @@
     </th:block>
   </ul>
 </nav>
-
-
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
+<script>
+  $(document).ready(function () {
+    $('#searchType').change(function () {
+      $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+    });
 
+    $("button[name='return-main']").on('click', function () {
+      location.replace('/board/report?page=1');
+    });
+    $('#search-form').on('submit', function (event) {
+      if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+        event.preventDefault(); // 이벤트 취소
+      }
+    });
+  });
+</script>
 </body>
 </html>
