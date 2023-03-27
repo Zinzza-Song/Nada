@@ -5,6 +5,7 @@ import com.fmi.nada.user.Likes;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.Sympathy;
 import lombok.RequiredArgsConstructor;
+import org.dom4j.rule.Mode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -147,6 +148,18 @@ public class DiaryController {
 
         // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
         // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
+        return "/diary/read :: tbody";
+    }
+
+    @RequestMapping(value = "/comment_delete", method = RequestMethod.POST)
+    public String commentDelete(@RequestParam("diaryIdx") Long diaryIdx,
+                                @RequestParam("commentIdx") Long commentIdx,
+                                Authentication authentication,
+                                Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        commentService.deleteByCommentIdx(commentIdx);
+        getCommentList(diaryIdx, model, member);
+
         return "/diary/read :: tbody";
     }
 
