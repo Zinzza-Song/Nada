@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Comment Repository
@@ -25,4 +26,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 댓글 삭제
     void deleteByCommentIdx(Long commentIdx);
 
+    Comment findByDiaryIdxAndCommentIdxAndMemberIdx(Long diaryIdx, Long commentIdx, Long memberIdx);
 }

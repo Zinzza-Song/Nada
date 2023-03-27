@@ -2111,6 +2111,10 @@ a {
     width: 30%;
     text-align: center;
 }
+/*diary read 페이지 댓글 버튼*/
+.clickModifyBtn {
+    display: none;
+}
 
 
 /*로고버튼 div태그*/
