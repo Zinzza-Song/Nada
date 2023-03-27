@@ -53,7 +53,7 @@
     운영자 답변
   </div>
   <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <button id="answer" name="answer" class="btn btn-dark mt-3 qnaBtn">답변하기</button>
+    <button id="answer" name="answer" class="btn customBtn mt-3 qnaBtn">답변하기</button>
   </div>
   <div sec:authorize="hasAnyRole('ROLE_USER')">
   <textarea class="form-control qnaContent" name="qnaAnswered"
@@ -72,15 +72,15 @@
                       rows="3"></textarea>
 
         <input type="hidden" id="idx" th:value="${qnaBean.qnaIdx}">
-        <button type="button" class="btn btn-dark mt-3 qnaBtn" id="complete">처리완료</button>
+        <button type="button" class="btn customBtn mt-3 qnaBtn" id="complete">처리완료</button>
       </li>
     </ul>
   </div>
 
   <form id="delete" th:action="@{/board/QNA/delete}" th:method="delete" style="margin-top: 20px">
     <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-    <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn">삭제</button>
-    <button class="btn btn-primary qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
+    <button type="submit" id="deleteBtn" class="btn customDeleteBtn qnaBtn">삭제</button>
+    <button class="btn customBtn qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
   </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
