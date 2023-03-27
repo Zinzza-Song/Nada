@@ -125,6 +125,8 @@
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
+                <td><button class="btn customModifyBtn" onclick="modifyComment(this)">수정</button></td>
+                <td><button class="btn customDeleteBtn" onclick="deleteComment(this)">삭제</button></td>
                 <td>
                   <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
                        onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
@@ -385,6 +387,23 @@
           // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
           $(`.table`).html(fragment);
         });
+  }
+
+  function deleteComment(e) {
+    var diaryIdx = $("#diaryIdx").val();
+    var commentIdx = $(e).parent().siblings('.commentIdx').text();
+    console.log(diaryIdx)
+    console.log(commentIdx)
+    // Ajax 요청
+    $.ajax({
+      url: "/diary/comment_delete",
+      type: "POST",
+      data: {diaryIdx: diaryIdx, commentIdx: commentIdx},
+      dataType: "html"
+    }).done(function (fragment) {
+      // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
+      $(`.table`).html(fragment);
+    });
   }
 
   //   diary 공감버튼 function
