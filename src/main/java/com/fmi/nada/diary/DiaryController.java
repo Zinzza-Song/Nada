@@ -277,6 +277,8 @@ public class DiaryController {
         Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
         model.addAttribute("readDiaryBean", readDiaryBean);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: #sympathyBtn";
     }
 
@@ -297,6 +299,8 @@ public class DiaryController {
         Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
         model.addAttribute("readDiaryBean", readDiaryBean);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: #sympathyBtn";
     }
 
@@ -313,6 +317,8 @@ public class DiaryController {
 
         getCommentList(commentLikeDto.getDiaryIdx(), model, member);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: tbody";
     }
 
@@ -327,6 +333,8 @@ public class DiaryController {
         diaryService.delCommentLike(commentLikeDto);
 
         getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        model.addAttribute("member", member);
 
         return "/diary/read :: tbody";
     }
