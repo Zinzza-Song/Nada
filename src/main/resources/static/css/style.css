@@ -2115,5 +2115,10 @@ a {
 
 /*로고버튼 div태그*/
 .nav-logo {
-    width: 450px;
+    width: 400px;
+}
+
+.nav-link{
+    width: 150px;
+    text-align: center;
 }
