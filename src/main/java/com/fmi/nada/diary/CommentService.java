@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Comment Service
@@ -40,6 +41,10 @@ public class CommentService {
     public void deleteByCommentIdx(Long commentIdx) {
         commentRepository.deleteByCommentIdx(commentIdx);
         likesRepository.deleteByCommentIdx(commentIdx);
+    }
+
+    public Comment findByDiaryIdxAndCommentIdxAndMemberIdx(Long diaryIdx, Long commentIdx, Long memberIdx){
+        return commentRepository.findByDiaryIdxAndCommentIdxAndMemberIdx(diaryIdx, commentIdx, memberIdx);
     }
 
 }

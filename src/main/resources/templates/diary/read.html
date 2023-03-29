@@ -124,7 +124,27 @@
                   </div>
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
+                <td><input type="text" class="modifyContent clickModifyBtn"></td>
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
+                <td th:if="${member.memberIdx == list.memberIdx}">
+                  <button class="btn customModifyBtn beforeModifyBtn" onclick="modifyComment(this)">
+                    수정
+                  </button>
+                </td>
+                <td>
+                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">
+                    완료
+                  </button>
+                </td>
+                <td>
+                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소
+                  </button>
+                </td>
+                <td th:if="${member.memberIdx == list.memberIdx}">
+                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">
+                    삭제
+                  </button>
+                </td>
                 <td>
                   <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
                        onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
@@ -236,6 +256,7 @@
 
   if (writerIdx == memberIdx) {
     $('.writerBtn').css('display', 'inline-block');
+    $('.commentBtn').css('display', 'inline-block');
   }
 
   // $('.blockMemberNickname').attr('value',commentWriter)
@@ -248,6 +269,7 @@
   }
 
   $(document).ready(function () {
+
     $('#addFriend').click(function () {
 
       const friendsDto = {
@@ -366,6 +388,7 @@
     });
   }
 
+  //댓글 작성
   function registerComment() {
     // 입력된 댓글 데이터를 가져옴
     var diaryIdx = $("#diaryIdx").val();
@@ -385,6 +408,60 @@
           // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
           $(`.table`).html(fragment);
         });
+  }
+
+  // 댓글 수정 버튼 클릭
+  function modifyComment(e) {
+    $(e).parent().siblings().children(`.beforeModifyBtn`).css('display', 'none');
+    $(e).parent().siblings().children('.clickModifyBtn').css('display', 'inline-block');
+    $(e).css('display', 'none');
+  }
+
+  // 댓글 수정버튼 클릭 이후 취소
+  function ResetComment(e) {
+    $(e).parent().siblings().children('.beforeModifyBtn').css('display', 'inline-block');
+    $(e).parent().siblings().children(`.clickModifyBtn`).css('display', 'none');
+    $(e).css('display', 'none');
+  }
+
+  // 댓글 수정버튼 클릭 이후 완료
+  function modifyProComment(e) {
+    var diaryIdx = $("#diaryIdx").val();
+    var commentIdx = $(e).parent().siblings('.commentIdx').text();
+    var commentModifyInput = $(e).parent().siblings().children(`.modifyContent`).val();
+    console.log(diaryIdx)
+    console.log(commentIdx)
+    console.log(commentModifyInput)
+
+    // Ajax 요청
+    $.ajax({
+      url: "/diary/comment_modify",
+      type: "POST",
+      data: {diaryIdx: diaryIdx, commentIdx: commentIdx, commentModifyInput: commentModifyInput},
+      dataType: "html"
+    }).done(function (fragment) {
+      // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
+      $(`.table`).html(fragment);
+      console.log('댓글 수정 완료')
+    });
+  }
+
+  // 댓글 삭제
+  function deleteComment(e) {
+    var diaryIdx = $("#diaryIdx").val();
+    var commentIdx = $(e).parent().siblings('.commentIdx').text();
+    console.log(diaryIdx)
+    console.log(commentIdx)
+    // Ajax 요청
+    $.ajax({
+      url: "/diary/comment_delete",
+      type: "POST",
+      data: {diaryIdx: diaryIdx, commentIdx: commentIdx},
+      dataType: "html"
+    }).done(function (fragment) {
+      // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
+      $(`.table`).html(fragment);
+    });
   }
 
   //   diary 공감버튼 function
