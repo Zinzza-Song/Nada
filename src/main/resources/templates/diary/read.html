@@ -124,27 +124,32 @@
                   </div>
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
-                <td><input type="text" class="modifyContent clickModifyBtn"></td>
+<!--                <td><input type="text" class="modifyContent clickModifyBtn"></td>-->
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
-                <td th:if="${member.memberIdx == list.memberIdx}">
-                  <button class="btn customModifyBtn beforeModifyBtn" onclick="modifyComment(this)">
+                <td class="tdBtn" th:if="${member.memberIdx == list.memberIdx}">
+                  <button class="btn customModifyBtn beforeModifyBtn" data-bs-toggle="modal"
+                          data-bs-target="#modify" onclick="modifyComment(this)">
+<!--                    <input type=hidden" th:text="${list.commentIdx}" class="commentIdx">-->
                     수정
                   </button>
-                </td>
-                <td>
-                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">
-                    완료
-                  </button>
-                </td>
-                <td>
-                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소
-                  </button>
-                </td>
-                <td th:if="${member.memberIdx == list.memberIdx}">
                   <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">
                     삭제
                   </button>
                 </td>
+<!--                <td>-->
+<!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">-->
+<!--                    완료-->
+<!--                  </button>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소-->
+<!--                  </button>-->
+<!--                </td>-->
+<!--                <td th:if="${member.memberIdx == list.memberIdx}">-->
+<!--                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">-->
+<!--                    삭제-->
+<!--                  </button>-->
+<!--                </td>-->
                 <td>
                   <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
                        onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
@@ -249,6 +254,32 @@
     </div>
   </div>
 </div>
+
+<!-- 댓글 수정부분 form-->
+<div class="modal fade" id="modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 exampleModalLabel">댓글 수정</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="modifyContent" class="col-form-label">댓글 내용</label>
+          <textarea class="form-control modifyContent" id="modifyContent"
+                    style="resize: none; height: 150px;"></textarea>
+        </div>
+        <input type="text" class="commentIdx" id="commentIdx" value="">
+        <div class="modal-footer">
+          <button type="button" class="btn customBtn" data-bs-dismiss="modal">취소</button>
+          <button type="button" onclick="modifyProComment(this)" class="btn customBtn">작성완료</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
@@ -410,25 +441,35 @@
         });
   }
 
-  // 댓글 수정 버튼 클릭
-  function modifyComment(e) {
-    $(e).parent().siblings().children(`.beforeModifyBtn`).css('display', 'none');
-    $(e).parent().siblings().children('.clickModifyBtn').css('display', 'inline-block');
-    $(e).css('display', 'none');
+  // 댓글 수정버튼클릭
+  function modifyComment(e){
+   const commentContent = $(e).parent().siblings('.commentContent').text();
+   const commentIdx=$(e).parent().siblings('.commentIdx').text();
+   console.log(commentIdx);
+
+    $('#modifyContent').val(commentContent)
+    $('#commentIdx').val(commentIdx)
   }
 
+  // 댓글 수정 버튼 클릭
+  // function modifyComment(e) {
+  //   $(e).parent().siblings().children(`.beforeModifyBtn`).css('display', 'none');
+  //   $(e).parent().siblings().children('.clickModifyBtn').css('display', 'inline-block');
+  //   $(e).css('display', 'none');
+  // }
+
   // 댓글 수정버튼 클릭 이후 취소
-  function ResetComment(e) {
-    $(e).parent().siblings().children('.beforeModifyBtn').css('display', 'inline-block');
-    $(e).parent().siblings().children(`.clickModifyBtn`).css('display', 'none');
-    $(e).css('display', 'none');
-  }
+  // function ResetComment(e) {
+  //   $(e).parent().siblings().children('.beforeModifyBtn').css('display', 'inline-block');
+  //   $(e).parent().siblings().children(`.clickModifyBtn`).css('display', 'none');
+  //   $(e).css('display', 'none');
+  // }
 
   // 댓글 수정버튼 클릭 이후 완료
   function modifyProComment(e) {
     var diaryIdx = $("#diaryIdx").val();
-    var commentIdx = $(e).parent().siblings('.commentIdx').text();
-    var commentModifyInput = $(e).parent().siblings().children(`.modifyContent`).val();
+    var commentIdx = $(e).parent().siblings('#commentIdx').val();
+    var commentModifyInput = $(e).parent().siblings().children('.modifyContent').val();
     console.log(diaryIdx)
     console.log(commentIdx)
     console.log(commentModifyInput)
@@ -443,6 +484,8 @@
       // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
       $(`.table`).html(fragment);
       console.log('댓글 수정 완료')
+      swal('댓글이 수정되었습니다.')
+      $('#modify').modal('hide');
     });
   }
 
