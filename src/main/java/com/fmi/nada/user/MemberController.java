@@ -5,7 +5,6 @@ import com.fmi.nada.diary.Analyzed;
 import com.fmi.nada.diary.AnalyzedService;
 import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
-import com.fmi.nada.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;

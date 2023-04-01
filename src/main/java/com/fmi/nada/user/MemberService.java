@@ -39,7 +39,7 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+        return memberRepository.findByUsername(username).get();
     }
 
     public Member findByMemberIdx(Long memberIdx) {
@@ -54,11 +54,17 @@ public class MemberService {
         return memberRepository.findByAuthorityOrderByMemberJoinDateDesc("ROLE_USER");
     }
 
-    public List<Member> memberSearchNicknameList(String keyword) { return memberRepository.findAllByMemberNicknameContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchNicknameList(String keyword) {
+        return memberRepository.findAllByMemberNicknameContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
-    public List<Member> memberSearchNameList(String keyword) { return memberRepository.findAllByMemberNameContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchNameList(String keyword) {
+        return memberRepository.findAllByMemberNameContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
-    public List<Member> memberSearchBirthList(String keyword) { return memberRepository.findAllByMemberBirthContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchBirthList(String keyword) {
+        return memberRepository.findAllByMemberBirthContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
     public void delMember(Long memberIdx) {
         memberRepository.deleteById(memberIdx);

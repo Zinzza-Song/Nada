@@ -69,6 +69,15 @@ public class Member implements UserDetails {
     @Column(name = "member_authority")
     private String authority;
 
+    @Column(name = "member_social")
+    private SocialType socialType;
+
+    @Column(name = "member_socialId")
+    private String socialId;
+
+    @Column(name = "member_refreshToken")
+    private String refreshToken;
+
     public Member(
             String username,
             String password,
@@ -116,6 +125,10 @@ public class Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
     }
 
 }

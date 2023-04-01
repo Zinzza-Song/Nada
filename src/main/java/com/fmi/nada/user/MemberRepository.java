@@ -3,12 +3,14 @@ package com.fmi.nada.user;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 회원 레포지토리
  */
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member findByUsername(String name);
+
+    Optional<Member> findByUsername(String name);
 
     Member findByMemberIdx(Long memberIdx);
 
@@ -21,4 +23,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findAllByMemberNameContainingOrderByMemberJoinDateDesc(String memberName);
 
     List<Member> findAllByMemberBirthContainingOrderByMemberJoinDateDesc(String memberBirth);
+
+    Member findByRefreshToken(String refreshToken);
+
+    Member findBySocialTypeAndSocialId(SocialType socialType, String SocialId);
+
 }
