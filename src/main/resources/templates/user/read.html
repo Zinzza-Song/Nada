@@ -276,17 +276,17 @@
 
 <script type="text/javascript">
 
+    let container = document.querySelector('.map');
+    let mapOptions = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
     var userAddr = $('.userAddr').text();
+    let map = new kakao.maps.Map(container, mapOptions);
 
     // 마이페이지 진입 시 감정 일기 점수 불러와 그래프 그리기
     // 지도 초기 중앙 좌표 유저 집 주소로 지정
     $(function () {
-        let container = document.querySelector('.map');
-        let mapOptions = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),
-            level: 3
-        };
-        let map = new kakao.maps.Map(container, mapOptions);
         var geocoder = new kakao.maps.services.Geocoder();
         geocoder.addressSearch(userAddr, function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
@@ -299,44 +299,44 @@
             }
         })
 
-        const diaryScore = document.getElementById("diaryScore");
-        let msg = diaryScore.value;
-        msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
-        console.log(msg);
-
-        let advice = document.getElementById('advice');
-
-        let gptData = {
-          method: 'POST',
-          body: JSON.stringify({msg}),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-
-        let mainAdvice = '';
-        fetch('http://localhost:8080/send', gptData)
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data.data);
-
-              const resMsg = data.data;
-              let resLines = resMsg.split('\n');
-
-              resLines.forEach(function (line) {
-                if (line.indexOf("조언:") != -1) {
-                  mainAdvice = line;
-                  console.log(mainAdvice);
-                }
-              });
-            })
-            .then(() => {
-              let resAdvice = mainAdvice.replace("조언 : ", "");
-              advice.innerText = resAdvice;
-
-              console.log($('#analyzeScoreArr').val());
-              console.log($('#analyzeScoreArr').innerText);
-            });
+        // const diaryScore = document.getElementById("diaryScore");
+        // let msg = diaryScore.value;
+        // msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+        // console.log(msg);
+        //
+        // let advice = document.getElementById('advice');
+        //
+        // let gptData = {
+        //   method: 'POST',
+        //   body: JSON.stringify({msg}),
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // }
+        //
+        // let mainAdvice = '';
+        // fetch('http://localhost:8080/send', gptData)
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //       console.log(data.data);
+        //
+        //       const resMsg = data.data;
+        //       let resLines = resMsg.split('\n');
+        //
+        //       resLines.forEach(function (line) {
+        //         if (line.indexOf("조언:") != -1) {
+        //           mainAdvice = line;
+        //           console.log(mainAdvice);
+        //         }
+        //       });
+        //     })
+        //     .then(() => {
+        //       let resAdvice = mainAdvice.replace("조언 : ", "");
+        //       advice.innerText = resAdvice;
+        //
+        //       console.log($('#analyzeScoreArr').val());
+        //       console.log($('#analyzeScoreArr').innerText);
+        //     });
     });
 
     // 그래프에 삽입되는 일기 분석 점수
@@ -480,7 +480,7 @@
     function searchAddrGpt(e) {
         document.querySelector(".places").innerHTML = "";
         let category = $(e).text();
-        let msg = userAddr + " 근처에서 " + category + "를 5개까지 장소와 주소로 나열해주세요.";
+        let msg = userAddr + " 근처에서 " + category + "를 5개까지 한글로 장소와 주소형식으로 나열하는데 구분자는 :로 해주세요.";
 
         console.log(category)
 
@@ -516,14 +516,18 @@
                         let [place, address] = line.split('('); // 콜론(:)을 기준으로 문자열을 분리합니다.
                         places.push(place);
                         addresses.push(address.replace(')', ""));
+                    } else if (line.indexOf('-') != -1) {
+                        let [place, address] = line.split('-')
+                        places.push(place);
+                        addresses.push(address);
                     }
                 });
                 // fetch 메서드가 완료된 후 placesInnerHTML을 초기화하고 결과를 반영
                 placesInnerHTML = places
                     .map((place, i) => `
           <div class="item">
-            <span class="keyword-item" onclick="searchAddr(this)">${places[i]}</span>
-            <input type="hidden" value="${addresses[i]}">
+            <button type="button" class="customBtn" onclick="searchAddr(this)">${places[i]}</button>
+            <input class="address_detail" type="hidden" value="${addresses[i]}" text="${addresses[i]}">
           </div>
         `)
                     .join("");
@@ -535,25 +539,21 @@
     // ********* 주소 클릭 스크립트 함수 *********
     // 주소-좌표 변환 객체를 생성합니다
     function searchAddr(e) {
-        let map = "";
-        map = new kakao.maps.Map(container, mapOptions);
-        let address = "";
-        address = $(e).val();
-        let geocoder = "";
-        geocoder = new kakao.maps.services.Geocoder();
-        geocoder.addressSearch(address, function (result, status) {
+        let address_v = ""
+        address_v = $(e).parent().children('.address_detail').val();
+        console.log(typeof address_v);
+
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(address_v, function (result, status) {
 
             // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
-
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
                 // 결과값으로 받은 위치를 마커로 표시합니다
                 var marker = new kakao.maps.Marker({
                     map: map,
                     position: coords
                 });
-
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
             }
