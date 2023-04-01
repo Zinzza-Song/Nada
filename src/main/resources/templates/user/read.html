@@ -275,7 +275,7 @@
 </div>
 
 <script type="text/javascript">
-
+    let posmarkers = [];
     let container = document.querySelector('.map');
     let mapOptions = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -478,6 +478,10 @@
 
     // 카테고리의 장소 5개와 각각의 주소 뽑아와 출력하기
     function searchAddrGpt(e) {
+        for (let i = 0; i < posmarkers.length; i++){
+            posmarkers[i].setMap(null)
+        }
+        posmarkers = [];
         var geocoder = new kakao.maps.services.Geocoder();
         geocoder.addressSearch(userAddr, function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
@@ -491,9 +495,10 @@
         });
         document.querySelector(".places").innerHTML = "";
         let category = $(e).text();
-        let msg = userAddr + " 근처에서 " + category + "를 줄마다 1개 장소와 해당 장소의 경도,위도를 알려주고," +
-            " 5개까지 알려줄 때 " +
-            "구분자는 :로 해주세요.";
+        let msg = userAddr + " 주변 8km 이내의 " + category + " 5개를 장소와 해당 주소의 위도와 경도를 알려주고," +
+            " 5개의 장소를 알려줄 때, 모든 장소는 반드시 중복될 수 없다. " +
+            "그리고 각각의 장소는 반드시 다른 위도,경도여야 한다. " +
+            "알려줄때 결과만 1.장소명 : 위도,경도 형식으로 알려주고, 구분자는 :로 해주세요.";
 
         console.log(category)
 
@@ -555,25 +560,26 @@
         let address_v = "";
         var coords = "";
         var marker = "";
-        let tude = "";
+
         address_v = $(e).parent().children('.address_detail').val();
         let [longtude, latitude] = address_v.split(",")
 
         // const geocoder = new kakao.maps.services.Geocoder();
         // geocoder.addressSearch(latitude+","+ longtude, function (result, status) {
 
-            // 정상적으로 검색이 완료됐으면
-            // if (status === kakao.maps.services.Status.OK) {
-                coords = new kakao.maps.LatLng(longtude, latitude);
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                // map.setCenter(coords);
-                map.setCenter(coords);
-            // }
+        // 정상적으로 검색이 완료됐으면
+        // if (status === kakao.maps.services.Status.OK) {
+        coords = new kakao.maps.LatLng(longtude, latitude);
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+        posmarkers.push(marker);
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        // map.setCenter(coords);
+        map.setCenter(coords);
+        // }
         // });
     }
 </script>
