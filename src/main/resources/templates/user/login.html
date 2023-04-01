@@ -71,6 +71,7 @@
                   id="btnLoginKakao"
                   value="카카오"
                   class="btn btn-social"
+                  onclick="goKakao()"
           />
         </div>
         <div class="col-md-4">
@@ -95,5 +96,10 @@
   <!-- login Box //-->
 </div>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
+<script>
+  function goKakao() {
+    location.href = "/oauth2/authorization/kakao";
+  }
+</script>
 </body>
 </html>

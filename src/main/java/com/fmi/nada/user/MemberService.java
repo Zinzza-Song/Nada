@@ -39,7 +39,12 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username).get();
+        Member member = memberRepository.findByUsername(username).get();
+        if (member == null)
+            System.out.println("없는 회원");
+        System.out.println(member.getUsername());
+        System.out.println(member.getMemberNickname());
+        return member;
     }
 
     public Member findByMemberIdx(Long memberIdx) {

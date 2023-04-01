@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -218,9 +217,9 @@ public class MemberController {
     public String deleteMember(@RequestParam("memberIdx") Long memberIdx, HttpServletResponse res) {
         memberService.delMember(memberIdx);
 
-        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-        cookie.setMaxAge(0);
-        res.addCookie(cookie);
+//        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+//        cookie.setMaxAge(0);
+//        res.addCookie(cookie);
 
         return "redirect:/";
 
