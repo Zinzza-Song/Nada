@@ -1,9 +1,6 @@
 package com.fmi.nada.user;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,9 +17,11 @@ import java.time.LocalDateTime;
 @Table
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @DynamicInsert
+@Builder
 public class Member {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
