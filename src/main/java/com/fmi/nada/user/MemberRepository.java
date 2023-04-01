@@ -24,8 +24,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findAllByMemberBirthContainingOrderByMemberJoinDateDesc(String memberBirth);
 
-    Member findByRefreshToken(String refreshToken);
+    Optional<Member> findByRefreshToken(String refreshToken);
 
-    Member findBySocialTypeAndSocialId(SocialType socialType, String SocialId);
+    Optional<Member> findBySocialTypeAndSocialId(SocialType socialType, String SocialId);
 
 }
