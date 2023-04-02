@@ -2,6 +2,7 @@ package com.fmi.nada.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class MailAuthService {
 
     private final String ePw = createKey();
 
+    @Value("${mail.mail-id}")
+    private String mailId;
 
     //회원가입 인증 메일작성
     public MimeMessage createMessageJoin(String to) throws MessagingException, UnsupportedEncodingException {
@@ -51,7 +54,7 @@ public class MailAuthService {
 
         message.setText(msgg, "utf-8", "html");
         //발송할 메시지, 캐릭터셋, 타입
-        message.setFrom(new InternetAddress("skycindy89@naver.com", "NADA_Admin"));
+        message.setFrom(new InternetAddress(mailId, "NADA_Admin"));
         // 발송하는 사람의 메일주소, 이름
         System.out.println("createmessage 에서 생성된 msgg 메시지" + msgg);
         System.out.println("createmessage 에서 생성된 리턴 메시지" + message);
@@ -85,7 +88,7 @@ public class MailAuthService {
 
         message.setText(msgg, "utf-8", "html");
         //발송할 메시지, 캐릭터셋, 타입
-        message.setFrom(new InternetAddress("skycindy89@naver.com", "NADA_Admin"));
+        message.setFrom(new InternetAddress(mailId, "NADA_Admin"));
         // 발송하는 사람의 메일주소, 이름
         System.out.println("createmessage 에서 생성된 msgg 메시지" + msgg);
         System.out.println("createmessage 에서 생성된 리턴 메시지" + message);
