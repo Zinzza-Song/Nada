@@ -52,7 +52,9 @@
         <div class="card-header">
           <button type="button" class="customBtn category" onclick="searchAddrGpt(this)">힐링 명소</button>
           <button type="button" class="customBtn category" onclick="searchAddrGpt(this)">유명 카페</button>
-          <button type="button" class="customBtn category" onclick="searchAddrGpt(this)">공원</button>
+          <button type="button" class="customBtn category" onclick="searchAddrGpt(this)" style="visibility: hidden;"
+                  id="park">공원
+          </button>
         </div>
         <div class="card-body">
           <div class="map" style="width:325px;height:400px;"></div>
@@ -302,7 +304,7 @@
     const diaryScore = document.getElementById("diaryScore");
     let msg = diaryScore.value;
     msg += "\n 감정상태 점수가 0~150의 범위를 가지고 있고 80이상은 긍정적인 상태 50~80은 보통상태 50이하는 부정적인 상태일 때" +
-        " 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+        " 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘요.";
     console.log(msg);
 
     let advice = document.getElementById('advice');
@@ -316,6 +318,7 @@
     }
 
     let mainAdvice = '';
+    let keyword = '';
     fetch('http://localhost:8080/send', gptData)
         .then((response) => response.json())
         .then((data) => {
@@ -334,6 +337,9 @@
         .then(() => {
           let resAdvice = mainAdvice.replace("조언 : ", "");
           advice.innerText = resAdvice;
+
+          if (resAdvice.indexOf("긍정적") != -1)
+            $('#park').css('visibility', 'visible');
 
           console.log($('#analyzeScoreArr').val());
           console.log($('#analyzeScoreArr').innerText);
