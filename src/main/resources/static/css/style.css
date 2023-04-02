@@ -1458,7 +1458,7 @@ input[type="button"] {
 }
 
 .commentContent {
-    width: 250px;
+    width: 200px;
     word-break: break-all
 }
 
@@ -2114,6 +2114,11 @@ a {
 /*diary read 페이지 댓글 버튼*/
 .clickModifyBtn {
     display: none;
+}
+
+.table>:not(caption)>*>.tdBtn {
+    padding: 0;
+    width: 110px;
 }
 
 
