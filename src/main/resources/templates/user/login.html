@@ -40,7 +40,7 @@
                 autocomplete="off"
         />
       </div>
-      <div id="login-btn-box">
+      <div id="login-btn-box" style="margin-top: 30px">
         <input
                 type="submit"
                 id="btnLogin"
@@ -50,47 +50,15 @@
         />
       </div>
     </form>
-    <div class="row loginBox">
+    <div class="row loginBox" style="margin-top: 50px">
       <div class="col-md-6 loginAct">
         <a th:href="@{/user/find_password}">비밀번호를 잊으셨나요?</a>
       </div>
       <div class="col-md-6 loginAct">
         <a th:href="@{/user/join}">아직 회원이 아니신가요?</a>
       </div>
-      <!--            <div class="col-md-6 loginAct">-->
-      <!--                <div class="lost-password">-->
-      <!--                    <a th:href="@{/user/join}">아직 회원이 아니신가?</a>-->
-      <!--                </div>-->
-      <!--            </div>-->
     </div>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col-md-4">
-          <input
-                  type="button"
-                  id="btnLoginKakao"
-                  value="카카오"
-                  class="btn btn-social"
-          />
-        </div>
-        <div class="col-md-4">
-          <input
-                  type="button"
-                  id="btnLoginGoogle"
-                  value="구글"
-                  class="btn btn-social"
-          />
-        </div>
-        <div class="col-md-4">
-          <input
-                  type="button"
-                  id="btnLoginNaver"
-                  value="네이버"
-                  class="btn btn-social"
-          />
-        </div>
-      </div>
-    </div>
+
   </div>
   <!-- login Box //-->
 </div>
