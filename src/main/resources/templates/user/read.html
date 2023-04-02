@@ -338,8 +338,14 @@
           let resAdvice = mainAdvice.replace("조언 : ", "");
           advice.innerText = resAdvice;
 
-          if (resAdvice.indexOf("긍정적") != -1)
+          if (resAdvice.indexOf("산책") != -1) {
             $('#park').css('visibility', 'visible');
+          } else if (resAdvice.indexOf("운동") != -1) {
+            $('#park').css('visibility', 'visible');
+          } else if (resAdvice.indexOf("걷기") != -1) {
+            $('#park').css('visibility', 'visible');
+          }
+
 
           console.log($('#analyzeScoreArr').val());
           console.log($('#analyzeScoreArr').innerText);
