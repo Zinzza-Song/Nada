@@ -5,6 +5,19 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:fragment="header">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JYGXY4FHNP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-JYGXY4FHNP');
+  </script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +34,7 @@
   <!-- 카카오 맵 API 사용을 위한 스크립트 - API 키 존재 -->
   <script type="text/javascript"
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec&libraries=services"></script>
-  <title>NADA 나의 다이어리</title>
+  <!--  <title>NADA 나의 다이어리</title>-->
 </head>
 <body>
 <!-- Example Code -->

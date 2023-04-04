@@ -3,8 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>일기 목록</title>
 </head>
 
 <body class=" diarymain">
