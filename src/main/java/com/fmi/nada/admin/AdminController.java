@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자 Controller
@@ -49,13 +50,28 @@ public class AdminController {
                       @RequestParam(value = "keyword", required = false) String keyword,
                       Model model) {
         List<Log> adminAllLogList = null;
+        Map<String, String> dateLogList = null;
+        int date_count = 1;
+        // 검색 관련 조건문
         if (keyword == null)
             adminAllLogList = logService.findAllByOrderByLogDateDesc();
         else if (type.equals("UserID"))
             adminAllLogList = logService.findAllByLogMemberEmailContainingOrderByLogDateDesc(keyword);
-        else if (type.equals("UserService"))
+        else if (type.equals("UserService")) {
             adminAllLogList = logService.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
-
+            for (int i = 0; i < adminAllLogList.size() - 1; i++) {
+                // 그래프 관련 조건문
+                if (adminAllLogList.get(i).getLogDate().getMonth() == adminAllLogList.get(i + 1).getLogDate().getMonth()) {
+                    if (adminAllLogList.get(i).getLogDate().getDayOfMonth() == adminAllLogList.get(i).getLogDate().getDayOfMonth()) {
+                        date_count++;
+                    }
+                    else if((adminAllLogList.get(i).getLogDate().getDayOfMonth() != adminAllLogList.get(i).getLogDate().getDayOfMonth()))
+                        dateLogList.put(adminAllLogList.get(i).getLogDate().getMonth().toString() + "/" + adminAllLogList.get(i).getLogDate().getDayOfMonth(), Integer.toString(date_count));
+                        date_count = 1;
+                        continue;
+                }
+            }
+        }
         model.addAttribute("adminAllLogList", adminAllLogList);
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);

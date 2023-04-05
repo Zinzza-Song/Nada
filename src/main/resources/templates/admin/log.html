@@ -5,48 +5,48 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-  <script>
-    $(document).ready(function () {
-      var win = $(window);
-      var doc = $(document);
+    <script>
+        $(document).ready(function () {
+            var win = $(window);
+            var doc = $(document);
 
-      // Each time the user scrolls
-      win.scroll(function () {
-        // Vertical end reached?
-        if (doc.height() - win.height() == win.scrollTop()) {
-          // New row
-          var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+            // Each time the user scrolls
+            win.scroll(function () {
+                // Vertical end reached?
+                if (doc.height() - win.height() == win.scrollTop()) {
+                    // New row
+                    var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
 
-          // Current number of columns to create
-          var n_cols = $('.logMoreData tr:first-child th').length;
-          for (var i = 0; i < n_cols; ++i)
-            tr.append($('<td />'));
-        }
+                    // Current number of columns to create
+                    var n_cols = $('.logMoreData tr:first-child th').length;
+                    for (var i = 0; i < n_cols; ++i)
+                        tr.append($('<td />'));
+                }
 
-        // Horizontal end reached?
-        if (doc.width() - win.width() == win.scrollLeft()) {
-          // New column in the heading row
-          $('.logMoreData tr:first-child').append($('<th />'));
+                // Horizontal end reached?
+                if (doc.width() - win.width() == win.scrollLeft()) {
+                    // New column in the heading row
+                    $('.logMoreData tr:first-child').append($('<th />'));
 
-          // New column in each row
-          $('.logMoreData tr:not(:first-child)').each(function () {
-            $(this).append($('<td />'));
-          });
-        }
-      });
-      $('#searchType').change(function () {
-        $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
-      });
+                    // New column in each row
+                    $('.logMoreData tr:not(:first-child)').each(function () {
+                        $(this).append($('<td />'));
+                    });
+                }
+            });
+            $('#searchType').change(function () {
+                $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+            });
 
-      $('#search-form').on('submit', function (event) {
-        if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
-          event.preventDefault(); // 이벤트 취소
-        }
-      });
+            $('#search-form').on('submit', function (event) {
+                if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+                    event.preventDefault(); // 이벤트 취소
+                }
+            });
 
-    });
+        });
 
-  </script>
+    </script>
 
 </head>
 <body class="p-3 m-0 border-0 bd-example">
@@ -54,47 +54,60 @@
 
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
-  <div class="container-fluid">
-    <form class="d-flex" role="search" th:action="@{/admin/log}">
-      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
-        <option selected value="UserID" id="UserID">ID</option>
-        <option selected value="UserService" id="UserService">서비스</option>
-      </select>
-      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
-      <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
-    </form>
-  </div>
+    <div class="container-fluid">
+        <form class="d-flex" role="search" th:action="@{/admin/log}">
+            <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+                <option selected value="UserID" id="UserID">ID</option>
+                <option selected value="UserService" id="UserService">서비스</option>
+            </select>
+            <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+                   aria-label="Search">
+            <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+        </form>
+    </div>
 </nav>
 <div>
-  <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
-  <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
-  <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
-  <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
+    <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
+    <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
+    <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
+    <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
+</div>
+<div class="container-fluid">
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=로그인'">회원 로그인</button>
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=로그아웃'">회원 로그아웃</button>
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=가입'">회원 가입</button>
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=탈퇴'">회원 탈퇴</button>
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=일기작성'">일기 작성</button>
+    <button class="customBtn" onclick="location.href='/admin/log?type=UserService&keyword=일기삭제'">일기 삭제</button>
+</div>
+<div class="chart">
+
 </div>
 <table class="table">
-  <thead>
-  <tr>
-    <th scope="col">no</th>
-    <th scope="col">성공여부</th>
-    <th scope="col">사용자</th>
-    <th scope="col">날짜</th>
-    <th scope="col">서비스</th>
-  </tr>
-  </thead>
-  <tbody class="table-group-divider logMoreData">
-  <tr th:each="log:${adminAllLogList}">
-    <th scope="row" th:text="${log.logIdx}">번호</th>
-    <th scope="row" th:if="${log. logIssuccessed}">성공</th>
-    <th scope="row" th:unless="${log.logIssuccessed }">실패</th>
-    <th scope="row" th:text="${log.logMemberEmail }">사용자</th>
-    <th scope="row" th:text="${#temporals.format(log.logDate, 'yyyy-MM-dd HH:mm:ss')}">날짜</th>
-    <th scope="row" th:text="${log.logUsedService}">서비스</th>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th scope="col">no</th>
+        <th scope="col">성공여부</th>
+        <th scope="col">사용자</th>
+        <th scope="col">날짜</th>
+        <th scope="col">서비스</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider logMoreData">
+    <tr th:each="log:${adminAllLogList}">
+        <th scope="row" th:text="${log.logIdx}">번호</th>
+        <th scope="row" th:if="${log. logIssuccessed}">성공</th>
+        <th scope="row" th:unless="${log.logIssuccessed }">실패</th>
+        <th scope="row" th:text="${log.logMemberEmail }">사용자</th>
+        <th scope="row" th:text="${#temporals.format(log.logDate, 'yyyy-MM-dd HH:mm:ss')}">날짜</th>
+        <th scope="row" th:text="${log.logUsedService}">서비스</th>
+    </tr>
+    </tbody>
 </table>
 <!-- End Example Code -->
 
 </body>
+<script>
 
-
+</script>
 </html>
