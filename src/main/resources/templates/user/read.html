@@ -351,10 +351,6 @@
                 let resAdvice = mainAdvice.replace("조언 : ", "");
                 advice.innerText = resAdvice;
 
-                console.log($('#analyzeScoreArr').val());
-                console.log($('#analyzeScoreArr').innerText);
-
-
                 if (resAdvice.indexOf("활동") != -1 && resAdvice.indexOf("스트레스") != -1){
                     $('#food').css('display', 'inline');
                     $('#cafe').css('display', 'inline');
@@ -368,9 +364,17 @@
                     $('#walk').css('display', 'inline');
                     $('#mountain').css('display', 'inline');
                     $('#cafe').css('display', 'inline');
+                }else if (resAdvice.indexOf("긍정") != -1&& resAdvice.indexOf("유지") != -1) {
+                    $('#movie').css('display', 'inline');
+                    $('#food').css('display', 'inline');
+                    $('#cafe').css('display', 'inline');
                 }else if (resAdvice.indexOf("긍정") != -1&& resAdvice.indexOf("이해") != -1){
                     $('#walk').css('display', 'inline');
                     $('#mountain').css('display', 'inline');
+                }else if (resAdvice.indexOf("긍정") != -1&& resAdvice.indexOf("정리") != -1){
+                    $('#walk').css('display', 'inline');
+                    $('#mountain').css('display', 'inline');
+                    $('#health').css('display', 'inline');
                 }else if (resAdvice.indexOf("운동") != -1) {
                     $('#health').css('display', 'inline');
                     $('#mountain').css('display', 'inline');
@@ -426,6 +430,9 @@
                     $('#walk').css('display', 'inline');
                     $('#mountain').css('display', 'inline');
                 }
+
+                console.log($('#analyzeScoreArr').val());
+                console.log($('#analyzeScoreArr').innerText);
 
             });
     });
