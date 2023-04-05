@@ -70,6 +70,7 @@ dependencies {
 
     // ga4
     implementation 'com.google.analytics:google-analytics-data:0.16.0'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.16.0'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

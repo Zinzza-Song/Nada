@@ -1,5 +1,6 @@
 package com.fmi.nada.admin;
 
+import com.fmi.nada.analytics.QuickstartJsonCredentialsSample;
 import com.fmi.nada.board.report.Report;
 import com.fmi.nada.board.report.ReportProDto;
 import com.fmi.nada.board.report.ReportService;
@@ -32,9 +33,15 @@ public class AdminController {
     public final DiaryService diaryService;
     public final CommentService commentService;
     public final ReportService reportService;
+    public final QuickstartJsonCredentialsSample ga;
 
     @GetMapping
     public String adminMain() {
+        try {
+            ga.getLog();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return "admin/index";
     }
 
