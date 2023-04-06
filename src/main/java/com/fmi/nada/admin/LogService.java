@@ -23,6 +23,7 @@ public class LogService {
     public List<Log> findAllByLogUsedServiceContainingOrderByLogDateDesc(String keyword) {
         return logRepository.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
     }
+
     public void logLogin(Member member) {
         System.out.println("로그인 로그 남기기 돌입");
         logRepository.save(new Log(
@@ -42,4 +43,11 @@ public class LogService {
         ));
     }
 
+    public String countLogsDate(String logData, String logUsedService) {
+        return logRepository.countLogsDate(logData, logUsedService);
+    }
+
+    public String countDiaryLog(String logData, String maxLogDate, String logUsedService) {
+        return logRepository.countDiaryLog(logData, maxLogDate, logUsedService);
+    }
 }

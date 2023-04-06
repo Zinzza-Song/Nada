@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,43 @@ public class AdminController {
     public final ReportService reportService;
 
     @GetMapping
-    public String adminMain() {
+    public String adminMain(Model model) {
+        // 현재 날짜 ( 지금은 DB에 저장된 날짜 임시 지정
+        // of 를 now()로 변경하면 된다.
+        LocalDate localDate = LocalDate.of(2023, 03, 23);
+        List<String> UserLogArr_add = new ArrayList<>();
+        List<String> UserLogArr_del = new ArrayList<>();
+        List<String> diaryCount = new ArrayList<>();
+
+        // 다이어리 7일치 데이터 가져오기
+        LocalDate maxLocalDate = localDate.plusDays(1);
+        LocalDate minLocalDate = localDate.minusDays(7);
+
+        String str_maxLocalDate = maxLocalDate.toString();
+        String str_minLocalDate = minLocalDate.toString();
+        String str_localDate = localDate.toString();
+
+        diaryCount.add(logService.countDiaryLog(str_minLocalDate, str_maxLocalDate, "일기작성"));
+        diaryCount.add(logService.countDiaryLog(str_minLocalDate, str_maxLocalDate, "일기삭제"));
+        System.out.println(diaryCount);
+
+        // 회원가입, 회원탈퇴
+        for (int i = 1; i < 8; i++) {
+            UserLogArr_add.add(logService.countLogsDate("%"+str_localDate+"%", "회원가입"));
+            UserLogArr_del.add(logService.countLogsDate("%"+str_localDate+"%", "회원탈퇴"));
+
+            LocalDate new_localDate = localDate.minusDays(i);
+            str_localDate = new_localDate.toString();
+
+            System.out.println(str_localDate);
+        }
+        System.out.println(UserLogArr_add);
+        System.out.println(UserLogArr_del);
+
+        model.addAttribute("diaryCount", diaryCount);
+        model.addAttribute("UserLogArr_add", UserLogArr_add);
+        model.addAttribute("UserLogArr_del", UserLogArr_del);
+
         return "admin/index";
     }
 
@@ -59,18 +97,6 @@ public class AdminController {
             adminAllLogList = logService.findAllByLogMemberEmailContainingOrderByLogDateDesc(keyword);
         else if (type.equals("UserService")) {
             adminAllLogList = logService.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
-            for (int i = 0; i < adminAllLogList.size() - 1; i++) {
-                // 그래프 관련 조건문
-                if (adminAllLogList.get(i).getLogDate().getMonth() == adminAllLogList.get(i + 1).getLogDate().getMonth()) {
-                    if (adminAllLogList.get(i).getLogDate().getDayOfMonth() == adminAllLogList.get(i).getLogDate().getDayOfMonth()) {
-                        date_count++;
-                    }
-                    else if((adminAllLogList.get(i).getLogDate().getDayOfMonth() != adminAllLogList.get(i).getLogDate().getDayOfMonth()))
-                        dateLogList.put(adminAllLogList.get(i).getLogDate().getMonth().toString() + "/" + adminAllLogList.get(i).getLogDate().getDayOfMonth(), Integer.toString(date_count));
-                        date_count = 1;
-                        continue;
-                }
-            }
         }
         model.addAttribute("adminAllLogList", adminAllLogList);
         model.addAttribute("type", type);
