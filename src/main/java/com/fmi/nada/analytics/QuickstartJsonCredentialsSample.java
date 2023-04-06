@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
 
 @Component
 public class QuickstartJsonCredentialsSample {
@@ -17,29 +20,27 @@ public class QuickstartJsonCredentialsSample {
     @Value("${GA4.credentialsJsonPath}")
     private String path;
 
-    public void getLog() throws Exception {
-        /**
-         * TODO(developer): Replace this variable with your Google Analytics 4 property ID before
-         * running the sample.
-         */
-        String propertyId = id;
-
-        /**
-         * TODO(developer): Replace this variable with a valid path to the credentials.json file for
-         * your service account downloaded from the Cloud Console.
-         */
-        String credentialsJsonPath = path;
-        sampleRunReport(propertyId, credentialsJsonPath);
+    public HashMap<String, Integer> getEvent() throws Exception {
+        return getStringIntegerHashMap("eventName", "activeUsers");
     }
 
-    // This is an example snippet that calls the Google Analytics Data API and runs a simple report
-    // on the provided GA4 property id.
-    static void sampleRunReport(String propertyId, String credentialsJsonPath) throws Exception {
-        // [START analyticsdata_json_credentials_initialize]
-        // Explicitly use service account credentials by specifying
-        // the private key file.
+    public HashMap<String, Integer> getViewOfPage() throws Exception {
+        return getStringIntegerHashMap("unifiedScreenName", "screenPageViews");
+    }
+
+    public HashMap<String, Integer> getDeviceCategory() throws Exception {
+        return getStringIntegerHashMap("deviceCategory", "activeUsers");
+    }
+
+    public HashMap<String, Integer> getCity() throws Exception {
+        return getStringIntegerHashMap("city", "activeUsers");
+    }
+
+    private HashMap<String, Integer> getStringIntegerHashMap(String dimensions, String metrics) throws IOException {
+        HashMap<String, Integer> map = new HashMap<>();
+
         GoogleCredentials credentials =
-                GoogleCredentials.fromStream(new FileInputStream(credentialsJsonPath));
+                GoogleCredentials.fromStream(new FileInputStream(path));
 
         BetaAnalyticsDataSettings betaAnalyticsDataSettings =
                 BetaAnalyticsDataSettings.newBuilder()
@@ -48,31 +49,23 @@ public class QuickstartJsonCredentialsSample {
 
         try (BetaAnalyticsDataClient analyticsData =
                      BetaAnalyticsDataClient.create(betaAnalyticsDataSettings)) {
-            // [END analyticsdata_json_credentials_initialize]
-
-            // [START analyticsdata_json_credentials_run_report]
             RunReportRequest request =
                     RunReportRequest.newBuilder()
-                            .setProperty("properties/" + propertyId)
-//                            .addDimensions(Dimension.newBuilder().setName("city"))
-//                            .addMetrics(Metric.newBuilder().setName("activeUsers"))
-                            .addDimensions(Dimension.newBuilder().setName("eventName"))
-                            .addMetrics(Metric.newBuilder().setName("activeUsers"))
-                            .addDateRanges(DateRange.newBuilder().setStartDate("2020-03-31").setEndDate("today"))
+                            .setProperty("properties/" + id)
+                            .addDimensions(Dimension.newBuilder().setName(dimensions))
+                            .addMetrics(Metric.newBuilder().setName(metrics))
+                            .addDateRanges(DateRange.newBuilder()
+                                    .setStartDate(LocalDate.now().minusDays(7).toString())
+                                    .setEndDate("today"))
                             .build();
 
-            // Make the request.
             RunReportResponse response = analyticsData.runReport(request);
-            // [END analyticsdata_json_credentials_run_report]
 
-            // [START analyticsdata_json_credentials_print_report]
-            System.out.println("Report result:");
-            // Iterate through every row of the API response.
-            for (Row row : response.getRowsList()) {
-                System.out.printf(
-                        "%s, %s%n", row.getDimensionValues(0).getValue(), row.getMetricValues(0).getValue());
-            }
-            // [END analyticsdata_json_credentials_print_report]
+            for (Row row : response.getRowsList())
+                map.put(row.getDimensionValues(0).getValue(), Integer.parseInt(row.getMetricValues(0).getValue()));
         }
+
+        return map;
     }
+
 }
