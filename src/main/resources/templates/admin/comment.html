@@ -4,7 +4,9 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 댓글 관리</title>
   <script>
     $(document).ready(function () {
       var win = $(window);

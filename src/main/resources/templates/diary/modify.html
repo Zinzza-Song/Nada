@@ -3,8 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
         xmlns="http://www.w3.org/1999/html">
-<head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/style.css"/>
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 수정</title>
 </head>
 <body class="diary-write-body">
 

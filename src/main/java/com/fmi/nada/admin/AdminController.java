@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자 Controller
@@ -52,6 +53,12 @@ public class AdminController {
             HashMap<String, Integer> views = ga.getViewOfPage(); // 페이지별로 접속한 횟수가 들어있는 해쉬맵
             views.remove("");
             views.remove("(not set)");
+            views.remove("일기 목록");
+            views.remove("NADA 나의 다이어리");
+
+            for (Map.Entry<String, Integer> entry : views.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+            }
 
             HashMap<String, Integer> devices = ga.getDeviceCategory(); // 접속한 기종별 횟수가 들어있는 해쉬맵
             HashMap<String, Integer> cities = ga.getCity(); // 접속한 지역과 횟수가 들어있는 해쉬맵

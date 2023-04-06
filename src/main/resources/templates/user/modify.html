@@ -4,7 +4,9 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <!-- 반응형 웹 미디어쿼리 선언부   -->
-<head th:insert="~{fragment/topMenu.html::header}">
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 회원 정보 수정</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>

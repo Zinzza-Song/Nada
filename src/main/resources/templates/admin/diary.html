@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-
-
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 관리</title>
 </head>
 <body class="p-3 m-0 border-0 bd-example">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -18,7 +18,8 @@
         <option value="writer" id="writer">작성자</option>
         <option value="subject" id="subject">제목</option>
       </select>
-      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
       <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>
@@ -71,6 +72,7 @@
       }
     })
   }
+
   $(document).ready(function () {
     $('#searchType').change(function () {
       $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화

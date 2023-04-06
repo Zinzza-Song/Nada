@@ -4,9 +4,11 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
+<head>
   <!-- 반응형 웹 미디어쿼리 선언부   -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 신고글</title>
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
