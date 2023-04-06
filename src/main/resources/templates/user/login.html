@@ -3,7 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 로그인</title>
 </head>
 <body class="">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>

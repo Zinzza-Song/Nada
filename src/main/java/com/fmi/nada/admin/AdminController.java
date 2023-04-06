@@ -1,5 +1,6 @@
 package com.fmi.nada.admin;
 
+import com.fmi.nada.analytics.QuickstartJsonCredentialsSample;
 import com.fmi.nada.board.report.Report;
 import com.fmi.nada.board.report.ReportProDto;
 import com.fmi.nada.board.report.ReportService;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자 Controller
@@ -32,9 +35,41 @@ public class AdminController {
     public final DiaryService diaryService;
     public final CommentService commentService;
     public final ReportService reportService;
+    public final QuickstartJsonCredentialsSample ga;
 
     @GetMapping
-    public String adminMain() {
+    public String adminMain(Model model) {
+        try {
+            HashMap<String, Integer> events = ga.getEvent(); // 발생한 이벤트와 횟수가 들어있는 해쉬맵
+            events.put("처음 방문자", events.remove("first_visit"));
+            events.put("사이트 이용자", events.remove("user_engagement"));
+            events.remove("form_start");
+            events.remove("scroll");
+            events.put("페이지 로드", events.remove("page_view"));
+            events.remove("session_start");
+            events.remove("form_submit");
+            events.remove("view_search_results"); // 이벤트 중 사용할 이벤트만 걸러냄
+
+            HashMap<String, Integer> views = ga.getViewOfPage(); // 페이지별로 접속한 횟수가 들어있는 해쉬맵
+            views.remove("");
+            views.remove("(not set)");
+            views.remove("일기 목록");
+            views.remove("NADA 나의 다이어리");
+
+            for (Map.Entry<String, Integer> entry : views.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+            }
+
+            HashMap<String, Integer> devices = ga.getDeviceCategory(); // 접속한 기종별 횟수가 들어있는 해쉬맵
+            HashMap<String, Integer> cities = ga.getCity(); // 접속한 지역과 횟수가 들어있는 해쉬맵
+
+            model.addAttribute("events", events);
+            model.addAttribute("views", views);
+            model.addAttribute("devices", devices);
+            model.addAttribute("cities", cities);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return "admin/index";
     }
 

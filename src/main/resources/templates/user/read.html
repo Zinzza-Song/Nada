@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 마이 페이지</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>

@@ -3,8 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 관리자 메인</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
