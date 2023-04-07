@@ -265,3 +265,4 @@ HELP.md
 *.yml
 .idea
 /.idea/
+*.json

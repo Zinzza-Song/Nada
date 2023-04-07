@@ -66,7 +66,7 @@ public class AdminController {
 
             LocalDate new_localDate = localDate.minusDays(i);
             str_localDate = new_localDate.toString();
-            dateArr.add(str_localDate);
+            dateArr.add("\"" + str_localDate + "\"");
 
             LocalDate new2_localDate = new_localDate.minusDays(1);
             str2_localDate = new2_localDate.toString();
