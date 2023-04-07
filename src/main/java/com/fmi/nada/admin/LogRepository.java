@@ -20,9 +20,9 @@ public interface LogRepository extends JpaRepository<Log, Long> {
     List<Log> findAllByLogUsedServiceContainingOrderByLogDateDesc(String keyword);
 
     @Query("SELECT COUNT(l) FROM Log l WHERE CAST(l.logDate AS string) LIKE :logDate AND l.logUsedService = :logUsedService")
-    String countLogsDate(@Param("logDate") String logDate, @Param("logUsedService") String logUsedService);
+    String countUserLogsCountByDate(@Param("logDate") String logDate, @Param("logUsedService") String logUsedService);
 
     @Query("SELECT COUNT(l) FROM Log l WHERE CAST(l.logDate AS string) >= :minLogDate AND CAST(l.logDate AS string) <= :maxLogDate AND l.logUsedService = :logUsedService")
-    String countDiaryLog(@Param("minLogDate") String minLogDate, @Param("maxLogDate") String maxLogDate, @Param("logUsedService") String logUsedService);
+    String countDiaryLogCountBy7days(@Param("minLogDate") String minLogDate, @Param("maxLogDate") String maxLogDate, @Param("logUsedService") String logUsedService);
 
 }

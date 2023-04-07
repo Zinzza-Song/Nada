@@ -43,11 +43,11 @@ public class LogService {
         ));
     }
 
-    public String countLogsDate(String logData, String logUsedService) {
-        return logRepository.countLogsDate(logData, logUsedService);
+    public String countUserLogsCountByDate(String logData, String logUsedService) {
+        return logRepository.countUserLogsCountByDate(logData, logUsedService);
     }
 
-    public String countDiaryLog(String logData, String maxLogDate, String logUsedService) {
-        return logRepository.countDiaryLog(logData, maxLogDate, logUsedService);
+    public String countDiaryLogCountBy7days(String minLogDate, String maxLogDate, String logUsedService) {
+        return logRepository.countDiaryLogCountBy7days(minLogDate, maxLogDate, logUsedService);
     }
 }

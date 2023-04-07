@@ -38,12 +38,13 @@ public class AdminController {
 
     @GetMapping
     public String adminMain(Model model) {
-        // 현재 날짜 ( 지금은 DB에 저장된 날짜 임시 지정
-        // of 를 now()로 변경하면 된다.
+        // 현재 날짜 ( DB에 저장된 날짜 임시 지정 )
+        // of() 를 now()로 변경하면 된다.
         LocalDate localDate = LocalDate.of(2023, 03, 23);
         List<String> UserLogArr_add = new ArrayList<>();
         List<String> UserLogArr_del = new ArrayList<>();
         List<String> diaryCount = new ArrayList<>();
+        List<String> dateArr = new ArrayList<>();
 
         // 다이어리 7일치 데이터 가져오기
         LocalDate maxLocalDate = localDate.plusDays(1);
@@ -51,28 +52,35 @@ public class AdminController {
 
         String str_maxLocalDate = maxLocalDate.toString();
         String str_minLocalDate = minLocalDate.toString();
-        String str_localDate = localDate.toString();
+        String str_localDate = "";
+        String str2_localDate = "";
 
-        diaryCount.add(logService.countDiaryLog(str_minLocalDate, str_maxLocalDate, "일기작성"));
-        diaryCount.add(logService.countDiaryLog(str_minLocalDate, str_maxLocalDate, "일기삭제"));
+        diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기작성"));
+        diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기삭제"));
         System.out.println(diaryCount);
 
         // 회원가입, 회원탈퇴
         for (int i = 1; i < 8; i++) {
-            UserLogArr_add.add(logService.countLogsDate("%"+str_localDate+"%", "회원가입"));
-            UserLogArr_del.add(logService.countLogsDate("%"+str_localDate+"%", "회원탈퇴"));
+            UserLogArr_add.add(logService.countUserLogsCountByDate(str2_localDate, "회원가입"));
+            UserLogArr_del.add(logService.countUserLogsCountByDate(str2_localDate, "회원탈퇴"));
 
             LocalDate new_localDate = localDate.minusDays(i);
             str_localDate = new_localDate.toString();
+            dateArr.add(str_localDate);
 
-            System.out.println(str_localDate);
+            LocalDate new2_localDate = new_localDate.minusDays(1);
+            str2_localDate = new2_localDate.toString();
+            str2_localDate = "%"+str2_localDate+"%";
         }
+
         System.out.println(UserLogArr_add);
         System.out.println(UserLogArr_del);
+        System.out.println(dateArr);
 
         model.addAttribute("diaryCount", diaryCount);
         model.addAttribute("UserLogArr_add", UserLogArr_add);
         model.addAttribute("UserLogArr_del", UserLogArr_del);
+        model.addAttribute("dateArr", dateArr);
 
         return "admin/index";
     }
