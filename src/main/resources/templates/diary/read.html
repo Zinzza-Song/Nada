@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/style.css"/>
-
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 열람</title>
 </head>
 <body class="diary-write-body">
 
@@ -124,32 +124,32 @@
                   </div>
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
-<!--                <td><input type="text" class="modifyContent clickModifyBtn"></td>-->
+                <!--                <td><input type="text" class="modifyContent clickModifyBtn"></td>-->
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
                 <td class="tdBtn" th:if="${member.memberIdx == list.memberIdx}">
                   <button class="btn customModifyBtn beforeModifyBtn" data-bs-toggle="modal"
                           data-bs-target="#modify" onclick="modifyComment(this)">
-<!--                    <input type=hidden" th:text="${list.commentIdx}" class="commentIdx">-->
+                    <!--                    <input type=hidden" th:text="${list.commentIdx}" class="commentIdx">-->
                     수정
                   </button>
                   <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">
                     삭제
                   </button>
                 </td>
-<!--                <td>-->
-<!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">-->
-<!--                    완료-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--                <td th:if="${member.memberIdx == list.memberIdx}">-->
-<!--                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">-->
-<!--                    삭제-->
-<!--                  </button>-->
-<!--                </td>-->
+                <!--                <td>-->
+                <!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">-->
+                <!--                    완료-->
+                <!--                  </button>-->
+                <!--                </td>-->
+                <!--                <td>-->
+                <!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소-->
+                <!--                  </button>-->
+                <!--                </td>-->
+                <!--                <td th:if="${member.memberIdx == list.memberIdx}">-->
+                <!--                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">-->
+                <!--                    삭제-->
+                <!--                  </button>-->
+                <!--                </td>-->
                 <td>
                   <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
                        onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
@@ -442,10 +442,10 @@
   }
 
   // 댓글 수정버튼클릭
-  function modifyComment(e){
-   const commentContent = $(e).parent().siblings('.commentContent').text();
-   const commentIdx=$(e).parent().siblings('.commentIdx').text();
-   console.log(commentIdx);
+  function modifyComment(e) {
+    const commentContent = $(e).parent().siblings('.commentContent').text();
+    const commentIdx = $(e).parent().siblings('.commentIdx').text();
+    console.log(commentIdx);
 
     $('#modifyContent').val(commentContent)
     $('#commentIdx').val(commentIdx)

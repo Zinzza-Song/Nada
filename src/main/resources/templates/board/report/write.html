@@ -3,11 +3,11 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
+<head>
   <!-- 반응형 웹 미디어쿼리 선언부   -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
-
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 신고하기</title>
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeWriteForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>

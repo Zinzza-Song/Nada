@@ -4,11 +4,13 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-    <script>
-        $(document).ready(function () {
-            var win = $(window);
-            var doc = $(document);
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 로그 관리</title>
+  <script>
+    $(document).ready(function () {
+      var win = $(window);
+      var doc = $(document);
 
             // Each time the user scrolls
             win.scroll(function () {
@@ -54,17 +56,17 @@
 
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/admin/log}">
-            <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
-                <option selected value="UserID" id="UserID">ID</option>
-                <option selected value="UserService" id="UserService">서비스</option>
-            </select>
-            <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
-                   aria-label="Search">
-            <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" th:action="@{/admin/log}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="UserID" id="UserID">ID</option>
+        <option selected value="UserService" id="UserService">서비스</option>
+      </select>
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
+      <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+    </form>
+  </div>
 </nav>
 <div>
     <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
