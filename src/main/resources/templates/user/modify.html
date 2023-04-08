@@ -4,16 +4,19 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <!-- 반응형 웹 미디어쿼리 선언부   -->
-<head th:insert="~{fragment/topMenu.html::header}">
+<head>
+    <div th:replace="~{fragment/topMenu.html::header}"></div>
+    <title>NADA 회원 정보 수정</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 <div id="container">
     <!-- login Box -->
     <div class="memberInfoBackground">
-        <form th:action="@{/user/modify_pro}" th:method="put" th:object="${memberInfoBean}">
 
-            <div class="login-box" style="width: 500px;">
+
+        <div class="login-box" style="width: 500px;">
+            <form th:action="@{/user/modify_pro}" th:method="put" th:object="${memberInfoBean}">
                 <div class="BoxTitle"><span class="logo-text">회 원 정 보 수 정</span></div>
                 <div class="form-group">
                     <label>이 름</label>
@@ -22,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label>닉네임</label>
-                    <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}" required
+                    <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}"
                            class="form-control">
                     <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error"
                        th:errors="*{memberNickname}"/>
@@ -56,7 +59,7 @@
                            class="form-control">
                     <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error"
                        th:errors="*{memberAddress}"/><br>
-                    <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+                    <input type="button" class="customBtn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
                     <div id="wrap"
                          style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
@@ -72,17 +75,21 @@
                     <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
                 </div>
                 <div class="form-group">
-                    <input type="submit" id="btnModify" value="수정" class="btn btn-light">
-                    <input type="reset" id="btnModifyReset" value="취소" class="btn btn-light">
-                    <form id="delete" th:action="@{/user/delete}" th:method="delete">
-                        <input type="hidden" id="memberIdx" name="memberIdx" th:value="${memberLoginBean.memberIdx}">
-                        <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn btn-danger">회원탈퇴
-                        </button>
-                    </form>
+                    <input type="submit" id="btnModify" value="수정" class="btn customModifyBtn"
+                           style="margin-bottom: 5px">
                 </div>
+            </form>
+            <div style="display: flex">
+                <button id="btnModifyReset" th:text="취소" class="btn customBtn" style="margin-right: 5px"
+                        onclick="window.location = '/user/read'"></button>
+                <form id="delete" th:action="@{/user/delete}" th:method="delete">
+                    <input type="hidden" id="memberIdx" name="memberIdx" th:value="${memberLoginBean.memberIdx}">
+                    <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn customDeleteBtn" style="">
+                        회원탈퇴
+                    </button>
+                </form>
             </div>
-        </form>
-
+        </div>
     </div>
     <!-- login Box //-->
 </div>

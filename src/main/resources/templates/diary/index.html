@@ -3,197 +3,198 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 목록</title>
 </head>
 
 <body class=" diarymain">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
 
 <div class="idiot" style="margin-top: 50px">
-    <div th:each="diary :${allDiaryList}" class="card diaryListCard">
-        <div>
+  <div th:each="diary :${allDiaryList}" class="card diaryListCard">
+    <div>
+      <div>
+        <a class="diary_atag" th:href="@{/diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}"
+           style="text-decoration-line: none;color: black">
+          <figcaption>자세히보기</figcaption>
+          <div class="card-body diarymainbody">
             <div>
-                <a class="diary_atag" th:href="@{diary/read/{diaryIdx}(diaryIdx=${diary.diaryIdx})}"
-                   style="text-decoration-line: none;color: black">
-                    <figcaption>자세히보기</figcaption>
-                    <div class="card-body diarymainbody">
-                        <div>
-                            <p class="card-title cardListTitle" style="width: 250px" th:text="${diary.diarySubject}">
-                                제목</p>
-                            <p class="diaryDate" style="margin-bottom: 10px"
-                               th:text="${#temporals.format(diary.diaryDate, 'yyyy-MM-dd')}">날짜</p>
-                            <div>
-                                <p class="diaryKeywords" style="margin-bottom: 10px" th:text="${diary.diaryKeywords}">
-                                    키워드</p>
-                            </div>
-                            <p class="card-text cardListContent" th:text="${diary.diaryContent}"></p>
-                        </div>
-                    </div>
-                </a>
-                <div class="card-footer">
-                    <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
-                    <span th:text="${diary.diarySympathyCnt}"
-                          style="float: left; width: 10%; margin-left: 8px; margin-top: 5px; font-size: 20px;">5</span>
-                    <span style="font-size: 20px;margin-top: 5px;float: left;">조회수</span>
-                    <span style="float:left; font-size: 20px; margin-top: 5px;margin-left: 5px;"
-                          th:text="${diary.diaryCnt}"></span>
-                    <span th:text="${diary.diaryWriter}"
-                          style="float: right; margin-right: 30px; font-size: 25px;">작성자</span>
-                </div>
+              <p class="card-title cardListTitle" style="width: 250px" th:text="${diary.diarySubject}">
+                제목</p>
+              <p class="diaryDate" style="margin-bottom: 10px"
+                 th:text="${#temporals.format(diary.diaryDate, 'yyyy-MM-dd')}">날짜</p>
+              <div>
+                <p class="diaryKeywords" style="margin-bottom: 10px" th:text="${diary.diaryKeywords}">
+                  키워드</p>
+              </div>
+              <p class="card-text cardListContent" th:text="${diary.diaryContent}"></p>
             </div>
+          </div>
+        </a>
+        <div class="card-footer">
+          <div class="emoticon" style="width: 30px; height: 30px; float: left;"></div>
+          <span th:text="${diary.diarySympathyCnt}"
+                style="float: left; width: 10%; margin-left: 8px; margin-top: 5px; font-size: 20px;">5</span>
+          <span style="font-size: 20px;margin-top: 5px;float: left;">조회수</span>
+          <span style="float:left; font-size: 20px; margin-top: 5px;margin-left: 5px;"
+                th:text="${diary.diaryCnt}"></span>
+          <span th:text="${diary.diaryWriter}"
+                style="float: right; margin-right: 30px; font-size: 25px;">작성자</span>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <br>
 <!-- 다이어리 하단 페이지 -->
 <nav aria-label="Page navigation" class="page">
-    <!-- 변수값 초기화 -->
-    <ul class="pagination page-bar justify-content-center"
-        th:with="start=${T(Math).floor(allDiaryList.number / 10) * 10 + 1},
+  <!-- 변수값 초기화 -->
+  <ul class="pagination page-bar justify-content-center"
+      th:with="start=${T(Math).floor(allDiaryList.number / 10) * 10 + 1},
              last=${start + 9 < allDiaryList.totalPages ? start + 9 : allDiaryList.totalPages},
              type=${param.type},
              keyword=${param.keyword}">
-        <th:block th:if="${keyword != null}">
-            <th:block th:with="
+    <th:block th:if="${keyword != null}">
+      <th:block th:with="
                 firstPage=@{/diary(page=1,type=${type},keyword=${keyword})},
                 prevPage=@{/diary(page=${allDiaryList.number},type=${type},keyword=${keyword})},
                 nextPage=@{/diary(page=${allDiaryList.number + 2},type=${type},keyword=${keyword})},
                 lastPage=@{/diary(page=${allDiaryList.totalPages},type=${type},keyword=${keyword})}">
-                <!-- 페이지가 없는 경우 -->
-                <th:block th:if="${allDiaryList.totalPages < 1}">
-                    <button name="return-main">전체 페이지로 돌아가기</button>
-                </th:block>
-                <!-- 페이지가 있는 경우 -->
-                <th:block th:if="${allDiaryList.totalPages > 0}">
-
-                    <!-- 첫 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
-                            <span aria-hidden="true">첫 페이지로</span>
-                        </a>
-                    </li>
-                    <!-- 이전 페이지로 이동 -->
-                    <li class="page-item" th:class="${allDiaryList.first} ? 'disabled'">
-                        <a class="page-link" th:href="${allDiaryList.first} ? '#' :${prevPage}"
-                           aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
-                        th:class="${page == allDiaryList.number + 1} ? 'active'">
-                        <a class="page-link" th:text="${page}"
-                           th:href="@{/diary(page=${page},type=${type},keyword=${keyword})}"></a>
-                    </li>
-
-                    <!-- 다음 페이지로 이동 -->
-                    <li class="page-item" th:class="${allDiaryList.last} ? 'disabled'">
-                        <a class="page-link" th:href="${allDiaryList.last} ? '#' :${nextPage}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 마지막 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link" th:href="${lastPage}">
-                            <span aria-hidden="true">마지막 페이지로</span>
-                        </a>
-                    </li>
-                </th:block>
-            </th:block>
+        <!-- 페이지가 없는 경우 -->
+        <th:block th:if="${allDiaryList.totalPages < 1}">
+          <button name="return-main">전체 페이지로 돌아가기</button>
         </th:block>
+        <!-- 페이지가 있는 경우 -->
+        <th:block th:if="${allDiaryList.totalPages > 0}">
 
-        <th:block th:if="${keyword == null}">
-            <th:block th:with="
+          <!-- 첫 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+              <span aria-hidden="true">첫 페이지로</span>
+            </a>
+          </li>
+          <!-- 이전 페이지로 이동 -->
+          <li class="page-item" th:class="${allDiaryList.first} ? 'disabled'">
+            <a class="page-link" th:href="${allDiaryList.first} ? '#' :${prevPage}"
+               aria-label="Previous">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+          <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+              th:class="${page == allDiaryList.number + 1} ? 'active'">
+            <a class="page-link" th:text="${page}"
+               th:href="@{/diary(page=${page},type=${type},keyword=${keyword})}"></a>
+          </li>
+
+          <!-- 다음 페이지로 이동 -->
+          <li class="page-item" th:class="${allDiaryList.last} ? 'disabled'">
+            <a class="page-link" th:href="${allDiaryList.last} ? '#' :${nextPage}"
+               aria-label="Next">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+
+          <!-- 마지막 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link" th:href="${lastPage}">
+              <span aria-hidden="true">마지막 페이지로</span>
+            </a>
+          </li>
+        </th:block>
+      </th:block>
+    </th:block>
+
+    <th:block th:if="${keyword == null}">
+      <th:block th:with="
                 firstPage=@{/diary(page=1)},
                 prevPage=@{/diary(page=${allDiaryList.number})},
                 nextPage=@{/diary(page=${allDiaryList.number + 2})},
                 lastPage=@{/diary(page=${allDiaryList.totalPages})}">
-                <!-- 페이지가 없는 경우 -->
-                <th:block th:if="${allDiaryList.totalPages < 1}">
-                    <button name="return-main">전체 페이지로 돌아가기</button>
-                </th:block>
-                <!-- 페이지가 있는 경우 -->
-                <th:block th:if="${allDiaryList.totalPages > 0}">
-
-                    <!-- 첫 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
-                            <span aria-hidden="true">첫 페이지로</span>
-                        </a>
-                    </li>
-                    <!-- 이전 페이지로 이동 -->
-                    <li class="page-item" th:class="${allDiaryList.first} ? 'disabled'">
-                        <a class="page-link" th:href="${allDiaryList.first} ? '#' :${prevPage}"
-                           aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
-                        th:class="${page == allDiaryList.number + 1} ? 'active'">
-                        <a class="page-link" th:text="${page}"
-                           th:href="@{/diary(page=${page})}"></a>
-                    </li>
-
-                    <!-- 다음 페이지로 이동 -->
-                    <li class="page-item" th:class="${allDiaryList.last} ? 'disabled'">
-                        <a class="page-link" th:href="${allDiaryList.last} ? '#' :${nextPage}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 마지막 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link" th:href="${lastPage}">
-                            <span aria-hidden="true">마지막 페이지로</span>
-                        </a>
-                    </li>
-                </th:block>
-            </th:block>
+        <!-- 페이지가 없는 경우 -->
+        <th:block th:if="${allDiaryList.totalPages < 1}">
+          <button name="return-main">전체 페이지로 돌아가기</button>
         </th:block>
-    </ul>
+        <!-- 페이지가 있는 경우 -->
+        <th:block th:if="${allDiaryList.totalPages > 0}">
+
+          <!-- 첫 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link now-page" th:href="${firstPage}" aria-label="First">
+              <span aria-hidden="true">첫 페이지로</span>
+            </a>
+          </li>
+          <!-- 이전 페이지로 이동 -->
+          <li class="page-item" th:class="${allDiaryList.first} ? 'disabled'">
+            <a class="page-link" th:href="${allDiaryList.first} ? '#' :${prevPage}"
+               aria-label="Previous">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+          <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+              th:class="${page == allDiaryList.number + 1} ? 'active'">
+            <a class="page-link" th:text="${page}"
+               th:href="@{/diary(page=${page})}"></a>
+          </li>
+
+          <!-- 다음 페이지로 이동 -->
+          <li class="page-item" th:class="${allDiaryList.last} ? 'disabled'">
+            <a class="page-link" th:href="${allDiaryList.last} ? '#' :${nextPage}"
+               aria-label="Next">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+
+          <!-- 마지막 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link" th:href="${lastPage}">
+              <span aria-hidden="true">마지막 페이지로</span>
+            </a>
+          </li>
+        </th:block>
+      </th:block>
+    </th:block>
+  </ul>
 </nav>
 
 
 <nav class="navbar searchbar diarySearchBar">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" action="/diary" name="search-form" id="search-form">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type"
-                    style="width: 100px; margin-right: 10px;">
-                <option selected value="content" id="content">내용</option>
-                <option value="writer" id="writer">작성자</option>
-                <option value="keyword" id="keyword">키워드</option>
-            </select>
-            <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해 주세요" id="search-input"
-                   aria-label="Search" style="width: 300px;">
-            <input type="submit" class="btn btn-outline-success" id="searchBtn"
-                   style="width: 100px" th:value="검색">
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" action="/diary" name="search-form" id="search-form">
+      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example" name="type"
+              style="width: 100px; margin-right: 10px;">
+        <option selected value="content" id="content">내용</option>
+        <option value="writer" id="writer">작성자</option>
+        <option value="keyword" id="keyword">키워드</option>
+      </select>
+      <input class="form-control me-2" type="search" name="keyword" placeholder="검색어를 입력해 주세요" id="search-input"
+             aria-label="Search" style="width: 300px;">
+      <input type="submit" class="btn customBtn" id="searchBtn"
+             style="width: 100px" th:value="검색">
+    </form>
+  </div>
 </nav>
 <!--<footer th:insert="footer.html::footer"></footer>-->
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
-    $(document).ready(function () {
-        $('#searchType').change(function () {
-            $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
-        });
-
-        $("button[name='return-main']").on('click', function () {
-            location.replace('diary');
-        });
-        $('#search-form').on('submit', function (event) {
-            if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
-                event.preventDefault(); // 이벤트 취소
-            }
-        });
+  $(document).ready(function () {
+    $('#searchType').change(function () {
+      $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
     });
+
+    $("button[name='return-main']").on('click', function () {
+      location.replace('diary');
+    });
+    $('#search-form').on('submit', function (event) {
+      if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+        event.preventDefault(); // 이벤트 취소
+      }
+    });
+  });
 </script>
 </body>
 </html>

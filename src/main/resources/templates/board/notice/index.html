@@ -4,10 +4,12 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+<head>
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 공지사항</title>
 
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeMain">
@@ -15,162 +17,180 @@
 
 
 <nav class="navbar searchbar">
-    <div class="container-fluid">
-        <form action="/board/notice" class="d-flex" id="search-form" name="search-form" role="search">
-            <select aria-label=".form-select-sm example" class="form-select form-select-sm" id="searchType" name="type"
-                    style="width: 100px; margin-right: 10px;">
-                <option id="content" selected value="content">제목</option>
-            </select>
-            <input aria-label="Search" class="form-control me-2" id="search-input" name="keyword"
-                   placeholder="검색어를 입력해 주세요"
-                   style="width: 300px;" type="search">
-            <input class="btn btn-outline-success" id="searchBtn" style="width: 100px"
-                   th:value="검색" type="submit">
-        </form>
-        <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/notice/write}"
-              th:method="get">
-            <button class="btn btn-outline-primary" style="width: 100px" type="submit">작성</button>
+  <div class="container-fluid">
+    <form action="/board/notice" class="d-flex" id="search-form" name="search-form" role="search">
+      <select aria-label=".form-select-sm example" class="form-select form-select-sm" id="searchType" name="type"
+              style="width: 100px; margin-right: 10px;">
+        <option id="subject" value="subject">제목</option>
+        <option id="content" value="content">내용</option>
+        <option id="date" value="date">날짜</option>
+      </select>
+      <input aria-label="Search" class="form-control me-2" id="search-input" name="keyword"
+             placeholder="검색어를 입력해 주세요"
+             style="width: 300px;" type="search">
+      <input class="btn customBtn" id="searchBtn" style="width: 100px"
+             th:value="검색" type="submit">
+    </form>
+    <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:action="@{/board/notice/write}"
+          th:method="get">
+      <button class="btn customBtn" style="width: 100px" type="submit">작성</button>
 
-        </form>
-    </div>
+    </form>
+  </div>
 </nav>
 
 <table class="table noticeTable">
-    <thead class="noticeTableHead">
-    <tr>
-        <th scope="col">NO</th>
-        <th class="noticeTableHeadSubject" scope="col">공지사항</th>
-        <th class="noticeTableHeadDate" scope="col">날짜</th>
-        <th scope="col">조회수</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider noticeTableBody" th:each="notice, index: ${noticeList}">
-    <tr>
-        <th scope="row" th:text="${index.index + 1}"></th>
-        <td class="noticeTableBodySubject">
-            <a class="noticeIndexSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}"
-               th:text="${notice.noticeSubject}">공지사항
-                제목</a>
-        </td>
-        <td class="noticeTableBodyDate" th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd')}">날짜</td>
-        <td th:text="${notice.noticeViews}">24</td>
-    </tr>
+  <thead class="noticeTableHead">
+  <tr>
+    <th scope="col">NO</th>
+    <th class="noticeTableHeadSubject" scope="col">공지사항</th>
+    <th class="noticeTableHeadDate" scope="col">날짜</th>
+    <th scope="col">조회수</th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider noticeTableBody" th:each="notice, index: ${noticeList}">
+  <tr>
+    <th scope="row" th:text="${index.index + 1}"></th>
+    <td class="noticeTableBodySubject">
+      <a class="noticeIndexSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}"
+         th:text="${notice.noticeSubject}">공지사항
+        제목</a>
+    </td>
+    <td class="noticeTableBodyDate" th:text="${#temporals.format(notice.noticeDate, 'yyyy-MM-dd')}">날짜</td>
+    <td th:text="${notice.noticeViews}">24</td>
+  </tr>
 
-    </tbody>
+  </tbody>
 </table>
 
 <nav aria-label="Page navigation" class="page">
-    <!-- 변수값 초기화 -->
-    <ul class="pagination page-bar justify-content-center"
-        th:with="start=${T(Math).floor(noticeList.number / 10) * 10 + 1},
+  <!-- 변수값 초기화 -->
+  <ul class="pagination page-bar justify-content-center"
+      th:with="start=${T(Math).floor(noticeList.number / 10) * 10 + 1},
              last=${start + 9 < noticeList.totalPages ? start + 9 : noticeList.totalPages},
              type=${param.type},
              keyword=${param.keyword}">
-        <th:block th:if="${keyword != null}">
-            <th:block th:with="
+    <th:block th:if="${keyword != null}">
+      <th:block th:with="
                 firstPage=@{/notice(page=1,type=${type},keyword=${keyword})},
                 prevPage=@{/notice(page=${noticeList.number},type=${type},keyword=${keyword})},
                 nextPage=@{/notice(page=${noticeList.number + 2},type=${type},keyword=${keyword})},
                 lastPage=@{/notice(page=${noticeList.totalPages},type=${type},keyword=${keyword})}">
-                <!-- 페이지가 없는 경우 -->
-                <th:block th:if="${noticeList.totalPages < 1}">
-                    <button name="return-main">전체 페이지로 돌아가기</button>
-                </th:block>
-                <!-- 페이지가 있는 경우 -->
-                <th:block th:if="${noticeList.totalPages > 0}">
-
-                    <!-- 첫 페이지로 이동 -->
-                    <li class="page-item">
-                        <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
-                            <span aria-hidden="true">첫 페이지로</span>
-                        </a>
-                    </li>
-                    <!-- 이전 페이지로 이동 -->
-                    <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link"
-                           th:href="${noticeList.first} ? '#' :${prevPage}">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
-                        th:each="page: ${#numbers.sequence(start, last)}">
-                        <a class="page-link" th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"
-                           th:text="${page}"></a>
-                    </li>
-
-                    <!-- 다음 페이지로 이동 -->
-                    <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
-                        <a aria-label="Next" class="page-link"
-                           th:href="${noticeList.last} ? '#' :${nextPage}">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 마지막 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link" th:href="${lastPage}">
-                            <span aria-hidden="true">마지막 페이지로</span>
-                        </a>
-                    </li>
-                </th:block>
-            </th:block>
+        <!-- 페이지가 없는 경우 -->
+        <th:block th:if="${noticeList.totalPages < 1}">
+          <button name="return-main">전체 페이지로 돌아가기</button>
         </th:block>
+        <!-- 페이지가 있는 경우 -->
+        <th:block th:if="${noticeList.totalPages > 0}">
 
-        <th:block th:if="${keyword == null}">
-            <th:block th:with="
+          <!-- 첫 페이지로 이동 -->
+          <li class="page-item">
+            <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
+              <span aria-hidden="true">첫 페이지로</span>
+            </a>
+          </li>
+          <!-- 이전 페이지로 이동 -->
+          <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
+            <a aria-label="Previous" class="page-link"
+               th:href="${noticeList.first} ? '#' :${prevPage}">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+          <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
+              th:each="page: ${#numbers.sequence(start, last)}">
+            <a class="page-link" th:href="@{/notice(page=${page},type=${type},keyword=${keyword})}"
+               th:text="${page}"></a>
+          </li>
+
+          <!-- 다음 페이지로 이동 -->
+          <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
+            <a aria-label="Next" class="page-link"
+               th:href="${noticeList.last} ? '#' :${nextPage}">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+
+          <!-- 마지막 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link" th:href="${lastPage}">
+              <span aria-hidden="true">마지막 페이지로</span>
+            </a>
+          </li>
+        </th:block>
+      </th:block>
+    </th:block>
+
+    <th:block th:if="${keyword == null}">
+      <th:block th:with="
                 firstPage=@{/board/notice(page=1)},
                 prevPage=@{/board/notice(page=${noticeList.number})},
                 nextPage=@{/board/notice(page=${noticeList.number + 2})},
                 lastPage=@{/board/notice(page=${noticeList.totalPages})}">
-                <!-- 페이지가 없는 경우 -->
-                <th:block th:if="${noticeList.totalPages < 1}">
-                    <button name="return-main">전체 페이지로 돌아가기</button>
-                </th:block>
-                <!-- 페이지가 있는 경우 -->
-                <th:block th:if="${noticeList.totalPages > 0}">
-
-                    <!-- 첫 페이지로 이동 -->
-                    <li class="page-item">
-                        <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
-                            <span aria-hidden="true">첫 페이지로</span>
-                        </a>
-                    </li>
-                    <!-- 이전 페이지로 이동 -->
-                    <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link"
-                           th:href="${noticeList.first} ? '#' :${prevPage}">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 하단에 보여지는 페이지 1,2,3,4... -->
-                    <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
-                        th:each="page: ${#numbers.sequence(start, last)}">
-                        <a class="page-link" th:href="@{notice(page=${page})}"
-                           th:text="${page}"></a>
-                    </li>
-
-                    <!-- 다음 페이지로 이동 -->
-                    <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
-                        <a aria-label="Next" class="page-link"
-                           th:href="${noticeList.last} ? '#' :${nextPage}">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-
-                    <!-- 마지막 페이지로 이동 -->
-                    <li class="page-item">
-                        <a class="page-link" th:href="${lastPage}">
-                            <span aria-hidden="true">마지막 페이지로</span>
-                        </a>
-                    </li>
-                </th:block>
-            </th:block>
+        <!-- 페이지가 없는 경우 -->
+        <th:block th:if="${noticeList.totalPages < 1}">
+          <button name="return-main">전체 페이지로 돌아가기</button>
         </th:block>
-    </ul>
+        <!-- 페이지가 있는 경우 -->
+        <th:block th:if="${noticeList.totalPages > 0}">
+
+          <!-- 첫 페이지로 이동 -->
+          <li class="page-item">
+            <a aria-label="First" class="page-link now-page" th:href="${firstPage}">
+              <span aria-hidden="true">첫 페이지로</span>
+            </a>
+          </li>
+          <!-- 이전 페이지로 이동 -->
+          <li class="page-item" th:class="${noticeList.first} ? 'disabled'">
+            <a aria-label="Previous" class="page-link"
+               th:href="${noticeList.first} ? '#' :${prevPage}">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <!-- 하단에 보여지는 페이지 1,2,3,4... -->
+          <li class="page-item" th:class="${page == noticeList.number + 1} ? 'active'"
+              th:each="page: ${#numbers.sequence(start, last)}">
+            <a class="page-link" th:href="@{notice(page=${page})}"
+               th:text="${page}"></a>
+          </li>
+
+          <!-- 다음 페이지로 이동 -->
+          <li class="page-item" th:class="${noticeList.last} ? 'disabled'">
+            <a aria-label="Next" class="page-link"
+               th:href="${noticeList.last} ? '#' :${nextPage}">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+
+          <!-- 마지막 페이지로 이동 -->
+          <li class="page-item">
+            <a class="page-link" th:href="${lastPage}">
+              <span aria-hidden="true">마지막 페이지로</span>
+            </a>
+          </li>
+        </th:block>
+      </th:block>
+    </th:block>
+  </ul>
 </nav>
 <footer th:replace="~{fragment/footer.html::footer}"></footer>
+<script>
+  $(document).ready(function () {
+    $('#searchType').change(function () {
+      $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+    });
+
+    $("button[name='return-main']").on('click', function () {
+      location.replace('/board/notice?page=1');
+    });
+    $('#search-form').on('submit', function (event) {
+      if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+        event.preventDefault(); // 이벤트 취소
+      }
+    });
+  });
+</script>
 </body>
 </html>

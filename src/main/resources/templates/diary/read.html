@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/style.css"/>
-
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 열람</title>
 </head>
 <body class="diary-write-body">
 
@@ -14,7 +14,9 @@
 <div class="container diary-container ">
 
   <div class="card-header BoxTitle text-center">
-    다 이 어 리 <span th:text="${readDiaryBean.diaryCnt}">0</span>
+    <span style="padding-left: 200px">다 이 어 리</span>
+    <span th:text="${readDiaryBean.diaryCnt}" style="float: right">0</span>
+    <span style="float: right">조회수:  </span>
   </div>
 
   <div class="diary-write row align-items-start col">
@@ -38,7 +40,7 @@
           <button class="btn card-title diaryWriter " data-bs-toggle="dropdown" id="dropdownMenuReference"
                   data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false"
                   style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
-          <ul class="dropdown-menu " style="" aria-labelledby="dropdownMenuReference">
+          <ul class="dropdown-menu " id="dropdownSameWriter" style="" aria-labelledby="dropdownMenuReference">
             <li class="dropdown-item" id="addFriend">친구추가</li>
             <li hidden="hidden" class="memberIdx" th:value="${readDiaryBean.memberIdx}">
             <li class="dropdown-item addBlock" onclick="addBlock(this)"
@@ -63,14 +65,9 @@
         <div class="form-group keywordSubject">
 
           <p class="keywordP">키워드</p>
-          <div class="keywords">
-            <!--                        <p>-->
-            <th:block th:each="keyword : ${readDiaryBean.diaryKeywords }">
-              <p class="keywords_item" th:text="${keyword}"></p>
-            </th:block>
-            <!--                        </p>-->
-
-          </div>
+          <div class="keywords"></div>
+          <input type="hidden" th:value="${readDiaryBean.diaryKeywords}" id="diaryKeywords"
+                 name="diaryKeywords"/>
           <!-- 다이어리 제목부터 키워드까지 -->
         </div>
       </div>
@@ -97,13 +94,13 @@
                placeholder="댓글을 작성해주세요." aria-label="Recipient's username"
                aria-describedby="button-addon2">
         <input type="hidden" id="diaryIdx" th:value="${readDiaryBean.diaryIdx}">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+        <button class="btn customBtn" type="button" id="button-addon2"
                 onclick="registerComment()">작성
         </button>
       </div>
       <div class="card-body commentList"
            style="width: 750px;height: 500px;margin-bottom: 10px;margin-left: 30px;overflow: scroll;overflow-x:hidden;">
-        <table class="table" style="width: 650px;height: 300px;margin-bottom: 10px;margin-left: 55px;">
+        <table class="table" style="width: 650px;margin-bottom: 10px;margin-left: 55px;">
           <div id="commentDiv">
             <th:block th:if="${commentList != null}">
               <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
@@ -115,7 +112,7 @@
                     <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
-                    <ul class="dropdown-menu" style="">
+                    <ul class="dropdown-menu" id="dropdownSameCommentWriter" style="">
                       <li class="dropdown-item" onclick="addFriend(this)">친구추가</li>
                       <li hidden="hidden" class="memberIdx" name="memberIdx"
                           th:text="${list.memberIdx}">
@@ -129,7 +126,32 @@
                   </div>
                 </td>
                 <td class="commentContent" th:text="${list.commentContent}">댓글 내용</td>
+                <!--                <td><input type="text" class="modifyContent clickModifyBtn"></td>-->
                 <td th:text="${#temporals.format(list.commentDate, 'yyyy-MM-dd')}">작성 날짜</td>
+                <td class="tdBtn" th:if="${member.memberIdx == list.memberIdx}">
+                  <button class="btn customModifyBtn beforeModifyBtn" data-bs-toggle="modal"
+                          data-bs-target="#modify" onclick="modifyComment(this)">
+                    <!--                    <input type=hidden" th:text="${list.commentIdx}" class="commentIdx">-->
+                    수정
+                  </button>
+                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">
+                    삭제
+                  </button>
+                </td>
+                <!--                <td>-->
+                <!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="modifyProComment(this)">-->
+                <!--                    완료-->
+                <!--                  </button>-->
+                <!--                </td>-->
+                <!--                <td>-->
+                <!--                  <button class="btn customModifyBtn clickModifyBtn" onclick="ResetComment(this)">취소-->
+                <!--                  </button>-->
+                <!--                </td>-->
+                <!--                <td th:if="${member.memberIdx == list.memberIdx}">-->
+                <!--                  <button class="btn customDeleteBtn beforeModifyBtn" onclick="deleteComment(this)">-->
+                <!--                    삭제-->
+                <!--                  </button>-->
+                <!--                </td>-->
                 <td>
                   <img th:if="${commentIsLikes.get(listStat.index)}" class="btn  btn-primary_readImg"
                        onclick="likeOff(this)" th:src="@{/images/likeOnImg.png}">
@@ -145,19 +167,20 @@
         </table>
       </div>
       <div class="btnWrap" style="float: right">
-        <th:block th:if="${member.memberIdx == readDiaryBean.memberIdx}">
-          <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="margin-top: 20px">
-            <input type="hidden" id="deleteDiaryIdx" name="deleteDiaryIdx" th:value="${readDiaryBean.diaryIdx}">
-            <button class="btn customBtn" id="deleteBtn" type="submit">
-              삭제
-            </button>
-          </form>
-          <button class="btn customBtn">
-            <a style="color: white"
-               th:href="@{/diary/modify(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
+        <!--        <th:block th:if="${member.memberIdx == readDiaryBean.memberIdx}">-->
+        <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="">
+          <input type="hidden" id="deleteDiaryIdx" name="deleteDiaryIdx" th:value="${readDiaryBean.diaryIdx}">
+          <button class="btn customDeleteBtn writerBtn" id="deleteBtn" type="submit">
+            삭제
           </button>
-        </th:block>
-        <a class="btn btn-dark listBtn" th:href="@{/diary(page=1)}">목록</a>
+        </form>
+        <button class="btn customModifyBtn writerBtn">
+          <a style="color: white"
+             th:href="@{/diary/modify(diaryIdx=${readDiaryBean.diaryIdx},page=1)}">수정</a>
+        </button>
+        <!--        </th:block>-->
+        <a class="btn customBtn listBtn" th:href="@{/diary(page=1)}">목록</a>
+
       </div>
     </div>
   </div>
@@ -192,8 +215,8 @@
         </div>
         <input type="input" id="blockMemberIdx" name="blockMemberIdx" value="">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button type="button" onclick="postBlock(this)" class="btn btn-primary">작성완료</button>
+          <button type="button" class="btn customBtn data-bs-dismiss=" modal>취소</button>
+          <button type="button" onclick="postBlock(this)" class="btn customBtn">작성완료</button>
         </div>
       </div>
     </div>
@@ -226,16 +249,50 @@
         </div>
         <input type="hidden" class="blockMemberIdx" id="commentBlockMemberIdx" value="">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button type="button" onclick="postComBlock()" class="btn btn-primary">작성완료</button>
+          <button type="button" class="btn customBtn" data-bs-dismiss="modal">취소</button>
+          <button type="button" onclick="postComBlock()" class="btn customBtn">작성완료</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- 댓글 수정부분 form-->
+<div class="modal fade" id="modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 exampleModalLabel">댓글 수정</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="modifyContent" class="col-form-label">댓글 내용</label>
+          <textarea class="form-control modifyContent" id="modifyContent"
+                    style="resize: none; height: 150px;"></textarea>
+        </div>
+        <input type="hidden" class="commentIdx" id="commentIdx" value="">
+        <div class="modal-footer">
+          <button type="button" class="btn customBtn" data-bs-dismiss="modal">취소</button>
+          <button type="button" onclick="modifyProComment(this)" class="btn customBtn">작성완료</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
+  const memberIdx = $('.idx').val();
+
+  if (writerIdx == memberIdx) {
+    $('.writerBtn').css('display', 'inline-block');
+    $('.commentBtn').css('display', 'inline-block');
+    $('#dropdownSameWriter').css('display', 'none');
+    $('#dropdownSameCommentWriter').css('display', 'none');
+  }
 
   // $('.blockMemberNickname').attr('value',commentWriter)
   function reportBtn() {
@@ -247,6 +304,7 @@
   }
 
   $(document).ready(function () {
+
     $('#addFriend').click(function () {
 
       const friendsDto = {
@@ -267,7 +325,25 @@
           alert("차단 대상자 입니다.");
       });
     });
+
+    createKeywords();
   });
+
+  function createKeywords() {
+    const keywords = $('#diaryKeywords').val();
+    let arrKeywords = keywords.split(",");
+
+    let keywordInnerHTML = "";
+    let i = 0;
+    for (i; i < arrKeywords.length; ++i) {
+      keywordInnerHTML += `<div class="item">
+    <span class="keyword-item">${arrKeywords[i]}</span>
+  </div>`;
+    }
+
+    const diaryKeywordsEl = document.querySelector('.keywords');
+    diaryKeywordsEl.innerHTML = keywordInnerHTML;
+  }
 
   function addFriend(e) {
     console.log("친구 추가 댓글")
@@ -347,6 +423,7 @@
     });
   }
 
+  //댓글 작성
   function registerComment() {
     // 입력된 댓글 데이터를 가져옴
     var diaryIdx = $("#diaryIdx").val();
@@ -368,6 +445,72 @@
         });
   }
 
+  // 댓글 수정버튼클릭
+  function modifyComment(e) {
+    const commentContent = $(e).parent().siblings('.commentContent').text();
+    const commentIdx = $(e).parent().siblings('.commentIdx').text();
+    console.log(commentIdx);
+
+    $('#modifyContent').val(commentContent)
+    $('#commentIdx').val(commentIdx)
+  }
+
+  // 댓글 수정 버튼 클릭
+  // function modifyComment(e) {
+  //   $(e).parent().siblings().children(`.beforeModifyBtn`).css('display', 'none');
+  //   $(e).parent().siblings().children('.clickModifyBtn').css('display', 'inline-block');
+  //   $(e).css('display', 'none');
+  // }
+
+  // 댓글 수정버튼 클릭 이후 취소
+  // function ResetComment(e) {
+  //   $(e).parent().siblings().children('.beforeModifyBtn').css('display', 'inline-block');
+  //   $(e).parent().siblings().children(`.clickModifyBtn`).css('display', 'none');
+  //   $(e).css('display', 'none');
+  // }
+
+  // 댓글 수정버튼 클릭 이후 완료
+  function modifyProComment(e) {
+    var diaryIdx = $("#diaryIdx").val();
+    var commentIdx = $(e).parent().siblings('#commentIdx').val();
+    var commentModifyInput = $(e).parent().siblings().children('.modifyContent').val();
+    console.log(diaryIdx)
+    console.log(commentIdx)
+    console.log(commentModifyInput)
+
+    // Ajax 요청
+    $.ajax({
+      url: "/diary/comment_modify",
+      type: "POST",
+      data: {diaryIdx: diaryIdx, commentIdx: commentIdx, commentModifyInput: commentModifyInput},
+      dataType: "html"
+    }).done(function (fragment) {
+      // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
+      $(`.table`).html(fragment);
+      console.log('댓글 수정 완료')
+      swal('댓글이 수정되었습니다.')
+      $('#modify').modal('hide');
+    });
+  }
+
+  // 댓글 삭제
+  function deleteComment(e) {
+    var diaryIdx = $("#diaryIdx").val();
+    var commentIdx = $(e).parent().siblings('.commentIdx').text();
+    console.log(diaryIdx)
+    console.log(commentIdx)
+    // Ajax 요청
+    $.ajax({
+      url: "/diary/comment_delete",
+      type: "POST",
+      data: {diaryIdx: diaryIdx, commentIdx: commentIdx},
+      dataType: "html"
+    }).done(function (fragment) {
+      // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
+      $(`.table`).html(fragment);
+    });
+  }
+
   //   diary 공감버튼 function
   function sympathyOn() {
     console.log('on');
@@ -382,22 +525,24 @@
       data: diarySympathyDto
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
+      createKeywords();
     });
   }
 
   function sympathyOff() {
     console.log('off');
 
-    const diayrSympathyDto = {
+    const diarySympathyDto = {
       "diaryIdx": $("#diaryIdx").val()
     }
 
     $.ajax({
       url: "/diary/sympathy",
       type: "DELETE",
-      data: diayrSympathyDto
+      data: diarySympathyDto
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
+      createKeywords();
     });
   }
 
@@ -416,6 +561,8 @@
     })).done(function (fragment) {
       $(`.table`).html(fragment);
     });
+
+    createKeywords();
   }
 
   function likeOff(e) {
@@ -434,6 +581,8 @@
     })).done(function (fragment) {
       $(`.table`).html(fragment);
     });
+
+    createKeywords();
   }
 
   //삭제버튼

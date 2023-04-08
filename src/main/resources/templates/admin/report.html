@@ -4,38 +4,23 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-    <script>
-        $(document).ready(function () {
-            var win = $(window);
-            var doc = $(document);
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 신고 관리</title>
+  <script>
+    $(document).ready(function () {
 
-            // Each time the user scrolls
-            win.scroll(function () {
-                // Vertical end reached?
-                if (doc.height() - win.height() == win.scrollTop()) {
-                    // New row
-                    var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+      $('#searchType').change(function () {
+        $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+      });
 
-                    // Current number of columns to create
-                    var n_cols = $('.logMoreData tr:first-child th').length;
-                    for (var i = 0; i < n_cols; ++i)
-                        tr.append($('<td />'));
-                }
-
-                // Horizontal end reached?
-                if (doc.width() - win.width() == win.scrollLeft()) {
-                    // New column in the heading row
-                    $('.logMoreData tr:first-child').append($('<th />'));
-
-                    // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function () {
-                        $(this).append($('<td />'));
-                    });
-                }
-            });
-        });
-    </script>
+      $('#search-form').on('submit', function (event) {
+        if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+          event.preventDefault(); // 이벤트 취소
+        }
+      });
+    });
+  </script>
 
 
 </head>
@@ -44,35 +29,45 @@
 
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-                <option selected value="reportDate" id="reportDate">날짜</option>
-            </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" th:action="@{/admin/report}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="reportCategory" id="reportCategory">사유</option>
+        <option selected value="reportSubject" id="reportSubject">제목</option>
+        <option selected value="reportReportedMember" id="reportReportedMember">대상자</option>
+      </select>
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
+      <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+    </form>
+  </div>
 </nav>
+<div>
+  <button class="customBtn" onclick="location.href='/admin'">관리자 메인</button>
+  <button class="customBtn" onclick="location.href='/admin/log'">서비스 로그</button>
+  <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
+  <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
+  <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
+</div>
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">신고 사유</th>
-        <th scope="col">신고 제목</th>
-        <th scope="col">신고 대상자</th>
-        <th scope="col">날짜</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider logMoreData">
-    <tr th:each="report:${allReportList }">
-        <th scope="row" th:text="${report.reportCategory}">신고사유</th>
-        <th scope="row"><a th:text="${report.reportSubject}"
-                           th:href="@{/board/report/read/{reportIdx}(reportIdx=${report.reportIdx})}">신고 제목</a></th>
-        <th scope="row" th:text="${report.reportReportedMember}">신고 대상자</th>
-        <th scope="row" th:text="${#temporals.format(report.reportDate  , 'yyyy-MM-dd')}">날짜</th>
-    </tr>
+  <thead>
+  <tr>
+    <th scope="col">신고 사유</th>
+    <th scope="col">신고 제목</th>
+    <th scope="col">신고 대상자</th>
+    <th scope="col">날짜</th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider logMoreData">
+  <tr th:each="report:${allReportList }">
+    <th scope="row" th:text="${report.reportCategory}">신고사유</th>
+    <th scope="row"><a th:text="${report.reportSubject}"
+                       th:href="@{/board/report/read(reportIdx=${report.reportIdx})}">신고 제목</a></th>
+    <th scope="row" th:text="${report.reportReportedMember}">신고 대상자</th>
+    <th scope="row" th:text="${#temporals.format(report.reportDate  , 'yyyy-MM-dd')}">날짜</th>
+  </tr>
 
-    </tbody>
+  </tbody>
 </table>
 
 <!-- End Example Code -->

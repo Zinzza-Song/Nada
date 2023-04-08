@@ -2,17 +2,15 @@ package com.fmi.nada.board.qna;
 
 
 import com.fmi.nada.user.Member;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +20,6 @@ import org.springframework.web.util.UriUtils;
 
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * QnA Controller
@@ -49,6 +46,8 @@ public class QnaController {
             li = qnaService.findAllByQnaSubjectContaining(keyword, pageable);
         } else if (type.equals("qnaWriter")) {
             li = qnaService.findAllByQnaWriterContaining(keyword, pageable);
+        } else if (type.equals("qnaContent")) {
+            li = qnaService.findAllByQnaContentContaining(keyword, pageable);
         }
         model.addAttribute("allQnaList", li);
         model.addAttribute("type", type);
@@ -145,7 +144,7 @@ public class QnaController {
     public String delete(@RequestParam("qnaIdx") Long qnaIdx
     ) {
         qnaService.deleteQna(qnaIdx);
-        return "redirect:/board/qna";
+        return "redirect:/board/QNA";
     }
 
 }

@@ -102,6 +102,7 @@ public class DiaryService {
 
     public void deleteDiary(Long diaryIdx) {
         diaryRepository.deleteById(diaryIdx);
+        sympathyRepository.deleteByDiaryIdx(diaryIdx);
     }
 
     // 다이어리 검색 페이징
@@ -190,6 +191,14 @@ public class DiaryService {
     public Diary viewAdd(Diary diary) {
         diary.setDiaryCnt(diary.getDiaryCnt() + 1L);
         return diaryRepository.save(diary);
+    }
+
+    public List<Diary> findDiarySubjectList(String keyword) {
+        return diaryRepository.findDiarySubjectList(keyword);
+    }
+
+    public List<Diary> findDiaryWriterList(String keyword) {
+        return diaryRepository.findDiaryWriterList(keyword);
     }
 
 }

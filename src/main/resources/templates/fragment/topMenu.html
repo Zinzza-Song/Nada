@@ -5,88 +5,100 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:fragment="header">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <!-- <title>Bootstrap Example</title> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- 카카오 맵 API 사용을 위한 스크립트 - API 키 존재 -->
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec&libraries=services"></script>
-    <title>NADA 나의 다이어리</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JYGXY4FHNP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-JYGXY4FHNP');
+  </script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+  <!-- <title>Bootstrap Example</title> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- 카카오 맵 API 사용을 위한 스크립트 - API 키 존재 -->
+  <script type="text/javascript"
+          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec0f249917e337c3f1f93d443a77afec&libraries=services"></script>
+  <!--  <title>NADA 나의 다이어리</title>-->
 </head>
 <body>
 <!-- Example Code -->
 <div th:fragment="nav">
-    <nav class="navbar navbar-expand-lg top-nav">
-        <div class="container-fluid top-menu">
-            <div class="nav-logo">
-                <a class="navbar-brand" th:href="@{/}">
-                    <img class="btn" th:src="@{/images/nada_logo.png}" style="width:130px; height:120px;"></a>
+  <nav class="navbar navbar-expand-lg top-nav">
+    <div class="container-fluid top-menu">
+      <div class="nav-logo">
+        <a class="navbar-brand" th:href="@{/}">
+          <img class="btn" th:src="@{/images/nada_logo.png}" style="width:130px; height:120px;"></a>
+      </div>
+      <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-5 mb-lg-0">
+          <li class="nav-item dropdown col-md-7">
+            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              감성일기
+            </a>
+            <ul class="dropdown-menu dropShow">
+              <li><a class="dropdown-item"
+                     th:href="@{/diary/write}">일기 작성</a></li>
+              <li><a class="dropdown-item"
+                     th:href="@{/diary?page=1}">일기 게시판</a></li>
+            </ul>
+          </li>
+          <li class="nav-item col-md-7">
+            <a class="nav-link "
+               th:href="@{/board/notice?page=1}">공지사항</a>
+          </li>
+          <li class="nav-item  col-md-7">
+            <a class="nav-link "
+               th:href="@{/board/QNA?page=1}" style="width: 100px;">Q & A</a>
+          </li>
+          <li class="nav-item col-md-7">
+            <a class="nav-link "
+               th:href="@{/board/report?page=1}">신고 게시판</a>
+          </li>
+          <li class="nav-item col-md-7">
+            <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/user/read}">MyPage</a>
+            <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">adminPage</a>
+          </li>
+          <li class="nav-item col-md-10">
+            <div class="join_login" sec:authorize="!isAuthenticated()">
+              <a class="nav-link userLoginBox"
+                 th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
+                                                     th:href="@{/user/login}">로그인</a>
             </div>
-            <button class="navbar-toggler toggleBtn" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-5 mb-lg-0">
-                    <li class="nav-item dropdown col-md-7">
-                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            감성일기
-                        </a>
-                        <ul class="dropdown-menu dropShow">
-                            <li><a class="dropdown-item"
-                                   th:href="@{/diary/write}">일기 작성</a></li>
-                            <li><a class="dropdown-item"
-                                   th:href="@{/diary?page=1}">일기 게시판</a></li>
-                        </ul>
-                    </li>
 
-                    <li class="nav-item col-md-7">
-                        <a class="nav-link "
-                           th:href="@{/board/notice?page=1}">공지사항</a>
-                    </li>
-                    <li class="nav-item  col-md-7">
-                        <a class="nav-link "
-                           th:href="@{/board/QNA?page=1}">Q&A</a>
-                    </li>
-                    <li class="nav-item col-md-7">
-                        <a class="nav-link "
-                           th:href="@{/board/report?page=1}">신고 게시판</a>
-                    </li>
-                    <li class="nav-item col-md-7">
-                        <a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:href="@{/user/read}">MyPage</a>
-                        <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">adminPage</a>
-                    </li>
-                    <li class="nav-item col-md-10">
-                        <div class="join_login" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link userLoginBox"
-                               th:href="@{/user/join}">회원가입</a>/<a class="nav-link userLoginBox"
-                                                                   th:href="@{/user/login}">로그인</a>
-                        </div>
+            <span id="nickname" sec:authorize="isAuthenticated()"
+                  th:text="${#authentication.name}">(닉네임)</span>
+            <form th:action="@{/logout}" method="post">
+              <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
+            </form>
 
-                        <span id="nickname" sec:authorize="isAuthenticated()"
-                              th:text="${#authentication.name}">(닉네임)</span>
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
-                        </form>
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 </body>
 </html>

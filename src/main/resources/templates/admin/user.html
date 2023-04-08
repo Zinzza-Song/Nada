@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-
-
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 유저 관리</title>
 </head>
 <body class="p-3 m-0 border-0 bd-example">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -13,17 +13,25 @@
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
   <div class="container-fluid">
-    <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-      <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-        <option selected value="username" id="username">회원ID</option>
-        <option value="name" id="name">회원이름</option>
+    <form class="d-flex" role="search" th:action="@{/admin/user}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+        <option selected value="nickname" id="username">닉네임</option>
+        <option value="name" id="name">이름</option>
         <option value="birth" id="birth">생년월일</option>
       </select>
-      <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-      <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
+      <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>
 </nav>
+<div>
+  <button class="customBtn" onclick="location.href='/admin'">관리자 메인</button>
+  <button class="customBtn" onclick="location.href='/admin/log'">서비스 로그</button>
+  <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
+  <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
+  <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
+</div>
 <table class="table">
   <thead>
   <tr>
@@ -47,7 +55,7 @@
     <th scope="row" th:text="${member.memberAddress}">주소</th>
     <th scope="row" th:text="${member.memberPhone }">연락처</th>
     <th scope="row">
-      <button type="button" class="btn btn-primary" onclick="kickMember(this)">탈퇴</button>
+      <button type="button" class="btn customDeleteBtn" onclick="kickMember(this)">탈퇴</button>
     </th>
   </tr>
 
@@ -55,36 +63,6 @@
 </table>
 <!-- End Example Code -->
 <script>
-  $(document).ready(function () {
-    var win = $(window);
-    var doc = $(document);
-
-    // Each time the user scrolls
-    win.scroll(function () {
-      // Vertical end reached?
-      if (doc.height() - win.height() == win.scrollTop()) {
-        // New row
-        var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
-
-        // Current number of columns to create
-        var n_cols = $('.logMoreData tr:first-child th').length;
-        for (var i = 0; i < n_cols; ++i)
-          tr.append($('<td />'));
-      }
-
-      // Horizontal end reached?
-      if (doc.width() - win.width() == win.scrollLeft()) {
-        // New column in the heading row
-        $('.logMoreData tr:first-child').append($('<th />'));
-
-        // New column in each row
-        $('.logMoreData tr:not(:first-child)').each(function () {
-          $(this).append($('<td />'));
-        });
-      }
-    });
-  });
-
   function kickMember(e) {
     const idx = $(e).parent().siblings('.idx').text();
 
@@ -97,6 +75,18 @@
       }
     })
   }
+
+  $(document).ready(function () {
+    $('#searchType').change(function () {
+      $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+    });
+
+    $('#search-form').on('submit', function (event) {
+      if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+        event.preventDefault(); // 이벤트 취소
+      }
+    });
+  })
 </script>
 </body>
 </html>

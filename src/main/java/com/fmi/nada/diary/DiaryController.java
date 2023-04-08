@@ -119,7 +119,7 @@ public class DiaryController {
         analyzedService.resisterAnalyze(
                 diary.getDiaryIdx(),
                 diary.getDiaryAnalyze(),
-                Integer.parseInt(diaryDTO.getAnalyzeScore()));
+                diaryDTO.getAnalyzeScore());
 
         insertKeywords(diaryDTO);
 
@@ -144,9 +144,47 @@ public class DiaryController {
         commentService.resisterComment(comment);
 
         getCommentList(diaryIdx, model, member);
+        model.addAttribute("member", member);
 
         // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
         // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
+        return "/diary/read :: tbody";
+    }
+
+    @RequestMapping(value = "/comment_modify", method = RequestMethod.POST)
+    public String commentModify(@RequestParam("diaryIdx") Long diaryIdx,
+                                @RequestParam("commentIdx") Long commentIdx,
+                                @RequestParam("commentModifyInput") String commentModifyInput,
+                                Authentication authentication,
+                                Model model) {
+
+        Member member = (Member) authentication.getPrincipal();
+
+        Comment comment = commentService.findByDiaryIdxAndCommentIdxAndMemberIdx(diaryIdx, commentIdx, member.getMemberIdx());
+        comment.setCommentContent(commentModifyInput);
+
+        commentService.resisterComment(comment);
+
+        getCommentList(diaryIdx, model, member);
+
+        model.addAttribute("member", member);
+
+        // jQuery를 사용하여 AJAX 요청을 보내고, 요청이 성공하면
+        // "/diary/read" URL에서 가져온 데이터 중 "tbody" 요소를 반환
+        return "/diary/read :: tbody";
+    }
+
+    @RequestMapping(value = "/comment_delete", method = RequestMethod.POST)
+    public String commentDelete(@RequestParam("diaryIdx") Long diaryIdx,
+                                @RequestParam("commentIdx") Long commentIdx,
+                                Authentication authentication,
+                                Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        commentService.deleteByCommentIdx(commentIdx);
+        getCommentList(diaryIdx, model, member);
+
+        model.addAttribute("member", member);
+
         return "/diary/read :: tbody";
     }
 
@@ -154,20 +192,42 @@ public class DiaryController {
     @GetMapping("/modify")
     public String modifyDiary(
             @RequestParam("diaryIdx") Long diaryIdx,
-            @RequestParam("page") int pageCnt,
+            @RequestParam("page") int page,
             @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
             Authentication authentication,
             Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("member", member);
 
+        Diary diary = diaryService.findByDiaryIdx(diaryIdx);
+        Integer score = analyzedService.findByDiaryIdx(diaryIdx).getAnalyzeScore();
+
+        diaryDTO.setDiarySubject(diary.getDiarySubject());
+        diaryDTO.setDiaryWriter(diary.getDiaryWriter());
+        diaryDTO.setDiaryContent(diary.getDiaryContent());
+        diaryDTO.setDiaryKeywords(diary.getDiaryKeywords());
+        diaryDTO.setDiaryAnalyze(diary.getDiaryAnalyze());
+        diaryDTO.setAnalyzeScore(score);
+        diaryDTO.setDiaryPublicable(diary.getDiaryPublicable());
+        diaryDTO.setDiaryAnalyzePublicable(diary.getDiaryAnalyzePublicable());
+        model.addAttribute("diaryModifyBean", diaryDTO);
+
+        model.addAttribute("diaryIdx", diaryIdx);
+        model.addAttribute("page", page);
+
         return "/diary/modify";
     }
 
 
     // 다이어리 수정 로직
-    @PutMapping("/modify_pro/{diaryIdx}")
-    public String modifyDiary_pro(@PathVariable("diaryIdx") Long diaryIdx, @RequestParam("pageCnt") int pageCnt, @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO, BindingResult bindingResult, Authentication authentication, Model model) {
+    @PutMapping("/modify_pro")
+    public String modifyDiary_pro(
+            @RequestParam("diaryIdx") Long diaryIdx,
+            @RequestParam("page") int page,
+            @Valid @ModelAttribute("diaryModifyBean") DiaryDTO diaryDTO,
+            BindingResult bindingResult,
+            Authentication authentication,
+            Model model) {
         if (bindingResult.hasErrors()) return "diary/modify";
 
         Member member = (Member) authentication.getPrincipal();
@@ -181,10 +241,15 @@ public class DiaryController {
         diary.setDiaryPublicable(diaryDTO.getDiaryPublicable());
         diary.setDiaryAnalyzePublicable(diaryDTO.getDiaryAnalyzePublicable());
 
-        insertKeywords(diaryDTO);
-        diaryService.modifyDiary(diary);
+        Analyzed analyzed = analyzedService.findByDiaryIdx(diaryIdx);
+        analyzed.setAnalyzeScore(diaryDTO.getAnalyzeScore());
 
-        return "redirect:/read/" + diary.getDiaryIdx() + "?page=" + pageCnt;
+        insertKeywords(diaryDTO);
+
+        diaryService.modifyDiary(diary);
+        analyzedService.analyzedModify(analyzed);
+
+        return "redirect:/diary/read/" + diary.getDiaryIdx() + "?page=" + page;
     }
 
     // 다이어리 삭제 로직
@@ -212,6 +277,8 @@ public class DiaryController {
         Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
         model.addAttribute("readDiaryBean", readDiaryBean);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: #sympathyBtn";
     }
 
@@ -232,6 +299,8 @@ public class DiaryController {
         Diary readDiaryBean = diaryService.findByDiaryIdx(diarySympathyDto.getDiaryIdx());
         model.addAttribute("readDiaryBean", readDiaryBean);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: #sympathyBtn";
     }
 
@@ -248,6 +317,8 @@ public class DiaryController {
 
         getCommentList(commentLikeDto.getDiaryIdx(), model, member);
 
+        model.addAttribute("member", member);
+
         return "/diary/read :: tbody";
     }
 
@@ -262,6 +333,8 @@ public class DiaryController {
         diaryService.delCommentLike(commentLikeDto);
 
         getCommentList(commentLikeDto.getDiaryIdx(), model, member);
+
+        model.addAttribute("member", member);
 
         return "/diary/read :: tbody";
     }

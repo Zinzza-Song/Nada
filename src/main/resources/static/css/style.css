@@ -1,6 +1,4 @@
 style
-
-
 html {
     height: 100%;
 }
@@ -62,12 +60,7 @@ html {
     color: black;
 }
 
-.logbtn {
-    width: 130px;
-    height: 130px;
-    margin: 5px;
 
-}
 
 /*#banner {*/
 /*    background-image: url(./images/mainBanner5.jpg);*/
@@ -189,10 +182,25 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     border-color: white;
 }
 
-.logBtnBox {
+.logBtnBoxTop{
     display: flex;
-    justify-content: center;
-    margin-top: 300px;
+    justify-content: left;
+    margin-top: 100px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.logBtnBox {
+    display: block;
+    justify-content: left;
+    margin-bottom: 20px;
+}
+
+.logbtn {
+    width: 130px;
+    height: 50px;
+    margin: 5px;
+
 }
 
 .selectSerch {
@@ -1026,22 +1034,22 @@ input[type="button"] {
         font-size: 30px;
     }
 
-    .item {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        height: 50px;
-        padding: 8px 16px;
-        background-color: saddlebrown;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 16px;
-        color: white;
-        position: relative;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        border-radius: 300px;
-    }
+    /*.item {*/
+    /*    margin-right: 10px;*/
+    /*    margin-bottom: 10px;*/
+    /*    height: 50px;*/
+    /*    padding: 8px 16px;*/
+    /*    background-color: saddlebrown;*/
+    /*    font-size: 20px;*/
+    /*    font-weight: 700;*/
+    /*    line-height: 16px;*/
+    /*    color: white;*/
+    /*    position: relative;*/
+    /*    display: flex;*/
+    /*    -webkit-box-align: center;*/
+    /*    align-items: center;*/
+    /*    border-radius: 300px;*/
+    /*}*/
 
     .writeAnTitle {
         width: 600px;
@@ -1077,7 +1085,9 @@ input[type="button"] {
         margin-bottom: 10px
     }
 }
-
+.modifySubmit{
+    width: 120px;
+}
 /* diary write페이지 반응형*/
 @media (max-width: 1600px) and (min-width: 768px) {
     .leftDiary {
@@ -1163,22 +1173,22 @@ input[type="button"] {
         font-size: 15px;
     }
 
-    .item {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        height: 50px;
-        padding: 8px 16px;
-        background-color: saddlebrown;
-        font-size: 15px;
-        font-weight: 700;
-        line-height: 16px;
-        color: white;
-        position: relative;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        border-radius: 300px;
-    }
+    /*.item {*/
+    /*    margin-right: 10px;*/
+    /*    margin-bottom: 10px;*/
+    /*    height: 50px;*/
+    /*    padding: 8px 16px;*/
+    /*    background-color: saddlebrown;*/
+    /*    font-size: 15px;*/
+    /*    font-weight: 700;*/
+    /*    line-height: 16px;*/
+    /*    color: white;*/
+    /*    position: relative;*/
+    /*    display: flex;*/
+    /*    -webkit-box-align: center;*/
+    /*    align-items: center;*/
+    /*    border-radius: 300px;*/
+    /*}*/
 
     .writeAnTitle {
         width: 550px;
@@ -1213,6 +1223,11 @@ input[type="button"] {
         height: 50px;
         font-size: 30px;
         margin-bottom: 10px
+    }
+    .modifySubmit{
+        width: 80px;
+        height: 50px;
+        font-size: 15px;
     }
 }
 
@@ -1302,22 +1317,22 @@ input[type="button"] {
         font-size: 10px;
     }
 
-    .item {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        height: 25px;
-        padding: 8px 8px;
-        background-color: saddlebrown;
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 16px;
-        color: white;
-        position: relative;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        border-radius: 300px;
-    }
+    /*.item {*/
+    /*    margin-right: 10px;*/
+    /*    margin-bottom: 10px;*/
+    /*    height: 25px;*/
+    /*    padding: 8px 8px;*/
+    /*    background-color: saddlebrown;*/
+    /*    font-size: 10px;*/
+    /*    font-weight: 700;*/
+    /*    line-height: 16px;*/
+    /*    color: white;*/
+    /*    position: relative;*/
+    /*    display: flex;*/
+    /*    -webkit-box-align: center;*/
+    /*    align-items: center;*/
+    /*    border-radius: 300px;*/
+    /*}*/
 
     .writeAnTitle {
         width: 200px;
@@ -1345,6 +1360,12 @@ input[type="button"] {
         width: 50px;
         height: 30px;
         text-align: center;
+        font-size: 10px;
+    }
+
+    .modifySubmit{
+        width: 50px;
+        height: 40px;
         font-size: 10px;
     }
 
@@ -1396,7 +1417,7 @@ input[type="button"] {
 
 .diaryAnalyzeContent {
     width: 650px;
-    height: 300px;
+    height: 270px;
     border: none;
     resize: none;
 }
@@ -1447,7 +1468,7 @@ input[type="button"] {
 }
 
 .commentContent {
-    width: 250px;
+    width: 200px;
     word-break: break-all
 }
 
@@ -1841,11 +1862,38 @@ input[type="button"] {
     transition: all .9s, color .3s;
 
 }
-
 .customBtn:hover {
     color: #e3cab0;
     box-shadow: 0 80px 0 0 rgba(0, 0, 0, .25) inset,
     0 -80px 0 0 rgba(0, 0, 0, .25) inset;
+}
+.customModifyBtn{
+    border-radius: 5px;
+    background-color: #2938bb;
+    text-align: center;
+    cursor: pointer;
+
+    color: #b0cce3;
+    transition: all .9s, color .3s;
+}
+.customModifyBtn:hover{
+    color: #b0cce3;
+    box-shadow: 0 80px 0 0 rgba(0, 12, 80, 0.3) inset,
+    0 -80px 0 0 rgba(0, 12, 80, 0.3) inset;
+}
+.customDeleteBtn{
+    border-radius: 5px;
+    background-color: #9b0f0f;
+    text-align: center;
+    cursor: pointer;
+
+    color: #e3b0bf;
+    transition: all .9s, color .5s;
+}
+.customDeleteBtn:hover{
+    color: #e3b0bf;
+    box-shadow: 0 80px 0 0 rgba(96, 1, 1, 0.25) inset,
+    0 -80px 0 0 rgba(96, 1, 1, 0.25) inset;
 }
 
 /*footer 고정*/
@@ -1955,6 +2003,9 @@ a {
 
 .mypageSubject:hover {
     text-decoration: underline;
+}
+#button-addon2{
+    height: 38px;
 }
 
 /*--------------------------------*/
@@ -2070,9 +2121,73 @@ a {
     width: 30%;
     text-align: center;
 }
+/*diary read 페이지 댓글 버튼*/
+.clickModifyBtn {
+    display: none;
+}
+
+.table>:not(caption)>*>.tdBtn {
+    padding: 0;
+    width: 110px;
+}
 
 
 /*로고버튼 div태그*/
-.nav-logo{
-    width: 450px;
+.nav-logo {
+    width: 400px;
+}
+
+.nav-link{
+    width: 150px;
+    text-align: center;
+}
+
+/* user/read 지도 부분*/
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:180px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;margin-top: 30px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+.cateBtn{
+    height: 30px;
+    display: flex;
+}
+
+.category{
+    margin-right: 5px;
+}
+.modifyBtn{
+    float: right;
 }

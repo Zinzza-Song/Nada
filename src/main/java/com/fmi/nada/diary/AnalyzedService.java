@@ -32,4 +32,12 @@ public class AnalyzedService {
         return top6Analyzed;
     }
 
+    public Analyzed findByDiaryIdx(Long diaryIdx) {
+        return analyzedRepository.findByDiaryIdx(diaryIdx);
+    }
+
+    public void analyzedModify(Analyzed analyzed) {
+        analyzedRepository.save(analyzed);
+    }
+
 }

@@ -3,9 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
 >
-<head th:insert="~{fragment/topMenu.html::header}">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 마이 페이지</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -18,18 +18,18 @@
     <div class="col-md-3">
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">프로필? 아이콘이었던가</h5>
+          <h5 class="card-title"><input class="customBtn modifyBtn" onclick="loc()" type="button" value="회원정보수정"></h5>
+          <p class="card-text" th:text="${memberLoginBean.memberNickname}">닉네임</p>
           <p class="card-text" id="email" th:text="${memberLoginBean.username}">이메일</p>
           <p class="card-text" th:text="${memberLoginBean.memberBirth}">생일</p>
-          <p class="card-text" th:text="${memberLoginBean.memberNickname}">닉네임</p>
-          <p class="card-text" th:text="${memberLoginBean.memberAddress}">주소</p>
+          <p class="card-text userAddr" th:text="${memberLoginBean.memberAddress}">주소</p>
         </div>
       </div>
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">감정상태 분석</h5>
-          <button onclick="changeChartType('line')" type="button">선그래프</button>
-          <button onclick="changeChartType('bar')" type="button">막대그래프</button>
+          <button class="customBtn" onclick="changeChartType('line')" type="button">선그래프</button>
+          <button class="customBtn" onclick="changeChartType('bar')" type="button">막대그래프</button>
         </div>
       </div>
       <div class="card mb-3">
@@ -45,18 +45,51 @@
             <input id="diaryWriteDateArr" th:value="${diaryWriteDateArr}" type="hidden">
             <input id="diaryScore" th:value="${analyzeScore}" type="hidden">
           </th:block>
-          <p class="card-text adviceText" id="advice">대충 긍정적인 분석</p>
+          <p class="card-text adviceText" id="advice">최신 일기를 기반으로 감정 분석 중</p>
         </div>
       </div>
-      <div class="card mb-3">
-        <div class="card-header">
-          <input placeholder="무엇을 찾고 싶으세요?" type="text">
-          <button th:text="검색" onclick="searchAddr()"/>
+      <div class="card mb-3 map_wrap">
+        <div class="card-header cateBtn">
+          <button type="button" class="customBtn category" onclick="searchPark(this)" style="display: none;" id="park">
+            공원
+          </button>
+          <button type="button" class="customBtn category" onclick="searchWalk(this)" style="display: none;" id="walk">
+            산책로
+          </button>
+          <button type="button" class="customBtn category" onclick="searchMountain(this)" style="display: none;"
+                  id="mountain">등산
+          </button>
+          <button type="button" class="customBtn category" onclick="searchHealth(this)" style="display: none;"
+                  id="health">헬스장
+          </button>
+          <button type="button" class="customBtn category" onclick="searchCafe(this)" style="display: none" id="cafe">
+            카페
+          </button>
+          <button type="button" class="customBtn category" onclick="searchMoive(this)" style="display: none;"
+                  id="movie">영화관
+          </button>
+          <button type="button" class="customBtn category" onclick="searchFood(this)" style="display: none;" id="food">
+            맛집
+          </button>
         </div>
-        <div class="card-body">
-          <div id="map" style="width:325px;height:400px;"></div>
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+        <div id="menu_wrap" class="bg_white">
+          <div class="option">
+            <div>
+              <form onsubmit="searchPlaces(); return false;">
+                <input type="text" th:value="${memberLoginBean.memberAddress}+공원" id="keyword"
+                       size="15">
+                <input type="hidden" th:value="${memberLoginBean.memberAddress}" id="secret">
+                <button type="submit">검색</button>
+              </form>
+            </div>
+          </div>
+          <hr>
+          <ul id="placesList"></ul>
+          <div id="pagination"></div>
         </div>
       </div>
+
 
     </div>
 
@@ -95,6 +128,9 @@
         </div>
         <div class="card-body">
           <div id="chart">
+            <th:block th:if="${analyzeScore} == null">
+              <p class="card-text" style="font-size: 50px">일기를 작성해주시면 그래프를 보실 수 있습니다.</p>
+            </th:block>
           </div>
         </div>
       </div>
@@ -103,34 +139,20 @@
       <div class="card mb-3">
         <div class="card-header">
           공감 누른 게시글
+          <button class="more-btn customBtn" data-bs-target="#diaryModal" data-bs-toggle="modal"
+                  type="button">목록 보기
+          </button>
         </div>
         <div class="card-body">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="col">게시글</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">날짜</th>
-              <th scope="col">조회수</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
-            <tr>
-              <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
-              <td th:text="${like.diarySubject}">일기 제목</td>
-              <td th:text="${like.diaryWriter}">일기 작성자</td>
-              <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
-              <td th:text="${like.diaryCnt}">일기 조회수</td>
-            </tr>
-            </tbody>
-          </table>
+          <div>
+            <span> 게시글 <span th:text="${likeDiaryList.size()}">0</span>개</span>
+          </div>
         </div>
       </div>
       <div class="card mb-3">
         <div class="card-header">
           친구
-          <button class="more-btn" data-bs-target="#friendModal" data-bs-toggle="modal"
+          <button class="more-btn customBtn" data-bs-target="#friendModal" data-bs-toggle="modal"
                   type="button">목록 보기
           </button>
         </div>
@@ -143,7 +165,7 @@
       <div class="card mb-3">
         <div class="card-header">
           차단 유저
-          <button class="more-btn" data-bs-target="#blockModal" data-bs-toggle="modal"
+          <button class="more-btn customBtn" data-bs-target="#blockModal" data-bs-toggle="modal"
                   type="button">목록 보기
           </button>
         </div>
@@ -153,8 +175,46 @@
           </div>
         </div>
       </div>
-      <div>
-        <input onclick="loc()" type="button" value="회원정보수정">
+    </div>
+  </div>
+</div>
+
+<!--게시글리스트 모달-->
+<div aria-hidden="true" aria-labelledby="diaryModal" class="modal fade" id="diaryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalLabel2">친구 목록</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <div id="showDiaryList">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">글 번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">날짜</th>
+              <th scope="col">공감수</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" th:each="like : ${likeDiaryList}">
+            <tr>
+              <th scope="row" th:text="${like.diaryIdx}">일기 번호</th>
+              <td><a th:href="@{/diary/read/{diaryIdx}(diaryIdx=${like.diaryIdx})}"
+                     th:text="${like.diarySubject}">일기
+                제목</a></td>
+              <td th:text="${like.diaryWriter}">일기 작성자</td>
+              <td th:text="${#temporals.format(like.diaryDate,'yyyy-MM-dd')}">일기 날짜</td>
+              <td th:text="${like.diarySympathyCnt}">일기 공감수</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn customBtn" data-bs-dismiss="modal" type="button">닫기</button>
       </div>
     </div>
   </div>
@@ -184,7 +244,7 @@
               <td th:text="${friend.friendsNickname}">Mark</td>
               <td th:text="${#temporals.format(friend.friendsDate, 'YY-MM-dd')}">날짜</td>
               <td>
-                <button onclick="deleteFriend(this)">삭제</button>
+                <button class="customDeleteBtn" onclick="deleteFriend(this)">삭제</button>
               </td>
             </tr>
             </tbody>
@@ -192,12 +252,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+        <button class="btn customBtn" data-bs-dismiss="modal" type="button">닫기</button>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 
@@ -229,7 +287,7 @@
               <td th:text="${block.blockMemberReason}">차단 이유</td>
               <td th:text="${#temporals.format(block.blockMemberDate,'yyyy-MM-dd')}">차단 날</td>
               <td>
-                <button onclick="deleteBlock(this)">삭제</button>
+                <button class="customDeleteBtn" onclick="deleteBlock(this)">삭제</button>
               </td>
             </tr>
             </tbody>
@@ -237,7 +295,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+        <button class="btn customBtn" data-bs-dismiss="modal" type="button">닫기</button>
       </div>
     </div>
   </div>
@@ -246,33 +304,34 @@
 
 <script type="text/javascript">
 
-  let container = document.getElementById('map');
-  let mapOptions = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667),
-    level: 3
-  };
-  var userAddr = $('.address').text();
+  var markers = [];
+
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+      mapOption = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+      };
+  // 지도를 생성합니다
+  var map = new kakao.maps.Map(mapContainer, mapOption);
+
+  // 장소 검색 객체를 생성합니다
+  var ps = new kakao.maps.services.Places();
+
+  // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+  var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+
+  // 키워드로 장소를 검색합니다
+  searchPlaces();
 
   // 마이페이지 진입 시 감정 일기 점수 불러와 그래프 그리기
   // 지도 초기 중앙 좌표 유저 집 주소로 지정
   $(function () {
-    let map = new kakao.maps.Map(container, mapOptions);
-    var geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch(userAddr, function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: coords
-        });
-        map.setCenter(coords);
-      }
-    })
 
 
     const diaryScore = document.getElementById("diaryScore");
     let msg = diaryScore.value;
-    msg += "\n 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘";
+    msg += "\n 감정상태 점수가 0~150의 범위를 가지고 있고 80이상은 긍정적인 상태 50~80은 보통상태 50이하는 부정적인 상태일 때" +
+        " 감정상태 점수가 위와 같이 변동된 경우 조언을 해줄 때 \"조언:\"으로 응답해줘요.";
     console.log(msg);
 
     let advice = document.getElementById('advice');
@@ -286,6 +345,7 @@
     }
 
     let mainAdvice = '';
+    let keyword = '';
     fetch('http://localhost:8080/send', gptData)
         .then((response) => response.json())
         .then((data) => {
@@ -305,22 +365,103 @@
           let resAdvice = mainAdvice.replace("조언 : ", "");
           advice.innerText = resAdvice;
 
+          if (resAdvice.indexOf("활동") != -1 || resAdvice.indexOf("스트레스") != -1) {
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#park').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+          } else if (resAdvice.indexOf("휴식") != -1 || resAdvice.indexOf("스트레스") != -1) {
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("유지") != -1) {
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("이해") != -1) {
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("정리") != -1) {
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#health').css('display', 'inline');
+          } else if (resAdvice.indexOf("운동") != -1) {
+            $('#health').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+          } else if (resAdvice.indexOf("음식") != -1) {
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          } else if (resAdvice.indexOf("영화") != -1) {
+            $('#movie').css('display', 'inline');
+          } else if (resAdvice.indexOf("취미") != -1) {
+            $('#mountain').css('display', 'inline');
+            $('#health').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+          } else if (resAdvice.indexOf("친구") != -1) {
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          } else if (resAdvice.indexOf("새로운") != -1) {
+            $('#health').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+          } else if (resAdvice.indexOf("쉬는") != -1) {
+            $('#park').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          } else if (resAdvice.indexOf("여가") != -1) {
+            $('#health').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+          } else if (resAdvice.indexOf("건강") != -1) {
+            $('#health').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#park').css('display', 'inline');
+          } else if (resAdvice.indexOf("소통") != -1) {
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+          } else if (resAdvice.indexOf("활동") != -1) {
+            $('#health').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+          } else if (resAdvice.indexOf("활발") != -1) {
+            $('#food').css('display', 'inline');
+            $('#health').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+          } else if (resAdvice.indexOf("즐거운") != -1) {
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+          }
+
           console.log($('#analyzeScoreArr').val());
           console.log($('#analyzeScoreArr').innerText);
+
         });
   });
-
   // 그래프에 삽입되는 일기 분석 점수
+
   let analyzeScoreArrInput = document.getElementById("analyzeScoreArr");
   let analyzeScoreArr = JSON.parse(analyzeScoreArrInput.value);
-
   // 그래프에 삽입되는 일기 작성 날짜
+
   let diaryWriteDateArrInput = document.getElementById("diaryWriteDateArr");
   let diaryWriteDateArr = JSON.parse(diaryWriteDateArrInput.value.replace(/&quot;/g, '"'));
-
   let chartType = 'line'; // 초기값은 선그래프
 
   function changeChartType(type) {
+
     chartType = type;
     chart.updateOptions({
       chart: {
@@ -328,7 +469,6 @@
       }
     });
   }
-
 
   let options = {
     series: [
@@ -400,20 +540,24 @@
     }
   };
 
+
   let chart = new ApexCharts(document.querySelector("#chart"), options);
+
   chart.render();
 
-
   function loc() {
+
+
     window.location = "/user/modify";
   }
 
   function deleteFriend(e) {
+
     const memberDeleteDto = {
       "friendsIdx": $(e).parent().siblings('.friendsIdx').text()
     }
-
     // Ajax 요청을 보냅니다.
+
     $.ajax({
       type: "DELETE",
       url: "/user/friend_del/",
@@ -428,6 +572,7 @@
   }
 
   // 차단리스트 모달에서 삭제
+
   function deleteBlock(e) {
     console.log('차단해제');
     console.log($(e).parent().siblings('.blockIdx').text());
@@ -444,58 +589,278 @@
         $("#blockNum").text(parseInt(num) - 1);
       }
     });
-
   }
 
-  function searchAddrGpt() {
-    let searchInput = $(`#search-input-addr`).val();
-    let msg = "종각역 근처에서 ";
-    msg += searchInput;
-    msg += " 장소를 5개만 추천 해주세요.";
+  function searchPlaces() {
 
-    console.log(msg);
+    var keyword = document.getElementById('keyword').value;
 
-    let loadSearch = $(`#addressResult`).val("잠시만 기다려주세요!");
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
 
-    let gptData = {
-      method: 'POST',
-      body: JSON.stringify({msg}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      alert('키워드를 입력해주세요!');
+      return false;
+    }
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+
+    ps.keywordSearch(keyword, placesSearchCB);
+    var keywordInput = document.getElementById('keyword');
+
+    keywordInput.value = document.getElementById('secret').value
+  }
+
+  // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+
+  function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+      // 정상적으로 검색이 완료됐으면
+
+      // 검색 목록과 마커를 표출합니다
+      displayPlaces(data);
+      // 페이지 번호를 표출합니다
+
+      displayPagination(pagination);
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+      alert('검색 결과가 존재하지 않습니다.');
+
+      return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+      alert('검색 결과 중 오류가 발생했습니다.');
+
+      return;
+
     }
 
-    fetch('http://localhost:8080/send', gptData)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.data);
-          const resMsg = data.data;
-        })
   }
 
-  // ********* 주소 클릭 스크립트 함수 *********
-  // 주소-좌표 변환 객체를 생성합니다
-  function searchAddr() {
-    let map = new kakao.maps.Map(container, mapOptions);
-    let geocoder = new kakao.maps.services.Geocoder();
-    geocoder.addressSearch('경기 성남시 분당구 판교역로 235 에이치스퀘어', function (result, status) {
+  // 검색 결과 목록과 마커를 표출하는 함수입니다
 
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
+  function displayPlaces(places) {
+    var listEl = document.getElementById('placesList'),
+        menuEl = document.getElementById('menu_wrap'),
+        fragment = document.createDocumentFragment(),
+        bounds = new kakao.maps.LatLngBounds(),
+        listStr = '';
 
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
 
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: coords
+    removeAllChildNods(listEl);
+    // 지도에 표시되고 있는 마커를 제거합니다
+
+    removeMarker();
+    for (var i = 0; i < places.length; i++) {
+
+      // 마커를 생성하고 지도에 표시합니다
+
+      var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+          marker = addMarker(placePosition, i),
+          itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+
+      // LatLngBounds 객체에 좌표를 추가합니다
+      bounds.extend(placePosition);
+      // 마커와 검색결과 항목에 mouseover 했을때
+
+      // 해당 장소에 인포윈도우에 장소명을 표시합니다
+      // mouseout 했을 때는 인포윈도우를 닫습니다
+      (function (marker, title) {
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          displayInfowindow(marker, title);
         });
 
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-      }
-    });
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          infowindow.close();
+        });
+
+        itemEl.onmouseover = function () {
+          displayInfowindow(marker, title);
+        };
+
+        itemEl.onmouseout = function () {
+          infowindow.close();
+        };
+      })(marker, places[i].place_name);
+      fragment.appendChild(itemEl);
+
+    }
+    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+
+    map.setBounds(bounds);
   }
+
+  // 검색결과 항목을 Element로 반환하는 함수입니다
+
+  function getListItem(index, places) {
+    var el = document.createElement('li'),
+        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+            '<div class="info">' +
+            '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+
+      itemStr += '    <span>' + places.road_address_name + '</span>' +
+          '   <span class="jibun gray">' + places.address_name + '</span>';
+    } else {
+      itemStr += '    <span>' + places.address_name + '</span>';
+    }
+    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+        '</div>';
+
+    el.innerHTML = itemStr;
+
+    el.className = 'item';
+    return el;
+
+  }
+
+  // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+
+  function addMarker(position, idx, title) {
+    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+          spriteOrigin: new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+          offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+        marker = new kakao.maps.Marker({
+          position: position, // 마커의 위치
+          image: markerImage
+        });
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+    return marker;
+
+  }
+
+  // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+
+  function removeMarker() {
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers = [];
+  }
+
+  // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+
+  function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i;
+    // 기존에 추가된 페이지번호를 삭제합니다
+
+    while (paginationEl.hasChildNodes()) {
+      paginationEl.removeChild(paginationEl.lastChild);
+    }
+
+    for (i = 1; i <= pagination.last; i++) {
+      var el = document.createElement('a');
+      el.href = "#";
+      el.innerHTML = i;
+
+      if (i === pagination.current) {
+        el.className = 'on';
+      } else {
+        el.onclick = (function (i) {
+          return function () {
+            pagination.gotoPage(i);
+          }
+        })(i);
+      }
+
+      fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+  }
+
+  // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+  // 인포윈도우에 장소명을 표시합니다
+  function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+  }
+
+  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+  function removeAllChildNods(el) {
+    while (el.hasChildNodes()) {
+      el.removeChild(el.lastChild);
+    }
+  }
+
+  var parkBtn = document.getElementById('park');
+  var walkBtn = document.getElementById('walk');
+  var mountainBtn = document.getElementById('mountain');
+  var healthBtn = document.getElementById('health');
+  var cafeBtn = document.getElementById('cafe');
+  var movieBtn = document.getElementById('movie');
+  var foodBtn = document.getElementById('food');
+
+  parkBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 공원' : ' 공원';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  walkBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 산책로' : ' 산책로';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  mountainBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 등산로' : ' 등산';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  healthBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 헬스장' : ' 헬스장';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  cafeBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 카페' : ' 카페';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  movieBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 영화관' : ' 영화관';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  foodBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 맛집' : ' 맛집';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>

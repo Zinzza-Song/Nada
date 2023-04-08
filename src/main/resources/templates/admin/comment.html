@@ -4,38 +4,21 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
-    <script>
-        $(document).ready(function () {
-            var win = $(window);
-            var doc = $(document);
-
-            // Each time the user scrolls
-            win.scroll(function () {
-                // Vertical end reached?
-                if (doc.height() - win.height() == win.scrollTop()) {
-                    // New row
-                    var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
-
-                    // Current number of columns to create
-                    var n_cols = $('.logMoreData tr:first-child th').length;
-                    for (var i = 0; i < n_cols; ++i)
-                        tr.append($('<td />'));
-                }
-
-                // Horizontal end reached?
-                if (doc.width() - win.width() == win.scrollLeft()) {
-                    // New column in the heading row
-                    $('.logMoreData tr:first-child').append($('<th />'));
-
-                    // New column in each row
-                    $('.logMoreData tr:not(:first-child)').each(function () {
-                        $(this).append($('<td />'));
-                    });
-                }
-            });
-        });
-    </script>
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 댓글 관리</title>
+  <script>
+    $(document).ready(function () {
+      $('#searchType').change(function () {
+        $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+      });
+      $('#search-form').on('submit', function (event) {
+        if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+          event.preventDefault(); // 이벤트 취소
+        }
+      });
+    });
+  </script>
 
 
 </head>
@@ -44,41 +27,60 @@
 
 <!-- Example Code -->
 <nav class="navbar searchbar topfix">
-    <div class="container-fluid">
-        <form class="d-flex" role="search" th:action="@{/admin}" method="post">
-            <select class="form-select form-select-sm" id="searchType" aria-label=".form-select-sm example">
-                <option selected value="commentDate" id="commentDate">날짜</option>
-            </select>
-            <input class="form-control me-2" type="search" placeholder="" id="inputSearch" aria-label="Search">
-            <button class="btn btn-outline-success" id="searchBtn" type="submit" style="width: 200px;">검색</button>
-        </form>
-    </div>
+  <div class="container-fluid">
+    <form class="d-flex" role="search" th:action="@{/admin/comment}">
+      <select class="form-select form-select-sm" name="type" id="searchType" aria-label=".form-select-sm example">
+        <option value="commentContent" id="commentContent">내용</option>
+        <option value="commentWriter" id="commentWriter">작성자</option>
+      </select>
+      <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요" name="keyword"
+             id="search-input" aria-label="Search">
+      <button class="btn btn-outline-success customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
+    </form>
+  </div>
 </nav>
+<div>
+  <button class="customBtn" onclick="location.href='/admin'">관리자 메인</button>
+  <button class="customBtn" onclick="location.href='/admin/log'">서비스 로그</button>
+  <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
+  <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
+  <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
+</div>
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">날짜</th>
-        <th scope="col">댓글</th>
-        <th scope="col">유저</th>
-        <th scope="col">작성된 일기번호</th>
-        <th scope="col">비고</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider logMoreData">
-    <tr th:each="comment:${adminAllCommentLogList }">
-        <th scope="row" th:text="${#temporals.format(comment.commentDate  , 'yyyy-MM-dd')}">날짜</th>
-        <th scope="row" th:text="${comment.commentContent   }">댓글</th>
-        <th scope="row" th:text="${comment.commentWriteremail   }">유저</th>
-        <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
-        <th scope="row">
-            <button type="button" class="btn btn-primary">삭제</button>
-        </th>
-    </tr>
-
-    </tbody>
+  <thead>
+  <tr>
+    <th scope="col">날짜</th>
+    <th scope="col">댓글</th>
+    <th scope="col">유저</th>
+    <th scope="col">작성된 일기번호</th>
+    <th scope="col">비고</th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider logMoreData" id="commentList">
+  <tr th:each="comment:${adminAllCommentLogList }">
+    <th scope="row" th:text="${comment.commentIdx}" class="commentIdx" hidden="hidden">글 번호</th>
+    <th scope="row" th:text="${#temporals.format(comment.commentDate  , 'yyyy-MM-dd')}">날짜</th>
+    <th scope="row" th:text="${comment.commentContent   }">댓글</th>
+    <th scope="row" th:text="${comment.commentWriter   }">유저</th>
+    <th scope="row" th:text="${comment.diaryIdx   }">작성된 일기번호</th>
+    <th scope="row">
+      <button type="button" class="btn customDeleteBtn" onclick="delComment(this)">삭제</button>
+    </th>
+  </tr>
+  </tbody>
 </table>
-
-<!-- End Example Code -->
+<script>
+  function delComment(e) {
+    $.ajax({
+      url: "/admin/comment_delete/",
+      type: "DELETE",
+      data: {commentIdx: $(e).parent().siblings('.commentIdx').text()},
+      success: function (fragment) {
+        $('#commentList').replaceWith(fragment);
+      }
+    })
+  }
+</script>
 
 </body>
 

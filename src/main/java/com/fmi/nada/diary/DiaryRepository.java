@@ -5,13 +5,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Diary Repository
  */
+@Transactional
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     Diary findByDiaryIdx(Long DiaryIdx);
@@ -42,6 +43,12 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Page<Diary> findAllByDiaryContentContaining(String diaryContent, Pageable pageable);
 
     Page<Diary> findAllByDiaryKeywordsContaining(String diaryKeywords, Pageable pageable);
+
+    @Query("SELECT r FROM Diary r WHERE r.diarySubject LIKE %:diarySubject% ORDER BY r.diaryDate DESC")
+    List<Diary> findDiarySubjectList(@Param("diarySubject") String diarySubject);
+
+    @Query("SELECT r FROM Diary r WHERE r.diaryWriter LIKE %:diaryWriter% ORDER BY r.diaryDate DESC")
+    List<Diary> findDiaryWriterList(@Param("diaryWriter") String diaryWriter);
 
     @Query("SELECT a FROM Diary a , Member m, Sympathy s " +
             "where (m.memberIdx = :memberIdx and s.memberIdx = :memberIdx)" +

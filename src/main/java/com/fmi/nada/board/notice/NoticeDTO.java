@@ -3,7 +3,6 @@ package com.fmi.nada.board.notice;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**

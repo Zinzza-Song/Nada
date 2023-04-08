@@ -3,8 +3,9 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
         xmlns="http://www.w3.org/1999/html">
-<head th:insert="~{fragment/topMenu.html::header}">
-  <link rel="stylesheet" href="/css/style.css"/>
+<head>
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 일기 수정</title>
 </head>
 <body class="diary-write-body">
 
@@ -59,6 +60,7 @@
               />
             </div>
 
+            <input type="hidden" id="tempDiaryContent">
             <div class="form-group diaryContent-div" style="">
                     <textarea style="" class="card-text diaryContent" id="diaryContent" placeholder="일기내용을 작성해주세요."
                               th:field="*{diaryContent}"></textarea>
@@ -69,6 +71,8 @@
             <div class="form-group diaryWriteBtn" style="">
               <input type="button" id="englishBtn" name="englishBtn" onclick="translation()"
                      value="영번역" class="btn customBtn englishBtn"/>
+              <input type="button" id="koreanBtn" name="koreanBtn" onclick="returnToOrigin()"
+                     value="원문" class="btn customBtn englishBtn"/>
               <input type="reset" id="diaryResetBtn" name="diaryResetBtn"
                      value="재작성" class="btn customBtn diaryResetBtn"/>
               <input type="button" id="diarySaveBtn" name="diarySaveBtn" onclick="diarySave()"
@@ -78,21 +82,7 @@
             <!--                키워드-->
             <div class="form-group keywordSubject">
               <p class="keywordSubjectP" style="">키워드</p>
-              <div class="keywords">
-                <!--                                <div class="item">-->
-                <!--                                  <span class="keyword">test</span>-->
-                <!--                                  <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">-->
-                <!--                                    <span class="blind">닫기</span>-->
-                <!--                                  </button>-->
-                <!--                                </div>-->
-                <div class="item">
-                  <span class="keyword-item">키워드들어갈자리</span>
-                  <button type="button" class="btn-close btn_close" aria-label="Close"
-                          onClick="deleteDiv(this)">
-                    <span class="blind">닫기</span>
-                  </button>
-                </div>
-              </div>
+              <div class="keywords"></div>
               <input type="hidden" th:field="*{diaryKeywords}" id="diaryKeywords"
                      name="diaryKeywords"/>
               <p th:if="${#fields.hasErrors('diaryKeywords')}" th:errorclass="error"
@@ -136,9 +126,10 @@
             </div>
 
             <input type="hidden" id="analyzeScore" th:field="*{analyzeScore}">
+            <input type="hidden" name="diaryIdx" th:value="${diaryIdx}">
+            <input type="hidden" name="page" th:value="${page}">
 
-
-            <button type="submit" class="btn customBtn btn-diary-right writeSubmit">수정 완료</button>
+            <button type="submit" class="btn customBtn btn-diary-right modifySubmit">수정 완료</button>
           </div>
         </div>
       </div>
@@ -148,14 +139,30 @@
 
 
 <script>
+  $(document).ready(function () {
+    const keywords = $('#diaryKeywords').val();
+    let arrKeywords = keywords.split(",");
 
+    let keywordInnerHTML = "";
+    let i = 0;
+    for (i; i < arrKeywords.length; ++i) {
+      keywordInnerHTML += `<div class="item">
+    <span class="keyword-item">${arrKeywords[i]}</span>
+    <button type="button" class="btn-close btn_close" aria-label="Close" onClick="deleteDiv(this)">
+      <span class="blind">닫기</span>
+    </button>
+  </div>`;
+    }
 
-  // const diaryContent = document.getElementById('diaryContent');
+    const diaryKeywordsEl = document.querySelector('.keywords');
+    diaryKeywordsEl.innerHTML = keywordInnerHTML;
+  });
 
   function translation() {
     //영번역 함수
     const diarycontent = document.getElementById('diaryContent');
     let msg = diarycontent.value;
+    document.getElementById('tempDiaryContent').value = msg;
     msg += "\n위 일기를 영어로 번역해줘요.";
     console.log(msg);
 
@@ -175,11 +182,17 @@
         });
   }
 
+  // 원문으로
+  function returnToOrigin() {
+    const diarycontent = document.getElementById('diaryContent');
+    diarycontent.value = document.getElementById('tempDiaryContent').value;
+  }
+
   function diarySave() {
     //다이어리 저장 함수
     const diarycontent = document.getElementById('diaryContent');
     let msg = diarycontent.value;
-    msg += "\n위 일기에서 키워드를 한글로 번역해서 단어로 나열해주고 위 일기를 바탕으로 조언을 해주고 위 일기에서 긍정적인 문장과 부정적인 문장의 개수를" +
+    msg += "\n위 텍스트에서 키워드를 한글로 번역해서 단어로 나열해주고 위 일기를 바탕으로 조언을 해주고 위 일기에서 긍정적인 문장과 부정적인 문장의 개수를" +
         "정수로 알려줘요.";
     console.log(msg);
 

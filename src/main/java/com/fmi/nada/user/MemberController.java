@@ -63,12 +63,13 @@ public class MemberController {
     @ResponseBody
     public String mailCheck(String username) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null) {
+        Member banMember = memberService.findByBanEmail(username);
+        if (member != null || banMember != null) {
             return "false";
         } else {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
-            return mailAuthService.sendSimpleMessage(username);
+            return mailAuthService.sendSimpleMessageJoin(username);
         }
     }
 
@@ -77,12 +78,12 @@ public class MemberController {
     @ResponseBody
     public String mailCheckPw(String username, String memberName) throws Exception {
         Member member = memberService.findByUsername(username);
-//        && member.getMemberName().equals(memberName)
-        if (member != null && member.getUsername().equals(username)) {
+
+        if (member != null && member.getUsername().equals(username) && member.getMemberName().equals(memberName)) {
             System.out.println("이메일 인증 요청이 들어옴!");
             System.out.println("이메일 인증 이메일 : " + username);
             System.out.println("이메일 인증 유저 : " + memberName);
-            return mailAuthService.sendSimpleMessage(username);
+            return mailAuthService.sendSimpleMessageFindPassword(username);
         } else {
             return "false";
         }
@@ -147,8 +148,10 @@ public class MemberController {
         for (int index = 0; index < diaryScore.size(); index++) {
             analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
         }
-        analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
-        model.addAttribute("analyzeScore", analyzeScore);
+        if (analyzeScore.length() != 0) {
+            analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
+            model.addAttribute("analyzeScore", analyzeScore);
+        }
 
         // 작성한 다이어리 분석 점수 그래프에 띄우기
         List<Integer> analyzeScoreArr = new ArrayList<>();
@@ -185,7 +188,7 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public String modify(@ModelAttribute("memberInfoBean") MemberJoinDto memberJoinDto,
+    public String modify(@ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
                          Authentication authentication, Model model) {
         Member member = (Member) authentication.getPrincipal();
         model.addAttribute("memberLoginBean", member);
@@ -194,13 +197,13 @@ public class MemberController {
 
     @PutMapping("/modify_pro")
     public String modify_pro(@Valid @ModelAttribute("memberInfoBean") MemberUpdateDto memberUpdateDto,
-                             @ModelAttribute("memberLoginBean") MemberJoinDto memberJoinDto,
-                             Authentication authentication, BindingResult bindingResult, Model model
-    ) {
+                             BindingResult bindingResult,
+                             Authentication authentication,
+                             Model model) {
         if (bindingResult.hasErrors()) {
             Member member = (Member) authentication.getPrincipal();
             model.addAttribute("memberLoginBean", member);
-            return "user/read";
+            return "user/modify";
         } else {
             Member member = (Member) authentication.getPrincipal();
             member.setMemberNickname(memberUpdateDto.getMemberNickname());
@@ -210,7 +213,7 @@ public class MemberController {
             memberService.updateMember(member);
             model.addAttribute("memberLoginBean", member);
         }
-        return "user/read";
+        return "redirect:read";
     }
 
     @DeleteMapping("/delete")
@@ -278,7 +281,19 @@ public class MemberController {
             BlockListDto blockListDto,
             Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
+        BlockList blockMember = memberService.findByBlockMemberIdxAndMemberIdx(
+                blockListDto.getBlockMemberIdx(),
+                member.getMemberIdx()
+        );
+        if (blockMember != null)
+            return "already";
+
         memberService.addBlockList(member, blockListDto);
+
+        Member friendMember = memberService.findByMemberIdx(blockListDto.getBlockMemberIdx());
+        List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, friendMember);
+        if (!friends.isEmpty())
+            memberService.delFriends(member.getMemberIdx(), blockListDto.getBlockMemberIdx());
 
         return "ok";
     }

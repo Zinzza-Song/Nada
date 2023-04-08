@@ -30,6 +30,6 @@ public class DiaryDTO {
 
     private Boolean diaryAnalyzePublicable;
 
-    private String analyzeScore;
+    private Integer analyzeScore;
 
 }

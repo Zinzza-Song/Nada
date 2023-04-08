@@ -1,6 +1,5 @@
 package com.fmi.nada.board.notice;
 
-import com.fmi.nada.board.qna.Qna;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,8 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,7 +31,13 @@ public class NoticeService {
     public Page<Notice> findAllByNoticeSubjectContaining(String noticeSubject, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10);
-        return noticeRepository.findAllByNoticeSubjectContaining(noticeSubject, pageable);
+        return noticeRepository.findAllByNoticeSubjectContainingOrderByNoticeDateDesc(noticeSubject, pageable);
+    }
+
+    public Page<Notice> findAllByNoticeContentContaining(String noticeSubject, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10);
+        return noticeRepository.findAllByNoticeContentContainingOrderByNoticeDateDesc(noticeSubject, pageable);
     }
 
     // 공지사항 등록
@@ -60,8 +64,6 @@ public class NoticeService {
             }
         }
     }
-
-    ;
 
     public void writeNotice(Notice notice) {
         noticeRepository.save(notice);
@@ -104,9 +106,8 @@ public class NoticeService {
         }
     }
 
-    ;
-
     public void updateNotice(Notice notice) {
         noticeRepository.save(notice);
     }
+
 }

@@ -4,11 +4,11 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         xmlns="http://www.w3.org/1999/html">
-<head th:insert="~{fragment/topMenu.html::header}">
-    <!-- 반응형 웹 미디어쿼리 선언부   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <header th:insert="~{fragment/topMenu.html::header}"></header>-->
-
+<head>
+  <!-- 반응형 웹 미디어쿼리 선언부   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 공지글</title>
 </head>
 <body class="p-3 m-0 border-0 bd-example noticeReadForm">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -16,72 +16,72 @@
 <!--<form enctype="multipart/form-data" th:action="@{/board/notice/modify}" th:method="get" th:object="${readNoticeBean}">-->
 <input type="hidden" id="idx" name="idx" th:value="${readNoticeBean.noticeIdx}">
 <div class="qnaform">
-    <div class="BoxTitle" style="text-align: center;margin-bottom: 20px">
-        <span class="logo-text">NOTICE</span></div>
-    <div class="mb-3">
-        <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject"
-               th:value="${readNoticeBean.noticeSubject }"
-               placeholder="공지사항 제목" readonly>
-    </div>
+  <div class="BoxTitle" style="text-align: center;margin-bottom: 20px">
+    <span class="logo-text">NOTICE</span></div>
+  <div class="mb-3">
+    <input type="text" class="form-control qnaSubject" name="noticeSubject" id="noticeSubject"
+           th:value="${readNoticeBean.noticeSubject }"
+           placeholder="공지사항 제목" readonly>
+  </div>
 
-    <div class="mb-3">
-        <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
-               th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
-    </div>
+  <div class="mb-3">
+    <input type="text" name="noticeDate" id="noticeDate" class="form-control qnaDate"
+           th:value="${#temporals.format(readNoticeBean.noticeDate,'yyyy-MM-dd')}" readonly>
+  </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
         <textarea class="form-control qnaContent" name="noticeContent" id="noticeContent " rows="5"
                   th:text="${readNoticeBean.noticeContent }"
                   style="resize: none;"
                   placeholder="공지내용" readonly>
         </textarea>
-    </div>
+  </div>
 
-    <div class="mb-3">
-        <label for="File" class="form-label">첨부파일</label>
-        <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
-            <input class="form-control form-control-sm qnaFile" name="File" id="File"
-                   style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
-                   th:value="${readNoticeBean.noticeFile}" readonly>
-        </a>
-    </div>
+  <div class="mb-3">
+    <label for="File" class="form-label">첨부파일</label>
+    <a th:href="@{/board/notice/download(noticeIdx=${readNoticeBean.noticeIdx})}">
+      <input class="form-control form-control-sm qnaFile" name="File" id="File"
+             style="overflow: hidden;text-overflow: ellipsis;white-space: normal;"
+             th:value="${readNoticeBean.noticeFile}" readonly>
+    </a>
+  </div>
 
-    <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
-        <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
-        <button type="submit" id="deleteBtn" class="btn btn-danger qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">삭제
-        </button>
-        <button type="button" class="btn btn-primary qnaBtn" onclick="modify() "
-                sec:authorize="hasAnyRole('ROLE_ADMIN')">수정
-        </button>
-        <button type="button" class="btn btn-primary qnaBtn" onclick="window.location='/board/notice'">목록</button>
-    </form>
+  <form id="delete" th:action="@{/board/notice/delete}" th:method="delete">
+    <input type="hidden" id="noticeIdx" name="noticeIdx" th:value="${readNoticeBean.noticeIdx}">
+    <button type="submit" id="deleteBtn" class="btn customDeleteBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">삭제
+    </button>
+    <button type="button" class="btn customModifyBtn qnaBtn" onclick="modify() "
+            sec:authorize="hasAnyRole('ROLE_ADMIN')">수정
+    </button>
+    <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/notice'">목록</button>
+  </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
-    $(function () {
-        $("#deleteBtn").on('click', function () {
-            var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
-            if (confirmCheck) {
-                $("delete").submit();
-            } else {
-                return false;
-            }
-        });
+  $(function () {
+    $("#deleteBtn").on('click', function () {
+      var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
+      if (confirmCheck) {
+        $("delete").submit();
+      } else {
+        return false;
+      }
     });
+  });
 
-    function modify() {
-        var noticeIdx = $("#idx").val();
-        window.location = "/board/notice/modify?noticeIdx=" + noticeIdx;
+  function modify() {
+    var noticeIdx = $("#idx").val();
+    window.location = "/board/notice/modify?noticeIdx=" + noticeIdx;
+  }
+
+  $(function () {
+    var file = $('#File').val();
+    if (file == null || file === "") {
+      $('#File').on('click', function (e) {
+        e.preventDefault();
+      })
     }
-
-    $(function () {
-        var file = $('#File').val();
-        if (file == null || file === "") {
-            $('#File').on('click', function (e) {
-                e.preventDefault();
-            })
-        }
-    });
+  });
 </script>
 </body>
 </html>
