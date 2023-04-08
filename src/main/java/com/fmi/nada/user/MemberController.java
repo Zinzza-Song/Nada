@@ -282,8 +282,8 @@ public class MemberController {
             Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
         BlockList blockMember = memberService.findByBlockMemberIdxAndMemberIdx(
-                member.getMemberIdx(),
-                blockListDto.getBlockMemberIdx()
+                blockListDto.getBlockMemberIdx(),
+                member.getMemberIdx()
         );
         if (blockMember != null)
             return "already";
