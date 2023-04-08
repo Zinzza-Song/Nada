@@ -63,7 +63,8 @@ public class MemberController {
     @ResponseBody
     public String mailCheck(String username) throws Exception {
         Member member = memberService.findByUsername(username);
-        if (member != null) {
+        Member banMember = memberService.findByBanEmail(username);
+        if (member != null || banMember != null) {
             return "false";
         } else {
             System.out.println("이메일 인증 요청이 들어옴!");
@@ -280,7 +281,19 @@ public class MemberController {
             BlockListDto blockListDto,
             Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
+        BlockList blockMember = memberService.findByBlockMemberIdxAndMemberIdx(
+                blockListDto.getBlockMemberIdx(),
+                member.getMemberIdx()
+        );
+        if (blockMember != null)
+            return "already";
+
         memberService.addBlockList(member, blockListDto);
+
+        Member friendMember = memberService.findByMemberIdx(blockListDto.getBlockMemberIdx());
+        List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, friendMember);
+        if (!friends.isEmpty())
+            memberService.delFriends(member.getMemberIdx(), blockListDto.getBlockMemberIdx());
 
         return "ok";
     }

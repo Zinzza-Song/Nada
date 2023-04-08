@@ -18,6 +18,7 @@ public class MemberService {
     private final BlockListRepository blockListRepository;
     private final FriendsRepository friendsRepository;
     private final SympathyRepository sympathyRepository;
+    private final BanRepository banRepository;
 
     public Member join(
             String username,
@@ -54,11 +55,17 @@ public class MemberService {
         return memberRepository.findByAuthorityOrderByMemberJoinDateDesc("ROLE_USER");
     }
 
-    public List<Member> memberSearchNicknameList(String keyword) { return memberRepository.findAllByMemberNicknameContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchNicknameList(String keyword) {
+        return memberRepository.findAllByMemberNicknameContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
-    public List<Member> memberSearchNameList(String keyword) { return memberRepository.findAllByMemberNameContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchNameList(String keyword) {
+        return memberRepository.findAllByMemberNameContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
-    public List<Member> memberSearchBirthList(String keyword) { return memberRepository.findAllByMemberBirthContainingOrderByMemberJoinDateDesc(keyword);}
+    public List<Member> memberSearchBirthList(String keyword) {
+        return memberRepository.findAllByMemberBirthContainingOrderByMemberJoinDateDesc(keyword);
+    }
 
     public void delMember(Long memberIdx) {
         memberRepository.deleteById(memberIdx);
@@ -131,6 +138,10 @@ public class MemberService {
         blockListRepository.deleteByMemberIdxAndBlockMemberIdx(
                 memberIdx,
                 blockMemberIdx);
+    }
+
+    public Member findByBanEmail(String email) {
+        return banRepository.findByBanEmail(email);
     }
 
 }
