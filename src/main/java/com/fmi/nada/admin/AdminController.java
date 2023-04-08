@@ -73,7 +73,7 @@ public class AdminController {
 
             LocalDate new2_localDate = new_localDate.minusDays(1);
             str2_localDate = new2_localDate.toString();
-            str2_localDate = "%"+str2_localDate+"%";
+            str2_localDate = "%" + str2_localDate + "%";
         }
 
         System.out.println(UserLogArr_add);
@@ -105,10 +105,47 @@ public class AdminController {
             HashMap<String, Integer> devices = ga.getDeviceCategory(); // 접속한 기종별 횟수가 들어있는 해쉬맵
             HashMap<String, Integer> cities = ga.getCity(); // 접속한 지역과 횟수가 들어있는 해쉬맵
 
+            List<String> viewsKeyList = new ArrayList<>();
+            List<String> viewsValueList = new ArrayList<>();
             // 테스트용 해쉬맵 출력
-//            for (Map.Entry<String, Integer> entry : views.entrySet()) {
-//                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
-//            }
+            for (Map.Entry<String, Integer> entry : views.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+                viewsKeyList.add("\"" + entry.getKey() + "\"");
+                viewsValueList.add("\"" + entry.getValue() + "\"");
+            }
+
+            List<String> eventsKeyList = new ArrayList<>();
+            List<String> eventsValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : events.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+                eventsKeyList.add("\"" + entry.getKey() + "\"");
+                eventsValueList.add("\"" + entry.getValue() + "\"");
+            }
+
+            List<String> devicesKeyList = new ArrayList<>();
+            List<String> devicesValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : devices.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+                devicesKeyList.add("\"" + entry.getKey() + "\"");
+                devicesValueList.add("\"" + entry.getValue() + "\"");
+            }
+
+            List<String> citiesKeyList = new ArrayList<>();
+            List<String> citiesValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : cities.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+                citiesKeyList.add("\"" + entry.getKey() + "\"");
+                citiesValueList.add("\"" + entry.getValue() + "\"");
+            }
+
+            model.addAttribute("eventsKeyList", eventsKeyList);
+            model.addAttribute("eventsValueList", eventsValueList);
+            model.addAttribute("viewsKeyList", viewsKeyList);
+            model.addAttribute("viewsValueList", viewsValueList);
+            model.addAttribute("devicesKeyList", devicesKeyList);
+            model.addAttribute("devicesValueList", devicesValueList);
+            model.addAttribute("citiesKeyList", citiesKeyList);
+            model.addAttribute("citiesValueList", citiesValueList);
 
             model.addAttribute("events", events);
             model.addAttribute("views", views);
