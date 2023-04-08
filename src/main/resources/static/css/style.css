@@ -60,12 +60,7 @@ html {
     color: black;
 }
 
-.logbtn {
-    width: 130px;
-    height: 130px;
-    margin: 5px;
 
-}
 
 /*#banner {*/
 /*    background-image: url(./images/mainBanner5.jpg);*/
@@ -187,10 +182,25 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     border-color: white;
 }
 
-.logBtnBox {
+.logBtnBoxTop{
     display: flex;
-    justify-content: center;
-    margin-top: 300px;
+    justify-content: left;
+    margin-top: 100px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.logBtnBox {
+    display: block;
+    justify-content: left;
+    margin-bottom: 20px;
+}
+
+.logbtn {
+    width: 130px;
+    height: 50px;
+    margin: 5px;
+
 }
 
 .selectSerch {

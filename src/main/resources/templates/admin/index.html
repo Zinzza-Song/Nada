@@ -4,8 +4,8 @@
         xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-  <div th:replace="~{fragment/topMenu.html::header}"></div>
-  <title>NADA 관리자 메인</title>
+    <div th:replace="~{fragment/topMenu.html::header}"></div>
+    <title>NADA 관리자 메인</title>
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
@@ -22,295 +22,311 @@
 <input type="hidden" th:value="${citiesKeyList}" id="citiesKeyList">
 <input type="hidden" th:value="${citiesValueList}" id="citiesValueList">
 
-<div class="logBtnBox">
-  <button type="button" class="logbtn" onclick="serviceLog()">서비스 로그</button>
-  <button type="button" class="logbtn" onclick="commentLog()">댓글로그</button>
-  <button type="button" class="logbtn" onclick="diaryLog()">일기 관리</button>
-  <button type="button" class="logbtn" onclick="userLog()">회원 관리</button>
-  <button type="button" class="logbtn" onclick="reportLog()">신고 관리</button>
-</div>
-<div>
-  <div id="pieGraph"></div>
-  <div id="areaGraph"></div>
-  <div id="GA4viewBarGraph"></div>
-  <div id="GA4eventBarGraph"></div>
-  <div id="GA4devicePieGraph"></div>
-  <div id="GA4citiesPieGraph"></div>
+<div class="row mt-5">
+    <div class="col-md-3" style="margin-left: 150px; width: 200px">
+        <div class="logBtnBoxTop">
+            <button type="button" class="logbtn" onclick="serviceLog()">서비스 로그</button>
+        </div>
+        <div class="logBtnBox">
+            <button type="button" class="logbtn" onclick="commentLog()">댓글로그</button>
+        </div>
+        <div class="logBtnBox">
+            <button type="button" class="logbtn" onclick="diaryLog()">일기 관리</button>
+        </div>
+        <div class="logBtnBox">
+            <button type="button" class="logbtn" onclick="userLog()">회원 관리</button>
+        </div>
+        <div class="logBtnBox">
+            <button type="button" class="logbtn" onclick="reportLog()">신고 관리</button>
+        </div>
+    </div>
+    <div class="col-md-3" style="margin-left: 100px;margin-right: 50px">
+        <div>
+            <div id="pieGraph" style="margin-bottom: 80px"></div>
+            <div id="GA4citiesPieGraph" style="margin-bottom: 80px"></div>
+            <div id="GA4devicePieGraph"></div>
+        </div>
+    </div>
+    <div class="col-md-3" style="margin-right: 30px">
+        <div id="areaGraph" style="margin-bottom: 30px"></div>
+        <div id="GA4eventBarGraph" style="margin-bottom: 30px"></div>
+        <div id="GA4viewBarGraph" ></div>
+    </div>
 </div>
 <footer th:insert="~{fragment/footerTemp.html::footer}"></footer>
 <script>
-  function serviceLog() {
-    location.href = "/admin/log"
-  }
+    function serviceLog() {
+        location.href = "/admin/log"
+    }
 
-  function commentLog() {
-    location.href = "/admin/comment"
-  }
+    function commentLog() {
+        location.href = "/admin/comment"
+    }
 
-  function diaryLog() {
-    location.href = "/admin/diary"
-  }
+    function diaryLog() {
+        location.href = "/admin/diary"
+    }
 
-  function userLog() {
-    location.href = "/admin/user"
-  }
+    function userLog() {
+        location.href = "/admin/user"
+    }
 
-  function reportLog() {
-    location.href = "/admin/report"
-  }
+    function reportLog() {
+        location.href = "/admin/report"
+    }
 
 
 </script>
 <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">
-  if (!wcs_add) var wcs_add = {};
-  wcs_add["wa"] = "1a1c5616993c0f0";
-  if (window.wcs) {
-    wcs_do();
-  }
-
-  let diaryArrInput = document.querySelector('#diaryCount');
-  let diaryArr = JSON.parse(diaryArrInput.value);
-
-  // 다이어리 그래프
-  var options1 = {
-    series: diaryArr,
-    chart: {
-      width: 380,
-      type: 'pie',
-    },
-    title: {
-      text: '최근 1주일간 일기 작성 / 삭제 현황',
-      align: 'left',
-      style: {
-        fontSize: '14px'
-      }
-    },
-    labels: ['일기 작성', '일기 삭제'],
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }]
-  };
-
-  var chart = new ApexCharts(document.querySelector("#pieGraph"), options1);
-  chart.render();
-
-  // 회원 그래프
-
-  let UserLogArr_addInput = document.querySelector('#UserLogArr_add');
-  let UserLogArr_add = JSON.parse(UserLogArr_addInput.value);
-
-  let UserLogArr_delInput = document.querySelector('#UserLogArr_del');
-  let UserLogArr_del = JSON.parse(UserLogArr_delInput.value);
-
-  let dateArr_Input = document.querySelector('#dateArr');
-  let dateArr = JSON.parse(dateArr_Input.value);
-  var options2 = {
-    series: [{
-      name: '회원가입',
-      data: UserLogArr_add.reverse()
-    }, {
-      name: '회원탈퇴',
-      data: UserLogArr_del.reverse()
-    }],
-    chart: {
-      height: 350,
-      width: 650,
-      type: 'area'
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      type: 'string',
-      categories: dateArr.reverse()
-    },
-    title: {
-      text: '최근 1주일간 회원 가입 / 탈퇴 현황',
-      align: 'left',
-      style: {
-        fontSize: '14px'
-      }
-    },
-    tooltip: {
-      x: {
-        format: 'dd/MM/yy'
-      },
-    },
-  };
-
-  var areaChart = new ApexCharts(document.querySelector("#areaGraph"), options2);
-  areaChart.render();
-
-  // GA4 chart
-
-  // views chart
-
-  let viewKey_Input = document.querySelector('#viewsKeyList')
-  let viewValue_Input = document.querySelector('#viewsValueList')
-
-  let viewKeyArr = JSON.parse(viewKey_Input.value)
-  let viewValueArr = JSON.parse(viewValue_Input.value)
-
-  var options3 = {
-    series: [{
-      data: viewValueArr
-    }],
-    title: {
-      text: '방문자 현황',
-      align: 'left',
-      style: {
-        fontSize: '14px'
-      }
-    },
-    chart: {
-      type: 'bar',
-      height: 350,
-      width: 600
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        distributed: true,
-        horizontal: true,
-      }
-    },
-    colors: ['#33b2df', '#2409ef', '#f1d009', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-      '#f48024', '#69d2e7'
-    ],
-    dataLabels: {
-      enabled: false
-    },
-    xaxis: {
-      categories: viewKeyArr,
+    if (!wcs_add) var wcs_add = {};
+    wcs_add["wa"] = "1a1c5616993c0f0";
+    if (window.wcs) {
+        wcs_do();
     }
-  };
 
-  var GA4viewsChart = new ApexCharts(document.querySelector("#GA4viewBarGraph"), options3);
-  GA4viewsChart.render();
+    let diaryArrInput = document.querySelector('#diaryCount');
+    let diaryArr = JSON.parse(diaryArrInput.value);
 
-  // events chart
-
-  let eventKey_Input = document.querySelector('#eventsKeyList')
-  let eventValue_Input = document.querySelector('#eventsValueList')
-
-  let eventKeyArr = JSON.parse(eventKey_Input.value)
-  let eventValueArr = JSON.parse(eventValue_Input.value)
-
-  var options4 = {
-    series: [{
-      data: eventValueArr
-    }],
-    chart: {
-      type: 'bar',
-      height: 350,
-      width: 600
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        distributed: true,
-        horizontal: true,
-      }
-    },
-    colors: ['#33b2df', '#546E7A', '#d4526e'
-    ],
-    dataLabels: {
-      enabled: false
-    },
-    xaxis: {
-      categories: eventKeyArr,
-    }
-  };
-
-  var GA4eventsChart = new ApexCharts(document.querySelector("#GA4eventBarGraph"), options4);
-  GA4eventsChart.render();
-
-  // device chart
-  let deviceKey_Input = document.querySelector('#devicesKeyList');
-  let devieceValue_Input = document.querySelector('#devicesValueList')
-
-  let deviceKeyArr = JSON.parse(deviceKey_Input.value);
-  let deviceValueArr = JSON.parse(devieceValue_Input.value);
-
-  var options5 = {
-    series: deviceValueArr,
-    chart: {
-      width: 380,
-      type: 'pie',
-    },
-    title: {
-      text: '접속 기기',
-      align: 'left',
-      style: {
-        fontSize: '14px'
-      }
-    },
-    labels: deviceKeyArr,
-    responsive: [{
-      breakpoint: 480,
-      options: {
+    // 다이어리 그래프
+    var options1 = {
+        series: diaryArr,
         chart: {
-          width: 200
+            width: 380,
+            type: 'pie',
         },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }]
-  };
+        title: {
+            text: '최근 1주일간 일기 작성 / 삭제 현황',
+            align: 'left',
+            style: {
+                fontSize: '14px'
+            }
+        },
+        labels: ['일기 작성', '일기 삭제'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
 
-  var GA4diviceChart = new ApexCharts(document.querySelector("#GA4devicePieGraph"), options5);
-  GA4diviceChart.render();
+    var chart = new ApexCharts(document.querySelector("#pieGraph"), options1);
+    chart.render();
 
-  // cities chart
+    // 회원 그래프
 
-  let citiesKey_Input = document.querySelector('#citiesKeyList');
-  let citiesValue_Input = document.querySelector('#citiesValueList')
+    let UserLogArr_addInput = document.querySelector('#UserLogArr_add');
+    let UserLogArr_add = JSON.parse(UserLogArr_addInput.value);
 
-  let citiesKeyArr = JSON.parse(citiesKey_Input.value);
-  let citiesValueArr = JSON.parse(citiesValue_Input.value);
+    let UserLogArr_delInput = document.querySelector('#UserLogArr_del');
+    let UserLogArr_del = JSON.parse(UserLogArr_delInput.value);
 
-  var options6 = {
-    series: citiesValueArr,
-    chart: {
-      width: 380,
-      type: 'donut',
-    },
-    title: {
-      text: '접속 지역',
-      align: 'left',
-      style: {
-        fontSize: '14px'
-      }
-    },
-    labels: citiesKeyArr,
-    responsive: [{
-      breakpoint: 480,
-      options: {
+    let dateArr_Input = document.querySelector('#dateArr');
+    let dateArr = JSON.parse(dateArr_Input.value);
+    var options2 = {
+        series: [{
+            name: '회원가입',
+            data: UserLogArr_add.reverse()
+        }, {
+            name: '회원탈퇴',
+            data: UserLogArr_del.reverse()
+        }],
         chart: {
-          width: 200
+            height: 350,
+            width: 650,
+            type: 'area'
         },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }]
-  };
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            type: 'string',
+            categories: dateArr.reverse()
+        },
+        title: {
+            text: '최근 1주일간 회원 가입 / 탈퇴 현황',
+            align: 'left',
+            style: {
+                fontSize: '14px'
+            }
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy'
+            },
+        },
+    };
 
-  var GA4cityChart = new ApexCharts(document.querySelector("#GA4citiesPieGraph"), options6);
-  GA4cityChart.render();
+    var areaChart = new ApexCharts(document.querySelector("#areaGraph"), options2);
+    areaChart.render();
+
+    // GA4 chart
+
+    // views chart
+
+    let viewKey_Input = document.querySelector('#viewsKeyList')
+    let viewValue_Input = document.querySelector('#viewsValueList')
+
+    let viewKeyArr = JSON.parse(viewKey_Input.value)
+    let viewValueArr = JSON.parse(viewValue_Input.value)
+
+    var options3 = {
+        series: [{
+            data: viewValueArr
+        }],
+        title: {
+            text: '방문자 현황',
+            align: 'left',
+            style: {
+                fontSize: '14px'
+            }
+        },
+        chart: {
+            type: 'bar',
+            height: 350,
+            width: 600
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                distributed: true,
+                horizontal: true,
+            }
+        },
+        colors: ['#33b2df', '#2409ef', '#f1d009', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+            '#f48024', '#69d2e7'
+        ],
+        dataLabels: {
+            enabled: false
+        },
+        xaxis: {
+            categories: viewKeyArr,
+        }
+    };
+
+    var GA4viewsChart = new ApexCharts(document.querySelector("#GA4viewBarGraph"), options3);
+    GA4viewsChart.render();
+
+    // events chart
+
+    let eventKey_Input = document.querySelector('#eventsKeyList')
+    let eventValue_Input = document.querySelector('#eventsValueList')
+
+    let eventKeyArr = JSON.parse(eventKey_Input.value)
+    let eventValueArr = JSON.parse(eventValue_Input.value)
+
+    var options4 = {
+        series: [{
+            data: eventValueArr
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            width: 600
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                distributed: true,
+                horizontal: true,
+            }
+        },
+        colors: ['#33b2df', '#546E7A', '#d4526e'
+        ],
+        dataLabels: {
+            enabled: false
+        },
+        xaxis: {
+            categories: eventKeyArr,
+        }
+    };
+
+    var GA4eventsChart = new ApexCharts(document.querySelector("#GA4eventBarGraph"), options4);
+    GA4eventsChart.render();
+
+    // device chart
+    let deviceKey_Input = document.querySelector('#devicesKeyList');
+    let devieceValue_Input = document.querySelector('#devicesValueList')
+
+    let deviceKeyArr = JSON.parse(deviceKey_Input.value);
+    let deviceValueArr = JSON.parse(devieceValue_Input.value);
+
+    var options5 = {
+        series: deviceValueArr,
+        chart: {
+            width: 380,
+            type: 'pie',
+        },
+        title: {
+            text: '접속 기기',
+            align: 'left',
+            style: {
+                fontSize: '14px'
+            }
+        },
+        labels: deviceKeyArr,
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var GA4diviceChart = new ApexCharts(document.querySelector("#GA4devicePieGraph"), options5);
+    GA4diviceChart.render();
+
+    // cities chart
+
+    let citiesKey_Input = document.querySelector('#citiesKeyList');
+    let citiesValue_Input = document.querySelector('#citiesValueList')
+
+    let citiesKeyArr = JSON.parse(citiesKey_Input.value);
+    let citiesValueArr = JSON.parse(citiesValue_Input.value);
+
+    var options6 = {
+        series: citiesValueArr,
+        chart: {
+            width: 380,
+            type: 'donut',
+        },
+        title: {
+            text: '접속 지역',
+            align: 'left',
+            style: {
+                fontSize: '14px'
+            }
+        },
+        labels: citiesKeyArr,
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var GA4cityChart = new ApexCharts(document.querySelector("#GA4citiesPieGraph"), options6);
+    GA4cityChart.render();
 
 </script>
 </body>
