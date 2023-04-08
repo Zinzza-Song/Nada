@@ -14,7 +14,9 @@
 <div class="container diary-container ">
 
   <div class="card-header BoxTitle text-center">
-    다 이 어 리 <span th:text="${readDiaryBean.diaryCnt}">0</span>
+    <span style="padding-left: 200px">다 이 어 리</span>
+    <span th:text="${readDiaryBean.diaryCnt}" style="float: right">0</span>
+    <span style="float: right">조회수:  </span>
   </div>
 
   <div class="diary-write row align-items-start col">
@@ -38,7 +40,7 @@
           <button class="btn card-title diaryWriter " data-bs-toggle="dropdown" id="dropdownMenuReference"
                   data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false"
                   style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
-          <ul class="dropdown-menu " style="" aria-labelledby="dropdownMenuReference">
+          <ul class="dropdown-menu " id="dropdownSameWriter" style="" aria-labelledby="dropdownMenuReference">
             <li class="dropdown-item" id="addFriend">친구추가</li>
             <li hidden="hidden" class="memberIdx" th:value="${readDiaryBean.memberIdx}">
             <li class="dropdown-item addBlock" onclick="addBlock(this)"
@@ -110,7 +112,7 @@
                     <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
-                    <ul class="dropdown-menu" style="">
+                    <ul class="dropdown-menu" id="dropdownSameCommentWriter" style="">
                       <li class="dropdown-item" onclick="addFriend(this)">친구추가</li>
                       <li hidden="hidden" class="memberIdx" name="memberIdx"
                           th:text="${list.memberIdx}">
@@ -288,6 +290,8 @@
   if (writerIdx == memberIdx) {
     $('.writerBtn').css('display', 'inline-block');
     $('.commentBtn').css('display', 'inline-block');
+    $('#dropdownSameWriter').css('display', 'none');
+    $('#dropdownSameCommentWriter').css('display', 'none');
   }
 
   // $('.blockMemberNickname').attr('value',commentWriter)

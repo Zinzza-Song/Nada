@@ -1,7 +1,6 @@
 package com.fmi.nada.board.report;
 
-import com.fmi.nada.user.Member;
-import com.fmi.nada.user.MemberService;
+import com.fmi.nada.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,6 +19,7 @@ import org.springframework.web.util.UriUtils;
 
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -92,12 +92,28 @@ public class ReportController {
             return "board/report/write";
 
         Member member = (Member) authentication.getPrincipal();
-
+        Member reportedMember = memberService.findByMemberNickname(reportDto.getReportReportedMember());
         Report report = null;
         if (file.isEmpty())
             report = reportService.writeReport(member, reportDto);
         else {
             report = reportService.writeReportFile(reportDto, member, file);
+        }
+
+        BlockList blockMember = memberService.findByBlockMemberIdxAndMemberIdx(
+                reportedMember.getMemberIdx(),
+                member.getMemberIdx()
+        );
+
+        if (blockMember == null) {
+            List<Friends> friends = memberService.findFriendsByMemberIdxAndFriendsMemberIdx(member, reportedMember);
+            if (!friends.isEmpty())
+                memberService.delFriends(member.getMemberIdx(), reportedMember.getMemberIdx());
+            BlockListDto blockListDto = new BlockListDto();
+            blockListDto.setBlockMemberNickname(reportedMember.getMemberNickname());
+            blockListDto.setBlockMemberReason("신고 대상자");
+            blockListDto.setBlockMemberIdx(reportedMember.getMemberIdx());
+            memberService.addBlockList(member, blockListDto);
         }
 
         return "redirect:/board/report/read?reportIdx=" + report.getReportIdx() + "&page=1";

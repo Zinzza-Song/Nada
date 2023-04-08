@@ -9,46 +9,20 @@
   <title>NADA 로그 관리</title>
   <script>
     $(document).ready(function () {
-      var win = $(window);
-      var doc = $(document);
 
-      // Each time the user scrolls
-      win.scroll(function () {
-        // Vertical end reached?
-        if (doc.height() - win.height() == win.scrollTop()) {
-          // New row
-          var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
+            $('#searchType').change(function () {
+                $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
+            });
 
-          // Current number of columns to create
-          var n_cols = $('.logMoreData tr:first-child th').length;
-          for (var i = 0; i < n_cols; ++i)
-            tr.append($('<td />'));
-        }
+            $('#search-form').on('submit', function (event) {
+                if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
+                    event.preventDefault(); // 이벤트 취소
+                }
+            });
 
-        // Horizontal end reached?
-        if (doc.width() - win.width() == win.scrollLeft()) {
-          // New column in the heading row
-          $('.logMoreData tr:first-child').append($('<th />'));
+        });
 
-          // New column in each row
-          $('.logMoreData tr:not(:first-child)').each(function () {
-            $(this).append($('<td />'));
-          });
-        }
-      });
-      $('#searchType').change(function () {
-        $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
-      });
-
-      $('#search-form').on('submit', function (event) {
-        if (!$('#search-input').val().trim()) { // 검색어가 공백인 경우
-          event.preventDefault(); // 이벤트 취소
-        }
-      });
-
-    });
-
-  </script>
+    </script>
 
 </head>
 <body class="p-3 m-0 border-0 bd-example">
@@ -69,35 +43,37 @@
   </div>
 </nav>
 <div>
-  <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
-  <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
-  <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
-  <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
+    <button class="customBtn" onclick="location.href='/admin'">관리자 메인</button>
+    <button class="customBtn" onclick="location.href='/admin/comment'">댓글 로그</button>
+    <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
+    <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
+    <button class="customBtn" onclick="location.href='/admin/report'">신고 관리</button>
 </div>
 <table class="table">
-  <thead>
-  <tr>
-    <th scope="col">no</th>
-    <th scope="col">성공여부</th>
-    <th scope="col">사용자</th>
-    <th scope="col">날짜</th>
-    <th scope="col">서비스</th>
-  </tr>
-  </thead>
-  <tbody class="table-group-divider logMoreData">
-  <tr th:each="log:${adminAllLogList}">
-    <th scope="row" th:text="${log.logIdx}">번호</th>
-    <th scope="row" th:if="${log. logIssuccessed}">성공</th>
-    <th scope="row" th:unless="${log.logIssuccessed }">실패</th>
-    <th scope="row" th:text="${log.logMemberEmail }">사용자</th>
-    <th scope="row" th:text="${#temporals.format(log.logDate, 'yyyy-MM-dd HH:mm:ss')}">날짜</th>
-    <th scope="row" th:text="${log.logUsedService}">서비스</th>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th scope="col">no</th>
+        <th scope="col">성공여부</th>
+        <th scope="col">사용자</th>
+        <th scope="col">날짜</th>
+        <th scope="col">서비스</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider logMoreData">
+    <tr th:each="log:${adminAllLogList}">
+        <th scope="row" th:text="${log.logIdx}">번호</th>
+        <th scope="row" th:if="${log. logIssuccessed}">성공</th>
+        <th scope="row" th:unless="${log.logIssuccessed }">실패</th>
+        <th scope="row" th:text="${log.logMemberEmail }">사용자</th>
+        <th scope="row" th:text="${#temporals.format(log.logDate, 'yyyy-MM-dd HH:mm:ss')}">날짜</th>
+        <th scope="row" th:text="${log.logUsedService}">서비스</th>
+    </tr>
+    </tbody>
 </table>
 <!-- End Example Code -->
 
 </body>
+<script>
 
-
+</script>
 </html>

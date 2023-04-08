@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자 Controller
@@ -38,6 +41,51 @@ public class AdminController {
 
     @GetMapping
     public String adminMain(Model model) {
+        // 현재 날짜 ( DB에 저장된 날짜 임시 지정 )
+        // of() 를 now()로 변경하면 된다.
+//        LocalDate localDate = LocalDate.of(2023, 03, 23);
+        LocalDate localDate = LocalDate.now();
+        List<String> UserLogArr_add = new ArrayList<>();
+        List<String> UserLogArr_del = new ArrayList<>();
+        List<String> diaryCount = new ArrayList<>();
+        List<String> dateArr = new ArrayList<>();
+
+        // 다이어리 7일치 데이터 가져오기
+        LocalDate maxLocalDate = localDate.plusDays(1);
+        LocalDate minLocalDate = localDate.minusDays(7);
+
+        String str_maxLocalDate = maxLocalDate.toString();
+        String str_minLocalDate = minLocalDate.toString();
+        String str_localDate = "";
+        String str2_localDate = "";
+
+        diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기작성"));
+        diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기삭제"));
+        System.out.println(diaryCount);
+
+        // 회원가입, 회원탈퇴
+        for (int i = 1; i < 8; i++) {
+            UserLogArr_add.add(logService.countUserLogsCountByDate(str2_localDate, "회원가입"));
+            UserLogArr_del.add(logService.countUserLogsCountByDate(str2_localDate, "회원탈퇴"));
+
+            LocalDate new_localDate = localDate.minusDays(i);
+            str_localDate = new_localDate.toString();
+            dateArr.add("\"" + str_localDate + "\"");
+
+            LocalDate new2_localDate = new_localDate.minusDays(1);
+            str2_localDate = new2_localDate.toString();
+            str2_localDate = "%" + str2_localDate + "%";
+        }
+
+        System.out.println(UserLogArr_add);
+        System.out.println(UserLogArr_del);
+        System.out.println(dateArr);
+
+        model.addAttribute("diaryCount", diaryCount);
+        model.addAttribute("UserLogArr_add", UserLogArr_add);
+        model.addAttribute("UserLogArr_del", UserLogArr_del);
+        model.addAttribute("dateArr", dateArr);
+
         try {
             HashMap<String, Integer> events = ga.getEvent(); // 발생한 이벤트와 횟수가 들어있는 해쉬맵
             events.put("처음 방문자", events.remove("first_visit"));
@@ -54,19 +102,49 @@ public class AdminController {
             views.remove("(not set)");
             views.remove("일기 목록");
             views.remove("NADA 나의 다이어리");
+            views.remove("My Diary 나만의 일기 쓰기");
 
             HashMap<String, Integer> devices = ga.getDeviceCategory(); // 접속한 기종별 횟수가 들어있는 해쉬맵
             HashMap<String, Integer> cities = ga.getCity(); // 접속한 지역과 횟수가 들어있는 해쉬맵
 
-            // 테스트용 해쉬맵 출력
-//            for (Map.Entry<String, Integer> entry : views.entrySet()) {
-//                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
-//            }
 
-            model.addAttribute("events", events);
-            model.addAttribute("views", views);
-            model.addAttribute("devices", devices);
-            model.addAttribute("cities", cities);
+            List<String> viewsKeyList = new ArrayList<>();
+            List<String> viewsValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : views.entrySet()) {
+                viewsKeyList.add("\"" + entry.getKey() + "\"");
+                viewsValueList.add(entry.getValue().toString());
+            }
+
+            List<String> eventsKeyList = new ArrayList<>();
+            List<String> eventsValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : events.entrySet()) {
+                eventsKeyList.add("\"" + entry.getKey() + "\"");
+                eventsValueList.add(entry.getValue().toString());
+            }
+
+            List<String> devicesKeyList = new ArrayList<>();
+            List<String> devicesValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : devices.entrySet()) {
+                devicesKeyList.add("\"" + entry.getKey() + "\"");
+                devicesValueList.add(entry.getValue().toString());
+            }
+
+            List<String> citiesKeyList = new ArrayList<>();
+            List<String> citiesValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : cities.entrySet()) {
+                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
+                citiesKeyList.add("\"" + entry.getKey() + "\"");
+                citiesValueList.add(entry.getValue().toString());
+            }
+
+            model.addAttribute("eventsKeyList", eventsKeyList);
+            model.addAttribute("eventsValueList", eventsValueList);
+            model.addAttribute("viewsKeyList", viewsKeyList);
+            model.addAttribute("viewsValueList", viewsValueList);
+            model.addAttribute("devicesKeyList", devicesKeyList);
+            model.addAttribute("devicesValueList", devicesValueList);
+            model.addAttribute("citiesKeyList", citiesKeyList);
+            model.addAttribute("citiesValueList", citiesValueList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -84,13 +162,16 @@ public class AdminController {
                       @RequestParam(value = "keyword", required = false) String keyword,
                       Model model) {
         List<Log> adminAllLogList = null;
+        Map<String, String> dateLogList = null;
+        int date_count = 1;
+        // 검색 관련 조건문
         if (keyword == null)
             adminAllLogList = logService.findAllByOrderByLogDateDesc();
         else if (type.equals("UserID"))
             adminAllLogList = logService.findAllByLogMemberEmailContainingOrderByLogDateDesc(keyword);
-        else if (type.equals("UserService"))
+        else if (type.equals("UserService")) {
             adminAllLogList = logService.findAllByLogUsedServiceContainingOrderByLogDateDesc(keyword);
-
+        }
         model.addAttribute("adminAllLogList", adminAllLogList);
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);
