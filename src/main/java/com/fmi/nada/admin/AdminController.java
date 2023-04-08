@@ -43,7 +43,8 @@ public class AdminController {
     public String adminMain(Model model) {
         // 현재 날짜 ( DB에 저장된 날짜 임시 지정 )
         // of() 를 now()로 변경하면 된다.
-        LocalDate localDate = LocalDate.of(2023, 03, 23);
+//        LocalDate localDate = LocalDate.of(2023, 03, 23);
+        LocalDate localDate = LocalDate.now();
         List<String> UserLogArr_add = new ArrayList<>();
         List<String> UserLogArr_del = new ArrayList<>();
         List<String> diaryCount = new ArrayList<>();
@@ -101,33 +102,31 @@ public class AdminController {
             views.remove("(not set)");
             views.remove("일기 목록");
             views.remove("NADA 나의 다이어리");
+            views.remove("My Diary 나만의 일기 쓰기");
 
             HashMap<String, Integer> devices = ga.getDeviceCategory(); // 접속한 기종별 횟수가 들어있는 해쉬맵
             HashMap<String, Integer> cities = ga.getCity(); // 접속한 지역과 횟수가 들어있는 해쉬맵
 
+
             List<String> viewsKeyList = new ArrayList<>();
             List<String> viewsValueList = new ArrayList<>();
-            // 테스트용 해쉬맵 출력
             for (Map.Entry<String, Integer> entry : views.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
                 viewsKeyList.add("\"" + entry.getKey() + "\"");
-                viewsValueList.add("\"" + entry.getValue() + "\"");
+                viewsValueList.add(entry.getValue().toString());
             }
 
             List<String> eventsKeyList = new ArrayList<>();
             List<String> eventsValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : events.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
                 eventsKeyList.add("\"" + entry.getKey() + "\"");
-                eventsValueList.add("\"" + entry.getValue() + "\"");
+                eventsValueList.add(entry.getValue().toString());
             }
 
             List<String> devicesKeyList = new ArrayList<>();
             List<String> devicesValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : devices.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
                 devicesKeyList.add("\"" + entry.getKey() + "\"");
-                devicesValueList.add("\"" + entry.getValue() + "\"");
+                devicesValueList.add(entry.getValue().toString());
             }
 
             List<String> citiesKeyList = new ArrayList<>();
@@ -135,7 +134,7 @@ public class AdminController {
             for (Map.Entry<String, Integer> entry : cities.entrySet()) {
                 System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
                 citiesKeyList.add("\"" + entry.getKey() + "\"");
-                citiesValueList.add("\"" + entry.getValue() + "\"");
+                citiesValueList.add(entry.getValue().toString());
             }
 
             model.addAttribute("eventsKeyList", eventsKeyList);
@@ -146,11 +145,6 @@ public class AdminController {
             model.addAttribute("devicesValueList", devicesValueList);
             model.addAttribute("citiesKeyList", citiesKeyList);
             model.addAttribute("citiesValueList", citiesValueList);
-
-            model.addAttribute("events", events);
-            model.addAttribute("views", views);
-            model.addAttribute("devices", devices);
-            model.addAttribute("cities", cities);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
