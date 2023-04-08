@@ -4,7 +4,9 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<head th:insert="~{fragment/topMenu.html::header}" class="logHeader">
+<head class="logHeader">
+  <div th:replace="~{fragment/topMenu.html::header}"></div>
+  <title>NADA 로그 관리</title>
   <script>
     $(document).ready(function () {
       var win = $(window);
@@ -60,7 +62,8 @@
         <option selected value="UserID" id="UserID">ID</option>
         <option selected value="UserService" id="UserService">서비스</option>
       </select>
-      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input" aria-label="Search">
+      <input class="form-control me-2" type="search" name="keyword" placeholder="" id="search-input"
+             aria-label="Search">
       <button class="btn customBtn" id="searchBtn" type="submit" style="width: 200px;">검색</button>
     </form>
   </div>
