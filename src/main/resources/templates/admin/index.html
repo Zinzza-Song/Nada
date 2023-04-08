@@ -9,35 +9,19 @@
 </head>
 <body>
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
-  <input type="hidden" th:value="${diaryCount}" id="diaryCount">
-  <input type="hidden" th:value="${UserLogArr_add}" id="UserLogArr_add">
-  <input type="hidden" th:value="${UserLogArr_del}" id="UserLogArr_del">
-  <input type="hidden" th:value="${dateArr}" id="dateArr">
-  <input type="hidden" th:value="${viewsKeyList}" id="viewsKeyList">
-  <input type="hidden" th:value="${viewsValueList}" id="viewsValueList">
-  <input type="hidden" th:value="${eventsKeyList}" id="eventsKeyList">
-  <input type="hidden" th:value="${eventsValueList}" id="eventsValueList">
-  <input type="hidden" th:value="${devicesKeyList}" id="devicesKeyList">
-  <input type="hidden" th:value="${devicesValueList}" id="devicesValueList">
-  <input type="hidden" th:value="${citiesKeyList}" id="citiesKeyList">
-  <input type="hidden" th:value="${citiesValueList}" id="citiesValueList">
+<input type="hidden" th:value="${diaryCount}" id="diaryCount">
+<input type="hidden" th:value="${UserLogArr_add}" id="UserLogArr_add">
+<input type="hidden" th:value="${UserLogArr_del}" id="UserLogArr_del">
+<input type="hidden" th:value="${dateArr}" id="dateArr">
+<input type="hidden" th:value="${viewsKeyList}" id="viewsKeyList">
+<input type="hidden" th:value="${viewsValueList}" id="viewsValueList">
+<input type="hidden" th:value="${eventsKeyList}" id="eventsKeyList">
+<input type="hidden" th:value="${eventsValueList}" id="eventsValueList">
+<input type="hidden" th:value="${devicesKeyList}" id="devicesKeyList">
+<input type="hidden" th:value="${devicesValueList}" id="devicesValueList">
+<input type="hidden" th:value="${citiesKeyList}" id="citiesKeyList">
+<input type="hidden" th:value="${citiesValueList}" id="citiesValueList">
 
-<!--  <p th:each="event : ${events}">-->
-<!--    <input type="hidden" th:value="${event.key}">-->
-<!--    <input type="hidden" th:value="${event.value}">-->
-<!--  </p>-->
-<!--  <p th:each="view : ${views}">-->
-<!--    <input type="hidden" th:value="${view.key}">-->
-<!--    <input type="hidden" th:value="${view.value}">-->
-<!--  </p>-->
-<!--  <p th:each="device : ${devices}">-->
-<!--    <input type="hidden" th:value="${device.key}">-->
-<!--    <input type="hidden" th:value="${device.value}">-->
-<!--  </p>-->
-<!--  <p th:each="city : ${cities}">-->
-<!--    <input type="hidden" th:value="${city.key}">-->
-<!--    <input type="hidden" th:value="${city.value}">-->
-<!--  </p>-->
 <div class="logBtnBox">
   <button type="button" class="logbtn" onclick="serviceLog()">서비스 로그</button>
   <button type="button" class="logbtn" onclick="commentLog()">댓글로그</button>
@@ -198,9 +182,13 @@
     plotOptions: {
       bar: {
         borderRadius: 4,
+        distributed: true,
         horizontal: true,
       }
     },
+    colors: ['#33b2df', '#2409ef', '#f1d009', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+      '#f48024', '#69d2e7'
+    ],
     dataLabels: {
       enabled: false
     },
@@ -232,9 +220,12 @@
     plotOptions: {
       bar: {
         borderRadius: 4,
+        distributed: true,
         horizontal: true,
       }
     },
+    colors: ['#33b2df', '#546E7A', '#d4526e'
+    ],
     dataLabels: {
       enabled: false
     },
@@ -292,10 +283,10 @@
   let citiesValueArr = JSON.parse(citiesValue_Input.value);
 
   var options6 = {
-      series: citiesValueArr,
+    series: citiesValueArr,
     chart: {
       width: 380,
-      type: 'pie',
+      type: 'donut',
     },
     title: {
       text: '접속 지역',
