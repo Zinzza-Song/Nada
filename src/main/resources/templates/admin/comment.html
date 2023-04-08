@@ -9,33 +9,6 @@
   <title>NADA 댓글 관리</title>
   <script>
     $(document).ready(function () {
-      var win = $(window);
-      var doc = $(document);
-
-      // Each time the user scrolls
-      win.scroll(function () {
-        // Vertical end reached?
-        if (doc.height() - win.height() == win.scrollTop()) {
-          // New row
-          var tr = $('<tr />').append($('<th />')).appendTo($('.logMoreData'));
-
-          // Current number of columns to create
-          var n_cols = $('.logMoreData tr:first-child th').length;
-          for (var i = 0; i < n_cols; ++i)
-            tr.append($('<td />'));
-        }
-
-        // Horizontal end reached?
-        if (doc.width() - win.width() == win.scrollLeft()) {
-          // New column in the heading row
-          $('.logMoreData tr:first-child').append($('<th />'));
-
-          // New column in each row
-          $('.logMoreData tr:not(:first-child)').each(function () {
-            $(this).append($('<td />'));
-          });
-        }
-      });
       $('#searchType').change(function () {
         $('#search-input').val('');  // 검색 주제 변경 시 텍스트 초기화
       });
@@ -67,6 +40,7 @@
   </div>
 </nav>
 <div>
+  <button class="customBtn" onclick="location.href='/admin'">관리자 메인</button>
   <button class="customBtn" onclick="location.href='/admin/log'">서비스 로그</button>
   <button class="customBtn" onclick="location.href='/admin/diary'">일기 관리</button>
   <button class="customBtn" onclick="location.href='/admin/user'">회원 관리</button>
