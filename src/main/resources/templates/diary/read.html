@@ -83,7 +83,7 @@
 
         </div>
 
-        <div class="form-group diaryAnalyze">
+        <div class="form-group diaryAnalyze" th:if="${readDiaryBean.diaryAnalyzePublicable}">
                     <textarea class="diaryAnalyzeContent"
                               th:readonly="readonly" id="diaryAnalyze"
                               th:text="${readDiaryBean.diaryAnalyze}"></textarea>
@@ -289,14 +289,15 @@
   const memberIdx = $('.idx').val();
   console.log(commentIdx);
 
-  function checkIdx(e){
+  function checkIdx(e) {
     const commentIdx = $(e).siblings().children('.memberIdx').text();
-    if(memberIdx == commentIdx){
+    if (memberIdx == commentIdx) {
       $('#dropdownSameCommentWriter').css('display', 'none');
     }
   }
-  function checkWriterIdx(){
-    if(writerIdx == memberIdx){
+
+  function checkWriterIdx() {
+    if (writerIdx == memberIdx) {
       $('#dropdownSameWriter').css('display', 'none');
     }
   }
@@ -461,16 +462,16 @@
       data: {diaryIdx: diaryIdx, commentInput: commentInput},
       dataType: "html"
     })
-            .done(function (fragment) {
-              // 댓글 입력 폼 초기화
-              $("#commentInput").val("");
+        .done(function (fragment) {
+          // 댓글 입력 폼 초기화
+          $("#commentInput").val("");
 
-              // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
-              $(`.table`).html(fragment);
-              if (writerIdx == memberIdx) {
-                $('#dropdownSameWriter').css('display', 'none');
-              }
-            });
+          // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
+          $(`.table`).html(fragment);
+          if (writerIdx == memberIdx) {
+            $('#dropdownSameWriter').css('display', 'none');
+          }
+        });
   }
 
   // 댓글 수정버튼클릭
