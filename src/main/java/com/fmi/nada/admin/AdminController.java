@@ -1,6 +1,6 @@
 package com.fmi.nada.admin;
 
-import com.fmi.nada.analytics.QuickstartJsonCredentialsSample;
+import com.fmi.nada.analytics.GoogleAnalytics;
 import com.fmi.nada.board.report.Report;
 import com.fmi.nada.board.report.ReportProDto;
 import com.fmi.nada.board.report.ReportService;
@@ -37,7 +37,7 @@ public class AdminController {
     public final DiaryService diaryService;
     public final CommentService commentService;
     public final ReportService reportService;
-    public final QuickstartJsonCredentialsSample ga;
+    public final GoogleAnalytics ga;
 
     @GetMapping
     public String adminMain(Model model) {
@@ -61,7 +61,6 @@ public class AdminController {
 
         diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기작성"));
         diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기삭제"));
-        System.out.println(diaryCount);
 
         // 회원가입, 회원탈퇴
         for (int i = 1; i < 8; i++) {
@@ -76,10 +75,6 @@ public class AdminController {
             str2_localDate = new2_localDate.toString();
             str2_localDate = "%" + str2_localDate + "%";
         }
-
-        System.out.println(UserLogArr_add);
-        System.out.println(UserLogArr_del);
-        System.out.println(dateArr);
 
         model.addAttribute("diaryCount", diaryCount);
         model.addAttribute("UserLogArr_add", UserLogArr_add);
@@ -131,11 +126,6 @@ public class AdminController {
 
             List<String> citiesKeyList = new ArrayList<>();
             List<String> citiesValueList = new ArrayList<>();
-            for (Map.Entry<String, Integer> entry : cities.entrySet()) {
-                System.out.println("[Key]:" + entry.getKey() + " [Value]:" + entry.getValue());
-                citiesKeyList.add("\"" + entry.getKey() + "\"");
-                citiesValueList.add(entry.getValue().toString());
-            }
 
             model.addAttribute("eventsKeyList", eventsKeyList);
             model.addAttribute("eventsValueList", eventsValueList);

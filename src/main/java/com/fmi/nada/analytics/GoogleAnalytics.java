@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 @Component
-public class QuickstartJsonCredentialsSample {
+public class GoogleAnalytics {
 
     @Value("${GA4.property-id}")
     private String id;
