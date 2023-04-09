@@ -122,9 +122,11 @@
           console.log(data)
           nickCheckMsg.html("사용 가능한 닉네임 입니다.");
           nickCheckMsg.css('color', 'green');
+          $(".join").removeAttr('disabled')
         } else {
           nickCheckMsg.html("사용 불가능한 닉네임 입니다.");
           nickCheckMsg.css('color', 'red');
+          $(".join").attr('disabled','disabled')
         }
       }
     });
