@@ -23,7 +23,6 @@
               style="width: 100px; margin-right: 10px;">
         <option id="subject" value="subject">제목</option>
         <option id="content" value="content">내용</option>
-        <option id="date" value="date">날짜</option>
       </select>
       <input aria-label="Search" class="form-control me-2" id="search-input" name="keyword"
              placeholder="검색어를 입력해 주세요"
@@ -78,7 +77,7 @@
                 lastPage=@{/notice(page=${noticeList.totalPages},type=${type},keyword=${keyword})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${noticeList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${noticeList.totalPages > 0}">
@@ -130,7 +129,7 @@
                 lastPage=@{/board/notice(page=${noticeList.totalPages})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${noticeList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${noticeList.totalPages > 0}">

@@ -33,6 +33,7 @@ public class MemberJoinDto {
     private String memberNickname;
 
     @NotBlank(message = "생년월일은 필수 입력 값입니다.")
+    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|28)$", message = "ex) 1997-05-16")
     private String memberBirth;
 
     @NotBlank(message = "주소는 필수 입력 값입니다.")

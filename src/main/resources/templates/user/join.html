@@ -42,7 +42,7 @@
       <div class="form-group">
         <label>Address</label>
         <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
-               class="form-control">
+               class="form-control" readonly>
         <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
         <br>
         <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
@@ -60,7 +60,7 @@
         <input type="text" name="username" id="username" th:field="*{username}"
                class="form-control">
         <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
-        <div>
+        <div class="sendMailBtn">
           <input type="button" id="send_Mail_Btn" value="전송" class="btn customBtn">
         </div>
       </div>
@@ -73,7 +73,6 @@
         <span id="mail-check-warn"></span>
         <div>
           <input type="button" id="btnCertification" value="인증" class="btn customBtn">
-
         </div>
 
       </div>
@@ -100,7 +99,7 @@
       </div>
 
       <div id="login-btn-box">
-        <input type="submit" id="btnjoin" value="회원가입" class="btn customBtn">
+        <input type="submit" id="btnjoin" value="회원가입" class="btn customBtn join">
       </div>
 
 
@@ -123,9 +122,11 @@
           console.log(data)
           nickCheckMsg.html("사용 가능한 닉네임 입니다.");
           nickCheckMsg.css('color', 'green');
+          $(".join").removeAttr('disabled')
         } else {
           nickCheckMsg.html("사용 불가능한 닉네임 입니다.");
           nickCheckMsg.css('color', 'red');
+          $(".join").attr('disabled','disabled')
         }
       }
     });
@@ -166,6 +167,7 @@
         $resultMsg.css('color', 'green');
         $('#send_Mail_Btn').attr('disabled', true);
         $('#btnCertification').attr('disabled', true);
+        $('#btnCertification').css('margin-top','5px');
         $('#username').attr('readonly', true);
         $('#username').attr('onChange', 'this.selectedIndex = this.initialSelect');
       } else {
@@ -189,11 +191,12 @@
 
       $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
       $("#passwordCheckLabel").css("color", "green");
-
+      $(".join").removeAttr('disabled')
     } else {
 
       $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
       $("#passwordCheckLabel").css("color", "red");
+      $(".join").attr('disabled','disabled')
     }
   });
   $('#password').blur(function () {
@@ -209,11 +212,12 @@
 
       $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
       $("#passwordCheckLabel").css("color", "green");
-
+      $(".join").removeAttr('disabled')
     } else {
 
       $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
       $("#passwordCheckLabel").css("color", "red");
+      $(".join").attr('disabled','disabled')
     }
   });
   // 우편번호 찾기 찾기 화면을 넣을 element
