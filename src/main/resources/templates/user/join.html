@@ -42,7 +42,7 @@
       <div class="form-group">
         <label>Address</label>
         <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
-               class="form-control">
+               class="form-control" readonly>
         <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error" th:errors="*{memberAddress}"/>
         <br>
         <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
