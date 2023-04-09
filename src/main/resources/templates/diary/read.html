@@ -38,7 +38,7 @@
         <div class="dropdown readDropdown" style="margin-bottom: 30px;display: inline-block">
           <p class="diaryWriterP" style="padding-top: 15px;">작성자 :</p>
           <button class="btn card-title diaryWriter " data-bs-toggle="dropdown" id="dropdownMenuReference"
-                  data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false"
+                  data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false" onclick="checkWriterIdx()"
                   style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
           <ul class="dropdown-menu " id="dropdownSameWriter" style="" aria-labelledby="dropdownMenuReference">
             <li class="dropdown-item" id="addFriend">친구추가</li>
@@ -83,7 +83,7 @@
 
         </div>
 
-        <div class="form-group diaryAnalyze">
+        <div class="form-group diaryAnalyze" th:if="${readDiaryBean.diaryAnalyzePublicable}">
                     <textarea class="diaryAnalyzeContent"
                               th:readonly="readonly" id="diaryAnalyze"
                               th:text="${readDiaryBean.diaryAnalyze}"></textarea>
@@ -110,6 +110,7 @@
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
+                            onclick="checkIdx(this) "
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
                     <ul class="dropdown-menu" id="dropdownSameCommentWriter" style="">
@@ -213,7 +214,7 @@
           <textarea class="form-control" id="blockMemberReason" name="blockMemberReason"
                     style="resize: none"></textarea>
         </div>
-        <input type="input" id="blockMemberIdx" name="blockMemberIdx" value="">
+        <input type="hidden" id="blockMemberIdx" name="blockMemberIdx" value="">
         <div class="modal-footer">
           <button type="button" class="btn customBtn data-bs-dismiss=" modal>취소</button>
           <button type="button" onclick="postBlock(this)" class="btn customBtn">작성완료</button>
@@ -286,12 +287,24 @@
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
   const memberIdx = $('.idx').val();
+  console.log(commentIdx);
+
+  function checkIdx(e) {
+    const commentIdx = $(e).siblings().children('.memberIdx').text();
+    if (memberIdx == commentIdx) {
+      $('#dropdownSameCommentWriter').css('display', 'none');
+    }
+  }
+
+  function checkWriterIdx() {
+    if (writerIdx == memberIdx) {
+      $('#dropdownSameWriter').css('display', 'none');
+    }
+  }
 
   if (writerIdx == memberIdx) {
     $('.writerBtn').css('display', 'inline-block');
     $('.commentBtn').css('display', 'inline-block');
-    $('#dropdownSameWriter').css('display', 'none');
-    $('#dropdownSameCommentWriter').css('display', 'none');
   }
 
   // $('.blockMemberNickname').attr('value',commentWriter)
@@ -305,10 +318,6 @@
 
   $(document).ready(function () {
 
-    if (writerIdx == memberIdx) {
-      $('#dropdownSameWriter').css('display', 'none');
-      $('#dropdownSameCommentWriter').css('display', 'none');
-    }
 
     $('#addFriend').click(function () {
 
@@ -323,14 +332,13 @@
       }).done(function (msg) {
         console.log(msg);
         if (msg === 'ok')
-          alert("친구가 정상적으로 추가되었습니다.");
+          swal("친구가 정상적으로 추가되었습니다.");
         else if (msg === 'already')
-          alert("이미 친구입니다.");
+          swal("이미 친구입니다.");
         else
-          alert("차단 대상자 입니다.");
+          swal("차단 대상자 입니다.");
         if (writerIdx == memberIdx) {
           $('#dropdownSameWriter').css('display', 'none');
-          $('#dropdownSameCommentWriter').css('display', 'none');
         }
       });
     });
@@ -367,15 +375,14 @@
       data: friendsDto
     }).done(function (msg) {
       console.log(msg);
-      if (msg == 'ok')
-        alert("친구가 정상적으로 추가되었습니다.");
-      else if (msg == 'already')
-        alert("이미 친구입니다.");
+      if (msg === 'ok')
+        swal("친구가 정상적으로 추가되었습니다.");
+      else if (msg === 'already')
+        swal("이미 친구입니다.");
       else
-        alert("차단 대상자 입니다.");
+        swal("차단 대상자 입니다.");
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -412,11 +419,12 @@
       data: blockListDto
     }).done(function (msg) {
       if (msg == 'ok')
-        alert("차단리스트에 정상적으로 등록되었습니다.");
+        swal("차단리스트에 정상적으로 등록되었습니다.");
+      else if (msg == 'already')
+        swal("이미 차단 대상자 입니다.");
       $('#writerBlock').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -435,11 +443,12 @@
       data: blockListDto
     }).done(function (msg) {
       if (msg == 'ok')
-        alert("차단리스트에 정상적으로 등록되었습니다.");
+        swal("차단리스트에 정상적으로 등록되었습니다.");
+      else if (msg == 'already')
+        swal("이미 차단 대상자 입니다.");
       $('#block').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -457,17 +466,16 @@
       data: {diaryIdx: diaryIdx, commentInput: commentInput},
       dataType: "html"
     })
-            .done(function (fragment) {
-              // 댓글 입력 폼 초기화
-              $("#commentInput").val("");
+        .done(function (fragment) {
+          // 댓글 입력 폼 초기화
+          $("#commentInput").val("");
 
-              // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
-              $(`.table`).html(fragment);
-              if (writerIdx == memberIdx) {
-                $('#dropdownSameWriter').css('display', 'none');
-                $('#dropdownSameCommentWriter').css('display', 'none');
-              }
-            });
+          // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
+          $(`.table`).html(fragment);
+          if (writerIdx == memberIdx) {
+            $('#dropdownSameWriter').css('display', 'none');
+          }
+        });
   }
 
   // 댓글 수정버튼클릭
@@ -517,7 +525,6 @@
       $('#modify').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -539,7 +546,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -561,7 +567,6 @@
       createKeywords();
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -582,7 +587,6 @@
       createKeywords();
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -603,7 +607,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
 
@@ -627,7 +630,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
 
