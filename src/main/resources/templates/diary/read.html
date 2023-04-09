@@ -100,7 +100,7 @@
       </div>
       <div class="card-body commentList"
            style="width: 750px;height: 500px;margin-bottom: 10px;margin-left: 30px;overflow: scroll;overflow-x:hidden;">
-        <table class="table" style="width: 650px;margin-bottom: 10px;margin-left: 55px;">
+        <table class="table" style="width: 650px;margin-bottom: 10px;margin-left: 55px;" th:with="id=${member.memberIdx}">
           <div id="commentDiv">
             <th:block th:if="${commentList != null}">
               <tbody class="table-group-divider" th:each="list: ${commentList}" style="font-size: 15px;">
@@ -110,10 +110,10 @@
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
-                            onclick="checkIdx(this) "
+                            onclick="checkIdx(this)"
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
-                    <ul class="dropdown-menu" id="dropdownSameCommentWriter" style="">
+                    <ul class="dropdown-menu" id="dropdownSameCommentWriter" th:if="${list.memberIdx != id}" >
                       <li class="dropdown-item" onclick="addFriend(this)">친구추가</li>
                       <li hidden="hidden" class="memberIdx" name="memberIdx"
                           th:text="${list.memberIdx}">
@@ -171,7 +171,7 @@
         <!--        <th:block th:if="${member.memberIdx == readDiaryBean.memberIdx}">-->
         <form id="delete" th:action="@{/diary/delete}" th:method="delete" style="">
           <input type="hidden" id="deleteDiaryIdx" name="deleteDiaryIdx" th:value="${readDiaryBean.diaryIdx}">
-          <button class="btn customDeleteBtn writerBtn" id="deleteBtn" type="submit">
+          <button class="btn customDeleteBtn writerBtn" id="deleteBtn" type="button" onclick="deleteDiary() ">
             삭제
           </button>
         </form>
@@ -285,16 +285,32 @@
 
 <script>
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
+  function deleteDiary() {
+    var form = $('#delete')
+    swal({
+      title: "정말로 삭제 하시겠습니까?",
+      icon: "warning",
+      buttons:[
+        '아니오',
+        '네'
+      ],
+    }).then(function(isConfirm){
+      if(isConfirm){
+        form.submit();
+      }
+    });
+  }
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
   const memberIdx = $('.idx').val();
-  console.log(commentIdx);
+
 
   function checkIdx(e) {
     const commentIdx = $(e).siblings().children('.memberIdx').text();
+    console.log(commentIdx)
     if (memberIdx == commentIdx) {
       $('#dropdownSameCommentWriter').css('display', 'none');
     }
-  }
+  };
 
   function checkWriterIdx() {
     if (writerIdx == memberIdx) {
@@ -535,6 +551,14 @@
     var commentIdx = $(e).parent().siblings('.commentIdx').text();
     console.log(diaryIdx)
     console.log(commentIdx)
+    swal({
+      title: "정말로 삭제 하시겠습니까?",
+      icon: "warning",
+      buttons:[
+        '아니오',
+        '네'
+      ],
+    })
     // Ajax 요청
     $.ajax({
       url: "/diary/comment_delete",
@@ -636,15 +660,7 @@
     createKeywords();
   }
 
-  //삭제버튼
-  $("#deleteBtn").on('click', function () {
-    var confirmCheck = confirm('삭제 하시겠습니까 ?')
-    if (confirmCheck) {
-      $("delete").submit();
-    } else {
-      return false;
-    }
-  });
+
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
