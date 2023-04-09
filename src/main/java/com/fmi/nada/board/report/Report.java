@@ -83,8 +83,5 @@ public class Report {
         this.reportContent = reportContent;
         this.reportReportedMember = reportReportedMember;
     }
-
-    public void addViewCount() {
-        this.reportView++;
-    }
+    
 }
