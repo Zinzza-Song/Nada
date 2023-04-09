@@ -63,17 +63,17 @@ public class AdminController {
         diaryCount.add(logService.countDiaryLogCountBy7days(str_minLocalDate, str_maxLocalDate, "일기삭제"));
 
         // 회원가입, 회원탈퇴
-        for (int i = 1; i < 8; i++) {
-            UserLogArr_add.add(logService.countUserLogsCountByDate(str2_localDate, "회원가입"));
-            UserLogArr_del.add(logService.countUserLogsCountByDate(str2_localDate, "회원탈퇴"));
-
+        for (int i = 0; i < 7; i++) {
             LocalDate new_localDate = localDate.minusDays(i);
             str_localDate = new_localDate.toString();
             dateArr.add("\"" + str_localDate + "\"");
 
-            LocalDate new2_localDate = new_localDate.minusDays(1);
+            LocalDate new2_localDate = new_localDate;
             str2_localDate = new2_localDate.toString();
             str2_localDate = "%" + str2_localDate + "%";
+
+            UserLogArr_add.add(logService.countUserLogsCountByDate(str2_localDate, "회원가입"));
+            UserLogArr_del.add(logService.countUserLogsCountByDate(str2_localDate, "탈퇴"));
         }
 
         model.addAttribute("diaryCount", diaryCount);
@@ -90,6 +90,7 @@ public class AdminController {
             events.put("페이지 로드", events.remove("page_view"));
             events.remove("session_start");
             events.remove("form_submit");
+            events.remove("click");
             events.remove("view_search_results"); // 이벤트 중 사용할 이벤트만 걸러냄
 
             HashMap<String, Integer> views = ga.getViewOfPage(); // 페이지별로 접속한 횟수가 들어있는 해쉬맵
@@ -126,6 +127,10 @@ public class AdminController {
 
             List<String> citiesKeyList = new ArrayList<>();
             List<String> citiesValueList = new ArrayList<>();
+            for (Map.Entry<String, Integer> entry : cities.entrySet()) {
+                citiesKeyList.add("\"" + entry.getKey() + "\"");
+                citiesValueList.add(entry.getValue().toString());
+            }
 
             model.addAttribute("eventsKeyList", eventsKeyList);
             model.addAttribute("eventsValueList", eventsValueList);
