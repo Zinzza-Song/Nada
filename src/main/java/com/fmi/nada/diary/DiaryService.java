@@ -56,8 +56,8 @@ public class DiaryService {
                 diaryAnalyze,
                 diaryPublicable,
                 diary_analyzePublicable);
-        diary.setDiaryCnt(1L);
-        diary.setDiarySympathyCnt(0L);
+//        diary.setDiaryCnt(0L);
+//        diary.setDiarySympathyCnt(0L);
         return diaryRepository.save(diary);
     }
 
