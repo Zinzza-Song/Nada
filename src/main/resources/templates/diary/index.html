@@ -63,7 +63,7 @@
                 lastPage=@{/diary(page=${allDiaryList.totalPages},type=${type},keyword=${keyword})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${allDiaryList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${allDiaryList.totalPages > 0}">
@@ -115,7 +115,7 @@
                 lastPage=@{/diary(page=${allDiaryList.totalPages})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${allDiaryList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${allDiaryList.totalPages > 0}">

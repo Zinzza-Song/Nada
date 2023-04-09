@@ -200,9 +200,19 @@ background-image: url(C:/Users/soldesk/Desktop/mainBack.jpg);
     width: 130px;
     height: 50px;
     margin: 5px;
+    border-radius: 5px;
+    background-color: #6c583e;
+    text-align: center;
+    cursor: pointer;
 
+    color: #e3cab0;
+    transition: all .9s, color .3s;
 }
-
+.logbtn:hover {
+    color: #e3cab0;
+    box-shadow: 0 80px 0 0 rgba(0, 0, 0, .25) inset,
+    0 -80px 0 0 rgba(0, 0, 0, .25) inset;
+}
 .selectSerch {
     width: auto;
 }
@@ -2215,4 +2225,7 @@ a {
     text-align: center;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 55px;
+}
+.sendMailBtn{
+    margin-top: 5px;
 }
