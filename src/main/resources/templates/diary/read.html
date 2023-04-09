@@ -38,7 +38,7 @@
         <div class="dropdown readDropdown" style="margin-bottom: 30px;display: inline-block">
           <p class="diaryWriterP" style="padding-top: 15px;">작성자 :</p>
           <button class="btn card-title diaryWriter " data-bs-toggle="dropdown" id="dropdownMenuReference"
-                  data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false"
+                  data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false" onclick="checkWriterIdx()"
                   style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
           <ul class="dropdown-menu " id="dropdownSameWriter" style="" aria-labelledby="dropdownMenuReference">
             <li class="dropdown-item" id="addFriend">친구추가</li>
@@ -110,6 +110,7 @@
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn commentWriter" data-bs-toggle="dropdown"
+                            onclick="checkIdx(this) "
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
                     <ul class="dropdown-menu" id="dropdownSameCommentWriter" style="">
@@ -286,12 +287,23 @@
   <!-- 댓글 신고하기 누르면 링크이동 경로 수정해야함 -->
   const writerIdx = $('.memberIdx').val(); // 게시글 작성자 번호
   const memberIdx = $('.idx').val();
+  console.log(commentIdx);
+
+  function checkIdx(e){
+    const commentIdx = $(e).siblings().children('.memberIdx').text();
+    if(memberIdx == commentIdx){
+      $('#dropdownSameCommentWriter').css('display', 'none');
+    }
+  }
+  function checkWriterIdx(){
+    if(writerIdx == memberIdx){
+      $('#dropdownSameWriter').css('display', 'none');
+    }
+  }
 
   if (writerIdx == memberIdx) {
     $('.writerBtn').css('display', 'inline-block');
     $('.commentBtn').css('display', 'inline-block');
-    $('#dropdownSameWriter').css('display', 'none');
-    $('#dropdownSameCommentWriter').css('display', 'none');
   }
 
   // $('.blockMemberNickname').attr('value',commentWriter)
@@ -305,10 +317,6 @@
 
   $(document).ready(function () {
 
-    if (writerIdx == memberIdx) {
-      $('#dropdownSameWriter').css('display', 'none');
-      $('#dropdownSameCommentWriter').css('display', 'none');
-    }
 
     $('#addFriend').click(function () {
 
@@ -330,7 +338,6 @@
           alert("차단 대상자 입니다.");
         if (writerIdx == memberIdx) {
           $('#dropdownSameWriter').css('display', 'none');
-          $('#dropdownSameCommentWriter').css('display', 'none');
         }
       });
     });
@@ -375,7 +382,6 @@
         alert("차단 대상자 입니다.");
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -416,7 +422,6 @@
       $('#writerBlock').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -439,7 +444,6 @@
       $('#block').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -465,7 +469,6 @@
               $(`.table`).html(fragment);
               if (writerIdx == memberIdx) {
                 $('#dropdownSameWriter').css('display', 'none');
-                $('#dropdownSameCommentWriter').css('display', 'none');
               }
             });
   }
@@ -517,7 +520,6 @@
       $('#modify').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -539,7 +541,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -561,7 +562,6 @@
       createKeywords();
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -582,7 +582,6 @@
       createKeywords();
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
   }
@@ -603,7 +602,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
 
@@ -627,7 +625,6 @@
       $(`.table`).html(fragment);
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
-        $('#dropdownSameCommentWriter').css('display', 'none');
       }
     });
 
