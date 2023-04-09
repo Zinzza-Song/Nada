@@ -305,6 +305,11 @@
 
   $(document).ready(function () {
 
+    if (writerIdx == memberIdx) {
+      $('#dropdownSameWriter').css('display', 'none');
+      $('#dropdownSameCommentWriter').css('display', 'none');
+    }
+
     $('#addFriend').click(function () {
 
       const friendsDto = {
@@ -323,6 +328,10 @@
           alert("이미 친구입니다.");
         else
           alert("차단 대상자 입니다.");
+        if (writerIdx == memberIdx) {
+          $('#dropdownSameWriter').css('display', 'none');
+          $('#dropdownSameCommentWriter').css('display', 'none');
+        }
       });
     });
 
@@ -364,6 +373,10 @@
         alert("이미 친구입니다.");
       else
         alert("차단 대상자 입니다.");
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -401,6 +414,10 @@
       if (msg == 'ok')
         alert("차단리스트에 정상적으로 등록되었습니다.");
       $('#writerBlock').modal('hide');
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -420,6 +437,10 @@
       if (msg == 'ok')
         alert("차단리스트에 정상적으로 등록되었습니다.");
       $('#block').modal('hide');
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -436,13 +457,17 @@
       data: {diaryIdx: diaryIdx, commentInput: commentInput},
       dataType: "html"
     })
-        .done(function (fragment) {
-          // 댓글 입력 폼 초기화
-          $("#commentInput").val("");
+            .done(function (fragment) {
+              // 댓글 입력 폼 초기화
+              $("#commentInput").val("");
 
-          // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
-          $(`.table`).html(fragment);
-        });
+              // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
+              $(`.table`).html(fragment);
+              if (writerIdx == memberIdx) {
+                $('#dropdownSameWriter').css('display', 'none');
+                $('#dropdownSameCommentWriter').css('display', 'none');
+              }
+            });
   }
 
   // 댓글 수정버튼클릭
@@ -490,6 +515,10 @@
       console.log('댓글 수정 완료')
       swal('댓글이 수정되었습니다.')
       $('#modify').modal('hide');
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -508,6 +537,10 @@
     }).done(function (fragment) {
       // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록 수정
       $(`.table`).html(fragment);
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -526,6 +559,10 @@
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
       createKeywords();
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -543,6 +580,10 @@
     }).done(function (fragment) {
       $("#sympathyBtn").replaceWith(fragment);
       createKeywords();
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
   }
 
@@ -560,6 +601,10 @@
       data: commentLikeDto
     })).done(function (fragment) {
       $(`.table`).html(fragment);
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
 
     createKeywords();
@@ -580,6 +625,10 @@
       data: commentLikeDto
     })).done(function (fragment) {
       $(`.table`).html(fragment);
+      if (writerIdx == memberIdx) {
+        $('#dropdownSameWriter').css('display', 'none');
+        $('#dropdownSameCommentWriter').css('display', 'none');
+      }
     });
 
     createKeywords();
