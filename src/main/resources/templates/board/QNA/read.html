@@ -79,23 +79,32 @@
 
   <form id="delete" th:action="@{/board/QNA/delete}" th:method="delete" style="margin-top: 20px">
     <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-    <button type="submit" id="deleteBtn" class="btn customDeleteBtn qnaBtn">삭제</button>
+    <button type="button" id="deleteBtn"
+            onclick="deleteQna()"
+            class="btn customDeleteBtn qnaBtn">삭제</button>
     <button class="btn customBtn qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
   </form>
 </div>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script>
+  function deleteQna() {
+    var form = $('#delete')
+    swal({
+      title: "정말로 삭제 하시겠습니까?",
+      icon: "warning",
+      buttons:[
+        '아니오',
+        '네'
+      ],
+    }).then(function(isConfirm){
+      if(isConfirm){
+        form.submit();
+      }
+    });
+  }
   $(function () {
     $("#answer").on('click', function () {
       $("#check").css('display', 'inline-block');
-    });
-    $("#deleteBtn").on('click', function () {
-      var confirmCheck = confirm('정말로 삭제 하시겠습니까?')
-      if (confirmCheck) {
-        $("delete").submit();
-      } else {
-        return false;
-      }
     });
     $("#complete").on('click', function () {
       $.ajax({
