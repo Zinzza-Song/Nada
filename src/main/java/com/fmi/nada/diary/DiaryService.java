@@ -29,7 +29,7 @@ public class DiaryService {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12);
 
-        return diaryRepository.findAllByOrderByDiaryDateDesc(pageable);
+        return diaryRepository.findAllByDiaryPublicableIsTrueOrderByDiaryDateDesc(pageable);
     }
 
     public List<Diary> getDiaryList() {
@@ -109,25 +109,25 @@ public class DiaryService {
     public Page<Diary> findAllByDiaryWriterContaining(String diaryWriter, Pageable pageable) {
         // page는 index처럼 0부터 시작
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 6);
+        pageable = PageRequest.of(page, 12);
 
-        return diaryRepository.findAllByDiaryWriterContaining(diaryWriter, pageable);
+        return diaryRepository.findAllByDiaryPublicableIsTrueAndDiaryWriterContaining(diaryWriter, pageable);
     }
 
     public Page<Diary> findAllByDiaryContentContaining(String diaryContent, Pageable pageable) {
         // page는 index처럼 0부터 시작
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 6);
+        pageable = PageRequest.of(page, 12);
 
-        return diaryRepository.findAllByDiaryContentContaining(diaryContent, pageable);
+        return diaryRepository.findAllByDiaryPublicableIsTrueAndDiaryContentContaining(diaryContent, pageable);
     }
 
     public Page<Diary> findAllByDiaryKeywordsContaining(String diaryKeywords, Pageable pageable) {
         // page는 index처럼 0부터 시작
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 6);
+        pageable = PageRequest.of(page, 12);
 
-        return diaryRepository.findAllByDiaryKeywordsContaining(diaryKeywords, pageable);
+        return diaryRepository.findAllByDiaryPublicableIsTrueAndDiaryKeywordsContaining(diaryKeywords, pageable);
     }
 
     // 공감 서비스 로직
