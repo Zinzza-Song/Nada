@@ -26,8 +26,9 @@
       <button class="btn customBtn" id="searchBtn" type="submit" th:text="검색"
               style="width: 100px"></button>
     </form>
-    <form class="noticeWriteBtn" th:action="@{/board/QNA/write}" th:method="get">
+    <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_USER')" th:action="@{/board/QNA/write}" th:method="get">
       <button type="submit" class="btn customBtn" style="width: 100px">작성</button>
+
 
     </form>
   </div>
