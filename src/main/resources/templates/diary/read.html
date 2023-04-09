@@ -83,7 +83,7 @@
 
         </div>
 
-        <div class="form-group diaryAnalyze">
+        <div class="form-group diaryAnalyze" th:if="${readDiaryBean.diaryAnalyzePublicable}">
                     <textarea class="diaryAnalyzeContent"
                               th:readonly="readonly" id="diaryAnalyze"
                               th:text="${readDiaryBean.diaryAnalyze}"></textarea>
@@ -214,7 +214,7 @@
           <textarea class="form-control" id="blockMemberReason" name="blockMemberReason"
                     style="resize: none"></textarea>
         </div>
-        <input type="input" id="blockMemberIdx" name="blockMemberIdx" value="">
+        <input type="hidden" id="blockMemberIdx" name="blockMemberIdx" value="">
         <div class="modal-footer">
           <button type="button" class="btn customBtn data-bs-dismiss=" modal>취소</button>
           <button type="button" onclick="postBlock(this)" class="btn customBtn">작성완료</button>
@@ -289,14 +289,15 @@
   const memberIdx = $('.idx').val();
   console.log(commentIdx);
 
-  function checkIdx(e){
+  function checkIdx(e) {
     const commentIdx = $(e).siblings().children('.memberIdx').text();
-    if(memberIdx == commentIdx){
+    if (memberIdx == commentIdx) {
       $('#dropdownSameCommentWriter').css('display', 'none');
     }
   }
-  function checkWriterIdx(){
-    if(writerIdx == memberIdx){
+
+  function checkWriterIdx() {
+    if (writerIdx == memberIdx) {
       $('#dropdownSameWriter').css('display', 'none');
     }
   }
@@ -331,11 +332,11 @@
       }).done(function (msg) {
         console.log(msg);
         if (msg === 'ok')
-          alert("친구가 정상적으로 추가되었습니다.");
+          swal("친구가 정상적으로 추가되었습니다.");
         else if (msg === 'already')
-          alert("이미 친구입니다.");
+          swal("이미 친구입니다.");
         else
-          alert("차단 대상자 입니다.");
+          swal("차단 대상자 입니다.");
         if (writerIdx == memberIdx) {
           $('#dropdownSameWriter').css('display', 'none');
         }
@@ -374,12 +375,12 @@
       data: friendsDto
     }).done(function (msg) {
       console.log(msg);
-      if (msg == 'ok')
-        alert("친구가 정상적으로 추가되었습니다.");
-      else if (msg == 'already')
-        alert("이미 친구입니다.");
+      if (msg === 'ok')
+        swal("친구가 정상적으로 추가되었습니다.");
+      else if (msg === 'already')
+        swal("이미 친구입니다.");
       else
-        alert("차단 대상자 입니다.");
+        swal("차단 대상자 입니다.");
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
       }
@@ -418,7 +419,9 @@
       data: blockListDto
     }).done(function (msg) {
       if (msg == 'ok')
-        alert("차단리스트에 정상적으로 등록되었습니다.");
+        swal("차단리스트에 정상적으로 등록되었습니다.");
+      else if (msg == 'already')
+        swal("이미 차단 대상자 입니다.");
       $('#writerBlock').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
@@ -440,7 +443,9 @@
       data: blockListDto
     }).done(function (msg) {
       if (msg == 'ok')
-        alert("차단리스트에 정상적으로 등록되었습니다.");
+        swal("차단리스트에 정상적으로 등록되었습니다.");
+      else if (msg == 'already')
+        swal("이미 차단 대상자 입니다.");
       $('#block').modal('hide');
       if (writerIdx == memberIdx) {
         $('#dropdownSameWriter').css('display', 'none');
@@ -461,16 +466,16 @@
       data: {diaryIdx: diaryIdx, commentInput: commentInput},
       dataType: "html"
     })
-            .done(function (fragment) {
-              // 댓글 입력 폼 초기화
-              $("#commentInput").val("");
+        .done(function (fragment) {
+          // 댓글 입력 폼 초기화
+          $("#commentInput").val("");
 
-              // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
-              $(`.table`).html(fragment);
-              if (writerIdx == memberIdx) {
-                $('#dropdownSameWriter').css('display', 'none');
-              }
-            });
+          // 서버에서 반환된 댓글 데이터를 이용하여 댓글 목록에 추가
+          $(`.table`).html(fragment);
+          if (writerIdx == memberIdx) {
+            $('#dropdownSameWriter').css('display', 'none');
+          }
+        });
   }
 
   // 댓글 수정버튼클릭

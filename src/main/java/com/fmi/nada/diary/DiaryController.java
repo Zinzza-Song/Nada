@@ -74,6 +74,7 @@ public class DiaryController {
         model.addAttribute("sympathyBeen", sympathy);
 
         Diary diary = diaryService.getDiaryDetail(diaryIdx);
+        System.out.println(diary.getDiaryCnt());
         Diary readDiaryBean = diaryService.viewAdd(diary);
         model.addAttribute("readDiaryBean", readDiaryBean);
 
