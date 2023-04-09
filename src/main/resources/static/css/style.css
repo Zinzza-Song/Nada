@@ -855,15 +855,7 @@ input[type="button"] {
     font-size: 30px;
 }
 
-.btn_close::before {
-    position: absolute;
-    display: block;
-    width: 14px;
-    height: 14px;
-    content: "";
-    top: 0px;
-    left: 0px;
-}
+
 
 .diarySubject, .diaryContent {
     white-space: pre-line;
@@ -2190,4 +2182,37 @@ a {
 }
 .modifyBtn{
     float: right;
+}
+
+/* 23-04-09 박건상 */
+.findPwSendBtn{
+    margin-top: 5px;
+}
+.certificationbtn{
+    margin-top: 13px;
+    float: left;
+}
+.btn_close::before {
+    /*position: absolute;*/
+    display: block;
+    width: 14px;
+    height: 14px;
+    content: "";
+    top: 0px;
+    left: 0px;
+}
+.btn_close{
+    width: 0em;
+    height: 0em;
+    border-radius: 1.375rem;
+    float: right;
+    margin-top: 9px;
+    margin-right: 10px;
+    background-color: #9b0f0f;
+}
+
+.schNone{
+    text-align: center;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    font-size: 55px;
 }
