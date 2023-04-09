@@ -206,12 +206,16 @@ public class MemberController {
             return "user/modify";
         } else {
             Member member = (Member) authentication.getPrincipal();
-            member.setMemberNickname(memberUpdateDto.getMemberNickname());
-            member.setPassword(passwordEncoder.encode(memberUpdateDto.getPassword()));
-            member.setMemberAddress(memberUpdateDto.getMemberAddress());
-            member.setMemberPhone(memberUpdateDto.getMemberPhone());
-            memberService.updateMember(member);
-            model.addAttribute("memberLoginBean", member);
+            if (passwordEncoder.matches(memberUpdateDto.getPassword(), member.getPassword())) {
+                member.setMemberNickname(memberUpdateDto.getMemberNickname());
+                member.setMemberAddress(memberUpdateDto.getMemberAddress());
+                member.setMemberPhone(memberUpdateDto.getMemberPhone());
+                memberService.updateMember(member);
+                model.addAttribute("memberLoginBean", member);
+            } else {
+                model.addAttribute("memberLoginBean", member);
+                return "user/modify";
+            }
         }
         return "redirect:read";
     }
