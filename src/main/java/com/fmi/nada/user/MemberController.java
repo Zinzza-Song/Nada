@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequiredArgsConstructor
@@ -62,6 +64,24 @@ public class MemberController {
     @GetMapping("/join/email_exist_check")
     @ResponseBody
     public String mailCheck(String username) throws Exception {
+        String regex1 = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$";
+        Pattern pattern1 = Pattern.compile(regex1);
+        Matcher matcher1 = pattern1.matcher(username);
+
+        String regex2 = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.co\\.kr$";
+        Pattern pattern2 = Pattern.compile(regex2);
+        Matcher matcher2 = pattern2.matcher(username);
+
+        String regex3 = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.net$";
+        Pattern pattern3 = Pattern.compile(regex3);
+        Matcher matcher3 = pattern3.matcher(username);
+
+        if (!matcher1.matches() && !matcher2.matches() && !matcher3.matches()) {
+            System.out.println("이메일 형식이 아님");
+            return "false";
+        }
+
+
         Member member = memberService.findByUsername(username);
         Member banMember = memberService.findByBanEmail(username);
         if (member != null || banMember != null) {
@@ -206,12 +226,16 @@ public class MemberController {
             return "user/modify";
         } else {
             Member member = (Member) authentication.getPrincipal();
-            member.setMemberNickname(memberUpdateDto.getMemberNickname());
-            member.setPassword(passwordEncoder.encode(memberUpdateDto.getPassword()));
-            member.setMemberAddress(memberUpdateDto.getMemberAddress());
-            member.setMemberPhone(memberUpdateDto.getMemberPhone());
-            memberService.updateMember(member);
-            model.addAttribute("memberLoginBean", member);
+            if (passwordEncoder.matches(memberUpdateDto.getPassword(), member.getPassword())) {
+                member.setMemberNickname(memberUpdateDto.getMemberNickname());
+                member.setMemberAddress(memberUpdateDto.getMemberAddress());
+                member.setMemberPhone(memberUpdateDto.getMemberPhone());
+                memberService.updateMember(member);
+                model.addAttribute("memberLoginBean", member);
+            } else {
+                model.addAttribute("memberLoginBean", member);
+                return "user/modify";
+            }
         }
         return "redirect:read";
     }

@@ -24,7 +24,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Diary findByDiarySubject(String diarySubject);
 
     // 최신 다이어리 게시글부터 정렬
-    Page<Diary> findAllByOrderByDiaryDateDesc(Pageable pageable);
+    Page<Diary> findAllByDiaryPublicableIsTrueOrderByDiaryDateDesc(Pageable pageable);
 
     List<Diary> findAllByOrderByDiaryDateDesc();
 
@@ -38,11 +38,11 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findLikeDiaryByDiaryIdx(Long diaryIdx);
 
     // 검색 기능 페이징에 사용되는 JPQL
-    Page<Diary> findAllByDiaryWriterContaining(String diaryWriter, Pageable pageable);
+    Page<Diary> findAllByDiaryPublicableIsTrueAndDiaryWriterContaining(String diaryWriter, Pageable pageable);
 
-    Page<Diary> findAllByDiaryContentContaining(String diaryContent, Pageable pageable);
+    Page<Diary> findAllByDiaryPublicableIsTrueAndDiaryContentContaining(String diaryContent, Pageable pageable);
 
-    Page<Diary> findAllByDiaryKeywordsContaining(String diaryKeywords, Pageable pageable);
+    Page<Diary> findAllByDiaryPublicableIsTrueAndDiaryKeywordsContaining(String diaryKeywords, Pageable pageable);
 
     @Query("SELECT r FROM Diary r WHERE r.diarySubject LIKE %:diarySubject% ORDER BY r.diaryDate DESC")
     List<Diary> findDiarySubjectList(@Param("diarySubject") String diarySubject);

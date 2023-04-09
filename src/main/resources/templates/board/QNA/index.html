@@ -26,8 +26,9 @@
       <button class="btn customBtn" id="searchBtn" type="submit" th:text="검색"
               style="width: 100px"></button>
     </form>
-    <form class="noticeWriteBtn" th:action="@{/board/QNA/write}" th:method="get">
+    <form class="noticeWriteBtn" sec:authorize="hasAnyRole('ROLE_USER')" th:action="@{/board/QNA/write}" th:method="get">
       <button type="submit" class="btn customBtn" style="width: 100px">작성</button>
+
 
     </form>
   </div>
@@ -69,7 +70,8 @@
                 lastPage=@{/QNA(page=${allQnaList.totalPages},type=${type},keyword=${keyword})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${allQnaList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+<!--          <button name="return-main">전체 페이지로 돌아가기</button>-->
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${allQnaList.totalPages > 0}">
@@ -121,7 +123,8 @@
                 lastPage=@{/board/QNA(page=${allQnaList.totalPages})}">
         <!-- 페이지가 없는 경우 -->
         <th:block th:if="${allQnaList.totalPages < 1}">
-          <button name="return-main">전체 페이지로 돌아가기</button>
+<!--          <button name="return-main">전체 페이지로 돌아가기</button>-->
+          <span class="schNone">검색결과가 없습니다.</span>
         </th:block>
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${allQnaList.totalPages > 0}">

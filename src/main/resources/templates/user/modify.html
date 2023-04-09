@@ -25,7 +25,8 @@
                 </div>
                 <div class="form-group">
                     <label>닉네임</label>
-                    <input type="text" name="memberNickname" id="memberNickname" th:field="*{memberNickname}"
+                    <input type="text" name="memberNickname" id="memberNickname"
+                           th:value="${memberLoginBean.memberNickname}"
                            class="form-control">
                     <p th:if="${#fields.hasErrors('memberNickname')}" th:errorclass="error"
                        th:errors="*{memberNickname}"/>
@@ -48,15 +49,11 @@
                     <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
                 </div>
                 <div class="form-group">
-                    <label>비밀번호 확인</label>
-                    <input type="password" name="member_password_check" id="member_password_check" class="form-control"
-                           autocomplete="off">
-                    <label id="passwordCheckLabel"></label>
-                </div>
-                <div class="form-group">
                     <label>Address</label>
-                    <input type="text" name="memberAddress" id="memberAddress" th:field="*{memberAddress}" value=""
-                           class="form-control">
+                    <input type="text" name="memberAddress" id="memberAddress"
+                           th:value="${memberLoginBean.memberAddress}"
+                           value=""
+                           class="form-control" readonly>
                     <p th:if="${#fields.hasErrors('memberAddress')}" th:errorclass="error"
                        th:errors="*{memberAddress}"/><br>
                     <input type="button" class="customBtn" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
@@ -70,21 +67,22 @@
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="tel" name="memberPhone" id="memberPhone" class="form-control" th:field="*{memberPhone}"
+                    <input type="tel" name="memberPhone" id="memberPhone" class="form-control"
+                           th:value="${memberLoginBean.memberPhone}"
                            value="" autocomplete="off">
                     <p th:if="${#fields.hasErrors('memberPhone')}" th:errorclass="error" th:errors="*{memberPhone}"/>
                 </div>
                 <div class="form-group">
                     <input type="submit" id="btnModify" value="수정" class="btn customModifyBtn"
-                           style="margin-bottom: 5px">
+                           style="margin-bottom: 5px; margin-top: 10px;">
                 </div>
             </form>
             <div style="display: flex">
                 <button id="btnModifyReset" th:text="취소" class="btn customBtn" style="margin-right: 5px"
                         onclick="window.location = '/user/read'"></button>
-                <form id="delete" th:action="@{/user/delete}" th:method="delete">
+                <form id="delete" th:action="@{/user/delete}" th:method="delete" name="frm">
                     <input type="hidden" id="memberIdx" name="memberIdx" th:value="${memberLoginBean.memberIdx}">
-                    <button type="submit" onclick="if(confirm('정말로 탈퇴하시겠습니까?')); " class="btn customDeleteBtn" style="">
+                    <button type="button" onclick="deleteUser(this)" class="btn customDeleteBtn" style="">
                         회원탈퇴
                     </button>
                 </form>
@@ -96,6 +94,23 @@
 
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 <script th:inline="javascript">
+
+    function deleteUser() {
+      var form = $('#delete')
+      swal({
+        title: "정말로 탈퇴 하시겠습니까?",
+        icon: "warning",
+        buttons:[
+          '아니오',
+          '네'
+        ],
+      }).then(function(isConfirm){
+        if(isConfirm){
+          form.submit();
+        }
+      });
+    }
+
 
     $('#memberNickname').keyup(function () {
         console.log('눌림');
@@ -116,46 +131,6 @@
         });
     });
 
-    $('#member_password_check').blur(function () {
-        const member_password = $("#password").val();
-        //비밀번호의 값
-        const member_password_check = $("#member_password_check").val();
-        //비밀번호 확인의 값
-        console.log(member_password);
-        console.log(member_password_check);
-        if (member_password === member_password_check && member_password !== ""
-            && member_password_check !== ""
-            && member_password != null && member_password_check != null) {
-
-            $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-            $("#passwordCheckLabel").css("color", "green");
-
-        } else {
-
-            $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-            $("#passwordCheckLabel").css("color", "red");
-        }
-    });
-    $('#password').blur(function () {
-        const member_password = $("#password").val();
-        //비밀번호의 값
-        const member_password_check = $("#member_password_check").val();
-        //비밀번호 확인의 값
-        console.log(member_password);
-        console.log(member_password_check);
-        if (member_password === member_password_check
-            && member_password_check !== ""
-            && member_password != null && member_password_check != null) {
-
-            $("#passwordCheckLabel").html("비밀번호가 일치합니다.");
-            $("#passwordCheckLabel").css("color", "green");
-
-        } else {
-
-            $("#passwordCheckLabel").html("비밀번호가 일치하지 않습니다..");
-            $("#passwordCheckLabel").css("color", "red");
-        }
-    });
     var element_wrap = document.getElementById('wrap');
 
     function foldDaumPostcode() {
