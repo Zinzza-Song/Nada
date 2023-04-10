@@ -9,23 +9,12 @@
   <div th:replace="~{fragment/topMenu.html::header}"></div>
   <title>NADA</title>
 </head>
-
 <body class="p-3 m-0 border-0 bd-example mainBody">
-
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
-<!--<img th:src="@{/images/mainBanner5.jpg}" style="width:100%; height: 350px;">-->
 <div class="videoContainer">
-
-<!--  <video id="videoPlay" width="100%" height="500px" style="margin-top: 20px; display: block" autoplay muted>-->
-<!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}"/>-->
-<!--    메인 동영상-->
-<!--  </video>-->
-  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" autoplay muted loop>
-    <source type="video/mp4" th:src="@{/videos/main_bannerVideo2.mp4}"/>
-    <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
-    메인 동영상
+  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" autoplay muted loop
+         src="/download">
   </video>
-
 </div>
 <div class="container text-center" id="main">
   <div class="row">
@@ -140,32 +129,6 @@
   </div>
 
 </div>
-<script>
-
-  // $(function () {
-  //
-  //   $('#videoPlay2').bind('contextmenu', function () {
-  //     return false;
-  //   });
-  //   $('#videoPlay').bind('contextmenu', function () {
-  //     return false;
-  //   });
-  //   $('#videoPlay').bind('ended', function () {
-  //     $('#videoPlay').css('display', 'none');
-  //     $('#videoPlay2').css('display', 'block');
-  //     $('#videoPlay2').play();
-  //   });
-  //   $('#videoPlay2').bind('ended', function () {
-  //     $('#videoPlay2').css('display', 'none');
-  //     $('#videoPlay').css('display', 'block');
-  //     $('#videoPlay').play();
-  //   });
-  //
-  //
-  // });
-
-</script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
-
 </html>
