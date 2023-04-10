@@ -9,23 +9,12 @@
   <div th:replace="~{fragment/topMenu.html::header}"></div>
   <title>NADA</title>
 </head>
-
 <body class="p-3 m-0 border-0 bd-example mainBody">
-
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
-<!--<img th:src="@{/images/mainBanner5.jpg}" style="width:100%; height: 350px;">-->
 <div class="videoContainer">
-
-  <!--  <video id="videoPlay" width="100%" height="500px" style="margin-top: 20px; display: block" autoplay muted>-->
-  <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}"/>-->
-  <!--    메인 동영상-->
-  <!--  </video>-->
-  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" muted loop>
-    <source type="video/mp4" th:src="@{/videos/main_bannerVideo2.mp4}"/>
-    <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
-    메인 동영상
+  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" autoplay muted loop
+         th:src="@{/videos/main_bannerVideo2.mp4}">
   </video>
-
 </div>
 <div class="container text-center" id="main">
   <div class="row">
@@ -140,10 +129,6 @@
   </div>
 
 </div>
-<script>
-  document.getElementById('videoPlay2').play();
-</script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
-
 </html>
