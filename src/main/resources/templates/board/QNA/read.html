@@ -79,9 +79,11 @@
 
   <form id="delete" th:action="@{/board/QNA/delete}" th:method="delete" style="margin-top: 20px">
     <input type="hidden" id="qnaIdx" name="qnaIdx" th:value="${qnaBean.qnaIdx}">
-    <button type="button" id="deleteBtn"
-            onclick="deleteQna()"
-            class="btn customDeleteBtn qnaBtn">삭제</button>
+    <th:block th:if="${memberLoginBean.memberIdx == qnaBean.memberIdx}">
+      <button type="button" id="deleteBtn"
+              onclick="deleteQna()"
+              class="btn customDeleteBtn qnaBtn">삭제</button>
+    </th:block>
     <button class="btn customBtn qnaBtn" onclick="window.location='/board/QNA'" type="button">목록</button>
   </form>
 </div>
