@@ -20,7 +20,7 @@
   <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}"/>-->
   <!--    메인 동영상-->
   <!--  </video>-->
-  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" autoplay muted loop>
+  <video id="videoPlay2" width="100%" height="500px" style="margin-top: 20px;" muted loop>
     <source type="video/mp4" th:src="@{/videos/main_bannerVideo2.mp4}"/>
     <!--    <source type="video/mp4" th:src="@{/videos/main_bannerVideo.mp4}" />-->
     메인 동영상
@@ -141,29 +141,7 @@
 
 </div>
 <script>
-
-  // $(function () {
-  //
-  //   $('#videoPlay2').bind('contextmenu', function () {
-  //     return false;
-  //   });
-  //   $('#videoPlay').bind('contextmenu', function () {
-  //     return false;
-  //   });
-  //   $('#videoPlay').bind('ended', function () {
-  //     $('#videoPlay').css('display', 'none');
-  //     $('#videoPlay2').css('display', 'block');
-  //     $('#videoPlay2').play();
-  //   });
-  //   $('#videoPlay2').bind('ended', function () {
-  //     $('#videoPlay2').css('display', 'none');
-  //     $('#videoPlay').css('display', 'block');
-  //     $('#videoPlay').play();
-  //   });
-  //
-  //
-  // });
-
+  document.getElementById('videoPlay2').play();
 </script>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 </body>
