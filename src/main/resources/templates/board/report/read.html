@@ -76,7 +76,9 @@
     <button type="button" class="btn customBtn qnaBtn" onclick="takeReport()"
             sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수
     </button>
-    <button type="submit" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
+    <button type="button" class="btn customBtn qnaBtn"
+            onclick="deleteReport()"
+            sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
   </th:block>
   <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/report'">목록</button>
 </form>
@@ -84,6 +86,21 @@
 
 <!--  관리자 답변 ajax  -->
 <script th:inline="javascript">
+  function deleteReport() {
+    var form = $('#delete')
+    swal({
+      title: "정말로 삭제 하시겠습니까?",
+      icon: "warning",
+      buttons:[
+        '아니오',
+        '네'
+      ],
+    }).then(function(isConfirm){
+      if(isConfirm){
+        form.submit();
+      }
+    });
+  }
   function takeReport() {
     const reportAdminmentEl = document.querySelector('#reportAdminment');
     reportAdminmentEl.readOnly = false;
