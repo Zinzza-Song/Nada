@@ -8,6 +8,7 @@ import com.fmi.nada.diary.Comment;
 import com.fmi.nada.diary.CommentService;
 import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
+import com.fmi.nada.user.Ban;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -311,7 +312,11 @@ public class AdminController {
      */
     @DeleteMapping("/user_delete")
     public String delMember(@RequestParam("memberIdx") Long memberIdx, Model model) {
+        Member deletedMember = memberService.findByMemberIdx(memberIdx);
         memberService.delMember(memberIdx);
+        Ban ban = memberService.findByBanEmail(deletedMember.getUsername());
+        ban.setBanIsbyadmin(true);
+        memberService.deleteByAdmin(ban);
 
         List<Member> adminMemberList = memberService.memberList();
         model.addAttribute("adminMemberList", adminMemberList);

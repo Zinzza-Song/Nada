@@ -6,6 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface BanRepository extends JpaRepository<Ban, Long> {
 
-    Member findByBanEmail(String email);
+    Ban findByBanEmail(String email);
 
 }
