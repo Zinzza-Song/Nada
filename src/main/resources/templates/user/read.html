@@ -365,14 +365,14 @@
           let resAdvice = mainAdvice.replace("조언 : ", "");
           advice.innerText = resAdvice;
 
-          if (resAdvice.indexOf("활동") != -1 || resAdvice.indexOf("스트레스") != -1) {
+          if (resAdvice.indexOf("활동") != -1 && resAdvice.indexOf("스트레스") != -1) {
             $('#food').css('display', 'inline');
             $('#cafe').css('display', 'inline');
             $('#movie').css('display', 'inline');
             $('#mountain').css('display', 'inline');
             $('#park').css('display', 'inline');
             $('#walk').css('display', 'inline');
-          } else if (resAdvice.indexOf("휴식") != -1 || resAdvice.indexOf("스트레스") != -1) {
+          } else if (resAdvice.indexOf("휴식") != -1 && resAdvice.indexOf("스트레스") != -1) {
             $('#movie').css('display', 'inline');
             $('#food').css('display', 'inline');
             $('#walk').css('display', 'inline');
@@ -597,7 +597,7 @@
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
 
-      alert('키워드를 입력해주세요!');
+      swal('키워드를 입력해주세요!');
       return false;
     }
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
@@ -620,12 +620,12 @@
 
       displayPagination(pagination);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-      alert('검색 결과가 존재하지 않습니다.');
+      swal('거주지 주변에 없습니다.');
 
       return;
 
     } else if (status === kakao.maps.services.Status.ERROR) {
-      alert('검색 결과 중 오류가 발생했습니다.');
+      swal('검색 결과 중 오류가 발생했습니다.');
 
       return;
 
