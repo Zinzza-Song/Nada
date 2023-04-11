@@ -83,7 +83,7 @@ public class MemberController {
 
 
         Member member = memberService.findByUsername(username);
-        Member banMember = memberService.findByBanEmail(username);
+        Ban banMember = memberService.findByBanEmail(username);
         if (member != null || banMember != null) {
             return "false";
         } else {
