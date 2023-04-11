@@ -48,7 +48,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(
-                new JwtAuthenticationFilter(authenticationManager(), logRepository),
+                new JwtAuthenticationFilter(authenticationManager(), logRepository, memberRepository),
                 UsernamePasswordAuthenticationFilter.class
         ).addFilterBefore(
                 new JwtAuthorizationFilter(memberRepository),
@@ -61,9 +61,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/login", "/denied").permitAll()
                 .antMatchers("/user/**", "/diary/**", "/board/QNA/**", "/board/notice/**",
                         "/board/report/**", "/send/**").hasRole("USER")
-                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers("/diary/**", "/board/report/**", "/board/notice/**", "/board/QNA/**",
+                        "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
-//                .anyRequest().permitAll();
 
         http.formLogin()
                 .loginPage("/user/login")

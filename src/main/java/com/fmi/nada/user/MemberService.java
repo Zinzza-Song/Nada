@@ -140,8 +140,12 @@ public class MemberService {
                 blockMemberIdx);
     }
 
-    public Member findByBanEmail(String email) {
+    public Ban findByBanEmail(String email) {
         return banRepository.findByBanEmail(email);
+    }
+
+    public void deleteByAdmin(Ban ban) {
+        banRepository.save(ban);
     }
 
 }
