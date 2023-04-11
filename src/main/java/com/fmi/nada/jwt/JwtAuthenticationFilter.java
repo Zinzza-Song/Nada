@@ -3,6 +3,7 @@ package com.fmi.nada.jwt;
 import com.fmi.nada.admin.Log;
 import com.fmi.nada.admin.LogRepository;
 import com.fmi.nada.user.Member;
+import com.fmi.nada.user.MemberRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -25,13 +27,18 @@ import java.util.ArrayList;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final LogRepository logRepository;
+    private final MemberRepository memberRepository;
 
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, LogRepository logRepository) {
+    public JwtAuthenticationFilter(
+            AuthenticationManager authenticationManager,
+            LogRepository logRepository,
+            MemberRepository memberRepository) {
         super(authenticationManager);
         this.authenticationManager = authenticationManager;
         this.logRepository = logRepository;
+        this.memberRepository = memberRepository;
     }
 
     /**
@@ -78,6 +85,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 user.getUsername(),
                 "로그인"
         ));
+
+        user.setMemberLoginDate(LocalDateTime.now());
+        memberRepository.save(user);
 
         //쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
