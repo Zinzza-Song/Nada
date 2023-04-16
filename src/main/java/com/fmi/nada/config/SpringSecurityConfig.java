@@ -57,12 +57,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/home", "/download", "/user/join/**", "/user/reset_password/**",
-                        "/diary", "/diary/read", "/board/notice", "/board/notice/read",
                         "/user/login", "/denied").permitAll()
-                .antMatchers("/user/**", "/diary/**", "/board/QNA/**", "/board/notice/**",
-                        "/board/report/**", "/send/**").hasRole("USER")
-                .antMatchers("/diary/**", "/board/report/**", "/board/notice/**", "/board/QNA/**",
-                        "/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**", "/board/QNA/write", "/board/report/write").hasRole("USER")
+                .antMatchers("/board/notice/write", "/board/notice/modify", "/admin/**").hasRole("ADMIN")
+                .antMatchers("/diary/**", "/send/**", "/board/notice", "/board/notice/read", "/board/QNA",
+                        "/board/QNA/read", "/board/report", "/board/report/read").access("hasRole('USER') or " +
+                        "hasRole('ADMIN')")
                 .anyRequest().authenticated();
 
         http.formLogin()
