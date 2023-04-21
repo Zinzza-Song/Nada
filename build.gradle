@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 
+    // Spring boot
     implementation 'org.springframework.boot:spring-boot-starter'
 
     // JPA
@@ -27,9 +28,6 @@ dependencies {
 
     // Mail Sender
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-    // OAuth2
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -48,6 +46,7 @@ dependencies {
     implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    // gson
     implementation 'com.google.code.gson:gson'
 
     // lombok
@@ -56,9 +55,6 @@ dependencies {
 
     // devtools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    // h2
-/*    runtimeOnly 'com.h2database:h2'*/
 
     // mysql
     runtimeOnly 'mysql:mysql-connector-java'
