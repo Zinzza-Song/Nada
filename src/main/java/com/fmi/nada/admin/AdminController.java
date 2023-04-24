@@ -108,29 +108,37 @@ public class AdminController {
             List<String> viewsKeyList = new ArrayList<>();
             List<String> viewsValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : views.entrySet()) {
-                viewsKeyList.add("\"" + entry.getKey() + "\"");
-                viewsValueList.add(entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    viewsKeyList.add("\"" + entry.getKey() + "\"");
+                    viewsValueList.add(entry.getValue().toString());
+                }
             }
 
             List<String> eventsKeyList = new ArrayList<>();
             List<String> eventsValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : events.entrySet()) {
-                eventsKeyList.add("\"" + entry.getKey() + "\"");
-                eventsValueList.add(entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    eventsKeyList.add("\"" + entry.getKey() + "\"");
+                    eventsValueList.add(entry.getValue().toString());
+                }
             }
 
             List<String> devicesKeyList = new ArrayList<>();
             List<String> devicesValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : devices.entrySet()) {
-                devicesKeyList.add("\"" + entry.getKey() + "\"");
-                devicesValueList.add(entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    devicesKeyList.add("\"" + entry.getKey() + "\"");
+                    devicesValueList.add(entry.getValue().toString());
+                }
             }
 
             List<String> citiesKeyList = new ArrayList<>();
             List<String> citiesValueList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : cities.entrySet()) {
-                citiesKeyList.add("\"" + entry.getKey() + "\"");
-                citiesValueList.add(entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    citiesKeyList.add("\"" + entry.getKey() + "\"");
+                    citiesValueList.add(entry.getValue().toString());
+                }
             }
 
             model.addAttribute("eventsKeyList", eventsKeyList);
