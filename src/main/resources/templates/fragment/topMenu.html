@@ -89,7 +89,7 @@
             </div>
 
             <span id="nickname" sec:authorize="isAuthenticated()"
-                  th:text="${#authentication.name}">(닉네임)</span>
+                  th:text="${#authentication.principal.memberNickname}">(닉네임)</span>
             <form th:action="@{/logout}" method="post">
               <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
             </form>
