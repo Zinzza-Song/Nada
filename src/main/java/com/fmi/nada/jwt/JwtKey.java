@@ -14,12 +14,9 @@ import java.util.Random;
 public class JwtKey {
 
     private static final Map<String, String> SECRET_KEY_SET = Map.of(
-            "key1", "SpringSecurityJWTPracticeProjectIsSoGoodAndThisProjectIsSoFunSpring" +
-                    "SecurityJWTPracticeProjectIsSoGoodAndThisProjectIsSoFun",
-            "key2", "GoodSpringSecurityNiceSpringSecurityGoodSpringSecurityNiceSpringSecurity" +
-                    "GoodSpringSecurityNiceSpringSecurityGoodSpringSecurityNiceSpringSecurity",
-            "key3", "HelloSpringSecurityHelloSpringSecurityHelloSpringSecurityHelloSpringSecurity" +
-                    "HelloSpringSecurityHelloSpringSecurityHelloSpringSecurityHelloSpringSecurity"
+            "key1", "prcU5TO3JUFPIrVpgaZoz5VV4EcCUdNh",
+            "key2", "2BMwMxZaTNlpC5qtTBCSIjkII96thKC4",
+            "key3", "bffJVtA68nyOQvZeFn4AFvu8iLG1XpdH"
     );
 
     private static final String[] KID_SET = SECRET_KEY_SET.keySet().toArray(new String[0]);
