@@ -2,10 +2,7 @@ package com.fmi.nada.config;
 
 import com.fmi.nada.admin.Log;
 import com.fmi.nada.admin.LogRepository;
-import com.fmi.nada.jwt.JwtAuthenticationFilter;
-import com.fmi.nada.jwt.JwtAuthorizationFilter;
-import com.fmi.nada.jwt.JwtProperties;
-import com.fmi.nada.jwt.JwtUtils;
+import com.fmi.nada.jwt.*;
 import com.fmi.nada.user.Member;
 import com.fmi.nada.user.MemberRepository;
 import com.fmi.nada.user.MemberService;
@@ -39,6 +36,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final LogRepository logRepository;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,10 +46,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(
-                new JwtAuthenticationFilter(authenticationManager(), logRepository, memberRepository),
+                new JwtAuthenticationFilter(
+                        authenticationManager(),
+                        logRepository,
+                        memberRepository,
+                        refreshTokenService),
                 UsernamePasswordAuthenticationFilter.class
         ).addFilterBefore(
-                new JwtAuthorizationFilter(memberRepository),
+                new JwtAuthorizationFilter(memberRepository, refreshTokenService),
                 BasicAuthenticationFilter.class
         );
 
@@ -96,7 +98,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(((request, response, authentication) -> {
                     response.sendRedirect("/user/login");
                 }))
-                .deleteCookies(JwtProperties.COOKIE_NAME);
+                .deleteCookies(JwtProperties.COOKIE_NAME)
+                .deleteCookies("userName");
 
         http.exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler());
