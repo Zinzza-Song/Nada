@@ -28,17 +28,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final LogRepository logRepository;
     private final MemberRepository memberRepository;
+    private final RefreshTokenService refreshTokenService;
 
     private final AuthenticationManager authenticationManager;
 
     public JwtAuthenticationFilter(
             AuthenticationManager authenticationManager,
             LogRepository logRepository,
-            MemberRepository memberRepository) {
+            MemberRepository memberRepository,
+            RefreshTokenService refreshTokenService) {
         super(authenticationManager);
         this.authenticationManager = authenticationManager;
         this.logRepository = logRepository;
         this.memberRepository = memberRepository;
+        this.refreshTokenService = refreshTokenService;
     }
 
     /**
@@ -54,6 +57,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 request.getParameter("password"),
                 new ArrayList<>()
         );
+
+        System.out.println("토큰 인증");
 
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -94,7 +99,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키 만료시간 설정
         cookie.setPath("/");
 
+        Cookie userNameCookie = new Cookie("userName", user.getUsername());
+        userNameCookie.setMaxAge(JwtProperties.EXPIRATION_REFRESH_TIME);
+        userNameCookie.setPath("/");
+
+        RefreshToken refreshToken = refreshTokenService.getRefreshToken(user.getUsername());
+
+        if (refreshToken == null) {
+            refreshTokenService.createRefreshToken(user);
+            System.out.println("리프레시 토큰 생성");
+        } else
+            System.out.println(refreshToken.getUserName());
+
+
         response.addCookie(cookie);
+        response.addCookie(userNameCookie);
         response.sendRedirect("/");
     }
 
@@ -113,6 +132,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed)
             throws IOException {
+
+        System.out.println("인증 실패");
 
         String errorMessage = "이메일 혹은 비밀번호를 잘못 입력하였습니다.";
         if (failed instanceof BadCredentialsException)
