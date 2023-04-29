@@ -21,9 +21,11 @@ import java.util.Arrays;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final MemberRepository memberRepository;
+    private final RefreshTokenService refreshTokenService;
 
-    public JwtAuthorizationFilter(MemberRepository userRepository) {
+    public JwtAuthorizationFilter(MemberRepository userRepository, RefreshTokenService refreshTokenService) {
         this.memberRepository = userRepository;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     .findFirst()
                     .map(Cookie::getValue)
                     .orElse(null);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
         }
 
         if (token != null) {
@@ -49,10 +51,33 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Authentication authentication = getUsernamePasswordAuthenticationToken(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-                cookie.setMaxAge(0);
+                String userName = token = Arrays.stream(request.getCookies())
+                        .filter(cookie -> cookie.getName().equals("userName"))
+                        .findFirst()
+                        .map(Cookie::getValue)
+                        .orElse(null);
 
-                response.addCookie(cookie);
+                System.out.println(userName);
+                RefreshToken refreshToken = refreshTokenService.getRefreshToken(userName);
+
+//                System.out.println(refreshToken.getUserName());
+
+                if (refreshToken != null) {
+                    token = JwtUtils.createToken(memberRepository.findByUsername(userName));
+
+                    Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
+                    cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키 만료시간 설정
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+
+                    Authentication authentication = getUsernamePasswordAuthenticationToken(token);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+                    cookie.setMaxAge(0);
+
+                    response.addCookie(cookie);
+                }
             }
         }
 
@@ -74,6 +99,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     member.getAuthorities()
             );
         }
+
         return null;
     }
 

@@ -5,7 +5,8 @@ package com.fmi.nada.jwt;
  */
 public class JwtProperties {
 
-    public static final int EXPIRATION_TIME = 3600000; // 1시간
+    public static final int EXPIRATION_TIME = 1800000; // 30분
+    public static final int EXPIRATION_REFRESH_TIME = 604800000; // 7일
     public static final String COOKIE_NAME = "JWT-AUTHENTICATION";
 
 }
