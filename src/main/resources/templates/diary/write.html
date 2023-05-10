@@ -90,7 +90,7 @@
         <div class="rightDiary diary-wrap">
           <div class="card-body Analyze diary col-6" id="Analyze" style="">
             <div class="form-group" style="text-align: center;margin-bottom: 10px">
-              <p class="writeTitle" style="">감정 분석</p>
+              <p class="writeTitle" style="">조언</p>
             </div>
 
             <div class="form-group public-check-box" style="">
@@ -113,7 +113,7 @@
             </div>
 
             <div class="form-group" style="">
-              <p class="writeAnTitle" style="">감정 분석 결과</p>
+              <p class="writeAnTitle" style="">GPT의 따뜻한 조언</p>
             </div>
 
             <div class="form-group diaryAnalyze-div" style="">
@@ -177,7 +177,7 @@
     console.log(msg);
 
     let diaryAnalyze = document.getElementById('diaryAnalyze');
-    diaryAnalyze.value = "일기를 분석 중입니다.";
+    diaryAnalyze.value = "조언을 생각중입니다 잠시만 기다려 주세요.";
 
     let gptData = {
       method: 'POST',

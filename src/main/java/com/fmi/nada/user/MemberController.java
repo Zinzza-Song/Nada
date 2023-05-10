@@ -168,7 +168,7 @@ public class MemberController {
         for (int index = 0; index < diaryScore.size(); index++) {
             analyzeScore += diaryScore.get(index).getAnalyzeScore() + ",";
         }
-        if (analyzeScore.length() != 0) {
+        if (analyzeScore.length() != 0 && diaryScore.size() >= 3) {
             analyzeScore = analyzeScore.substring(0, analyzeScore.length() - 1);
             model.addAttribute("analyzeScore", analyzeScore);
         }
