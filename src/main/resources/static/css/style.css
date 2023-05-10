@@ -2230,3 +2230,14 @@ a {
 .sendMailBtn{
     margin-top: 5px;
 }
+
+.profile {
+    text-size: 30px;
+    margin-bottom: 10px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    color: #77493b;
+}
+
+.profile:last-child {
+    margin-bottom: 0;
+}
