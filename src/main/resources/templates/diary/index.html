@@ -10,6 +10,9 @@
 
 <body class=" diarymain">
 <header th:insert="~{fragment/topMenu.html::nav}"></header>
+<th:block th:if="${allDiaryList.totalPages < 1}">
+  <span class="schNone">검색결과가 없습니다.</span>
+</th:block>
 <div class="idiot" style="margin-top: 50px">
   <div th:each="diary :${allDiaryList}" class="card diaryListCard">
     <div>
@@ -61,9 +64,7 @@
                 nextPage=@{/diary(page=${allDiaryList.number + 2},type=${type},keyword=${keyword})},
                 lastPage=@{/diary(page=${allDiaryList.totalPages},type=${type},keyword=${keyword})}">
         <!-- 페이지가 없는 경우 -->
-        <th:block th:if="${allDiaryList.totalPages < 1}">
-          <span class="schNone">검색결과가 없습니다.</span>
-        </th:block>
+
         <!-- 페이지가 있는 경우 -->
         <th:block th:if="${allDiaryList.totalPages > 0}">
 
