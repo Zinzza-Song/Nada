@@ -2225,7 +2225,19 @@ a {
     text-align: center;
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     font-size: 55px;
+    margin-top: 25%;
 }
 .sendMailBtn{
     margin-top: 5px;
+}
+
+.profile {
+    text-size: 30px;
+    margin-bottom: 10px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    color: #77493b;
+}
+
+.profile:last-child {
+    margin-bottom: 0;
 }
