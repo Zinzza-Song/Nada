@@ -22,4 +22,8 @@ public class RefreshTokenService {
         refreshTokenRepository.save(new RefreshToken(member.getMemberIdx(), refreshToken, member.getUsername()));
     }
 
+    public void deleteRefreshToken(Long memberIdx) {
+        refreshTokenRepository.deleteById(memberIdx);
+    }
+
 }
