@@ -6,6 +6,7 @@ import com.fmi.nada.diary.AnalyzedService;
 import com.fmi.nada.diary.Diary;
 import com.fmi.nada.diary.DiaryService;
 import com.fmi.nada.jwt.JwtProperties;
+import com.fmi.nada.jwt.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final DiaryService diaryService;
     private final AnalyzedService analyzedService;
+    private final RefreshTokenService refreshTokenService;
 
     @GetMapping("/login")
     public String login(
@@ -244,9 +246,17 @@ public class MemberController {
     public String deleteMember(@RequestParam("memberIdx") Long memberIdx, HttpServletResponse res) {
         memberService.delMember(memberIdx);
 
-        Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-        cookie.setMaxAge(0);
-        res.addCookie(cookie);
+        refreshTokenService.deleteRefreshToken(memberIdx);
+
+        Cookie cookie1 = new Cookie(JwtProperties.COOKIE_NAME, null);
+        cookie1.setMaxAge(0);
+
+        Cookie cookie2 = new Cookie("userName", null);
+        cookie2.setMaxAge(0);
+
+        res.addCookie(cookie1);
+        res.addCookie(cookie2);
+
 
         return "redirect:/";
 
