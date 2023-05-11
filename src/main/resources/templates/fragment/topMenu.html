@@ -73,7 +73,7 @@
             <a class="nav-link "
                th:href="@{/board/QNA?page=1}" style="width: 100px;">Q & A</a>
           </li>
-          <li class="nav-item col-md-7">
+          <li class="nav-item col-md-7" sec:authorize="!hasRole('ROLE_ADMIN')">
             <a class="nav-link "
                th:href="@{/board/report?page=1}">신고 게시판</a>
           </li>
@@ -88,11 +88,13 @@
                                                      th:href="@{/user/login}">로그인</a>
             </div>
 
-            <span id="nickname" sec:authorize="isAuthenticated()"
-                  th:text="${#authentication.principal.memberNickname}">(닉네임)</span>
-            <form th:action="@{/logout}" method="post">
-              <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
-            </form>
+            <div style="margin-left: 30px;">
+              <span id="nickname" sec:authorize="isAuthenticated()"
+                    th:text="${#authentication.principal.memberNickname}">(닉네임)</span>
+              <form th:action="@{/logout}" method="post">
+                <input type="submit" class="logoutBtn" sec:authorize="isAuthenticated()" value="로그아웃">
+              </form>
+            </div>
 
           </li>
         </ul>
