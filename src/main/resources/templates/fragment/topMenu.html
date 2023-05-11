@@ -53,7 +53,7 @@
       </button>
       <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-5 mb-lg-0">
-          <li class="nav-item dropdown col-md-7">
+          <li class="nav-item dropdown col-md-7" style="margin-left: 280px">
             <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
               감성일기
@@ -88,7 +88,7 @@
                                                      th:href="@{/user/login}">로그인</a>
             </div>
 
-            <div style="margin-left: 30px;">
+            <div style="margin-left: 30px; width: 200px">
               <span id="nickname" sec:authorize="isAuthenticated()"
                     th:text="${#authentication.principal.memberNickname}">(닉네임)</span>
               <form th:action="@{/logout}" method="post">
