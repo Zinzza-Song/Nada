@@ -2403,3 +2403,13 @@ a {
 .error {
     color: red;
 }
+
+.menu{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.menu li{
+    width: 160px;
+}
+
