@@ -36,11 +36,11 @@
 
         <div class="card keywordcard" id="keyword">
           <div style="font-size: 20px;margin-bottom: 15px; margin-top:10px">
-            키워드 추천
+            많이 사용 된 키워드
           </div>
           <div class="card-body">
-            <blockquote class="blockquote mb-0" id="keywordContext" th:each="keyword : ${keywordList}">
-              <p class="list" th:text="${keyword.keywordName}">키워드</p>
+            <blockquote class="blockquote mb-0" id="keywordContext" th:each="keyword, numStat: ${keywordList}">
+              <p class="list" th:text="${numStat.count + '. '+keyword.keywordName}">키워드</p>
             </blockquote>
           </div>
         </div>
