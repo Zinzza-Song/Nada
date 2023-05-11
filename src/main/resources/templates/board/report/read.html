@@ -77,9 +77,15 @@
             sec:authorize="hasAnyRole('ROLE_ADMIN')">신고 접수
     </button>
     <button type="submit" class="btn customBtn qnaBtn"
-            sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료</button>
+            sec:authorize="hasAnyRole('ROLE_ADMIN')">처리 완료
+    </button>
   </th:block>
-  <button type="button" class="btn customBtn qnaBtn" onclick="window.location='/board/report'">목록</button>
+  <button type="button" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_USER')"
+          onclick="window.location='/board/report'">목록
+  </button>
+  <button type="button" class="btn customBtn qnaBtn" sec:authorize="hasAnyRole('ROLE_ADMIN')"
+          onclick="window.location='/admin/report'">목록
+  </button>
 </form>
 <footer th:replace="~{fragment/footerTemp.html::footer}"></footer>
 
@@ -90,16 +96,17 @@
     swal({
       title: "정말로 삭제 하시겠습니까?",
       icon: "warning",
-      buttons:[
+      buttons: [
         '아니오',
         '네'
       ],
-    }).then(function(isConfirm){
-      if(isConfirm){
+    }).then(function (isConfirm) {
+      if (isConfirm) {
         form.submit();
       }
     });
   }
+
   function takeReport() {
     const reportAdminmentEl = document.querySelector('#reportAdminment');
     reportAdminmentEl.readOnly = false;
