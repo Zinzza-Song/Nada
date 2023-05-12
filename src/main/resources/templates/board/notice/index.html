@@ -47,9 +47,9 @@
     <th scope="col">조회수</th>
   </tr>
   </thead>
-  <tbody class="table-group-divider noticeTableBody" th:each="notice, index: ${noticeList}">
+  <tbody class="table-group-divider noticeTableBody" th:each="notice: ${noticeList}">
   <tr>
-    <th scope="row" th:text="${index.index + 1}"></th>
+    <th scope="row" th:text="${notice.noticeIdx}"></th>
     <td class="noticeTableBodySubject">
       <a class="noticeIndexSubject" th:href="@{/board/notice/read(noticeIdx=${notice.noticeIdx})}"
          th:text="${notice.noticeSubject}">공지사항
