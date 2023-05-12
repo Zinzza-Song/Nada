@@ -71,6 +71,10 @@
           <button type="button" class="customBtn category" onclick="searchFood(this)" style="display: none;" id="food">
             맛집
           </button>
+          <button type="button" class="customBtn category" onclick="searchConsulting(this)"
+                  style="display: none;" id="consulting">
+            상담소
+          </button>
         </div>
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
         <div id="menu_wrap" class="bg_white">
@@ -365,84 +369,100 @@
           let resAdvice = mainAdvice.replace("조언 : ", "");
           advice.innerText = resAdvice;
 
-          if (resAdvice.indexOf("활동") != -1 && resAdvice.indexOf("스트레스") != -1) {
-            $('#food').css('display', 'inline');
-            $('#cafe').css('display', 'inline');
+          if (resAdvice.indexOf("활동") != -1) {
             $('#movie').css('display', 'inline');
             $('#mountain').css('display', 'inline');
             $('#park').css('display', 'inline');
             $('#walk').css('display', 'inline');
-          } else if (resAdvice.indexOf("휴식") != -1 && resAdvice.indexOf("스트레스") != -1) {
-            $('#movie').css('display', 'inline');
-            $('#food').css('display', 'inline');
-            $('#walk').css('display', 'inline');
-            $('#mountain').css('display', 'inline');
-            $('#cafe').css('display', 'inline');
-          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("유지") != -1) {
+            $('#health').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("휴식") != -1 || resAdvice.indexOf("스트레스")) {
             $('#movie').css('display', 'inline');
             $('#food').css('display', 'inline');
             $('#cafe').css('display', 'inline');
-          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("이해") != -1) {
+          }
+          if (resAdvice.indexOf("긍정") != -1) {
+            $('#consulting').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("이해") != -1) {
+            $('#consulting').css('display', 'inline');
             $('#walk').css('display', 'inline');
-            $('#mountain').css('display', 'inline');
-          } else if (resAdvice.indexOf("긍정") != -1 && resAdvice.indexOf("정리") != -1) {
-            $('#walk').css('display', 'inline');
-            $('#mountain').css('display', 'inline');
-            $('#health').css('display', 'inline');
-          } else if (resAdvice.indexOf("운동") != -1) {
-            $('#health').css('display', 'inline');
-            $('#mountain').css('display', 'inline');
-            $('#walk').css('display', 'inline');
-          } else if (resAdvice.indexOf("음식") != -1) {
-            $('#food').css('display', 'inline');
-            $('#cafe').css('display', 'inline');
-          } else if (resAdvice.indexOf("영화") != -1) {
-            $('#movie').css('display', 'inline');
-          } else if (resAdvice.indexOf("취미") != -1) {
-            $('#mountain').css('display', 'inline');
-            $('#health').css('display', 'inline');
-            $('#movie').css('display', 'inline');
-            $('#food').css('display', 'inline');
-          } else if (resAdvice.indexOf("친구") != -1) {
-            $('#movie').css('display', 'inline');
-            $('#food').css('display', 'inline');
-            $('#cafe').css('display', 'inline');
-          } else if (resAdvice.indexOf("새로운") != -1) {
-            $('#health').css('display', 'inline');
-            $('#walk').css('display', 'inline');
-            $('#movie').css('display', 'inline');
-          } else if (resAdvice.indexOf("쉬는") != -1) {
             $('#park').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("정리") != -1) {
+            $('#consulting').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+            $('#park').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("운동") != -1) {
+            $('#health').css('display', 'inline');
+            $('#mountain').css('display', 'inline');
+            $('#walk').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("음식") != -1) {
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("영화") != -1) {
+            $('#movie').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("취미") != -1) {
+            $('#mountain').css('display', 'inline');
+            $('#health').css('display', 'inline');
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("친구") != -1) {
+            $('#movie').css('display', 'inline');
+            $('#food').css('display', 'inline');
+            $('#cafe').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("새로운") != -1) {
+            $('#health').css('display', 'inline');
             $('#walk').css('display', 'inline');
             $('#movie').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("쉬는") != -1) {
+            $('#movie').css('display', 'inline');
             $('#cafe').css('display', 'inline');
-          } else if (resAdvice.indexOf("여가") != -1) {
+          }
+          if (resAdvice.indexOf("여가") != -1) {
             $('#health').css('display', 'inline');
             $('#cafe').css('display', 'inline');
             $('#movie').css('display', 'inline');
-          } else if (resAdvice.indexOf("건강") != -1) {
+            $('#park').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("건강") != -1) {
             $('#health').css('display', 'inline');
             $('#walk').css('display', 'inline');
             $('#mountain').css('display', 'inline');
             $('#park').css('display', 'inline');
-          } else if (resAdvice.indexOf("소통") != -1) {
-            $('#food').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("소통") != -1) {
             $('#cafe').css('display', 'inline');
-            $('#movie').css('display', 'inline');
-          } else if (resAdvice.indexOf("활동") != -1) {
+          }
+          if (resAdvice.indexOf("활동") != -1) {
             $('#health').css('display', 'inline');
             $('#walk').css('display', 'inline');
             $('#mountain').css('display', 'inline');
-          } else if (resAdvice.indexOf("활발") != -1) {
-            $('#food').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("활발") != -1) {
             $('#health').css('display', 'inline');
             $('#walk').css('display', 'inline');
             $('#mountain').css('display', 'inline');
-          } else if (resAdvice.indexOf("즐거운") != -1) {
+          }
+          if (resAdvice.indexOf("즐거운") != -1) {
             $('#movie').css('display', 'inline');
             $('#food').css('display', 'inline');
             $('#walk').css('display', 'inline');
             $('#mountain').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("상담") != -1) {
+            $('#consulting').css('display', 'inline');
+          }
+          if (resAdvice.indexOf("관리") != -1) {
+            $('#consulting').css('display', 'inline');
+            $('#health').css('display', 'inline');
           }
 
           console.log($('#analyzeScoreArr').val());
@@ -521,7 +541,7 @@
         return `${year}-${month}-${day}`;
       }).reverse(),
       title: {
-        text: '최근 작성한 일기 7개의 감정 점수'
+        text: '최근 작성한 일기 7개의 온도'
       }
     },
     yaxis: {
@@ -803,6 +823,7 @@
   var cafeBtn = document.getElementById('cafe');
   var movieBtn = document.getElementById('movie');
   var foodBtn = document.getElementById('food');
+  var consultingBtn = document.getElementById('consulting');
 
   parkBtn.addEventListener('click', function () {
     var keywordInput = document.getElementById('keyword');
@@ -856,6 +877,14 @@
     var keywordInput = document.getElementById('keyword');
     var keyword = keywordInput.value;
     keywordInput.value = keyword ? keyword + ' 맛집' : ' 맛집';
+    searchPlaces();
+    keywordInput.value = document.getElementById('secret').value
+  });
+
+  consultingBtn.addEventListener('click', function () {
+    var keywordInput = document.getElementById('keyword');
+    var keyword = keywordInput.value;
+    keywordInput.value = keyword ? keyword + ' 심리상담' : ' 심리상담';
     searchPlaces();
     keywordInput.value = document.getElementById('secret').value
   });
