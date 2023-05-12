@@ -41,14 +41,14 @@
                   data-bs-reference="parent" data-bs-offset="10,20" aria-expanded="false" onclick="checkWriterIdx()"
                   style="display: contents;" th:text="${readDiaryBean.diaryWriter}"/>
           <ul class="dropdown-menu " id="dropdownSameWriter" style="" aria-labelledby="dropdownMenuReference">
-            <li class="dropdown-item" id="addFriend">친구추가</li>
+            <li class="dropdown-item menu-cursor" id="addFriend">친구추가</li>
             <li hidden="hidden" class="memberIdx" th:value="${readDiaryBean.memberIdx}">
-            <li class="dropdown-item addBlock" onclick="addBlock(this)"
+            <li class="dropdown-item addBlock menu-cursor" onclick="addBlock(this)"
                 data-bs-toggle="modal"
                 data-bs-target="#writerBlock">
               차단
             </li>
-            <li class="dropdown-item" onclick="reportBtn()">게시글 신고</li>
+            <li class="dropdown-item menu-cursor" onclick="reportBtn()">게시글 신고</li>
           </ul>
         </div>
         <div class="form-group ">
@@ -115,15 +115,15 @@
                             aria-expanded="false" th:text="${list.commentWriter}">작성자
                     </button>
                     <ul class="dropdown-menu" id="dropdownSameCommentWriter" >
-                      <li class="dropdown-item" onclick="addFriend(this)">친구추가</li>
+                      <li class="dropdown-item menu-cursor" onclick="addFriend(this)">친구추가</li>
                       <li hidden="hidden" class="memberIdx" name="memberIdx" id="commentMemberIdx" th:attr="data-idx=${list.memberIdx}"
                           th:text="${list.memberIdx}"></li>
-                      <li class="dropdown-item addBlock" onclick="addCommentBlock(this)"
+                      <li class="dropdown-item addBlock menu-cursor" onclick="addCommentBlock(this)"
                           data-bs-toggle="modal"
                           data-bs-target="#block">
                         차단
                       </li>
-                      <li class="dropdown-item" onclick="commentReportBtn(this)">댓글 신고</li>
+                      <li class="dropdown-item menu-cursor" onclick="commentReportBtn(this)">댓글 신고</li>
                     </ul>
                   </div>
                 </td>

@@ -2428,3 +2428,7 @@ a {
     font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
     color: #77493b;
 }
+
+.menu-cursor {
+    cursor: pointer;
+}
