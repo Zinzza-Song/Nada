@@ -25,9 +25,9 @@
           <p class="card-text userAddr profile" th:text="${memberLoginBean.memberAddress}">주소</p>
         </div>
       </div>
-      <div class="card mb-3">
+      <div class="card mb-3" th:if="${analyzeScore} != null">
         <div class="card-body">
-          <h5 class="card-title">감정상태 분석</h5>
+          <h5 class="card-title">그래프 선택</h5>
           <button class="customBtn" onclick="changeChartType('line')" type="button">선그래프</button>
           <button class="customBtn" onclick="changeChartType('bar')" type="button">막대그래프</button>
         </div>
@@ -37,7 +37,7 @@
 <!--          <h5 class="card-title">감정상태 분석글</h5>-->
           <!-- 감정 점수가 아직 없는 경우-->
           <th:block th:if="${analyzeScore} == null">
-            <p class="card-text">어서 빨리 일기를 작성해 주세요!!</p>
+            <p class="card-text no-diary">어서 빨리 일기를 작성해 주세요!!</p>
           </th:block>
           <!-- 감정 점수가 존재하는 경우-->
           <th:block th:if="${analyzeScore} != null">
@@ -129,7 +129,7 @@
         <div class="card-body">
           <div id="chart">
             <th:block th:if="${analyzeScore} == null">
-              <p class="card-text" style="font-size: 50px">일기를 3개 이상 작성해주시면 그래프를 보실 수 있습니다.</p>
+              <p class="card-text more-diary">일기를 3개 이상 작성해주시면 그래프를 보실 수 있습니다.</p>
             </th:block>
           </div>
         </div>

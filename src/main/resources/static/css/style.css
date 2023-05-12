@@ -2413,3 +2413,18 @@ a {
     width: 160px;
 }
 
+.more-diary {
+    font-size: 50px;
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    color: #77493b;
+}
+
+.no-diary {
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    color: #77493b;
+}
+
+#advice {
+    font-family: 'KCCChassam', 'Dovemayo_wild', 'TAEBAEKmilkyway';
+    color: #77493b;
+}
